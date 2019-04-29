@@ -1,0 +1,56 @@
+#slider{
+  .slide-img{
+
+  position: relative;
+  img{
+    width: 100%;
+    height: 545px;
+  }
+  .slide-text{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    padding-top:0 0;
+    padding-top: 17%;
+    color: white;
+    font-weight: bold;
+  }
+}
+}
+#carts{
+  .container{
+    text-align: center;
+  .cart-root{
+    position: relative;
+    height: 360px;
+   
+    .cart{
+      position: absolute;
+      width: 100%;
+      background: white;
+      height: 100%;
+      top: -115px;
+      left: 0;
+      padding: 45px 44px;
+      z-index: 11;
+      border-radius: 10.25px;
+      transition: 0.4s all;
+      box-shadow: 1px 1px 1px 1px #00000033;
+    }
+  }
+  .cart-root:hover{
+ 
+   
+    .cart{
+     transform: scale(1.1)
+     
+      
+    }
+  }
+}
+
+
+}

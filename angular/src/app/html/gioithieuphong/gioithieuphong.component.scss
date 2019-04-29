@@ -1,0 +1,32 @@
+#gt-phong{
+    padding: 50px 0;
+    text-align: center;
+    .title{
+        font-size: 25px;
+        font-weight: bold;
+        color: #F86923;
+        padding: 0 0 50px 0;
+    }
+}
+.loai-phong img {
+    width: 50%;
+}
+.loai-phong{
+    border-bottom:  1px solid  #ddecf3;
+    padding-bottom: 20px;
+    text-align: center;
+    .tenloaiphong{
+        width: 100%;
+        text-align: left;
+        color: #428bca;
+        font-size: 18px;
+        font-weight: bold;
+    }
+    .mota{
+        width: 70%;
+        margin: auto;
+        padding-top: 10px;
+        color: #428bca;
+        font-style: italic;
+    }
+}

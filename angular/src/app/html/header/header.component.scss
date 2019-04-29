@@ -1,0 +1,75 @@
+
+.display{
+    display: none;
+    
+}
+#head1{
+
+  transition: top 0.5s;
+  background: #ddecf3;
+  top: -50px;
+}
+.item{
+  position: relative;
+  outline: none;
+  
+}
+a{
+  padding-top: 0;
+  padding-bottom: 0;
+}
+.active{
+  background: #e8ddc0;
+}
+.action{
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+  right: 0;
+  width: 100%;
+  overflow: hidden;
+  background: #e8ddc0;
+  height: 0;
+  transition: 0.3s ease;
+}
+.item:hover .action{
+  bottom: 0;
+  height: 100%;
+
+}
+
+@-webkit-keyframes up {
+    from {
+      -webkit-transform: translate3d(0, 0, 0);
+      transform: translate3d(0, 0, 0);
+      visibility: visible;
+    
+    }
+  
+    to {
+      -webkit-transform: translate3d(0, 0, 0);
+      transform: translate3d(0, 0, 0);
+      
+    }
+  }
+  
+  @keyframes up {
+    from {
+      -webkit-transform: translate3d(0, 0, 0);
+      transform: translate3d(0,0, 0);
+      -webkit-animation-delay: 2s;
+      visibility: visible;
+     
+    }
+  
+    to {
+      -webkit-transform: translate3d(0,0, 0);
+      transform: translate3d(0,0, 0);
+    
+    }
+  }
+  
+  .up {
+    -webkit-animation-name: up;
+    animation-name: up;
+  }

@@ -1,0 +1,426 @@
+<div style="margin-bottom: 110px">
+  <app-header>
+
+  </app-header>
+</div>
+<div class="container">
+  <p class="text-center " style="font-size: 40px">THANH TOÁN</p>
+  <div *ngIf="khachhang">
+    <div class="row">
+
+      <div class="col-md-4">
+        <div class="form-group">
+          <label for="name" class="cols-sm-2 control-label">Tên Khách Hàng:</label>
+          <div class="cols-sm-10">
+            <div class="input-group">
+              <span class="input-group-addon">
+                <i class="fa fa-user fa" aria-hidden="true"></i>
+              </span>
+              <input disabled value="{{khachhang.ten}}" type="text" class="form-control" name="name" placeholder="Nhập Tên" />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group">
+          <label for="name" class="cols-sm-2 control-label">Email Khách Hàng:</label>
+          <div class="cols-sm-10">
+            <div class="input-group">
+              <span class="input-group-addon">
+                <i class="fa fa-envelope" aria-hidden="true"></i>
+              </span>
+              <input disabled value="{{khachhang.email}}" type="text" class="form-control" name="name" placeholder="Nhập email" />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group">
+          <label for="name" class="cols-sm-2 control-label">Số Điện Thoại:</label>
+          <div class="cols-sm-10">
+            <div class="input-group">
+              <span class="input-group-addon">
+                <i class="fa fa-user fa" aria-hidden="true"></i>
+              </span>
+              <input disabled value="{{khachhang.sdt}}" type="text" class="form-control" name="name" placeholder="Nhập Tên" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="!khachhang">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="form-group">
+          <label for="name" class="cols-sm-2 control-label">Tên Khách Hàng:</label>
+          <div class="cols-sm-10">
+            <div class="input-group">
+              <span class="input-group-addon">
+                <i class="fa fa-user fa" aria-hidden="true"></i>
+              </span>
+              <input type="text" class="form-control" name="name" placeholder="Nhập Tên" />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group">
+          <label for="name" class="cols-sm-2 control-label">Email Khách Hàng:</label>
+          <div class="cols-sm-10">
+            <div class="input-group">
+              <span class="input-group-addon">
+                <i class="fa fa-envelope" aria-hidden="true"></i>
+              </span>
+              <input type="text" class="form-control" name="name" placeholder="Nhập email" />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group">
+          <label for="name" class="cols-sm-2 control-label">Số Điện Thoại:</label>
+          <div class="cols-sm-10">
+            <div class="input-group">
+              <span class="input-group-addon">
+                <i class="fa fa-phone-square" aria-hidden="true"></i>
+              </span>
+              <input type="text" class="form-control" name="name" placeholder="Nhập số điệc thoại" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <hr />
+  <div class="row">
+    <div class="col-md-4">
+      <div class="form-group">
+        <label for="name" class="cols-sm-2 control-label">Thực đơn đã đặt:</label>
+        <div class="cols-sm-10">
+          <div class="input-group">
+            <input disabled data-toggle="modal" data-target="#myModal" style="cursor: pointer;" type="text" class="form-control"
+              name="name" value="Tổng tiền:{{tongTien}} VND" />
+            <span data-toggle="modal" data-target="#myModal" style="cursor: pointer;" class="input-group-addon">
+              Xem chi tiết
+            </span>
+          </div>
+          <!-- Modal -->
+          <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                  </button>
+                  <h4 class="modal-title text-center" id="myModalLabel">Đơn Hàng</h4>
+                </div>
+                <div class="modal-body">
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <td>Hinh Ảnh</td>
+                        <td>Tên</td>
+                        <td class="text-center">Số Lượng</td>
+                        <td class="text-center">Tổng Tiền</td>
+                        <td>#</td>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let item of cart">
+
+                        <td>
+                          <a style="margin-bottom: 0" class="thumbnail">
+                            <img style="max-width: 34px;" src="assets/images/dish/dish.jpg" alt="...">
+                          </a>
+
+                        </td>
+                        <td>
+                          <span style="margin: auto">{{item.item.ten}}</span>
+                        </td>
+                        <td class="text-center">
+                          <span *ngIf="sua==0">
+                            {{item.sl}}
+                          </span>
+
+                          <input *ngIf="sua==1" oninput="validity.valid||(value='');" style="width: 40%;display: inline;"
+                            type="number" min="1" max="100" class="form-control" value="{{item.sl}}" (change)="thayDoiGiaTri($event.target.value,item)">
+                        </td>
+                        <td class="text-center">
+                          {{item.item.gia*item.sl}}
+                        </td>
+                        <td>
+                          <span *ngIf="sua==0" style="cursor: no-drop;" class="
+                                    glyphicon glyphicon-trash"></span>
+                          <span *ngIf="sua==1" style="cursor: pointer;" (click)="xoa(item.item._id)" class="
+                                    glyphicon glyphicon-trash"></span>
+                        </td>
+                      </tr>
+                      <tr *ngFor="let item of cart1">
+
+                        <td>
+
+
+                        </td>
+                        <td>
+                          <span style="margin: auto">{{item.thucdon.tenthucdon}}</span>
+                        </td>
+                        <td class="text-center">
+                          <span *ngIf="sua==0">
+                            {{item.sl}}
+                          </span>
+
+                          <input *ngIf="sua==1" oninput="validity.valid||(value='');" style="width: 40%;display: inline;"
+                            type="number" min="1" max="100" class="form-control" value="{{item.sl}}" (change)="thayDoiGiaTriThucDon($event.target.value,item)">
+                        </td>
+                        <td class="text-center">
+                          {{item.thucdon.gia*item.sl}}
+                        </td>
+                        <td>
+                          <span *ngIf="sua==0" style="cursor: no-drop;" class="
+                                      glyphicon glyphicon-trash"></span>
+                          <span *ngIf="sua==1" style="cursor: pointer;" (click)="xoaThucDon(item.thucdon._id)" class="
+                                      glyphicon glyphicon-trash"></span>
+                        </td>
+                      </tr>
+                    </tbody>
+                    <tfoot>
+                      <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td class="text-center text-primary">Tổng:{{tongTien}} VND</td>
+                        <td></td>
+                      </tr>
+                    </tfoot>
+
+                  </table>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                  <button *ngIf="sua==0" (click)="chinhSua()" type="button" class="btn btn-default">Chỉnh Sửa</button>
+                  <button *ngIf="sua==1" (click)="ok()" type="button" class="btn btn-success">Ok</button>
+                  <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+
+      <div class="form-group">
+        <label for="name" class="cols-sm-2 control-label">Phòng-Dich vụ đã đặt:</label>
+        <div class="cols-sm-10">
+          <div class="input-group">
+            <input disabled data-toggle="modal" data-target="phongdichvu" style="cursor: pointer;" type="text" class="form-control"
+              name="name" value="Tổng tiền:{{tinhTienPhong()+tinhTienDichVu()}} VND" />
+            <span data-toggle="modal" data-target="#phongdichvu" style="cursor: pointer;" class="input-group-addon">
+              Xem chi tiết
+            </span>
+          </div>
+          <!-- Modal -->
+          <div class="modal fade" id="phongdichvu" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                  </button>
+                  <h4 class="modal-title text-center" id="myModalLabel">Đơn Hàng</h4>
+                </div>
+                <div class="modal-body">
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th>Phòng</th>
+                        <th class="text-right">Gia</th>
+                        <th class="text-right">Tổng tiền</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let item of phongstore">
+                        <td>{{item.item.ten}}</td>
+                        <td class="text-right">{{item.item.gia}}</td>
+                        <td></td>
+                      </tr>
+                      <tr class="success">
+                        <td></td>
+                        <td></td>
+                        <td class="text-right">{{tinhTienPhong()}}</td>
+                      </tr>
+                    </tbody>
+
+                    <thead>
+                      <tr>
+                        <th>Dịch vụ</th>
+                        <th class="text-right">Giá</th>
+                        <th></th>
+                      </tr>
+
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let item of dichVuStore">
+                        <td>{{item.item.ten}}</td>
+                        <td class="text-right">{{item.item.gia}}</td>
+                        <td></td>
+                      </tr>
+                      <tr class="success">
+                        <td></td>
+                        <td></td>
+                        <td class="text-right">{{tinhTienDichVu()}}</td>
+                      </tr>
+                    </tbody>
+                    <tfoot>
+                      <tr>
+                        <td></td>
+                        <td></td>
+                        <td class="text-right">{{tinhTienPhong()+tinhTienDichVu()}}</td>
+                      </tr>
+                    </tfoot>
+                  </table>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                  <!-- <button *ngIf="sua==0" (click)="chinhSua()" type="button" class="btn btn-default">Chỉnh Sửa</button>
+                  <button *ngIf="sua==1" (click)="ok()" type="button" class="btn btn-success">Ok</button> -->
+                  <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="form-group">
+        <label for="name" class="cols-sm-2 control-label">Tổng tiền phải trả:</label>
+        <div class="cols-sm-10">
+          <input disabled data-toggle="modal" data-target="phongdichvu" type="text" class="form-control" name="name"
+            value="Tổng tiền:{{tinhTienPhong()+tinhTienDichVu()+tongTien}} VND" />
+        </div>
+      </div>
+    </div>
+  </div>
+  <hr />
+  <div class="row">
+    <div class="col-md-3">
+      <div class="form-group">
+        <label for="name" class="cols-sm-2 control-label">Ngày Đặt-Giờ đặt </label>
+        <div class="cols-sm-10">
+          <form>
+            <!-- <angular2-date-picker [(ngModel)]="date" [settings]="settings"></angular2-date-picker> -->
+            <div class='input-group date'>
+              <input id="thoidiemdat" type='date' class="form-control" (change)="laythoigian($event)"  />
+              <span class="input-group-addon">
+                <span class="glyphicon glyphicon-calendar" ></span>
+              </span>
+            </div>
+          </form>
+        </div>
+      </div>
+   
+    
+  
+  
+  
+  
+    </div>
+    <div class="col-md-3 text-left">
+      <p class="inform">
+        <span >
+          Đã đặt
+        </span>
+        <span>
+          Chưa đặt
+        </span>
+      </p>
+      <div (click)="chonbuoisang()" class="btn btn-primary" [ngClass]="{'active':sang===false}">
+          buoi sang
+      </div>
+      <div (click)="chonbuoichieu()" class="btn btn-primary"  [ngClass]="{'active':chieu===false}">
+          buoi chieu
+      </div>
+   </div>
+  </div>
+  <div class="row">
+    <input data-toggle="modal" data-target="#xacNhan" type="button" class="btn btn-lg btn-primary pull-right" value="Xác Nhận">
+  </div>
+  <!-- Modal -->
+  <div class="modal fade" id="xacNhan" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">
+            <span aria-hidden="true">&times;</span>
+            <span class="sr-only">Close</span>
+          </button>
+          <h4 class="modal-title text-center" id=" myModalLabel">Hóa Đơn Tạm</h4>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-3">
+              <div class="form-group">
+                Tên khách hàng:
+              </div>
+              <div class="form-group">
+                Số Điện Thoại:
+              </div>
+              <div class="form-group">
+                Món ăn đã đặt:
+              </div>
+              <div class="form-group">
+                Phòng - Dịch vụ:
+              </div>
+              <div class="form-group">
+                Tổng tiền phải trả:
+              </div>
+              <div class="form-group">
+                Ngày đến:
+              </div>
+              <div class="form-group">
+                Buổi đến:
+              </div>
+            </div>
+            <div class="col-md-9">
+              <div class="bill-temp">
+                <div class="form-group">
+                  <input disabled value="{{khachhang.ten}}" type="text" class="form-control">
+                </div>
+                <div class="form-group">
+                  <input disabled value="{{khachhang.sdt}}" type="text" class="form-control">
+                </div>
+                <div class="form-group">
+                  <input disabled value="{{tongTien}} VND" type="text" class="form-control">
+                </div>
+                <div class="form-group">
+                  <input disabled value="{{tinhTienPhong()+tinhTienDichVu()}} VND" type="text" class="form-control">
+                </div>
+                <div class="form-group">
+                  <input disabled value="{{tinhTienPhong()+tinhTienDichVu()+tongTien}} VND" type="text" class="form-control tongtien">
+                </div>
+                <div class="form-group">
+                  <input disabled value="{{ngayden}}" type="text" class="form-control">
+                </div>
+                <div class="form-group">
+                  <input disabled value="{{buoiden}}" type="text" class="form-control">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" (click)="taohoadon()">Tạo</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<app-footer>
+
+</app-footer>

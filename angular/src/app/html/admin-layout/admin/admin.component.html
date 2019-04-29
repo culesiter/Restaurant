@@ -1,0 +1,83 @@
+<div class="container-fluid">
+  <div class="h-100">
+      <div class="header-part">
+          <app-adheader></app-adheader>
+      </div>
+      <div class="col-xs-12 col-sm-12 content-part">
+          <div class="content-head">
+
+              <div class="col-xs-6 col-sm-6 col-md-4 col-lg-4">
+                  <nav class="navbar">
+                      <a class="navbar-brand">
+                          <p style="text-transform: capitalize">{{headtittle}}</p>
+                      </a>
+                  </nav>
+              </div>
+
+              <div class="col-xs-6 col-sm-6 col-md-8 col-lg-8 down-menu">
+
+                  <div class="col-xs-3 col-sm-4 col-md-5 col-lg-5">
+
+                  </div>
+
+                  <div class="col-xs-9 col-sm-8 col-md-5 col-lg-5">
+                      <div class="btn-group">
+                          <button type="button" class="btn btn-default dropdown-toggle gr-down" data-toggle="dropdown">
+                              <i class="fas fa-bell"></i>
+                          </button>
+                          <ul class="dropdown-menu noti-down">
+                              <li class="tieude">
+                                  <p>Notification</p>
+                              </li>
+                              <li class="ctent">
+
+                                  <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                                      <div class="mini-avatar">
+                                          <img src="https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/5/2/4/e/f7b9-d570-4804-878c-b8bf6f45d170" alt="">
+                                      </div>
+
+                                  </div>
+
+                                  <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                      <div class="noti-content">
+                                          <p> Tml vua dinh xoac bansssssss
+                                          </p>
+                                      </div>
+                                  </div>
+
+                              </li>
+                              <li class="ctent">
+
+                                  <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                                      <div class="mini-avatar">
+                                          <img src="https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/5/2/4/e/f7b9-d570-4804-878c-b8bf6f45d170" alt="">
+                                      </div>
+
+                                  </div>
+
+                                  <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                      <div class="noti-content">
+                                          <p> Tml vua dinh xoac banassssssssssssssssssssssssssssss ssssssssssssssssss sssssssssssssssssssssssssssssssss
+                                          </p>
+                                      </div>
+                                  </div>
+
+                              </li>
+                              <li class="divider"></li>
+                              <li class="end">
+                                  <p>See more</p>
+                              </li>
+                          </ul>
+                      </div>
+                  </div>
+
+
+              </div>
+          </div>
+
+          <div class="content-main">
+              <router-outlet></router-outlet>
+          </div>
+      </div>
+  </div>
+</div>

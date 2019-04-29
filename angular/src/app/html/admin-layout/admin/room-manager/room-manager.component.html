@@ -1,0 +1,120 @@
+<div class="container-fluid">
+    <div class="customer-head">
+        <div class="btn-group group-them" data-toggle="buttons">
+            <label class="btn btn-default btn-lg bnt-them" (click)="formShow('view')">
+                Danh sách phòng ăn
+            </label>
+            <label class="btn btn-primary btn-lg bnt-them " (click)="formShow('create')">
+                Thêm phòng ăn mới
+            </label>
+        </div>
+    </div>
+    <div class="content">
+        <div class="list-customer" *ngIf="formStatus==='view'">
+            <table class="table table-hover list-table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Tên</th>
+                        <th scope="col">Loại</th>
+                        <th scope="col">Giá</th>
+                        <th scope="col">Sức Chứa</th>
+                        <th scope="col">Trạng thái</th>
+                    </tr>
+                </thead>
+                <tbody class="tbody-list">
+                    <tr *ngFor="let item of listData" (click)="formShow('detail',item)">
+                        <th scope="row">1</th>
+                        <td>{{item.ten}}</td>
+                        <td>{{item.loai}}</td>
+                        <td>{{item.gia}}</td>
+                        <td>{{item.succhua}}</td>
+                        <td>{{item.tinhtrang}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <!-- ket thuc form xem list -->
+        <!-- form add new begin -->
+        <div class="create-customer" *ngIf="formStatus==='create'">
+            <form (ngSubmit)="addNew()" [formGroup]="formAddNew">
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label>Tên</label>
+                        <input type="text" class="form-control" formControlName="ten" placeholder="H302">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label>Giá</label>
+                        <input type="text" formControlName="gia" class="form-control" placeholder="Giá">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label>Loại</label>
+                        <select name="5c13f163217a7e0c80d97c74" id="" class="opt" formControlName="_idloai">
+                            <option *ngFor="let type of lstType" value="5c12b7e01428bf24344ed6b4">{{type.ten}}</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label>Sức Chứa</label>
+                        <input type="text" class="form-control" formControlName="succhua" placeholder="15">
+                    </div>
+                    <div class="form-group col-md-12">
+                        <label>Tình Trạng</label>
+                        <input type="textarea" class="form-control" formControlName="tinhtrang" placeholder="H">
+                    </div>
+                    <div class="form-group col-md-12">
+                        <label>Image</label>
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" (change)="onFileChange($event)" id="inputGroupFile01">
+                            <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-12">
+                        <button type="submit" class="btn btn-secondary">Thêm</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <!-- ket thuc form add new -->
+        <!-- bat dau form detail -->
+        <div *ngIf="formStatus==='detail'">
+            <div class="dish-detail">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 carosel">
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <form (ngSubmit)="edit()" [formGroup]="frmSua">
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                <label>Tên</label>
+                                <input type="text" class="form-control" formControlName="ten" value="{{eData.ten}}">
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label>Loại</label>
+                                <select name="" id="" class="opt" formControlName="_idloai">
+                                    <option value="5c12b8031428bf24344ed6b5" selected disabled hidden>{{eData.loai}}</option>
+                                    <option *ngFor="let type of lstType" value="5c12b8031428bf24344ed6b5">{{type.ten}}</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label>Giá</label>
+                                <input type="text" class="form-control" formControlName="gia" value="{{eData.gia}}">
+                            </div>
+                            <div class="form-group col-md-2">
+                                <label>Sức Chứa</label>
+                                <input type="number" class="form-control" formControlName="succhua" value="{{eData.succhua}}">
+                            </div>
+                            <div class="form-group col-md-2">
+                                <label>Tình Trạng</label>
+                                <input type="text" class="form-control" formControlName="tinhtrang" value="{{eData.tinhtrang}}">
+                            </div>
+                            <div class="form-group col-md-12">
+                                <button type="submit" class="btn btn-secondary">Sửa</button>
+                                <button class="btn btn-warning" (click)="delete()">Xóa</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- ket thuc form detail -->
+    </div>
+</div>

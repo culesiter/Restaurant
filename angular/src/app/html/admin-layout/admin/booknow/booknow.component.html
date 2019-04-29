@@ -1,0 +1,54 @@
+<div class="booking">
+  <form  (ngSubmit)="taoMoi()" [formGroup]="formAddNew">
+      <div class="form-group col-md-6">
+          <label>Khách hàng</label>
+          <input type="text"  formControlName="kh" class="form-control" placeholder="Tên khách hàng">
+      </div>
+      <div class="form-group col-md-6">
+          <label>Phòng</label>
+          <input type="text"  formControlName="phong" class="form-control" placeholder="Phòng">
+      </div>
+      <div class="form-group col-md-3">
+          <label>Ngày</label>
+          <input class="form-control"  formControlName="ngay" type="date">
+      </div>
+      <div class="form-group col-md-2">
+          <label>Giờ</label>
+          <input class="form-control"  formControlName="gio" atp-time-picker value="19:00" />
+      </div>
+      <div class="form-group col-md-12">
+              <label>Chọn món</label>
+              <div class="chonmon" id="style-1">
+
+                  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+
+                      <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                          <p class="tbtd">Các món trong danh sách</p>
+                          <div *ngFor="let item of monAnChuaChon">
+                              <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6" (click)="chonmon(item)">
+                                  <div class="active chon">
+                                      {{item.name}}
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 right-part">
+                          <p class="tbtd">Các món đã chọn</p>
+                          <div *ngFor="let item of monAnTrongThucDon">
+                              <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6" (click)="xoaMon(item)">
+                                  <div class="active chon">
+                                      {{item.name}}
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      <div class="col-md-12">
+          <button type="submit" class="btn btn-default">Submit</button>
+          <button class="btn btn-warning" (click)="formClear()">Clear</button>
+      </div>
+
+  </form>
+</div>

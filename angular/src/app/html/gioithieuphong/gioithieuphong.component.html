@@ -1,0 +1,47 @@
+<div id="gt-phong">
+  <div class="container">
+    <ul class="nav nav-tabs">
+      <li class="active"><a data-toggle="tab" href="#home">Các loại phòng</a></li>
+      <li><a data-toggle="tab" href="#menu1">Các dịch vụ</a></li>
+    </ul>
+    <div class="tab-content">
+      <div id="home" class="tab-pane fade in active">
+        <div class="title">
+          CÁC LOẠI PHÒNG ĂN TRONG NHÀ HÀNG
+        </div>
+        <div class="page-content">
+          <div *ngFor="let item of loaip" class="loai-phong">
+            <div class="tenloaiphong">
+              {{item.ten}}
+            </div>
+            <img src="http://localhost:3000/{{item.hinhanh}}" class="img-thumbnail" alt="Image">
+            <div class="mota">
+              {{item.mota}}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="menu1" class="tab-pane fade">
+        <div class="title">
+          CÁC LOẠI DỊCH VỤ
+        </div>
+        <div class="page-content">
+          <div *ngFor="let item of loaidv" class="loai-phong">
+            <div class="tenloaiphong">
+              {{item.ten}}
+              <span class="giadv" style="    margin-left: 50px;
+                  color: red;
+                  font-style: italic;
+                  font-weight: normal;">Giá:
+                {{item.gia}}</span>
+            </div>
+            <img src="http://localhost:3000/{{item.hinhanh}}" class="img-thumbnail" alt="Image">
+            <div class="mota">
+              {{item.mota}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,42 @@
+.page-title{
+    padding-top: 20px;
+    span{
+        font-size: 25px;
+        font-weight: bold;
+        color: #428bca;
+    }
+}
+.page-content{
+    width: 100%;
+    height: auto;
+    border: 1px solid #ddecf3;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 17px;
+    text-align: center;
+    margin-bottom: 50px;
+    img{
+        width: auto;
+        margin: auto;
+    }
+    .thongtin{
+        width: 100%;
+        text-align: left;
+        p.ttlh{
+            font-weight: bold;
+            font-style: italic;
+        }
+        p.tennh{
+            font-size: 20px;
+            font-weight: bold;
+        }
+        span.cs{
+            font-weight: bold;
+            line-height: 30px;
+        }
+        p.tdaia{
+            font-size: 22px;
+            font-weight: bold;
+        }
+    }
+}

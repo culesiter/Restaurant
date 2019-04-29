@@ -1,0 +1,18 @@
+<div class="container">
+  <div class="col-sm-6" style="height:130px;">
+    <div class="form-group">
+      <div class='input-group date' id='datetimepicker1'>
+        <input id="time" [(ngModel)]="date" type='text' class="form-control"  />
+
+        <span class="input-group-addon">
+          <span class="glyphicon glyphicon-calendar"></span>
+        </span>
+      </div>
+      <button (click)="thushow()">ok</button>
+      <input type="text"  [(ngModel)]="thu">
+      gt: {{date}}
+      thu:{{thu}}
+    </div>
+  </div>
+
+</div>

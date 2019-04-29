@@ -1,0 +1,23 @@
+ul{
+    list-style: none;
+}
+.panel-body{
+    height: 140px;
+    overflow-y: scroll;
+}
+strong {
+    font-weight: 900;
+    font-size: 30px;
+}
+small{
+    font-size: 15px;
+    font-weight: bold;
+    display: block;
+    border-bottom: 1px solid #ddecf3;
+    color: #428bca;
+    text-align: left;
+}
+.panel-heading{
+    background:url('/assets/images/backgroud/dish.jpg') center no-repeat;
+    background-size: cover;
+}

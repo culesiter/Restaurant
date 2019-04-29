@@ -1,0 +1,55 @@
+.booking{
+    width: 100%;
+    height: 100%;
+    padding: 5%;
+    .chonmon{
+        width: 100%;
+        height: auto;
+        border: 1px solid rgb(184, 183, 183);
+        border-radius: 5px;
+        padding: 5px;
+        overflow: hidden;
+        background: whitesmoke;
+        max-height: 300px;
+        overflow-y: scroll;
+        .chon{
+          cursor: pointer;
+          width: 100%;
+          height: auto;
+          background: #FFFFFF;
+          text-align: center;
+          margin-bottom: 5px;
+          border-radius: 5px;
+          &:hover{
+            background: whitesmoke;
+            font-weight: bold;
+          }
+        }
+      }
+      #style-1::-webkit-scrollbar {
+        width: 6px;
+        background-color: #F5F5F5;
+      } 
+      #style-1::-webkit-scrollbar-thumb {
+        background-color: gray;
+      }
+      #style-1::-webkit-scrollbar-track {
+        -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+        background-color: #F5F5F5;
+      }
+      .opt{
+          width: 100%;
+          height: 35px;
+          border-radius: 4px;
+          border: 1px solid rgb(184, 183, 183);
+      }
+      p.tbtd{
+        font-weight: 700;
+        font-size: 15px;
+      }
+      .right-part{
+        height: auto;
+        min-height: 80px;
+        border-left: 1px solid gray;
+      }
+}

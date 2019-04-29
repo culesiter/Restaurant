@@ -1,0 +1,144 @@
+<div class="container-fluid">
+    <div class="customer-head">
+        <div class="btn-group group-them" data-toggle="buttons">
+            <label class="btn btn-default btn-lg bnt-them" (click)="formShow('view')">
+                Danh sách Thực Đơn
+            </label>
+            <label class="btn btn-primary btn-lg bnt-them " (click)="formShow('create')">
+                Thêm Thực Đơn Mới
+            </label>
+        </div>
+    </div>
+    <div class="content">
+        <div class="list-customer" *ngIf="formStatus==='view'">
+            <table class="table table-hover list-table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Tên Thực đơn</th>
+                        <th scope="col">Khuyến Mãi</th>
+                        <th scope="col" style="width:10%"></th>
+                    </tr>
+                </thead>
+                <tbody class="tbody-list">
+                    <tr *ngFor="let item of listThucdon">
+                        <th scope="row">1</th>
+                        <td (click)="formShow('detail',item._id)">{{item.ten}}</td>
+                        <td (click)="formShow('detail',item._id)">{{item.khuyenmai}}%</td>
+                        <td class="optiond" (click)="xoatd(item._id)"><i class="fa fa-trash-o" aria-hidden="true"></i></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <!-- ket thuc form xem list -->
+        <!-- form add new begin -->
+        <div class="create-menu" *ngIf="formStatus==='create'">
+            <form (ngSubmit)="addNew()" [formGroup]="formAddNewMenu">
+                <div class="form-row">
+                    <div class="form-group col-md-5">
+                        <label>Tên Menu</label>
+                        <input type="text" class="form-control" formControlName="ten" placeholder="Tên">
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label>Khuyến mãi</label>
+                        <input type="number" class="form-control" formControlName="khuyenmai" value="0">
+                    </div>
+                    <div class="form-group col-md-10">
+                        <button class="form-control" type="submit" class="btn btn-secondary">Thêm</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="create-menu" *ngIf="formStatus==='addmon'">
+            <div class="menu-title">
+                <div class="row">
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        Tên thực đơn: <span>haha</span>
+                    </div>
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        Khuyến Mãi: <span>10%</span>
+                    </div>
+                </div>
+            </div>
+            <div class="dish-choice">
+                <div class="row">
+                    <div class="col-md-12">
+                        <table class="table table-hover list-table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col" style="width:50%;">Tên món ăn</th>
+                                    <th scope="col" style="width:10%;">Số lượng</th>
+                                    <th scope="col" style="width:20%;">Giá</th>
+                                    <th scope="col" style="width:20%;">Option</th>
+                                </tr>
+                            </thead>
+                            <tbody class="tbody-list">
+                                <tr *ngFor="let item of listmon">
+                                    <th scope="row">1</th>
+                                    <td class="ten-mon">
+                                        <div class="form-group">
+                                            <input type="text" disabled value="{{item.ten}}" class="form-control">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-group">
+                                            <input type="number" class="form-control" (change)="laysl($event)">
+                                        </div>
+                                    </td>
+                                    <td class="ten-mon">
+                                        <div class="form-group">
+                                            <input type="number" disabled value="1000" class="form-control">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-group">
+                                            <button class="btn btn-danger" (click)="themmonanhd(item._id)">Thêm</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="form-group">
+                                <button class="btn btn-success" (click)="back()">Hoàn Thành</button>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- ket thuc form add new -->
+        <!-- bat dau form detail -->
+        <div class="detail-menu" *ngIf="formStatus==='detail'">
+            <form action="">
+                <div class="col-xs-12 col-sm-6 col-md-1 col-lg-2">
+                    <div class="form-group">
+                        <button class="btn btn-secondary" type="submit" (click)="themmonanhd(item._id)">Chỉnh sửa</button>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-1 col-lg-2">
+                    <div class="form-group">
+                        <button class="btn btn-danger" (click)="back()">Quay lại</button>
+                    </div>
+                </div>
+                <table class="table table-hover list-table">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Tên Món Ăn</th>
+                            <th scope="col">Số Lượng </th>
+                            <th scope="col">Giá</th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody class="tbody-list">
+                        <tr *ngFor="let item of lstmontheothucdon" (click)="formShow('detail',item._id)">
+                            <th scope="row">1</th>
+                            <td>{{item.tenmonan}}</td>
+                            <td><input class="sl-ma" type="text" value="{{item.soluong}}"></td>
+                            <td>{{item.gia}}</td>
+                            <td class="optiond"><i class="fa fa-trash-o" aria-hidden="true"></i></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </form>
+        </div>

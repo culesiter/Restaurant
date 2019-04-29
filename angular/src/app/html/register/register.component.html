@@ -1,0 +1,108 @@
+<div class="container">
+  <div class="row main">
+    <div class="panel-heading">
+      <div class="panel-title text-center">
+        <h1 class="title">ADTECOR</h1>
+        <hr />
+      </div>
+    </div>
+    <div class="main-login main-center">
+      <form (ngSubmit)="luuForm()" [formGroup]="frmDangKy">
+
+        <div class="form-group">
+          <label for="name" class="cols-sm-2 control-label">Tên người dùng:</label>
+          <div class="cols-sm-10">
+            <div class="input-group">
+              <span class="input-group-addon">
+                <i class="fa fa-user fa" aria-hidden="true"></i>
+              </span>
+
+              <input formControlName="ten" type="text" class="form-control" name="name" id="name" placeholder="Nhập tên" />
+              <span *ngIf="frmDangKy.controls.ten.dirty && 
+              frmDangKy.controls.ten.errors==null" class="input-group-addon">
+                <i class="fa fa-check text-success" aria-hidden="true"></i>
+              </span>
+              
+            </div>
+            <span style="color:red" class="label" *ngIf="frmDangKy.controls.ten.dirty && 
+            frmDangKy.controls.ten.errors?.required">Vui lòng điền tên!</span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="email" class="cols-sm-2 control-label">Email:</label>
+          <div class="cols-sm-10">
+            <div class="input-group">
+              <span class="input-group-addon">
+                <i class="fa fa-envelope fa" aria-hidden="true"></i>
+              </span>
+              <input formControlName="email" type="email" class="form-control" placeholder="Nhập email" />
+              <span *ngIf="frmDangKy.controls.email.dirty && 
+              frmDangKy.controls.email.errors==null" class="input-group-addon">
+                <i class="fa fa-check text-success" aria-hidden="true"></i>
+              </span>
+            </div>
+            <span style="color:red" class="label" *ngIf="frmDangKy.controls.email.dirty && 
+            frmDangKy.controls.email.errors?.required">Vui lòng điền email!</span>
+          </div>
+          <span style="color:red" class="label" *ngIf="frmDangKy.controls.email.dirty && 
+            frmDangKy.controls.email.errors?.pattern">Vui lòng điền đúng mail!</span>
+
+        </div>
+
+        <div class="form-group">
+          <label for="username" class="cols-sm-2 control-label">Số điện thoại:</label>
+          <div class="cols-sm-10">
+            <div class="input-group">
+              <span class="input-group-addon">
+                <i class="fa fa-phone-square" aria-hidden="true"></i>
+              </span>
+              
+              <input formControlName="sdt" type="text" class="form-control" name="username" id="username" placeholder="Nhập số điện thoại"
+              />
+              <span *ngIf="frmDangKy.controls.sdt.dirty && 
+              frmDangKy.controls.sdt.errors==null" class="input-group-addon">
+                <i class="fa fa-check text-success" aria-hidden="true"></i>
+              </span>
+            </div>
+            <span style="color:red" class="label" *ngIf="frmDangKy.controls.sdt.dirty && 
+            frmDangKy.controls.sdt.errors?.required">Vui lòng điền số điện thoại!</span>
+            <span style="color:red" class="label" *ngIf="frmDangKy.controls.sdt.dirty && 
+            frmDangKy.controls.sdt.errors?.pattern">Số điên thoại gồm số gồm 10-11 số!</span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="password" class="cols-sm-2 control-label">Mật khẩu:</label>
+          <div class="cols-sm-10">
+            <div class="input-group">
+              <span class="input-group-addon">
+                <i class="fa fa-lock fa-lg" aria-hidden="true"></i>
+              </span>
+              <input formControlName="matkhau" type="password" class="form-control" name="password" id="password" placeholder="Nhập mật khẩu"
+              />
+              <span *ngIf="frmDangKy.controls.matkhau.dirty && 
+              frmDangKy.controls.matkhau.errors==null" class="input-group-addon">
+                <i class="fa fa-check text-success" aria-hidden="true"></i>
+              </span>
+            </div>
+            <span style="color:red" class="label" *ngIf="frmDangKy.controls.matkhau.dirty && 
+            frmDangKy.controls.matkhau.errors?.required">Vui lòng điền mật khẩu!</span>
+            <span style="color:red" class="label" *ngIf="frmDangKy.controls.matkhau.dirty && 
+            frmDangKy.controls.matkhau.errors?.pattern">Mật khẩu gồm 6 ký tự!</span>
+          </div>
+        </div>
+
+        <div class="form-group ">
+          <button [disabled]="frmDangKy.invalid" type="submit" class="btn btn-primary btn-lg btn-block login-button">Đăng ký</button>
+        </div>
+        <div class="login-register">
+          <a style="cursor: pointer;">Đăng Nhập</a>
+          <a style="cursor: pointer;" onclick="
+            window.history.back();
+        " >Quay Lại</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

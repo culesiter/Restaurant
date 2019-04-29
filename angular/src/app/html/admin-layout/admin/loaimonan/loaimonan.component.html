@@ -1,0 +1,80 @@
+<div class="container-fluid">
+    <div class="customer-head">
+        <div class="btn-group group-them" data-toggle="buttons">
+            <label class="btn btn-default btn-lg bnt-them" (click)="formShow('view')">
+                Danh sách Loại Món Ăn
+            </label>
+            <label class="btn btn-primary btn-lg bnt-them " (click)="formShow('create')">
+                Thêm Loại Món Ăn Mới
+            </label>
+        </div>
+    </div>
+    <div class="content">
+        <div class="list-customer" *ngIf="formStatus==='view'">
+            <table class="table table-hover list-table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Tên Loại</th>
+                        <th scope="col">Description</th>
+                    </tr>
+                </thead>
+                <tbody class="tbody-list">
+                    <tr  *ngFor="let item of listLoaiMon" (click)="formShow('detail',item)">
+                        <th scope="row">1</th>
+                        <td>{{item.ten}}</td>
+                        <td>50000</td>
+                    </tr>
+                </tbody>
+            </table>
+  
+        </div>
+        <!-- ket thuc form xem list -->
+        <!-- form add new begin -->
+        <div class="create-customer" *ngIf="formStatus==='create'">
+            <form (ngSubmit)="taoMoi()" [formGroup]="formAddNew">
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label>Tên Loại</label>
+                        <input type="text" class="form-control" formControlName="ten" placeholder="Taxi babe">
+                    </div>
+                    <div class="form-group col-md-12">
+                        <label>Description</label>
+                        <input type="textarea" class="form-control" formControlName="descrip" placeholder="Ho Chi Minh City">
+                    </div>
+                    <div class="form-group col-md-12">
+                        <button type="submit" class="btn btn-secondary">Sign up</button>
+                        <button class="btn btn-warning" (click)="XoaForm(formAddNew)">Clear</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <!-- ket thuc form add new -->
+        <!-- bat dau form detail -->
+        <div *ngIf="formStatus==='detail'">
+            <div class="dish-detail">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 carosel">
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <form (ngSubmit)="sua()" [formGroup]="frmSua">
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label>Tên Loại Món Ăn</label>
+                                <input type="text" class="form-control" formControlName="ten" value="{{eLoaiMon.ten}}">
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label>Description</label>
+                                <input type="textarea" class="form-control" formControlName="descrip" value="Ho Chi Minh City">
+                            </div>
+                            <div class="form-group col-md-12">
+                                <button type="submit" class="btn btn-secondary">Sửa</button>
+                                <button class="btn btn-warning" (click)="XoaMon()">Xóa</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- ket thuc form detail -->   
+    </div>
+  </div>

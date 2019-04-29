@@ -1,0 +1,92 @@
+<div class="main-header">
+
+  <div class="top-header">
+      <div class="logo-content">
+          <img src="../../../../../assets/images/logo/logo1.png" alt="">
+      </div>
+  </div>
+  <!-- <div class="hide-btndown">
+      <button id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="dropdownMenuLink" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+          <i class="fas fa-sort-down"></i>
+      </button>
+
+      <div class="dropdown-menu">
+          <div class="dropdown-item ">
+              <i class="fas fa-user-cog"></i>
+              <span class="menuspan">Customer Manager</span>
+          </div>
+          <div class="dropdown-item">
+              <i class="fab fa-product-hunt"></i>
+              <span class="menuspan">Product manager</span>
+          </div>
+      </div>
+  </div> -->
+  <ul class="nav flex-column main-nav">
+      <li class="nav-item" routerLink="/admin/dashboard/customer" routerLinkActive="active" (click)="activeRouter('Quản Lý Khách Hàng')">
+          <a class="nav-link">
+              <img src="https://cdn1.iconfinder.com/data/icons/finance-solid-icons-vol-1/48/047-512.png" alt="">
+              <span>Khách hàng</span>
+          </a>
+      </li>
+      <li class="nav-item" routerLink="/admin/dashboard/dish" routerLinkActive="active" (click)="activeRouter1('Quản Lý Món Ăn')">
+          <a class="nav-link">
+              <img src="https://www.shareicon.net/download/2015/11/21/675769_hot_512x512.png" alt="">
+              <span>Món ăn</span>
+          </a>
+      </li>
+      <li class="nav-item" (click)="activeRouter('Quản Lý Loại Món Ăn')" [ngStyle]="{'display': styleExp}">
+          <a class="nav-link loai" routerLink="/admin/dashboard/dishtype" routerLinkActive="active">
+              <img src="http://www.myiconfinder.com/uploads/iconsets/256-256-42837d25cc2e3f713642f2ad5b38a832.png"
+                  alt="">
+              <span>Loại Món ăn</span>
+          </a>
+      </li>
+      <li class="nav-item" routerLink="/admin/dashboard/room" routerLinkActive="active" (click)="activeRouter2('Phòng Ăn')">
+          <a class="nav-link">
+              <img src="http://www.westgatehouse.org/wp-content/uploads/2013/11/icons_room.png" alt="">
+              <span>Phòng Ăn</span>
+          </a>
+      </li>
+      <li class="nav-item" (click)="activeRouter('Quản Lý Loại Món Ăn')" [ngStyle]="{'display': styleExp2}">
+          <a class="nav-link loai" routerLink="/admin/dashboard/roomtype" routerLinkActive="active">
+              <img src="https://cdn1.iconfinder.com/data/icons/hotel-and-restaurant-solid-icons-vol-1-1/64/030-512.png"
+                  alt="">
+
+              <span>Loại Phòng Ăn</span>
+          </a>
+      </li>
+      <li class="nav-item" routerLink="/admin/dashboard/menu" routerLinkActive="active" (click)="activeRouter('Quản Lý Menu')">
+          <a class="nav-link">
+              <img src="http://pluspng.com/img-png/png-menu-restaurant-bistro-dining-menu-restaurant-icon-512.png"
+                  alt="">
+
+              <span>Thực Đơn</span>
+          </a>
+      </li>
+      <li class="nav-item" routerLink="/admin/dashboard/bills" routerLinkActive="active" (click)="activeRouter('Hóa Đơn')">
+          <a class="nav-link">
+              <img src="https://png.icons8.com/metro/1600/bill.png" alt="">
+              <span>Hóa Đơn</span>
+              <span class="demhd">2</span>
+          </a>
+      </li>
+      <li class="nav-item" routerLink="/admin/dashboard/services" routerLinkActive="active" (click)="activeRouter('Dịch Vụ')">
+          <a class="nav-link">
+              <img src="https://cdn2.iconfinder.com/data/icons/travel-solid-icons-vol-3/48/115-512.png" alt="">
+
+              <span>Dịch Vụ</span>
+          </a>
+      </li>
+      <!-- <li class="nav-item" routerLink="/admin/dashboard/booking" routerLinkActive="active" (click)="activeRouter('Đặt bàn ngay')">
+          <a class="nav-link">
+              <img src="https://image.flaticon.com/icons/png/512/562/562674.png" alt="">
+              <span class="test">Đặt</span>
+              <span class="test t1"> Bàn</span>
+              <span class="test t2"> Ngay!!</span>
+          </a>
+      </li> -->
+  </ul>
+
+
+</div>

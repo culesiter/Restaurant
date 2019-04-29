@@ -1,0 +1,24 @@
+<div class="animated slideInRight" *ngIf="dish">
+  <div class="col-xs-12 col-md-3 dish">
+    <div style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);" class="thumbnail">
+      <img style="cursor: pointer;" (click)="denTrangChiTiet(dish._id)" src="http://localhost:3000/{{dish.hinhanh}}" alt="..."
+        class="image-responsive">
+      <div class="caption">
+        <h3 style="display: -webkit-box;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;">{{dish.ten}}</h3>
+        <span>{{dish.gia}}</span>
+        <p><a (click)="addToCart(dish)" class="btn btn-primary" role="button">Mua</a>
+          <a (click)="denTrangChiTiet(dish._id)" class="btn btn-default" role="button">Chi tiết</a></p>
+      </div>
+    </div>
+    <div style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)" [ngClass]="{'display':dish.khuyenmai===0||!dish.khuyenmai}"
+      class="khuyenmai text-center btn-info">
+      <span style="color: red; font-size: 19px">
+        {{dish.khuyenmai}}%
+      </span>
+    </div>
+  </div>
+</div>

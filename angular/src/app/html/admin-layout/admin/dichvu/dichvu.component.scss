@@ -1,0 +1,104 @@
+.container-fluid{
+    width: 100%;
+    background: #F4F3EF;
+    padding-right: 0;
+    padding-left: 0;
+    height: 100%;
+}
+.tbody-list{
+    font-weight: 100;
+}
+.customer-head{
+    width: 90%;
+    margin: auto;
+    background: #F4F3EF;
+    overflow: hidden;
+}
+.group-them{
+    width: 100% !important;
+}
+.bnt-them{
+    width: 50%;
+    overflow: hidden;
+}
+.content{
+    width: 90%;
+    margin: auto;
+    margin-top: 5%;
+    height: auto;
+    background: white;
+    border-radius: 5px;
+}
+
+.dish-detail{
+    width: 100%;
+    height: 100%;
+    background: orangered;
+    .carosel{
+        max-height: 380px;
+        overflow: hidden;
+        object-fit: contain;
+        img{
+            margin: auto;
+            width: 50%;
+            height: 50%;
+        }
+    }
+}
+.imgfood{
+    width: 100%;
+    height: 50%;
+    position: relative;
+}
+.xoaAnh{
+    cursor: pointer;
+    position: absolute; z-index: 1; top: 0;
+    font-size: 20px;
+    color: red;
+    left: 85%;
+    width: 25px;
+    height: 25px;
+    text-align: center;
+    background: #F4F3EF;
+    border-radius: 50%;
+}
+.noticeDelete{
+    position: absolute; z-index: 1; top: 0;
+    color: black;
+    font-size: 15px;
+    right:  100%;
+    width: 300%;
+    p{
+        border-radius: 5px;
+        display: block;
+        background: white;
+    }
+}
+.opt{
+    width: 100%;
+    height: 35px;
+    border-radius: 4px;
+    border: 1px solid rgb(184, 183, 183);
+}
+
+//---------------------- Responsive
+@media (max-width: 768px) { 
+ .xoaAnh{
+    left: 82%;
+    font-size: 15px;
+    width: 20px;
+    height: 20px;
+ }
+ }
+@media (min-width: 750px) and (max-width: 970px) { 
+  
+
+    
+ }
+@media (min-width: 970px) and (max-width: 1170px) { 
+   
+
+ }
+@media (min-width: 1170px) { 
+    
+ }

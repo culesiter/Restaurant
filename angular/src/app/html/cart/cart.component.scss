@@ -1,0 +1,58 @@
+.display{
+    display: none;
+    -webkit-animation-delay: 100s;
+}
+@media (max-width: 767px) {    body { font-size: 12px; }
+.btn{ font-size: 14px}
+}
+.nut{
+
+  animation: doimau 1s;
+  
+}
+@keyframes doimau {
+  0% {background-color: #428bca;}
+  25% {background-color: #5cb85c;}
+  50%{background-color: #428bca;}
+  75% {background-color: #5cb85c;}
+  100% {background-color: #428bca;}
+}
+@-webkit-keyframes t {
+    from {
+      -webkit-transform: translate3d(0, 0, 0);
+      transform: translate3d(0, 0, 0);
+    }
+  
+    to {
+      visibility: hidden;
+      -webkit-transform: translate3d(100%, 0, 0);
+      transform: translate3d(100%, 0, 0);
+    }
+  }
+  
+  @keyframes t {
+    from {
+      -webkit-transform: translate3d(0, 0, 0);
+      transform: translate3d(0, 0, 0);
+    }
+  
+    to {
+      visibility: hidden;
+      -webkit-transform: translate3d(100%, 0, 0);
+      transform: translate3d(100%, 0, 0);
+    }
+  }
+  
+  .t {
+    -webkit-animation-name: t;
+    animation-name: t;
+  }
+  .a{
+      -webkit-animation-delay:0s;
+  }
+  .b{
+    -webkit-animation-delay: 0.1s;
+  }
+  .c{
+    -webkit-animation-delay: 0.2s;
+  }

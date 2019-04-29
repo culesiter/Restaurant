@@ -1,0 +1,79 @@
+import { Component, OnInit } from '@angular/core';
+import { Ithucdon } from '../../share/entities/ithucdon';
+import { Ithucdoninter } from '../../share/entities/ithucdoninter';
+import { ThucdonserviceService } from '../../share/services/thucdonservice.service';
+import { CartserviceService } from '../../share/services/cartservice.service';
+
+@Component({
+  selector: 'app-thucdon-list',
+  templateUrl: './thucdon-list.component.html',
+  styleUrls: ['./thucdon-list.component.scss']
+})
+export class ThucdonListComponent implements OnInit {
+
+  private thucdons:Ithucdoninter[];
+  constructor(private thucdonservice:ThucdonserviceService,private cartService: CartserviceService) { }
+  
+  ngOnInit() {
+  
+    this.trinhThucDon();
+  }
+  trinhThucDon() {
+    this.thucdonservice.laydanhsachmonanTrungBay().subscribe(response=>{
+      this.thucdons=response;
+      this.thucdons.map(res=>{
+        res.gia = this.giaThucDon(res._id);
+        res.danhsachtenmonan=this.danhSachMonAn(res._id);  
+      })
+    })
+  }
+  giaThucDon(id){
+    var tong=0;
+    var thucdon:Ithucdon[]=JSON.parse(localStorage.getItem('thucdon'));
+    thucdon.forEach(element=>{
+      if(element._idthucdon==id)
+      tong=tong+element.gia*element.soluong;
+      console.log(tong);
+      
+    })
+    return tong;
+  }
+  danhSachMonAn(id){
+    var mang:string[]=[];
+    var thucdon:Ithucdon[]=JSON.parse(localStorage.getItem('thucdon'));
+    thucdon.forEach(element=>{
+      
+      if(element._idthucdon==id)
+      {
+      mang.push(element.tenmonan)
+      }
+     
+    })
+    
+    
+    return mang;
+  }
+  
+  
+  addToCart(thucdon) {
+    this.cartService.addTocart1(thucdon);
+    this.cartService.change();
+    this.cartService.nhay();
+  }
+  tenMonAn(id)
+  {
+    var tong = 0;
+    this.thucdonservice.laydanhsachThucDon().subscribe(response=>{
+      response.map(res=>{
+        if( res._idthucdon==id)
+        {
+          console.log(res);
+          tong=tong+res.gia;
+        }
+      })
+      return tong;
+    })
+    
+    
+  }
+}

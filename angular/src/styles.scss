@@ -1,0 +1,46 @@
+/* You can add global styles to this file, and also import other style files */
+@media (max-width: 767px) {    body { font-size: 12px; }
+.btn{ font-size: 14px}
+} 
+body{
+    font-family: 'Play', sans-serif;
+    overflow-x:hidden; 
+}
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background-color: rgb(209, 191, 191);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: gray;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgb(146, 143, 143);
+}
+
+::-webkit-scrollbar-thumb:active {
+    background-color: rgb(160, 153, 153);
+}
+.panel-body,.panel-footer,.panel-title {
+    font-family: 'Play', sans-serif;
+}
+.glyphicon{
+    font-family: unset !important;
+}
+.glyphicon-phone-alt:before,.glyphicon-calendar:before {
+    font-family: 'Glyphicons Halflings';
+}
+li{
+    cursor: pointer;
+}
+.bill-temp input {
+    background: none !important;
+    height: 20px;
+    border: none;
+    box-shadow: unset;
+    font-style: italic;
+}

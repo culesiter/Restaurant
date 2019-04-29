@@ -1,0 +1,67 @@
+<div class="bills">
+    <div class="list-table" *ngIf="xem===true">
+        <table class="table table-hover list-table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Tên khách hàng</th>
+                    <th scope="col">Thời điểm tạo</th>
+                    <th scope="col">Tình Trạng</th>
+                </tr>
+            </thead>
+            <tbody class="tbody-list">
+                <tr *ngFor="let item of lstHoadon" (click)="openDetail(item)">
+                    <th scope="row">1</th>
+                    <td>{{item.ten}}</td>
+                    <td>{{item.thoidiemtao}}</td>
+                    <td *ngIf="item.tinhtrang===0" style="color:red">Chưa xác nhận</td>
+                    <td *ngIf="item.tinhtrang===2" style="color:yellow">Đã xác nhận</td>
+                    <td *ngIf="item.tinhtrang===3" style="color:green">Đã thanh toán</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="detail" *ngIf="xem===false">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <form>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label>Tên khách hàng</label>
+                        <input type="text" class="form-control" value="Giá">
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label>Thời điểm tạo</label>
+                        <input type="text" class="form-control" placeholder="Cơm chiên dương châu">
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label>Thời điểm đến</label>
+                        <input type="text" class="form-control" placeholder="Giá">
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label>Tổng tiền</label>
+                        <input type="text" class="form-control" placeholder="Giá">
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label>Trạng thái</label>
+                        <select class="form-control">
+                            <option value="0">Chưa Xác Nhận</option>
+                            <option value="1">Đã Xác Nhận</option>
+                            <option value="2">Đã Thanh Toán</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label>Hình thức thanh toán</label>
+                        <select class="form-control">
+                            <option value="0">Trả trước</option>
+                            <option value="1">Trả sau</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-12">
+                        <button type="submit" class="btn btn-secondary">Xác nhận đơn hàng</button>
+                        <button class="btn btn-warning" (click)="openDetail()">Back</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

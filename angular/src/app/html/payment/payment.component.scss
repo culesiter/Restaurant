@@ -1,0 +1,37 @@
+.container{
+    min-height: 500px;
+    input.tongtien{
+        color: red;
+        font-weight: bold;
+    }
+}
+.active{
+    background: #d9534f !important;
+    border: #d9534f !important;
+}
+.inform{
+    span{
+        position: relative;
+        margin-right: 50px;
+        &:nth-child(1):before
+        {
+            background: #d9534f;
+        }
+        &:nth-child(2):before
+        {
+           
+            background: #428bca;
+        }
+    }
+    span:before{
+        content: "";
+    position: absolute;
+    top: -5px;
+    left: 57px;
+    
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;  
+    }
+
+}
