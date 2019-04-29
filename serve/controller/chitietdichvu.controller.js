@@ -18,6 +18,8 @@ function updateProduct1(req,res){
         res.send(result);
     }).catch((err) => {
         res.send(err);
+
+        haha abc debugger;
     });
 }
 function layChiTietDichVu1(req,res){
