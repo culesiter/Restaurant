@@ -18,13 +18,6 @@ function updateProduct1(req,res){
         res.send(result);
     }).catch((err) => {
         res.send(err);
-<<<<<<< HEAD
-        ok haha
-        test okk
-=======
-
-        haha abc debugger;
->>>>>>> b2bc50187963ca21b284bdf450a43768b62eae42
     });
 }
 function layChiTietDichVu1(req,res){
