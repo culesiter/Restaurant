@@ -14,6 +14,8 @@ function taoChiTietDichVu1(req,res){
     });
 }
 
+hahaah
+
 function updateProduct1(req,res){
    
    
