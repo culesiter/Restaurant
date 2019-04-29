@@ -21,6 +21,7 @@ function updateProduct1(req,res){
     });
 }
 function layChiTietDichVu1(req,res){
+    dit con me may
     service.layChiTietDichVu(req.query).then((result) => {
         res.send(result);
     }).catch((err) => {
@@ -43,5 +44,3 @@ function xoaChiTietDichVu1(req,res){
         res.send(err);
     });
 }
-thằng vũ an lol
-thằng vũ an lol
