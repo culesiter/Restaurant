@@ -19,6 +19,7 @@ function updateProduct1(req,res){
     }).catch((err) => {
         res.send(err);
     });
+    var sd ='manh';
 }
 function layChiTietDichVu1(req,res){
     service.layChiTietDichVu(req.query).then((result) => {
