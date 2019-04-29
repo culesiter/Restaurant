@@ -22,6 +22,8 @@ function updateProduct1(req,res){
         res.send(result);
     }).catch((err) => {
         res.send(err);
+        ok haha
+        test okk
     });
 }
 function layChiTietDichVu1(req,res){
