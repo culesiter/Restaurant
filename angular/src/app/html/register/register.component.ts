@@ -13,14 +13,20 @@ export class RegisterComponent implements OnInit {
 
   private frmDangKy: FormGroup;
   private khachhang: Icustomer = {};
-
-  constructor(private formbuilder: FormBuilder,private router:Router,private login: LoginService,private customer:HumanService) { }
+  private user: any = [];
+  constructor(private formbuilder: FormBuilder, private router: Router, private login: LoginService, private customer: HumanService) { }
 
   ngOnInit() {
     this.taoForm();
   }
   luuForm() {
-    this.customer.them1(this.frmDangKy.value).subscribe(response => {
+    console.log(JSON.stringify(this.frmDangKy.value));
+    this.user = { ten: this.frmDangKy.value.ten,
+       email: this.frmDangKy.value.email,
+        sdt: this.frmDangKy.value.sdt,
+         matkhau: this.frmDangKy.value.matkhau,
+        thanhvien: true };
+    this.customer.them1(this.user).subscribe(response => {
       console.log(response);
       if (response.message === 'tao thanh cong') {
         this.login.login(this.frmDangKy.value.email, this.frmDangKy.value.matkhau).subscribe(res => {
@@ -30,7 +36,6 @@ export class RegisterComponent implements OnInit {
             const user = JSON.stringify(res);
             localStorage.setItem('user', user);
             this.khachhang = JSON.parse(localStorage.getItem('user'));
-         
             this.router.navigate(['/home']);
           }
         });
@@ -54,9 +59,9 @@ export class RegisterComponent implements OnInit {
       ]],
       matkhau: ['', [
         Validators.required,
-        Validators.pattern('^[a-zA-Z0-9]{6,6}$')
+        Validators.pattern('^[a-zA-Z0-9]{6,25}$')
       ]]
-    })
+    });
   }
 
 }

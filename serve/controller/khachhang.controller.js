@@ -23,6 +23,8 @@ function dangNhap(req,res){
     });
 }
 function taoNguoiDung1(req,res){
+    console.log('manh vua tao tk');
+    console.log(req.body)
     service.taoNguoiDung(req.body).then((result) => {
         res.send(result);
     }).catch((err) => {

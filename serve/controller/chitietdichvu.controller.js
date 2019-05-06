@@ -21,7 +21,6 @@ function updateProduct1(req,res){
     });
 }
 function layChiTietDichVu1(req,res){
-    dit con me may
     service.layChiTietDichVu(req.query).then((result) => {
         res.send(result);
     }).catch((err) => {

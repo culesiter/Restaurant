@@ -10,7 +10,7 @@ var customerSchema=mongoose.Schema(
 
         },
         phone:{
-            type:Number
+            type:String
         },
         password:{
             type:String,

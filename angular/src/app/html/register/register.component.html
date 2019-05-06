@@ -36,7 +36,7 @@
               <span class="input-group-addon">
                 <i class="fa fa-envelope fa" aria-hidden="true"></i>
               </span>
-              <input formControlName="email" type="email" class="form-control" placeholder="Nhập email" />
+              <input formControlName="email" type="email" name="username" class="form-control" placeholder="Nhập email" />
               <span *ngIf="frmDangKy.controls.email.dirty && 
               frmDangKy.controls.email.errors==null" class="input-group-addon">
                 <i class="fa fa-check text-success" aria-hidden="true"></i>
@@ -58,7 +58,7 @@
                 <i class="fa fa-phone-square" aria-hidden="true"></i>
               </span>
               
-              <input formControlName="sdt" type="text" class="form-control" name="username" id="username" placeholder="Nhập số điện thoại"
+              <input formControlName="sdt" type="text" class="form-control"  id="username" placeholder="Nhập số điện thoại"
               />
               <span *ngIf="frmDangKy.controls.sdt.dirty && 
               frmDangKy.controls.sdt.errors==null" class="input-group-addon">
@@ -89,7 +89,7 @@
             <span style="color:red" class="label" *ngIf="frmDangKy.controls.matkhau.dirty && 
             frmDangKy.controls.matkhau.errors?.required">Vui lòng điền mật khẩu!</span>
             <span style="color:red" class="label" *ngIf="frmDangKy.controls.matkhau.dirty && 
-            frmDangKy.controls.matkhau.errors?.pattern">Mật khẩu gồm 6 ký tự!</span>
+            frmDangKy.controls.matkhau.errors?.pattern">Mật khẩu gồm 6-25 ký tự!</span>
           </div>
         </div>
 

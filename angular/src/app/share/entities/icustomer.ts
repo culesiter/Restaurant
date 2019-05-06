@@ -2,6 +2,6 @@ export class Icustomer {
     _id?:string;
     ten?:string;
     email?:string;
-    sdt?:number;
+    sdt?:string;
     matkhau?:string;
 }

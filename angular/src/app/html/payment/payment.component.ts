@@ -97,9 +97,6 @@ export class PaymentComponent implements OnInit {
           this.sang = false;
         }
       }
-
-
-
       localStorage.setItem('thoidiemden', JSON.stringify(moment(new Date(event.target.value)).format('DD-MM-YYYY')));
       this.ngayden = event.target.value;
     });
@@ -122,34 +119,33 @@ export class PaymentComponent implements OnInit {
       thoidiemden: thoidiemden,
       buoiDat: this.buoiDat
     };
-    console.log(data);
-    
-
+   if(thoidiemden!="Invalid date"){
     this.gettime.themhoadon(data).subscribe(response => {
-      console.log(response);
-      
       if (response.message == 'luu thanh cong') {
         const monan = JSON.parse(localStorage.getItem('cart'));
-        for (let i = 0; i < monan.length; i++) {
-          const rr = {
-            _idmonan: monan[i].item._id,
-            soluongmonan: monan[i].soluong
-          };
-          this.gettime.themcthd(rr).subscribe(res => {
-            console.log(res);
-
-          });
+        if(monan){
+          for (let i = 0; i < monan.length; i++) {
+            const rr = {
+              _idmonan: monan[i].item._id,
+              soluongmonan: monan[i].soluong
+            };
+            this.gettime.themcthd(rr).subscribe(res => {
+              console.log(res);
+            });
+          }
         }
         const thucDon = JSON.parse(localStorage.getItem('cart1'));
-        for (let i = 0; i < thucDon.length; i++) {
-          const rr = {
-            _idthucdon: thucDon[i].thucdon._id,
-            soluongmonan: thucDon[i].soluong
-          };
-          this.gettime.themcthd(rr).subscribe(res => {
-            console.log(res);
-
-          });
+        if(thucDon){
+          for (let i = 0; i < thucDon.length; i++) {
+            const rr = {
+              _idthucdon: thucDon[i].thucdon._id,
+              soluongmonan: thucDon[i].soluong
+            };
+            this.gettime.themcthd(rr).subscribe(res => {
+              console.log(res);
+  
+            });
+          }
         }
       }
 alert('ok');
@@ -157,6 +153,11 @@ alert('ok');
 this.router.navigate(['/home']);
 window.location.reload();
     })
+   }
+   else{
+     alert('Vui lòng chọn thời điểm')
+   }
+    
   }
   giatri(time) {
     console.log(time);

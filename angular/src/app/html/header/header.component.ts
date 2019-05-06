@@ -80,12 +80,12 @@ export class HeaderComponent implements OnInit {
       console.log(response);
       
       if (response.message === 'dang nhap thanh cong') {
-        alert('dang nhap thanh cong');
+        alert('Đăng nhập thành công');
         const user = JSON.stringify(response);
         localStorage.setItem('user', user);
         this.khachhang = JSON.parse(localStorage.getItem('user'));
       }else{
-        alert('dang nhap thanh cong');
+        alert('Sai Email hoặc Password');
       }
     });
 
@@ -100,6 +100,9 @@ export class HeaderComponent implements OnInit {
   }
   dangXuat() {
     localStorage.removeItem('user');
+    localStorage.removeItem('cart');
+    localStorage.removeItem('dichvu');
+    localStorage.removeItem('phong');
     this.kiemTraKhachHang();
   }
   kiemTraKhachHang() {

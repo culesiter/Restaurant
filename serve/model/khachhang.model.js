@@ -10,7 +10,7 @@ var khachhangSchema=mongoose.Schema(
 
         },
         sdt:{
-            type:Number
+            type:String
         },
         matkhau:{
             type:String,
