@@ -41,25 +41,19 @@ export class PaymentComponent implements OnInit {
   //   defaultOpen: false,
   //   closeOnSelect: true
   // }
-  constructor(private formBuilder: FormBuilder, private gettime: LoginService,private router:Router) { }
+  constructor(private formBuilder: FormBuilder, private gettime: LoginService, private router: Router) { }
   ngOnInit() {
-    //   $(function () {
-    //     $('#datetimepicker1').datetimepicker({
-    //     });
-    // });
-    this.taoFormThanhToan()
+    this.taoFormThanhToan();
     this.sua = 0;
     this.kiemTraNguoiDung();
     this.tongTien = this.thucDon();
     this.tienthucdon = this.thucDon1();
-    console.log(this.tongTien);
-    console.log(this.tienthucdon);
-    if (this.tienthucdon) {
-      this.tongTien = this.thucDon() + this.tienthucdon;
-    } else if (this.tienthucdon == null) {
-      this.tongTien = this.thucDon();
-    } else if (!this.thucDon()) {
+    if (this.tienthucdon && !this.thucDon()) {
       this.tongTien = this.tienthucdon;
+    } else if (!this.tienthucdon && this.thucDon()) {
+      this.tongTien = this.thucDon();
+    } else if (this.tienthucdon && this.thucDon()) {
+      this.tongTien = this.tienthucdon + this.thucDon();
     } else {
       this.tongTien = 0;
     }
@@ -71,12 +65,10 @@ export class PaymentComponent implements OnInit {
   chonbuoisang() {
     this.buoiDat = 1;
     this.buoiden = "sang"
-
   }
   chonbuoichieu() {
     this.buoiDat = 2;
     this.buoiden = "chieu"
-
   }
   laythoigian(event) {
 
@@ -98,66 +90,68 @@ export class PaymentComponent implements OnInit {
         }
       }
       localStorage.setItem('thoidiemden', JSON.stringify(moment(new Date(event.target.value)).format('DD-MM-YYYY')));
-      this.ngayden = event.target.value;
+      this.ngayden = moment(new Date(event.target.value)).format('DD-MM-YYYY');
     });
 
   }
   taohoadon() {
-
     const phong = JSON.parse(localStorage.getItem('phong'));
-
     const khachhang = JSON.parse(localStorage.getItem('user'));
-
-
     const thoidiemden = JSON.parse(localStorage.getItem('thoidiemden'));
-
-    console.log(typeof thoidiemden);
-
-    const data = {
-      _idphong: phong[0].item._id,
-      _idkhachhang: khachhang._id,
-      thoidiemden: thoidiemden,
-      buoiDat: this.buoiDat
-    };
-   if(thoidiemden!="Invalid date"){
-    this.gettime.themhoadon(data).subscribe(response => {
-      if (response.message == 'luu thanh cong') {
-        const monan = JSON.parse(localStorage.getItem('cart'));
-        if(monan){
-          for (let i = 0; i < monan.length; i++) {
-            const rr = {
-              _idmonan: monan[i].item._id,
-              soluongmonan: monan[i].soluong
-            };
-            this.gettime.themcthd(rr).subscribe(res => {
-              console.log(res);
-            });
+    if (thoidiemden !== 'Invalid date') {
+      if (khachhang) {
+        const data = {
+          _idphong: phong[0].item._id,
+          _idkhachhang: khachhang._id,
+          thoidiemden: thoidiemden,
+          buoiDat: this.buoiDat
+        };
+        this.gettime.themhoadon(data).subscribe(response => {
+          console.log(response.values);
+          if (response.message === 'luu thanh cong') {
+            const monan = JSON.parse(localStorage.getItem('cart'));
+            if (monan) {
+              for (let i = 0; i < monan.length; i++) {
+                const rr = {
+                  _idhoadon: response.values._id,
+                  _idmonan: monan[i].item._id,
+                  soluongmonan: monan[i].sl
+                };
+                this.gettime.themcthd(rr).subscribe(res => {
+                  console.log(res);
+                });
+              }
+            }
+            const thucDon = JSON.parse(localStorage.getItem('cart1'));
+            if (thucDon) {
+              for (let i = 0; i < thucDon.length; i++) {
+                const rr = {
+                  _idhoadon: response.values._id,
+                  _idthucdon: thucDon[i].thucdon._id,
+                  soluongmonan: thucDon[i].soluong
+                };
+                this.gettime.themcthd(rr).subscribe(res => {
+                  console.log(res);
+                });
+              }
+            }
           }
-        }
-        const thucDon = JSON.parse(localStorage.getItem('cart1'));
-        if(thucDon){
-          for (let i = 0; i < thucDon.length; i++) {
-            const rr = {
-              _idthucdon: thucDon[i].thucdon._id,
-              soluongmonan: thucDon[i].soluong
-            };
-            this.gettime.themcthd(rr).subscribe(res => {
-              console.log(res);
-  
-            });
-          }
-        }
+          alert('ok');
+          localStorage.removeItem('cart');
+          localStorage.removeItem('cart1');
+          localStorage.removeItem('dichvu');
+          localStorage.removeItem('thoidiemden');
+          localStorage.removeItem('phong');
+          $('#xacNhan').hide();
+          this.router.navigate(['/home']);
+          // window.location.reload();
+        });
+      } else {
+        console.log('nhap nguoi dung');
       }
-alert('ok');
-
-this.router.navigate(['/home']);
-window.location.reload();
-    })
-   }
-   else{
-     alert('Vui lòng chọn thời điểm')
-   }
-    
+    } else {
+      alert('Vui lòng chọn thời điểm');
+    }
   }
   giatri(time) {
     console.log(time);
@@ -265,5 +259,11 @@ window.location.reload();
   }
   kiemTraNguoiDung() {
     this.khachhang = JSON.parse(localStorage.getItem('user'));
+    if (!this.khachhang) {
+      this.khachhang = {
+        ten: 'Null',
+        sdt: 'Null'
+      };
+    }
   }
 }

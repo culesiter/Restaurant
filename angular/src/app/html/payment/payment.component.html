@@ -5,7 +5,7 @@
 </div>
 <div class="container">
   <p class="text-center " style="font-size: 40px">THANH TOÁN</p>
-  <div *ngIf="khachhang">
+  <div *ngIf="khachhang.ten!=='Null'">
     <div class="row">
 
       <div class="col-md-4">
@@ -49,7 +49,7 @@
       </div>
     </div>
   </div>
-  <div *ngIf="!khachhang">
+  <div *ngIf="khachhang.ten==='Null'">
     <div class="row">
       <div class="col-md-4">
         <div class="form-group">
@@ -323,25 +323,18 @@
           </form>
         </div>
       </div>
-   
-    
-  
-  
-  
-  
     </div>
     <div class="col-md-3 text-left">
         <div class="form-group">
             <label for="name" class="cols-sm-2 control-label">Chọn buổi đặt</label>
             <div>
-                <div (click)="chonbuoisang()" class="btn btn-primary" [ngClass]="{'active':sang===false}">
+                <div (click)="chonbuoisang()" class="btn btn-primary" [ngClass]="{'active':sang===false,'clicked':buoiDat===1}">
                     buoi sang
                 </div>
-                <div (click)="chonbuoichieu()" class="btn btn-primary"  [ngClass]="{'active':chieu===false}">
+                <div (click)="chonbuoichieu()" class="btn btn-primary"  [ngClass]="{'active':chieu===false,'clicked':buoiDat===2}">
                     buoi chieu
                 </div>
             </div>
-           
         </div>
    </div>
   </div>

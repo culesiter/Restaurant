@@ -32,6 +32,7 @@ export class LoginService {
    });
   }
   themcthd(data): Observable<any> {
+    console.log(data);
     return this.http.post(this.cthd, data).map(res => {
       return res.json();
    });

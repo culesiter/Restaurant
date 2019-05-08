@@ -44,16 +44,8 @@ export class CartComponent implements OnInit {
     this.taoFormTimKiem();    // this.layPhongStore();
     this.laydanhsachphong();
     this.taoCart();
-
-    if (this.tienthucdon) {
-      this.tongTien = this.tinhTongTien() + this.tienthucdon;
-    } else if (!this.tienthucdon) {
-      this.tongTien = this.tinhTongTien();
-    } else if (!this.tinhTongTien()) {
-      this.tongTien = this.tienthucdon;
-    } else {
-      this.tongTien = 0;
-    }
+    this.tienthucdon = this.tinhTienThucDon();
+    this.congthuctinhtongtienan();
     this.tienphong = this.tinhTienPhong();
     if (this.tienphong == null) {
       this.tienphong = 0;
@@ -62,9 +54,6 @@ export class CartComponent implements OnInit {
     if (this.tiendichvu == null) {
       this.tiendichvu = 0;
     }
-    console.log( this.tienphong, this.tiendichvu,  this.tongTien );
-    
-    this.tienthucdon = this.tinhTienThucDon();
     this.kiemTraCart();
     this.kiemTraPhongVuaDat();
     this.kiemTraHienTien();
@@ -72,6 +61,17 @@ export class CartComponent implements OnInit {
     this.kiemTraHienTienDichVu();
     this.kiemTraKhachhang();
     this.kiemTraPhongStore();
+  }
+  congthuctinhtongtienan() {
+    if (this.tienthucdon && !this.tinhTongTien()) {
+      this.tongTien = this.tienthucdon;
+    } else if (!this.tienthucdon && this.tinhTongTien()) {
+      this.tongTien = this.tinhTongTien();
+    } else if (this.tienthucdon && this.tinhTongTien()) {
+      this.tongTien = this.tienthucdon + this.tinhTongTien();
+    } else {
+      this.tongTien = 0;
+    }
   }
   thongBao() {
     if (this.kiemTraPhongStore() === false) {
@@ -349,12 +349,10 @@ export class CartComponent implements OnInit {
 
     });
 
-
+    this.congthuctinhtongtienan()
 
   }
   xoaThucDon(id) {
-    console.log(id);
-
     this.cart1 = JSON.parse(localStorage.getItem('cart1'));
     this.cart1.forEach(element => {
       if (element.thucdon._id == id) {
@@ -367,7 +365,7 @@ export class CartComponent implements OnInit {
       this.kiemTraCart();
 
     });
-
+     this.congthuctinhtongtienan();
   }
   thayDoiGiaTri(value, item) {
 
@@ -381,9 +379,8 @@ export class CartComponent implements OnInit {
     });
     localStorage.setItem('cart', JSON.stringify(this.cart));
     this.taoCart();
-    this.tongTien = this.tinhTongTien();
     this.cartService.change();
-
+    this.congthuctinhtongtienan();
   }
   taoCart() {
     this.cart = JSON.parse(localStorage.getItem('cart'));
@@ -421,6 +418,7 @@ export class CartComponent implements OnInit {
     this.taoCart();
     this.tienthucdon = this.tinhTienThucDon();
     this.cartService.change();
+    this.congthuctinhtongtienan();
   }
 
 
