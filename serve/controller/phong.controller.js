@@ -5,7 +5,8 @@ module.exports={
     getProductById1:getProductById,
     xoaPhong:xoaPhong1,
     capNhatPhong:capNhatPhong1,
-    capNhatHinh:capNhatHinh1
+    capNhatHinh:capNhatHinh1,
+    layLoaiPhong:layLoaiPhong1
 }
 function capNhatHinh1(req,res){
     console.log(req.file);
@@ -32,6 +33,13 @@ function capNhatPhong1(req,res){
 }
 function layPhong1(req,res){
     service.layPhong().then((result) => {
+        res.send(result);
+    }).catch((err) => {
+        res.send(err);
+    });
+}
+function layLoaiPhong1(req,res){
+    service.layLoaiPhong(req.query).then((result) => {
         res.send(result);
     }).catch((err) => {
         res.send(err);

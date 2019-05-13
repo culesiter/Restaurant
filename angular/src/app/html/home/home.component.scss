@@ -34,3 +34,13 @@
 ::-webkit-scrollbar-thumb:hover {
     background: #555; 
 }
+.banner{
+    background: url('../../../assets/images/banner-dep.jpg');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: left top;
+    background-size: cover;
+}
+.pa{
+    position: relative;
+}

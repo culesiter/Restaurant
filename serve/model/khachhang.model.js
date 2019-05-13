@@ -14,11 +14,9 @@ var khachhangSchema=mongoose.Schema(
         },
         matkhau:{
             type:String,
-            require:true
         },
         hinhanh:{
             type:String
-
         },
         thanhvien:{
             type:Boolean,

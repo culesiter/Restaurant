@@ -10,31 +10,37 @@ export class LoginService {
   private hoadon1 = 'http://localhost:3000/hoadon';
   private cthd = 'http://localhost:3000/chitiethoadon';
   constructor(private http: Http) { }
-  gettime(time): Observable<any> {
+  gettime(time, Idp): Observable<any> {
     const date = {
-       thoidiemden: time
-     };
-     console.log(date);
-     return this.http.post(this.hoadon, date).map(respose => respose.json());
-   }
+      thoidiemden: time,
+      _idphong: Idp
+    };
+    return this.http.post(this.hoadon, date).map(respose => respose.json());
+  }
+  getlistblankroom(time): Observable<any> {
+    const date = {
+      thoidiemden: time
+    };
+    return this.http.post(this.hoadon, date).map(respose => respose.json());
+  }
   login(email, matkhau): Observable<any> {
     const user = {
       email: email,
       matkhau: matkhau
     };
-    return this.http.post(this.loginurl,user).map(respose => respose.json());
+    return this.http.post(this.loginurl, user).map(respose => respose.json());
   }
   themhoadon(data): Observable<any> {
     console.log(data);
-    
+
     return this.http.post(this.hoadon1, data).map(res => {
       return res.json();
-   });
+    });
   }
   themcthd(data): Observable<any> {
     console.log(data);
     return this.http.post(this.cthd, data).map(res => {
       return res.json();
-   });
+    });
   }
 }

@@ -21,6 +21,7 @@ const fileFiter = (req, file, cb) => {
 const upload = multer({ storage: storage, fileFiter: fileFiter })
 module.exports=function(){
   router.post('/',controller.taoNguoiDung);
+  router.post('/noaccount/',controller.taoNguoiDungK);
   router.get('/',controller.layNguoiDung);
   router.post('/login/',controller.dangNhap)
   // router.get('/:id',controller.getProductById1);

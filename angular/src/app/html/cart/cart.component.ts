@@ -10,6 +10,8 @@ import { CartserviceService } from './../../share/services/cartservice.service';
 import { Icart } from './../../share/entities/icart';
 import { Component, OnInit } from '@angular/core';
 import { PhongserviceService } from '../../share/services/phongservice.service';
+import { LoginService } from '../../share/services/login.service';
+const moment = require('moment');
 
 declare var $: any;
 @Component({
@@ -35,12 +37,25 @@ export class CartComponent implements OnInit {
   private dichvus: Idichvu[] = [];
   private frmTimKiem: FormGroup;
   private phongChon: Iphong;
-  constructor(private dichvuservice: DichvuService, private formbuilder: FormBuilder, private cartService: CartserviceService, private phongservice: PhongserviceService) { }
+  private doi = false;
+  private check = true;
+  today = new Date();
+  private sang = true;
+  private chieu = true;
+  private ngayden: string;
+  private mochonphong = false;
+  private buoi = [];
+  constructor(private dichvuservice: DichvuService,
+    private formbuilder: FormBuilder,
+    private cartService: CartserviceService,
+    private phongservice: PhongserviceService,
+    private gettime: LoginService) { }
 
 
   ngOnInit() {
-
-
+    this.cleartime();
+    this.clearphong();
+    this.clearbuoi();
     this.taoFormTimKiem();    // this.layPhongStore();
     this.laydanhsachphong();
     this.taoCart();
@@ -61,6 +76,98 @@ export class CartComponent implements OnInit {
     this.kiemTraHienTienDichVu();
     this.kiemTraKhachhang();
     this.kiemTraPhongStore();
+  }
+  cleartime(){
+    localStorage.removeItem('thoidiemden');
+  }
+  clearphong() {
+    const clear = [];
+    localStorage.setItem('phong', JSON.stringify(clear));
+  }
+  clearbuoi() {
+    const clear = [];
+    localStorage.setItem('buoi', JSON.stringify(clear));
+  }
+  chonBuoi(buoi, idphong) {
+    let buoidadat = true;
+    let dem = 0;
+    const data = {
+      buoiDat: buoi,
+      _idphong: idphong
+    };
+    if (localStorage.getItem('buoi') === null) {
+      this.buoi.push(data);
+      localStorage.setItem('buoi', JSON.stringify(this.buoi));
+    } else {
+      this.buoi = JSON.parse(localStorage.getItem('buoi'));
+      let index = -1;
+      for (let i = 0; i < this.buoi.length; i++) {
+        if (this.buoi[i]._idphong === data._idphong && this.buoi[i].buoiDat === data.buoiDat) {
+          index = i;
+          console.log(i);
+          dem = 1;
+        } else if (this.buoi[i]._idphong === data._idphong && this.buoi[i].buoiDat !== data.buoiDat) {
+          buoidadat = false;
+        }
+      }
+      console.log(index);
+      if (index > -1) {
+        this.buoi.splice(index, 1);
+        localStorage.setItem('buoi', JSON.stringify(this.buoi));
+      } else if (buoidadat === false && dem === 0) {
+        this.buoi.push(data);
+        localStorage.setItem('buoi', JSON.stringify(this.buoi));
+      } else {
+        console.log('clear');
+        this.clearbuoi();
+        this.buoi = [];
+        this.buoi.push(data);
+        localStorage.setItem('buoi', JSON.stringify(this.buoi));
+      }
+    }
+
+  }
+  laythoigian(event) {
+    if (new Date(event.target.value) < this.today) {
+      this.check = false;
+      return false;
+    }
+    this.clearphong();
+    this.clearbuoi();
+    this.layPhongStore();
+    this.tienphong = this.tinhTienPhong();
+    this.kiemTraPhongVuaDat();
+    this.kiemTraPhongStore();
+    this.check = true;
+    this.doi = true;
+    this.gettime.getlistblankroom(moment(new Date(event.target.value)).format('DD-MM-YYYY')).subscribe(res => {
+      this.phongservice.laydanhsachphong().subscribe(response => {
+        this.phong = response;
+        this.phong.forEach(element => {
+          element['sang'] = 'trong';
+          element['chieu'] = 'trong';
+          if (res) {
+            res.forEach(element2 => {
+              if (element._id === element2._idphong._id) {
+                if (element2.buoiDat === 1) {
+                  element['sang'] = 'dat';
+                } else if (element2.buoiDat === 2) {
+                  element['chieu'] = 'dat';
+                } else {
+                  element['sang'] = 'dat';
+                  element['chieu'] = 'dat';
+                }
+              }
+            });
+          }
+        });
+        this.doi = false;
+        this.mochonphong = true;
+      });
+      localStorage.setItem('thoidiemden', JSON.stringify(moment(new Date(event.target.value)).format('DD-MM-YYYY')));
+      this.ngayden = moment(new Date(event.target.value)).format('DD-MM-YYYY');
+    });
+
   }
   congthuctinhtongtienan() {
     if (this.tienthucdon && !this.tinhTongTien()) {
@@ -255,6 +362,14 @@ export class CartComponent implements OnInit {
 
 
   }
+  kiemtrabuoi(buoi, id) {
+    this.buoi = JSON.parse(localStorage.getItem('buoi'));
+    for (let i = 0; i < this.buoi.length; i++) {
+      if (this.buoi[i].buoiDat === buoi && this.buoi[i]._idphong === id) {
+        return true;
+      }
+    }
+  }
   kiemTra(id) {
     this.layPhongStore();
     for (let i = 0; i < this.mang.length; i++) {
@@ -303,15 +418,28 @@ export class CartComponent implements OnInit {
   }
   giatriphong(giatri: Iphong) {
     const phong = JSON.parse(localStorage.getItem('phong'));
-    if (!phong || phong.length === 0) {
-      this.phongChon = giatri;
-      this.phongservice.themvaophong(giatri);
-      this.layPhongStore();
-      this.tienphong = this.tinhTienPhong();
-      this.kiemTraPhongVuaDat();
+    const buoi = JSON.parse(localStorage.getItem('buoi'));
+    if (!buoi || buoi.length === 0 || buoi[0]._idphong !== giatri._id) {
+      alert('Chọn buổi cho phòng trên');
     } else {
-      alert('Xin lỗi bạn đã chọn phòng rồi');
+      if (!phong || phong.length === 0) {
+
+        this.phongChon = giatri;
+        this.phongservice.themvaophong(giatri);
+        if (buoi.length === 2) {
+          let pp = JSON.parse(localStorage.getItem('phong'));
+          pp[0].item.gia = pp[0].item.gia * 2;
+          localStorage.setItem('phong', JSON.stringify(pp));
+        }
+        this.layPhongStore();
+        this.tienphong = this.tinhTienPhong();
+        this.kiemTraPhongVuaDat();
+
+      } else {
+        alert('Xin lỗi bạn đã chọn phòng rồi');
+      }
     }
+
 
 
 
@@ -365,7 +493,7 @@ export class CartComponent implements OnInit {
       this.kiemTraCart();
 
     });
-     this.congthuctinhtongtienan();
+    this.congthuctinhtongtienan();
   }
   thayDoiGiaTri(value, item) {
 

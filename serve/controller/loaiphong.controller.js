@@ -33,7 +33,7 @@ function capNhatLoaiPhong1(req,res){
     });
 }
 function layLoaiPhong1(req,res){
-    service.layLoaiPhong().then((result) => {
+    service.layLoaiPhong(req.query).then((result) => {
         res.send(result);
     }).catch((err) => {
         res.send(err);

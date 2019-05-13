@@ -21,11 +21,7 @@ export class CartserviceService {
     this.abc.next(this.count());
   }
   nhay() {
-    
     this.guinhay.next(this.biennhay = true);
-   
-    
-    
   }
   doi() {
     

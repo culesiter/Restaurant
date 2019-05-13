@@ -38,7 +38,7 @@
       width: 100%;
       background: white;
       height: 100%;
-      top: -115px;
+      top: -50px;
       left: 0;
       padding: 45px 44px;
       z-index: 11;
@@ -59,4 +59,17 @@
 }
 
 
+}
+
+.item{
+  img{
+    width: 100%;
+    height: auto;
+  }
+}
+.left{
+  border-radius: 100px 0 0 100px;
+}
+.right{
+  border-radius: 0 100px 100px 0;
 }

@@ -2,8 +2,11 @@
   <div id="contact">
     <app-header></app-header>
   </div>
-  <div style="margin-top: 90px; min-height:400px;">
+  <div [ngClass]="{'banner': banner===true}"  class="pa" style="margin-top: 90px; min-height:400px;">
     <router-outlet></router-outlet>
+    <div class="chid">
+
+    </div>
   </div>
   <div routerLink="/home/listcart" id="cart" (click)="nhay()" [ngClass]="{'animated jello': muaNhay}" class="cart" style="position: fixed; z-index: 1000; right: 15px;bottom: 50px">
     <a>

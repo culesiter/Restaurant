@@ -151,7 +151,7 @@ function getProductById(req) {
 }
 function layChiTietDichVu(request) {
     return new Promise((resolve, reject) => {
-        console.log();
+        console.log(request);
         
         if(!request.id)
         {
@@ -178,7 +178,7 @@ function layChiTietDichVu(request) {
                     }
                 })
         }else{
-                chitietdichvu.find({_idchitiethoadon:request.id}) .select('_id _idchitiethoadon _iddichvu').populate('_iddichvu').populate('_idchitiethoadon').exec(
+                chitietdichvu.find({_idhoadon:request.id}) .select('_id _idhoadon _iddichvu ').populate('_iddichvu ten').populate('_idhoadon').exec(
                     function (err, response) {
                         if (err) {
                             var err = {
@@ -262,12 +262,10 @@ function login(user) {
     });
 }
 function taoChiTietDichVu(request) {
-
-   
     return new Promise((resolve, reject) => {
         var chitietdichvumoi = new chitietdichvu({
             _iddichvu: request._iddichvu,
-            _idchitiethoadon: request._idchitiethoadon
+            _idhoadon: request._idhoadon
         });
         dichvu.findById(request._iddichvu).exec().then(
             res => {
@@ -278,7 +276,7 @@ function taoChiTietDichVu(request) {
                     reject(err)
                 }
                 else if (res) {
-                    return chitiethoadon.findById(request._idchitiethoadon)
+                    return hoadon.findById(request._idhoadon)
                 }
             }
         ).then(
@@ -294,6 +292,7 @@ function taoChiTietDichVu(request) {
                 }
             }
         ).then(result => {
+            console.log('đã tạo chi tiết dịch vụ');
             const data = {
                 message: "luu thanh cong",
                 values: {

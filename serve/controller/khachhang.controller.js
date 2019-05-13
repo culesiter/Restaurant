@@ -6,7 +6,8 @@ module.exports={
     xoaNguoiDung:xoaNguoiDung1,
     capNhatKhachHang:capNhatKhachHang1,
     dangNhap:dangNhap,
-    capNhatHinh:capNhatHinh1
+    capNhatHinh:capNhatHinh1,
+    taoNguoiDungK:taoNguoiDungK1
 }
 function capNhatHinh1(req,res){
     service.capNhatHinh(req.params,req.file).then((result) => {
@@ -17,6 +18,13 @@ function capNhatHinh1(req,res){
 }
 function dangNhap(req,res){
     service.dangNhap(req).then((result) => {
+        res.send(result);
+    }).catch((err) => {
+        res.send(err)
+    });
+}
+function taoNguoiDungK1(req,res){
+    service.taoNguoiDungk(req.body).then((result) => {
         res.send(result);
     }).catch((err) => {
         res.send(err)

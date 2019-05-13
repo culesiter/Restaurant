@@ -5,7 +5,9 @@ module.exports = {
     getProductById1: getProductById,
     xoaHoaDon: xoaHoaDon1,
     updateProduct2: updateProduct1,
-    layHoaDonTheoDay:layHoaDonTheoDay1
+    layHoaDonTheoDay:layHoaDonTheoDay1,
+    layHoaDonNguoiDung:layHoaDonNguoiDung1,
+    layHoaDonId:layHoaDonId1
 }
 function layHoaDonTheoDay1(req, res) {
     service.layHoaDonTheoDay(req.body).then((result) => {
@@ -30,11 +32,25 @@ function updateProduct1(req, res) {
         res.send(err);
     });
 }
+function layHoaDonId1(req, res) {
+    service.layHoaDonId(req.query).then((result) => {
+        res.send(result);
+    }).catch((err) => {
+        res.send(err);
+    });
+}
 function layHoaDon1(req, res) {
 
 
 
-    service.layHoaDon().then((result) => {
+    service.layHoaDon(req.query).then((result) => {
+        res.send(result);
+    }).catch((err) => {
+        res.send(err);
+    });
+}
+function layHoaDonNguoiDung1(req, res) {
+    service.layHoaDonNguoiDung(req.query).then((result) => {
         res.send(result);
     }).catch((err) => {
         res.send(err);

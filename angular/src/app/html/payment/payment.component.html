@@ -3,90 +3,105 @@
 
   </app-header>
 </div>
-<div class="container">
-  <p class="text-center " style="font-size: 40px">THANH TOÁN</p>
-  <div *ngIf="khachhang.ten!=='Null'">
-    <div class="row">
+<form [formGroup]="frmThanhToan">
+  <div class="container">
+    <p class="text-center " style="font-size: 40px">THANH TOÁN</p>
+    <div *ngIf="khachhang.ten!==''">
+      <div class="row">
 
-      <div class="col-md-4">
-        <div class="form-group">
-          <label for="name" class="cols-sm-2 control-label">Tên Khách Hàng:</label>
-          <div class="cols-sm-10">
-            <div class="input-group">
-              <span class="input-group-addon">
-                <i class="fa fa-user fa" aria-hidden="true"></i>
-              </span>
-              <input disabled value="{{khachhang.ten}}" type="text" class="form-control" name="name" placeholder="Nhập Tên" />
+        <div class="col-md-4">
+          <div class="form-group">
+            <label for="name" class="cols-sm-2 control-label">Tên Khách Hàng:</label>
+            <div class="cols-sm-10">
+              <div class="input-group">
+                <span class="input-group-addon">
+                  <i class="fa fa-user fa" aria-hidden="true"></i>
+                </span>
+                <input disabled value="{{khachhang.ten}}" type="text" class="form-control" name="name"
+                  placeholder="Nhập Tên" />
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <div class="col-md-4">
-        <div class="form-group">
-          <label for="name" class="cols-sm-2 control-label">Email Khách Hàng:</label>
-          <div class="cols-sm-10">
-            <div class="input-group">
-              <span class="input-group-addon">
-                <i class="fa fa-envelope" aria-hidden="true"></i>
-              </span>
-              <input disabled value="{{khachhang.email}}" type="text" class="form-control" name="name" placeholder="Nhập email" />
+        <div class="col-md-4">
+          <div class="form-group">
+            <label for="name" class="cols-sm-2 control-label">Email Khách Hàng:</label>
+            <div class="cols-sm-10">
+              <div class="input-group">
+                <span class="input-group-addon">
+                  <i class="fa fa-envelope" aria-hidden="true"></i>
+                </span>
+                <input disabled value="{{khachhang.email}}" type="text" class="form-control" name="name"
+                  placeholder="Nhập email" />
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <div class="col-md-4">
-        <div class="form-group">
-          <label for="name" class="cols-sm-2 control-label">Số Điện Thoại:</label>
-          <div class="cols-sm-10">
-            <div class="input-group">
-              <span class="input-group-addon">
-                <i class="fa fa-user fa" aria-hidden="true"></i>
-              </span>
-              <input disabled value="{{khachhang.sdt}}" type="text" class="form-control" name="name" placeholder="Nhập Tên" />
+        <div class="col-md-4">
+          <div class="form-group">
+            <label for="name" class="cols-sm-2 control-label">Số Điện Thoại:</label>
+            <div class="cols-sm-10">
+              <div class="input-group">
+                <span class="input-group-addon">
+                  <i class="fa fa-user fa" aria-hidden="true"></i>
+                </span>
+                <input disabled value="{{khachhang.sdt}}" type="text" class="form-control" name="name"
+                  placeholder="Nhập Tên" />
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-  <div *ngIf="khachhang.ten==='Null'">
-    <div class="row">
-      <div class="col-md-4">
-        <div class="form-group">
-          <label for="name" class="cols-sm-2 control-label">Tên Khách Hàng:</label>
-          <div class="cols-sm-10">
-            <div class="input-group">
-              <span class="input-group-addon">
-                <i class="fa fa-user fa" aria-hidden="true"></i>
-              </span>
-              <input type="text" class="form-control" name="name" placeholder="Nhập Tên" />
+    <div *ngIf="khachhang.ten===''">
+      <div class="row">
+        <div class="col-md-4">
+          <div class="form-group">
+            <label for="name" class="cols-sm-2 control-label">Tên Khách Hàng:</label>
+            <div class="cols-sm-10 wrong">
+              <div class="input-group">
+                <span class="input-group-addon">
+                  <i class="fa fa-user fa" aria-hidden="true"></i>
+                </span>
+                <input type="text" formControlName="ten" class="form-control" name="name" placeholder="Nhập Tên" />
+              </div>
+              <span style="color:red" class="label" *ngIf="frmThanhToan.controls.ten.dirty && 
+              frmThanhToan.controls.ten.errors?.required">Vui lòng điền tên!</span>
             </div>
           </div>
         </div>
-      </div>
-      <div class="col-md-4">
-        <div class="form-group">
-          <label for="name" class="cols-sm-2 control-label">Email Khách Hàng:</label>
-          <div class="cols-sm-10">
-            <div class="input-group">
-              <span class="input-group-addon">
-                <i class="fa fa-envelope" aria-hidden="true"></i>
-              </span>
-              <input type="text" class="form-control" name="name" placeholder="Nhập email" />
-            </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <label for="name" class="cols-sm-2 control-label">Email Khách Hàng:</label>
+            <div class="cols-sm-10 wrong">
+              <div class="input-group">
+                <span class="input-group-addon">
+                  <i class="fa fa-envelope" aria-hidden="true"></i>
+                </span>
+                <input type="text" formControlName="email" class="form-control" name="name" placeholder="Nhập email" />
+              </div>
+              <span style="color:red" class="label" *ngIf="frmThanhToan.controls.email.dirty && 
+              frmThanhToan.controls.email.errors?.required">Vui lòng điền email!</span>
+            <span style="color:red" class="label" *ngIf="frmThanhToan.controls.email.dirty && 
+            frmThanhToan.controls.email.errors?.pattern">Vui lòng điền đúng mail!</span>
           </div>
         </div>
       </div>
       <div class="col-md-4">
         <div class="form-group">
           <label for="name" class="cols-sm-2 control-label">Số Điện Thoại:</label>
-          <div class="cols-sm-10">
+          <div class="cols-sm-10 wrong">
             <div class="input-group">
               <span class="input-group-addon">
                 <i class="fa fa-phone-square" aria-hidden="true"></i>
               </span>
-              <input type="text" class="form-control" name="name" placeholder="Nhập số điệc thoại" />
+              <input type="text" formControlName="sdt" class="form-control" name="name"
+                placeholder="Nhập số điệc thoại" />
             </div>
+            <span style="color:red" class="label" *ngIf="frmThanhToan.controls.sdt.dirty && 
+            frmThanhToan.controls.sdt.errors?.required">Vui lòng điền số điện thoại!</span>
+            <span style="color:red" class="label" *ngIf="frmThanhToan.controls.sdt.dirty && 
+            frmThanhToan.controls.sdt.errors?.pattern">Số điên thoại gồm số gồm 10-11 số!</span>
           </div>
         </div>
       </div>
@@ -99,14 +114,15 @@
         <label for="name" class="cols-sm-2 control-label">Thực đơn đã đặt:</label>
         <div class="cols-sm-10">
           <div class="input-group">
-            <input disabled data-toggle="modal" data-target="#myModal" style="cursor: pointer;" type="text" class="form-control"
-              name="name" value="Tổng tiền:{{tongTien}} VND" />
+            <input disabled data-toggle="modal" data-target="#myModal" style="cursor: pointer;" type="text"
+              class="form-control" name="name" value="Tổng tiền:{{tongTien}} VND" />
             <span data-toggle="modal" data-target="#myModal" style="cursor: pointer;" class="input-group-addon">
               Xem chi tiết
             </span>
           </div>
           <!-- Modal -->
-          <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+            aria-hidden="true">
             <div class="modal-dialog">
               <div class="modal-content">
                 <div class="modal-header">
@@ -144,17 +160,18 @@
                             {{item.sl}}
                           </span>
 
-                          <input *ngIf="sua==1" oninput="validity.valid||(value='');" style="width: 40%;display: inline;"
-                            type="number" min="1" max="100" class="form-control" value="{{item.sl}}" (change)="thayDoiGiaTri($event.target.value,item)">
+                          <input *ngIf="sua==1" oninput="validity.valid||(value='');"
+                            style="width: 40%;display: inline;" type="number" min="1" max="100" class="form-control"
+                            value="{{item.sl}}" (change)="thayDoiGiaTri($event.target.value,item)">
                         </td>
                         <td class="text-center">
                           {{item.item.gia*item.sl}}
                         </td>
                         <td>
                           <span *ngIf="sua==0" style="cursor: no-drop;" class="
-                                    glyphicon glyphicon-trash"></span>
+                                      glyphicon glyphicon-trash"></span>
                           <span *ngIf="sua==1" style="cursor: pointer;" (click)="xoa(item.item._id)" class="
-                                    glyphicon glyphicon-trash"></span>
+                                      glyphicon glyphicon-trash"></span>
                         </td>
                       </tr>
                       <tr *ngFor="let item of cart1">
@@ -171,17 +188,18 @@
                             {{item.sl}}
                           </span>
 
-                          <input *ngIf="sua==1" oninput="validity.valid||(value='');" style="width: 40%;display: inline;"
-                            type="number" min="1" max="100" class="form-control" value="{{item.sl}}" (change)="thayDoiGiaTriThucDon($event.target.value,item)">
+                          <input *ngIf="sua==1" oninput="validity.valid||(value='');"
+                            style="width: 40%;display: inline;" type="number" min="1" max="100" class="form-control"
+                            value="{{item.sl}}" (change)="thayDoiGiaTriThucDon($event.target.value,item)">
                         </td>
                         <td class="text-center">
                           {{item.thucdon.gia*item.sl}}
                         </td>
                         <td>
                           <span *ngIf="sua==0" style="cursor: no-drop;" class="
-                                      glyphicon glyphicon-trash"></span>
+                                        glyphicon glyphicon-trash"></span>
                           <span *ngIf="sua==1" style="cursor: pointer;" (click)="xoaThucDon(item.thucdon._id)" class="
-                                      glyphicon glyphicon-trash"></span>
+                                        glyphicon glyphicon-trash"></span>
                         </td>
                       </tr>
                     </tbody>
@@ -215,8 +233,8 @@
         <label for="name" class="cols-sm-2 control-label">Phòng-Dich vụ đã đặt:</label>
         <div class="cols-sm-10">
           <div class="input-group">
-            <input disabled data-toggle="modal" data-target="phongdichvu" style="cursor: pointer;" type="text" class="form-control"
-              name="name" value="Tổng tiền:{{tinhTienPhong()+tinhTienDichVu()}} VND" />
+            <input disabled data-toggle="modal" data-target="phongdichvu" style="cursor: pointer;" type="text"
+              class="form-control" name="name" value="Tổng tiền:{{tinhTienPhong()+tinhTienDichVu()}} VND" />
             <span data-toggle="modal" data-target="#phongdichvu" style="cursor: pointer;" class="input-group-addon">
               Xem chi tiết
             </span>
@@ -287,7 +305,7 @@
                 <div class="modal-footer">
                   <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
                   <!-- <button *ngIf="sua==0" (click)="chinhSua()" type="button" class="btn btn-default">Chỉnh Sửa</button>
-                  <button *ngIf="sua==1" (click)="ok()" type="button" class="btn btn-success">Ok</button> -->
+                    <button *ngIf="sua==1" (click)="ok()" type="button" class="btn btn-success">Ok</button> -->
                   <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
                 </div>
               </div>
@@ -311,35 +329,17 @@
     <div class="col-md-3">
       <div class="form-group">
         <label for="name" class="cols-sm-2 control-label">Ngày Đặt-Giờ đặt </label>
-        <div class="cols-sm-10">
-          <form>
-            <!-- <angular2-date-picker [(ngModel)]="date" [settings]="settings"></angular2-date-picker> -->
-            <div class='input-group date'>
-              <input id="thoidiemdat" type='date' class="form-control" (change)="laythoigian($event)"  />
-              <span class="input-group-addon">
-                <span class="glyphicon glyphicon-calendar" ></span>
-              </span>
-            </div>
-          </form>
+        <div class="cols-sm-10 wrong">
+            {{ngayden}}
         </div>
       </div>
     </div>
-    <div class="col-md-3 text-left">
-        <div class="form-group">
-            <label for="name" class="cols-sm-2 control-label">Chọn buổi đặt</label>
-            <div>
-                <div (click)="chonbuoisang()" class="btn btn-primary" [ngClass]="{'active':sang===false,'clicked':buoiDat===1}">
-                    buoi sang
-                </div>
-                <div (click)="chonbuoichieu()" class="btn btn-primary"  [ngClass]="{'active':chieu===false,'clicked':buoiDat===2}">
-                    buoi chieu
-                </div>
-            </div>
-        </div>
-   </div>
   </div>
   <div class="row">
-    <input data-toggle="modal" data-target="#xacNhan" type="button" class="btn btn-lg btn-primary pull-right" value="Xác Nhận">
+    <input *ngIf="khachhang.ten===''"  data-toggle="modal" data-target="#xacNhan" [disabled]="frmThanhToan.invalid||check===false" type="button" class="btn btn-lg btn-primary pull-right"
+      value="Xác Nhận" (click)="time()">
+      <input *ngIf="khachhang.ten!==''"  data-toggle="modal" data-target="#xacNhan" [disabled]="check===false" type="button" class="btn btn-lg btn-primary pull-right"
+      value="Xác Nhận">
   </div>
   <!-- Modal -->
   <div class="modal fade" id="xacNhan" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -392,7 +392,8 @@
                   <input disabled value="{{tinhTienPhong()+tinhTienDichVu()}} VND" type="text" class="form-control">
                 </div>
                 <div class="form-group">
-                  <input disabled value="{{tinhTienPhong()+tinhTienDichVu()+tongTien}} VND" type="text" class="form-control tongtien">
+                  <input disabled value="{{tinhTienPhong()+tinhTienDichVu()+tongTien}} VND" type="text"
+                    class="form-control tongtien">
                 </div>
                 <div class="form-group">
                   <input disabled value="{{ngayden}}" type="text" class="form-control">
@@ -411,7 +412,9 @@
       </div>
     </div>
   </div>
-</div>
+  </div>
+</form>
+
 <app-footer>
 
 </app-footer>

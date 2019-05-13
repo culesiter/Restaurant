@@ -5,8 +5,21 @@
         font-weight: bold;
     }
 }
+.wrong{
+    span.label{
+        position: absolute;
+        bottom: -10px;
+        left: 15px;
+    }
+}
+.hid{
+    display: none;
+}
 .active{
    display: none !important;
+}
+.unactive{
+    display:  block !important;
 }
 .clicked{
     background: greenyellow !important;

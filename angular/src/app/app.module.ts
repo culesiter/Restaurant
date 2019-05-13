@@ -55,6 +55,7 @@ import { GioithieuphongComponent } from './html/gioithieuphong/gioithieuphong.co
 import { ThongtinnguoidungComponent } from './html/thongtinnguoidung/thongtinnguoidung.component';
 import { HoadonService } from './share/services/hoadon.service';
 import { AuthGuard } from './share/services/guard/auth.guard';
+import { OrderDetailComponent } from './html/order-detail/order-detail.component';
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   {
@@ -63,14 +64,17 @@ const routes: Routes = [
       { path: 'section', component: SectionComponent },
       { path: 'about', component: AboutusComponent },
       { path: 'room-introduce', component: GioithieuphongComponent },
-      {path:'monan/:id',component:DetaildishComponent},
-      {path:'uudai',component:UudaiComponent},
-      {path:'user-profile',component:ThongtinnguoidungComponent},
-      { path: 'dish', component: DishLishComponent ,children:[
-        {path:'',redirectTo:'monan',pathMatch:'full'},
-        {path:'monan',component:DishComponent},
-        {path:'thucdon',component:ThucdonListComponent}
-      ]},
+      { path: 'monan/:id', component: DetaildishComponent },
+      { path: 'uudai', component: UudaiComponent },
+      { path: 'user-profile', component: ThongtinnguoidungComponent },
+      { path: 'order-detail', component: OrderDetailComponent },
+      {
+        path: 'dish', component: DishLishComponent, children: [
+          { path: '', redirectTo: 'monan', pathMatch: 'full' },
+          { path: 'monan', component: DishComponent },
+          { path: 'thucdon', component: ThucdonListComponent }
+        ]
+      },
 
       {
         path: 'listcart', component: ListcartComponent, children: [
@@ -81,37 +85,36 @@ const routes: Routes = [
     ]
   },
   { path: 'payment', component: PaymentComponent },
-  
+
   { path: 'register', component: RegisterComponent },
-  {path:'test',component:PhongComponent},
+  { path: 'test', component: PhongComponent },
   {
     path: 'admin', component: AdminLayoutComponent, children: [
-        { path: '', redirectTo: 'login', pathMatch: 'full' },
-        { path: 'login', component: AdminLoginComponent },
-        {
-          canActivate: [AuthGuard], path:'dashboard', component: AdminComponent, children: [
-                { path: '', redirectTo: 'customer', pathMatch: 'full' },
-                { path: 'customer', component: CustomerManagerComponent },
-                { path: 'dish', component: DishManagerComponent },
-                {path: 'dishtype', component: LoaimonanComponent},
-                { path: 'menu', component: MenuManagerComponent },
-                { path: 'services', component: DichvuComponent },
-                { path: 'room', component: RoomManagerComponent },
-                {path: 'roomtype', component: LoaiphongComponent},
-                { path: 'booking', component: BooknowComponent },
-                {
-                    path: 'bills', component: BillsManagerComponent, children: [
-                        { path: 'detail:/id', component: BillDetailComponent }
-                    ]
-                },
+      { path: '', redirectTo: 'login', pathMatch: 'full' },
+      { path: 'login', component: AdminLoginComponent },
+      {
+        canActivate: [AuthGuard], path: 'dashboard', component: AdminComponent, children: [
+          { path: '', redirectTo: 'customer', pathMatch: 'full' },
+          { path: 'customer', component: CustomerManagerComponent },
+          { path: 'dish', component: DishManagerComponent },
+          { path: 'dishtype', component: LoaimonanComponent },
+          { path: 'menu', component: MenuManagerComponent },
+          { path: 'services', component: DichvuComponent },
+          { path: 'room', component: RoomManagerComponent },
+          { path: 'roomtype', component: LoaiphongComponent },
+          { path: 'booking', component: BooknowComponent },
+          {
+            path: 'bills', component: BillsManagerComponent, children: [
+              { path: 'detail:/id', component: BillDetailComponent }
             ]
-        }
+          },
+        ]
+      }
     ]
-}
+  }
 ]
 @NgModule({
   declarations: [
-
     AppComponent,
     HomeComponent,
     HeaderComponent,
@@ -150,6 +153,7 @@ const routes: Routes = [
     AboutusComponent,
     GioithieuphongComponent,
     ThongtinnguoidungComponent,
+    OrderDetailComponent,
   ],
   imports: [
     OwlModule,
@@ -161,7 +165,7 @@ const routes: Routes = [
     BrowserModule,
     RouterModule.forRoot(routes)
   ],
-  providers: [DichvuService,LoginService,AuthGuard, HoadonService, HumanService,ThucdonserviceService,DishserviceService,DataTransferService, CartserviceService,PhongserviceService],
+  providers: [DichvuService, LoginService, AuthGuard, HoadonService, HumanService, ThucdonserviceService, DishserviceService, DataTransferService, CartserviceService, PhongserviceService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -13,8 +13,7 @@ var userSchema=mongoose.Schema(
             type:String
         },
         password:{
-            type:String,
-            require:true
+            type:String
         },
         birthday:{
             type:Date

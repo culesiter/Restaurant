@@ -9,6 +9,7 @@ import 'rxjs/add/operator/distinct';
 @Injectable()
 export class DichvuService {
   private dvURL = 'http://localhost:3000/dichvu';
+  private ctdvurl='http://localhost:3000/chitietdichvu';
   private dichvu: Idichvustore = {};
   private dichvus: Idichvustore[] = [];
 
@@ -24,6 +25,11 @@ export class DichvuService {
   }
   themDV(data): Observable<any> {
     return this.http.post(this.dvURL, data).map(res => {
+      return res.json();
+   });
+  }
+  themCtdv(data): Observable<any> {
+    return this.http.post(this.ctdvurl, data).map(res => {
       return res.json();
    });
   }
@@ -64,8 +70,7 @@ export class DichvuService {
         this.dichvus.splice(index, 1);
         localStorage.setItem('dichvu', JSON.stringify(this.dichvus));
       }
-    })
-
+    });
   }
 
 

@@ -1,0 +1,82 @@
+<section id="order-detail">
+  <div class="container">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Tên</th>
+          <th>Ngày Đặt</th>
+          <th>Tình trạng</th>
+          <th>Tiền</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of hoadonkh;index as i">
+          <td>
+            {{i}}
+          </td>
+          <td>
+            {{item.ten}}
+          </td>
+          <td>
+            {{item.thoidiemtao}}
+          </td>
+          <td>
+            {{item.tinhtrang}}
+          </td>
+          <td>
+            {{item.tongtien}}
+          </td>
+          <td style="width:200px">
+            <div class="btn btn-danger">
+              Hủy
+            </div>
+            <div class="btn btn-primary" data-toggle="modal" data-target="#myModal" (click)="toDetail(item._id)">
+              Xem chi tiết
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Món ăn</th>
+            <th>Tổng tiền</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of chitietma;index as i">
+            <td>{{item._idmonan.ten}} X {{item.soluongmonan}}</td>
+            <td>{{item._idmonan.gia}}</td>
+          </tr>
+        </tbody>
+        <thead>
+          <tr>
+            <th>Phong</th>
+          </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of phong;index as i">
+              <td>{{item.ten}} - {{item.loai}}</td>
+              <td>{{item.gia}}</td>
+            </tr>
+        </tbody>
+        <tfoot >
+          <tr *ngFor="let item of phong;index as i">
+            <th>Tổng tiền</th>
+            <th>
+                  {{item.tongtien}}
+            </th>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+</div>

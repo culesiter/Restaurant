@@ -12,11 +12,13 @@ module.exports = {
     layHoaDon: layHoaDon,
     xoaHoaDon: xoaHoaDon,
     updateProduct: updateProduct,
-    layHoaDonTheoDay: layHoaDonTheoDay
+    layHoaDonTheoDay: layHoaDonTheoDay,
+    layHoaDonNguoiDung:layHoaDonNguoiDung,
+    layHoaDonId:layHoaDonId
 }
 function layHoaDonTheoDay(req) {
     return new Promise((resolve, reject) => {
-        hoadon.find({}).select('_id thoidiemden thoidiemtao hinhthucthanhtoan tinhtrang _idkhachhang buoiDat').populate('_idkhachhang', 'ten').exec(
+        hoadon.find({}).select('_id thoidiemden thoidiemtao hinhthucthanhtoan tinhtrang _idkhachhang buoiDat _idphong').populate('_idkhachhang', 'ten').populate('_idphong').exec(
             function (err, response) {
                 if (err) {
                     var err = {
@@ -25,9 +27,9 @@ function layHoaDonTheoDay(req) {
                     reject(err)
                 } else {
                     var data = response.filter(res => {
-                        var caseA = caseB = false;
-                        caseA = moment(new Date(res.thoidiemden)).format("DD/MM/YYYY") == moment(new Date(req.thoidiemden)).format("DD/MM/YYYY");
-                        return caseA;
+                        if (res.thoidiemden == req.thoidiemden) {
+                            return res;
+                        }
                     })
                     resolve(data);
                 }
@@ -113,9 +115,65 @@ function updateProduct(pramas, request) {
     })
 
 }
+function layHoaDonId(request) {
+    return new Promise((resolve, reject) => {
+    hoadon.find({ _id: request.id }).select('_id thoidiemden thoidiemtao hinhthucthanhtoan tinhtrang _idkhachhang _idphong buoiDat tongtien').populate('_idkhachhang', 'ten').populate('_idphong').exec(
+        function (err, response) {
+            if (err) {
+                var err = {
+                    err: err
+                }
+                reject(err)
+            } else {
+                var data = response.map(res => {
+                    return {
+                        _id: res._id,
+                        ten: res._idkhachhang.ten,
+                        thoidiemtao: moment(new Date(res.thoidiemtao)).format("DD/MM/YYYY"),
+                        thoidiemden: res.thoidiemden,
+                        tinhtrang: res.tinhtrang,
+                        buoiDat: res.buoiDat,
+                        _idphong: res._idphong,
+                        tongtien:res.tongtien
+                    }
+                }
+                )
+                resolve(data);
+            }
+        })
+    });
+}
+function layHoaDonNguoiDung(request) {
+    return new Promise((resolve, reject) => {
+    hoadon.find({ _idkhachhang: request.idkh }).select('_id thoidiemden thoidiemtao hinhthucthanhtoan tinhtrang _idkhachhang _idphong buoiDat tongtien').populate('_idkhachhang', 'ten').populate('_idphong').exec(
+        function (err, response) {
+            if (err) {
+                var err = {
+                    err: err
+                }
+                reject(err)
+            } else {
+                var data = response.map(res => {
+                    return {
+                        _id: res._id,
+                        ten: res._idkhachhang.ten,
+                        thoidiemtao: moment(new Date(res.thoidiemtao)).format("DD/MM/YYYY"),
+                        thoidiemden: res.thoidiemden,
+                        tinhtrang: res.tinhtrang,
+                        buoiDat: res.buoiDat,
+                        _idphong: res._idphong,
+                        tongtien:res.tongtien
+                    }
+                }
+                )
+                resolve(data);
+            }
+        })
+    });
+}
 function layHoaDon() {
     return new Promise((resolve, reject) => {
-        hoadon.find({}).select('_id thoidiemden thoidiemtao hinhthucthanhtoan tinhtrang _idkhachhang buoiDat ').populate('_idkhachhang', 'ten').exec(
+        hoadon.find({}).select('_id thoidiemden thoidiemtao hinhthucthanhtoan tinhtrang _idkhachhang _idphong buoiDat tongtien').populate('_idkhachhang', 'ten').populate('_idphong').exec(
             function (err, response) {
                 if (err) {
                     var err = {
@@ -128,31 +186,29 @@ function layHoaDon() {
                             _id: res._id,
                             ten: res._idkhachhang.ten,
                             thoidiemtao: res.thoidiemtao,
-                            thoidiemden: moment(new Date(res.thoidiemden)).format("DD/MM/YYYY"),
+                            thoidiemden:res.thoidiemden,
                             tinhtrang: res.tinhtrang,
-                            buoiDat:res.buoiDat
+                            buoiDat: res.buoiDat,
+                            _idphong: res._idphong,
+                            tongtien:res.tongtien
                         }
                     }
-
                     )
-
                     resolve(data);
                 }
             })
     });
+   
 }
 function taoHoaDon(request) {
-
-console.log(request);
-
-
     var hoadonmoi = new hoadon({
         _idkhachhang: request._idkhachhang,
         thoidiemden: request.thoidiemden,
         tinhtrang: request.tinhtrang,
         hinhthucthanhtoan: request.hinhthucthanhtoan,
         _idphong: request._idphong,
-        buoiDat:request.buoiDat
+        buoiDat: request.buoiDat,
+        tongtien:request.tongtien
     });
     return new Promise((resolve, reject) => {
         phong.findById(request._idphong).exec().then(

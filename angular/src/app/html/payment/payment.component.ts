@@ -7,6 +7,8 @@ import { Iphongstore } from '../../share/entities/iphongstore';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { LoginService } from '../../share/services/login.service';
 import { Router } from '@angular/router';
+import { HumanService } from '../../share/services/human.service';
+import { DichvuService } from '../../share/services/dichvu.service';
 const moment = require('moment');
 declare var $: any;
 @Component({
@@ -18,6 +20,7 @@ export class PaymentComponent implements OnInit {
 
   private thoidiemtao: Date;
   private khachhang: Icustomer;
+  private newkhachhang: Icustomer;
   private cart: Icart[] = [];
   private cart1: Icart[] = [];
   private tongTien: number;
@@ -33,16 +36,17 @@ export class PaymentComponent implements OnInit {
   private chieu = true;
   private buoiDat = 0;
   private dem = 0;
+  private check = true;
   private phong;
-  // settings = {
-  //   bigBanner: true,
-  //   timePicker: true,
-  //   format: 'dd-MM-yyyy hh:mm a',
-  //   defaultOpen: false,
-  //   closeOnSelect: true
-  // }
-  constructor(private formBuilder: FormBuilder, private gettime: LoginService, private router: Router) { }
+  private doi = false;
+  constructor(private formBuilder: FormBuilder,
+    private gettime: LoginService,
+    private router: Router,
+    private customer: HumanService,
+    private dichvu: DichvuService) { }
+  today = new Date();
   ngOnInit() {
+    this.newkhachhang = {};
     this.taoFormThanhToan();
     this.sua = 0;
     this.kiemTraNguoiDung();
@@ -59,24 +63,32 @@ export class PaymentComponent implements OnInit {
     }
     this.layPhongStore();
     this.layDichVuStore();
+    this.ngayden = JSON.parse(localStorage.getItem('thoidiemden'));
   }
 
 
   chonbuoisang() {
     this.buoiDat = 1;
-    this.buoiden = "sang"
+    this.buoiden = "sang";
   }
   chonbuoichieu() {
     this.buoiDat = 2;
-    this.buoiden = "chieu"
+    this.buoiden = "chieu";
   }
   laythoigian(event) {
-
-    this.gettime.gettime(event.target.value).subscribe(Response => {
+    if (new Date(event.target.value) < this.today) {
+      this.check = false;
+      return false;
+    }
+    this.check = true;
+    this.doi = true;
+    const phong = JSON.parse(localStorage.getItem('phong'));
+    this.gettime.gettime(moment(new Date(event.target.value)).format('DD-MM-YYYY'), phong[0].item._id).subscribe(Response => {
       let data = [];
       data = Response.map(res => {
         return res.buoiDat;
       });
+      this.doi = false;
       this.sang = true;
       this.chieu = true;
       for (let i = 0; i <= data.length; i++) {
@@ -94,63 +106,136 @@ export class PaymentComponent implements OnInit {
     });
 
   }
+  time() {
+    const thoidiemden = JSON.parse(localStorage.getItem('thoidiemden'));
+    this.khachhang = {
+      ten: this.frmThanhToan.value.ten,
+      sdt: this.frmThanhToan.value.sdt
+    };
+  }
   taohoadon() {
     const phong = JSON.parse(localStorage.getItem('phong'));
     const khachhang = JSON.parse(localStorage.getItem('user'));
     const thoidiemden = JSON.parse(localStorage.getItem('thoidiemden'));
-    if (thoidiemden !== 'Invalid date') {
-      if (khachhang) {
-        const data = {
-          _idphong: phong[0].item._id,
-          _idkhachhang: khachhang._id,
-          thoidiemden: thoidiemden,
-          buoiDat: this.buoiDat
-        };
-        this.gettime.themhoadon(data).subscribe(response => {
-          console.log(response.values);
-          if (response.message === 'luu thanh cong') {
-            const monan = JSON.parse(localStorage.getItem('cart'));
-            if (monan) {
-              for (let i = 0; i < monan.length; i++) {
-                const rr = {
-                  _idhoadon: response.values._id,
-                  _idmonan: monan[i].item._id,
-                  soluongmonan: monan[i].sl
-                };
-                this.gettime.themcthd(rr).subscribe(res => {
-                  console.log(res);
-                });
-              }
-            }
-            const thucDon = JSON.parse(localStorage.getItem('cart1'));
-            if (thucDon) {
-              for (let i = 0; i < thucDon.length; i++) {
-                const rr = {
-                  _idhoadon: response.values._id,
-                  _idthucdon: thucDon[i].thucdon._id,
-                  soluongmonan: thucDon[i].soluong
-                };
-                this.gettime.themcthd(rr).subscribe(res => {
-                  console.log(res);
-                });
-              }
+    let buoidat = JSON.parse(localStorage.getItem('buoi'))[0].buoiDat;
+    if (buoidat.length == 2) {
+      buoidat = 3;
+    }
+    if (khachhang) {
+      const data = {
+        _idphong: phong[0].item._id,
+        _idkhachhang: khachhang._id,
+        thoidiemden: thoidiemden,
+        buoiDat: buoidat,
+        tongtien: this.tongTien + this.tinhTienPhong() + this.tinhTienDichVu()
+      };
+      this.gettime.themhoadon(data).subscribe(response => {
+        console.log(response.values);
+        if (response.message === 'luu thanh cong') {
+          const monan = JSON.parse(localStorage.getItem('cart'));
+          if (monan) {
+            for (let i = 0; i < monan.length; i++) {
+              const rr = {
+                _idhoadon: response.values._id,
+                _idmonan: monan[i].item._id,
+                soluongmonan: monan[i].sl
+              };
+              this.gettime.themcthd(rr).subscribe(res => {
+                console.log(res);
+              });
             }
           }
-          alert('ok');
-          localStorage.removeItem('cart');
-          localStorage.removeItem('cart1');
-          localStorage.removeItem('dichvu');
-          localStorage.removeItem('thoidiemden');
-          localStorage.removeItem('phong');
-          $('#xacNhan').hide();
-          this.router.navigate(['/home']);
-          // window.location.reload();
-        });
-      } else {
-        console.log('nhap nguoi dung');
-      }
+          const thucDon = JSON.parse(localStorage.getItem('cart1'));
+          if (thucDon) {
+            for (let i = 0; i < thucDon.length; i++) {
+              const rr = {
+                _idhoadon: response.values._id,
+                _idthucdon: thucDon[i].thucdon._id,
+                soluongthucdon: thucDon[i].sl
+              };
+              this.gettime.themcthd(rr).subscribe(res => {
+                console.log(res);
+              });
+            }
+          }
+          const dichvu = JSON.parse(localStorage.getItem('dichvu'));
+          if (dichvu) {
+            for (let i = 0; i < dichvu.length; i++) {
+              const rr = {
+                _idhoadon: response.values._id,
+                _iddichvu: dichvu[i].item._id,
+              };
+              this.dichvu.themCtdv(rr).subscribe(res => {
+                console.log(res);
+              });
+            }
+          }
+        }
+        alert('ok');
+        localStorage.removeItem('cart');
+        localStorage.removeItem('cart1');
+        localStorage.removeItem('dichvu');
+        localStorage.removeItem('thoidiemden');
+        localStorage.removeItem('phong');
+        $('#xacNhan').modal('toggle');
+        $('body').removeClass('modal-open');
+        $('.modal-backdrop').removeClass('modal-backdrop fade in')
+        this.router.navigate(['/home']);
+      });
     } else {
-      alert('Vui lòng chọn thời điểm');
+      this.customer.themtknoaccount(this.frmThanhToan.value).subscribe(Response => {
+        console.log(Response);
+        if (Response.message === 'tao thanh cong') {
+          const data = {
+            _idphong: phong[0].item._id,
+            _idkhachhang: Response.values._id,
+            thoidiemden: thoidiemden,
+            buoiDat: buoidat,
+            tongtien: this.tongTien + this.tinhTienPhong() + this.tinhTienDichVu()
+          };
+          this.gettime.themhoadon(data).subscribe(response => {
+            console.log(response.values);
+            if (response.message === 'luu thanh cong') {
+              const monan = JSON.parse(localStorage.getItem('cart'));
+              if (monan) {
+                for (let i = 0; i < monan.length; i++) {
+                  const rr = {
+                    _idhoadon: response.values._id,
+                    _idmonan: monan[i].item._id,
+                    soluongmonan: monan[i].sl
+                  };
+                  this.gettime.themcthd(rr).subscribe(res => {
+                    console.log(res);
+                  });
+                }
+              }
+              const thucDon = JSON.parse(localStorage.getItem('cart1'));
+              if (thucDon) {
+                for (let i = 0; i < thucDon.length; i++) {
+                  const rr = {
+                    _idhoadon: response.values._id,
+                    _idthucdon: thucDon[i].thucdon._id,
+                    soluongmonan: thucDon[i].soluong
+                  };
+                  this.gettime.themcthd(rr).subscribe(res => {
+                    console.log(res);
+                  });
+                }
+              }
+            }
+            alert('ok');
+            localStorage.removeItem('cart');
+            localStorage.removeItem('cart1');
+            localStorage.removeItem('dichvu');
+            localStorage.removeItem('thoidiemden');
+            localStorage.removeItem('phong');
+            $('#xacNhan').hide();
+            $('body').removeClass('modal-open');
+            $('.modal-backdrop').removeClass('modal-backdrop fade in')
+            this.router.navigate(['/home']);
+          });
+        }
+      });
     }
   }
   giatri(time) {
@@ -158,11 +243,18 @@ export class PaymentComponent implements OnInit {
   }
   taoFormThanhToan() {
     this.frmThanhToan = this.formBuilder.group({
-      ten: ['', []],
-      email: ['', []],
-      sdt: ['', []],
-      time: ['', []]
-    })
+      ten: ['', [
+        Validators.required
+      ]],
+      email: ['', [
+        Validators.required,
+        Validators.pattern('^[a-zA-Z0-9%-_]{4,32}@gmail.com$')
+      ]],
+      sdt: ['', [
+        Validators.required,
+        Validators.pattern('^(0)[0-9]{9,10}$')
+      ]]
+    });
   }
   luuf() {
     console.log(this.frmThanhToan.value);
@@ -171,9 +263,10 @@ export class PaymentComponent implements OnInit {
     var dichvu: Idichvustore[] = JSON.parse(localStorage.getItem('dichvu'));
     var tong: number = 0;
     if (dichvu) {
-      dichvu.map(res => { return tong = tong + (res.item.gia) })
+      dichvu.map(res => { return tong = tong + (res.item.gia) });
       return tong;
     }
+    return 0;
   }
   layDichVuStore() {
     this.dichVuStore = JSON.parse(localStorage.getItem('dichvu'));
@@ -252,7 +345,7 @@ export class PaymentComponent implements OnInit {
     var tong = 0;
     if (this.cart1 != null) {
       this.cart1.forEach(element => {
-        tong = tong + (element.thucdon.gia * element.sl)
+        tong = tong + (element.thucdon.gia * element.sl);
       })
       return tong;
     }
@@ -261,8 +354,8 @@ export class PaymentComponent implements OnInit {
     this.khachhang = JSON.parse(localStorage.getItem('user'));
     if (!this.khachhang) {
       this.khachhang = {
-        ten: 'Null',
-        sdt: 'Null'
+        ten: '',
+        sdt: ''
       };
     }
   }

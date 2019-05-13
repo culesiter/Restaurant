@@ -22,6 +22,7 @@ const upload = multer({ storage: storage, fileFiter: fileFiter })
 module.exports=function(){
   router.post('/',controller.taoPhong);
   router.get('/',controller.layPhong);
+  router.get('/ph/',controller.layLoaiPhong);
   // router.get('/:id',controller.getProductById1);
   router.delete('/:id',controller.xoaPhong);
   router.put('/:id',controller.capNhatPhong);

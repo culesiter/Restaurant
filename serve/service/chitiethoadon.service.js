@@ -125,7 +125,7 @@ function getProductById(req) {
 }
 function layChiTietHoaDon(request) {
     return new Promise((resolve, reject) => {
-            chitiethoadon.find({ _idhoadon: request.id }).select('_id _idhoadon _idmonan _idthucdon soluongmonan soluonghoadon').populate('_idmonan').populate('_idthucdon').exec(
+            chitiethoadon.find({ _idhoadon: request.id }).select('_id _idhoadon _idmonan _idthucdon soluongmonan soluongthucdon soluonghoadon').populate('_idmonan').populate('_idthucdon').exec(
                 function (err, response) {
                     if (err) {
                         var err = {
@@ -199,8 +199,6 @@ function login(user) {
     });
 }
 function taoChiTietHoaDon(request) {
-
-
     return new Promise((resolve, reject) => {
         var chitiethoadonmoi = new chitiethoadon({
             _idhoadon: request._idhoadon,

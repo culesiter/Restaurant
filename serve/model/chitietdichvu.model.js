@@ -5,8 +5,8 @@ var chitietdichvuSchema = mongoose.Schema(
             type: mongoose.Schema.Types.ObjectId, ref: 'dichvu',
             require: true
         },
-        _idchitiethoadon: {
-            type: mongoose.Schema.Types.ObjectId, ref: 'chitiethoadon',
+        _idhoadon: {
+            type: mongoose.Schema.Types.ObjectId, ref: 'hoadon',
             require: true
         }
 

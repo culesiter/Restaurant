@@ -1,29 +1,30 @@
 
 const typeproduct = require("./../model/producttype.model")
-const phong=require("./../model/phong.model");
+const phong = require("./../model/phong.model");
 
 
-const khachhang=require("./../model/khachhang.model");
-const loainguoidung=require("./../model/loainguoidung.model");
-const hoadon=require("./../model/hoadon.model");
+const khachhang = require("./../model/khachhang.model");
+const loainguoidung = require("./../model/loainguoidung.model");
+const hoadon = require("./../model/hoadon.model");
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 module.exports = {
     taoNguoiDung: taoNguoiDung,
+    taoNguoiDungk: taoNguoiDungk,
     layNguoiDung: layNguoiDung,
     xoaNguoiDung: xoaNguoiDung,
     capNhatKhachHang: capNhatKhachHang,
-    dangNhap:dangNhap,
+    dangNhap: dangNhap,
 
-    capNhatHinh:capNhatHinh
+    capNhatHinh: capNhatHinh
 }
 function capNhatHinh(pramas, file) {
 
     return new Promise((resolve, reject) => {
 
         khachhang.findById({ _id: pramas.id }).then(res => {
-            
+
             if (!res) {
                 var err = {
                     message: "khong ton tai"
@@ -32,15 +33,14 @@ function capNhatHinh(pramas, file) {
             }
             else if (res) {
                 res.hinhanh = file.path
-                res.save((err,response)=>{
-                    if(response)
-                    {
+                res.save((err, response) => {
+                    if (response) {
                         const data = {
                             message: "thanh cong",
                         }
                         resolve(data);
                     }
-                    
+
                 })
             }
         }).catch(err => {
@@ -48,68 +48,73 @@ function capNhatHinh(pramas, file) {
         })
     });
 }
-function dangNhap(request)
-{
+function dangNhap(request) {
     return new Promise((resolve, reject) => {
-   khachhang.findOne({ email: request.body.email })
-        .then(user => {
-          if (!user) { 
-            var err={message: "that bai"  }
-            return reject(err)
-          }
-          bcrypt.compare(request.body.matkhau, user.matkhau, (err, result) => {
-            if (err) {
-                var err={message: err+""}
-                return reject(err)
-            }
-            if (result) {
-              const token = jwt.sign({
-                id: user._id,
-                name: user.name,
-                img: user.img
-              },
-                'secret',
+        khachhang.findOne({ email: request.body.email })
+            .then(user => {
+                if (!user) {
+                    var err = { message: "that bai" }
+                    return reject(err)
+                }
+                if(user.matkhau)
                 {
-                  expiresIn: "1h"
-                })
-             var data={message: "dang nhap thanh cong",
-             _id:user._id,
-             ten:user.ten,
-             email:user.email,
-             sdt:user.sdt,
-             token: token}
-             console.log(123,data);
-             
-             return resolve(data)
-            }
-            err={message: "that bai"  }
-            return reject(err)
-          })
-        })
-        .catch(err => {
-var err={message:err+""}
-            reject(err)
-        })
+                    bcrypt.compare(request.body.matkhau, user.matkhau, (err, result) => {
+                        if (err) {
+                            var err = { message: err + "" }
+                            return reject(err)
+                        }
+                        if (result) {
+                            const token = jwt.sign({
+                                id: user._id,
+                                name: user.name,
+                                img: user.img
+                            },
+                                'secret',
+                                {
+                                    expiresIn: "1h"
+                                })
+                            var data = {
+                                message: "dang nhap thanh cong",
+                                _id: user._id,
+                                ten: user.ten,
+                                email: user.email,
+                                sdt: user.sdt,
+                                token: token
+                            }
+                            console.log(123, data);
     
+                            return resolve(data)
+                        }
+                        err = { message: "that bai" }
+                        return reject(err)
+                    })
+                }else{
+                    var err = { message: "that bai" }
+                    return reject(err)
+                }
+            })
+            .catch(err => {
+                var err = { message: err + "" }
+                reject(err)
+            })
+
     })
 }
 function xoaNguoiDung(request) {
     return new Promise((resolve, reject) => {
-hoadon.findOne({_idkhachhang:request.id}).exec().then(
-    response=>{
-        if(response)
-        {
-            var mes={
-                message:"rang buoc"
+        hoadon.findOne({ _idkhachhang: request.id }).exec().then(
+            response => {
+                if (response) {
+                    var mes = {
+                        message: "rang buoc"
+                    }
+                    reject(mes)
+                }
+                else if (!response) {
+                    return khachhang.remove({ _id: request.id })
+                }
             }
-            reject(mes)
-        }
-        else if(!response)
-        {
-          return  khachhang.remove({ _id: request.id })
-        }
-    }
-).then(result => {
+        ).then(result => {
             const data = {
                 message: "xoa thanh cong"
             }
@@ -122,60 +127,58 @@ hoadon.findOne({_idkhachhang:request.id}).exec().then(
 function capNhatKhachHang(pramas, request) {
 
     return new Promise((resolve, reject) => {
-        
-           khachhang.findById({ _id: pramas.id }).then(res => {
-                if (!res) {
-                    var err = {
-                        message: "khong ton tai"
-                    }
-                    reject(err)
+
+        khachhang.findById({ _id: pramas.id }).then(res => {
+            if (!res) {
+                var err = {
+                    message: "khong ton tai"
                 }
-                else if (res) {
-                    bcrypt.hash(request.matkhau, 10, (err, hash) => {
-                         if(hash) {
-                            res.ten=request.ten||res.ten,
-                            res.matkhau=hash||res.matkhau,
-                            res.email=request.email||res.email,
-                            res.sdt=request.sdt||res.sdt
-                            return res.save((err,response)=>{
-                                if(response)
-                                {
-                                    const data = {
-                                        message: "thanh cong",
-                                        values: {
-                                            _id: response._id
-                        
-                                        }
+                reject(err)
+            }
+            else if (res) {
+                bcrypt.hash(request.matkhau, 10, (err, hash) => {
+                    if (hash) {
+                        res.ten = request.ten || res.ten,
+                            res.matkhau = hash || res.matkhau,
+                            res.email = request.email || res.email,
+                            res.sdt = request.sdt || res.sdt
+                        return res.save((err, response) => {
+                            if (response) {
+                                const data = {
+                                    message: "thanh cong",
+                                    values: {
+                                        _id: response._id
+
                                     }
-                                    resolve(data);
                                 }
-                                
-                            });
-                        }else if(hash==undefined)
-                        {
-                            res.ten=request.ten||res.ten,
-                            res.matkhau=res.matkhau,
-                            res.email=request.email||res.email,
-                            res.sdt=request.sdt||res.sdt
-                            return res.save((err,response)=>{
-                                if(response)
-                                {
-                                    const data = {
-                                        message: "thanh cong",
-                                        values: {
-                                            _id: response._id
-                        
-                                        }
+                                resolve(data);
+                            }
+
+                        });
+                    } else if (hash == undefined) {
+                        res.ten = request.ten || res.ten,
+                            res.matkhau = res.matkhau,
+                            res.email = request.email || res.email,
+                            res.sdt = request.sdt || res.sdt
+                        return res.save((err, response) => {
+                            if (response) {
+                                const data = {
+                                    message: "thanh cong",
+                                    values: {
+                                        _id: response._id
+
                                     }
-                                    resolve(data);
                                 }
-                                
-                            });
-                        }
-                    })   
-                }}).catch(err => {
-                reject(err + "");
-            })
+                                resolve(data);
+                            }
+
+                        });
+                    }
+                })
+            }
+        }).catch(err => {
+            reject(err + "");
+        })
     });
 }
 
@@ -193,14 +196,14 @@ function layNguoiDung(req) {
                 } else {
                     var data = response.map(res => {
                         return {
-                            _id:res._id,
-                            ten:res.ten,
-                            email:res.email,
-                            sdt:res.sdt,
-                            matkhau:res.matkhau,
-                            hinhanh:res.hinhanh,
-                            thanhvien:res.thanhvien,
-                            diem:res.diem                       
+                            _id: res._id,
+                            ten: res.ten,
+                            email: res.email,
+                            sdt: res.sdt,
+                            matkhau: res.matkhau,
+                            hinhanh: res.hinhanh,
+                            thanhvien: res.thanhvien,
+                            diem: res.diem
                         }
                     }
                     )
@@ -210,51 +213,51 @@ function layNguoiDung(req) {
     });
 }
 function taoNguoiDung(request) {
-        return new Promise((resolve, reject) => {
-            var email = {
-                email: new RegExp('^' + request.email.trim() + '$', "i")
-            }
+    return new Promise((resolve, reject) => {
+        var email = {
+            email: new RegExp('^' + request.email.trim() + '$', "i")
+        }
         bcrypt.hash(request.matkhau, 10, (err, hash) => {
             if (err) {
                 reject(err);
             } else {
                 var nguoidungmoi = new khachhang({
-                    ten:request.ten,
-                    email:request.email,
-                    sdt:request.sdt,
-                    matkhau:hash,
-                    hinhanh:request.hinhanh,
-                    thanhvien:request.thanhvien,
-                    diem:request.diem
+                    ten: request.ten,
+                    email: request.email,
+                    sdt: request.sdt,
+                    matkhau: hash,
+                    hinhanh: request.hinhanh,
+                    thanhvien: request.thanhvien,
+                    diem: request.diem
                 });
                 khachhang.find(email).then(items => {
                     if (items.length > 0) {
-        
+
                         var err = {
                             message: "email da co"
                         }
                         reject(err)
-        
+
                     }
                     else {
-        
+
                         return nguoidungmoi.save()
                     }
-        
+
                 }).then(result => {
                     const data = {
                         message: "tao thanh cong",
                         values: {
                             _id: result._id
-        
+
                         }
                     }
                     resolve(data);
-                  console.log(data);
-                  
+                    console.log(data);
+
                 }).catch(err => {
-                    var err={err:err+""}
-                    reject(err );
+                    var err = { err: err + "" }
+                    reject(err);
                 })
 
             }
@@ -262,5 +265,32 @@ function taoNguoiDung(request) {
 
 
     })
-  
-}     
+
+}  
+function taoNguoiDungk(request){
+    return new Promise((resolve, reject) => {
+        var nguoidungmoi = new khachhang({
+            ten: request.ten,
+            email: request.email,
+            sdt: request.sdt,
+            hinhanh: request.hinhanh,
+            thanhvien: request.thanhvien,
+            diem: request.diem
+        });
+       nguoidungmoi.save().then(result => {
+            const data = {
+                message: "tao thanh cong",
+                values: {
+                    _id: result._id
+
+                }
+            }
+            resolve(data);
+            console.log(data);
+
+        }).catch(err => {
+            var err = { err: err + "" }
+            reject(err);
+        })
+    })
+}   

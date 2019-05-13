@@ -14,7 +14,6 @@ var customerSchema=mongoose.Schema(
         },
         password:{
             type:String,
-            require:true
         },
         birthday:{
             type:Date

@@ -41,30 +41,14 @@ export class HeaderComponent implements OnInit {
     this.kiemTraUrl();
     this.kiemTraKhachHang();
 
-    //this.kiemTraTop()
 
   }
 
   kiemTraTop() {
-    // window.onscroll = function () { myFunction() };
-
-    // function myFunction() {
-    //   if (document.body.scrollTop > 50 || document.documentElement.scrollTop > 50) {
-    //     document.getElementById("header").className = "display";
-    //     document.getElementById("header1").className = "";
-
-
-    //   } else {
-    //     document.getElementById("header").className = "";
-    //     document.getElementById("header1").className = "display";
-    //   }
-    // }
     var prevScrollpos = window.pageYOffset;
     window.onscroll = function () {
       var currentScrollPos = window.pageYOffset;
       if (prevScrollpos > currentScrollPos) {
-        console.log(1);
-
         document.getElementById("head1").style.top = "0";
       } else {
         document.getElementById("head1").style.top = "-50px";
@@ -77,14 +61,12 @@ export class HeaderComponent implements OnInit {
   }
   dangNhap() {
     this.login.login(this.email.value, this.matkhau.value).subscribe(response => {
-      console.log(response);
-      
       if (response.message === 'dang nhap thanh cong') {
         alert('Đăng nhập thành công');
         const user = JSON.stringify(response);
         localStorage.setItem('user', user);
         this.khachhang = JSON.parse(localStorage.getItem('user'));
-      }else{
+      } else {
         alert('Sai Email hoặc Password');
       }
     });
@@ -101,7 +83,9 @@ export class HeaderComponent implements OnInit {
   dangXuat() {
     localStorage.removeItem('user');
     localStorage.removeItem('cart');
+    localStorage.removeItem('cart1');
     localStorage.removeItem('dichvu');
+    localStorage.removeItem('thoidiemden');
     localStorage.removeItem('phong');
     this.kiemTraKhachHang();
   }

@@ -56,3 +56,21 @@
   .c{
     -webkit-animation-delay: 0.2s;
   }
+
+  .date{
+    position: relative;
+    padding-left: 10px;
+    img{
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      right: -50px;
+    }
+  }
+.chuse{
+  background: #428bca !important;
+  border: 1px solid  #428bca !important
+}
+.table>thead>tr>th, .table>tbody>tr>th, .table>tfoot>tr>th, .table>thead>tr>td, .table>tbody>tr>td, .table>tfoot>tr>td{
+  vertical-align: middle;
+}

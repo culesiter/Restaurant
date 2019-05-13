@@ -1,6 +1,7 @@
 import { CartserviceService } from './../../share/services/cartservice.service';
 import { Component, OnInit } from '@angular/core';
 import { ThucdonserviceService } from '../../share/services/thucdonservice.service';
+import { Router } from '@angular/router';
 declare var $: any;
 @Component({
   selector: 'app-home',
@@ -13,27 +14,19 @@ export class HomeComponent implements OnInit {
   private timeout = null;
   private muaNhay: boolean;
   private check_Click: Boolean = false;
-  constructor(private thucdonservice: ThucdonserviceService, private cartService: CartserviceService) { }
+  public href: String = "";
+  constructor(private thucdonservice: ThucdonserviceService,
+     private cartService: CartserviceService,
+     private router: Router) { }
 
 
   ngOnInit() {
-    // $('#cart').on('click', function () {
-    //   $('#cart').addClass('animated jello');
-    //   setTimeout(function () {
-    //     $('#cart').removeClass('animated jello');
-    //   }, 1000);
-    // });
-
-    // document.getElementById('cart').onclick()
-
-
-
-
+    this.href = this.router.url;
+    console.log(this.router.url);
     this.thucdonservice.laydanhsachThucDon().subscribe(response => {
       localStorage.setItem('thucdon', JSON.stringify(response));
-    })
+    });
     this.getCount();
-
     this.layKetQua();
   }
   layKetQua() {
@@ -42,20 +35,16 @@ export class HomeComponent implements OnInit {
       setTimeout(() => {
         this.muaNhay = false;
       }, 1000);
-    })
-    
-
+    });
   }
   getCount() {
     this.cartService.getcount().subscribe(response => {
-      this.count = response
-      
+      this.count = response;
     })
   }
 
   nhay() {
     this.check_Click = true;
-
     setTimeout(() => {
       this.check_Click = false;
     }, 1000);

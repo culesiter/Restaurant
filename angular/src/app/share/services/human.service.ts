@@ -6,6 +6,7 @@ import { Icustomer } from '../entities/icustomer';
 @Injectable()
 export class HumanService {
   private url = "http://localhost:3000/khachhang";
+  private urlk = "http://localhost:3000/khachhang/noaccount";
   private urlnv = "http://localhost:3000/nhanvien/login";
   constructor(private http: Http) { }
   upanhkh(id,img): Observable<any> {
@@ -15,6 +16,12 @@ export class HumanService {
   }
   them1(data): Observable<any> {
     return this.http.post(this.url, data).map(res => {
+      console.log(res);
+      return res.json();
+   });
+  }
+  themtknoaccount(data): Observable<any> {
+    return this.http.post(this.urlk, data).map(res => {
       console.log(res);
       return res.json();
    });
