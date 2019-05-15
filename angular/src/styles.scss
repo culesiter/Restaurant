@@ -60,3 +60,8 @@ li{
         color: green;
     }
 }
+.modal-open {
+    overflow: hidden;
+    overflow-y: auto;
+    padding-right: 0 !important;
+}

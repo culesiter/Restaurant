@@ -1,6 +1,6 @@
-<section id="order-detail">
+<section >
   <div class="container">
-    <table class="table table-striped">
+    <table  datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"  >
       <thead>
         <tr>
           <th>#</th>
@@ -44,7 +44,13 @@
 <div id="myModal" class="modal fade" role="dialog">
   <div class="modal-dialog">
     <div class="modal-content">
-      <table class="table table-bordered">
+      <p class="text-center" *ngFor="let item of chitiet;index as i" style="margin-top:20px">
+         Hóa đơn {{item._id}} tạo ngày {{item.thoidiemtao}}, ngày đến {{item.thoidiemden}}
+      </p>
+      <div *ngIf="doi===true" class="img text-center" style="margin-bottom: 20px;width: 100%;">
+          <img src="../../../assets/images/load.svg" alt="">
+      </div>
+      <table *ngIf="fade===false" class="table table-bordered">
         <thead>
           <tr>
             <th>Món ăn</th>
@@ -53,13 +59,14 @@
         </thead>
         <tbody>
           <tr *ngFor="let item of chitietma;index as i">
-            <td>{{item._idmonan.ten}} X {{item.soluongmonan}}</td>
+            <td>{{item._idmonan.ten}} X {{item.soluongmonan}} <span *ngIf="item._idmonan.giacu"> giảm {{item._idmonan.khuyenmai}} %</span></td>
             <td>{{item._idmonan.gia}}</td>
           </tr>
         </tbody>
         <thead>
           <tr>
             <th>Phong</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -68,8 +75,20 @@
               <td>{{item.gia}}</td>
             </tr>
         </tbody>
+        <thead *ngIf="dichvu">
+            <tr>
+              <th>Dịch vụ</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody *ngIf="dichvu">
+              <tr *ngFor="let item of dichvu;index as i">
+                <td>{{item._iddichvu.ten}}</td>
+                <td>{{item._iddichvu.gia}}</td>
+              </tr>
+          </tbody>
         <tfoot >
-          <tr *ngFor="let item of phong;index as i">
+          <tr *ngFor="let item of chitiet;index as i">
             <th>Tổng tiền</th>
             <th>
                   {{item.tongtien}}

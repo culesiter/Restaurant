@@ -9,7 +9,8 @@
         -webkit-box-orient: vertical;
         overflow: hidden;
         text-overflow: ellipsis;">{{dish.ten}}</h3>
-        <span>{{dish.gia}}</span>
+        <span *ngIf="!dish.giacu">{{dish.gia}}</span>
+        <span *ngIf="dish.giacu">{{dish.giacu}} -> {{dish.gia}}</span>
         <p><a (click)="addToCart(dish)" class="btn btn-primary" role="button">Mua</a>
           <a (click)="denTrangChiTiet(dish._id)" class="btn btn-default" role="button">Chi tiết</a></p>
       </div>

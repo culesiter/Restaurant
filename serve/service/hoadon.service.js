@@ -1,8 +1,9 @@
 const thucdon = require("./../model/thucdon.model");
 const monan = require("./../model/monan.model")
-const thucdonmonan = require("./../model/chitietthucdonmonan.model")
-const moment = require('moment');
+const thucdonmonan = require("./../model/chitietthucdonmonan.model");
 
+const moment = require('moment');
+const chitiethoadon=require('./../model/chitiethoadon.model');
 const hoadon = require("./../model/hoadon.model");
 const khachhang = require("./../model/khachhang.model");
 const phong = require('./../model/phong.model')

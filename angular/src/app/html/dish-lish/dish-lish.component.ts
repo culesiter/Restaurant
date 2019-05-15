@@ -39,9 +39,8 @@ export class DishLishComponent implements OnInit {
     this.ThanhTimKiemScroll();
 
   }
-  ThanhTimKiemScroll()
-  {
-    
+  ThanhTimKiemScroll() {
+
   }
   denTrangChiTiet(id) {
     this.router.navigate(['/home/monan/' + id]);
@@ -96,11 +95,14 @@ export class DishLishComponent implements OnInit {
   }
   showdishs() {
     this.dishservice.laydanhsachmonan().subscribe(response => {
-
-
+      response.forEach(element => {
+        if (element.khuyenmai > 0) {
+          element['giacu'] = element.gia;
+          element.gia = element.gia * (100 - element.khuyenmai) / 100;
+        }
+      });
       this.dishs = response;
-    })
-
+    });
   }
   showdishs2() {
     this.dishservice.laydanhsachmonan().subscribe(response => {
