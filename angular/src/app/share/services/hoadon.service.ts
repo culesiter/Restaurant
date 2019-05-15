@@ -32,7 +32,7 @@ export class HoadonService {
     return this.http.get(this.url + '/id/?id=' + id).map(respose => respose.json() as any[]);
   }
   getCTHD(id): Observable<any> {
-    return this.http.get(this.url + '/' + id).map(res => res.json());
+    return this.http.get(this.urlcthd + '/' + id).map(res => res.json());
   }
   getCTHDMA(id): Observable<any> {
     return this.http.get(this.urlcthd + '/' + id).map(res => res.json());

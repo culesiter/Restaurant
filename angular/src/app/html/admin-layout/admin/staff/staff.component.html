@@ -1,0 +1,127 @@
+<div class="container-fluid">
+  <div class="customer-head">
+      <div class="btn-group group-them" data-toggle="buttons">
+          <label class="btn btn-default btn-lg bnt-them" (click)="formShow('view')">
+              View List Staffs
+          </label>
+          <label class="btn btn-primary btn-lg bnt-them " (click)="formShow('create')">
+              Create New Staff
+          </label>
+      </div>
+  </div>
+  <div class="content">
+      <div class="list-customer" *ngIf="formStatus==='view'">
+          <table class="table table-hover list-table">
+              <thead>
+                  <tr>
+                      <th scope="col">#</th>
+                      <th scope="col">Tên</th>
+                      <th scope="col">Email</th>
+                      <th scope="col">Chức vụ</th>
+                      <th scope="col">Thâm niên</th>
+                  </tr>
+              </thead>
+              <tbody class="tbody-list">
+                  <tr *ngFor="let item of listData" (click)="formShow('detail',item)">
+                      <th scope="row">1</th>
+                      <td>{{item.ten}}</td>
+                      <td>{{item.email}}</td>
+                      <td>{{item.thanhvien}}</td>
+                      <td>{{item.diem}}</td>
+                  </tr>
+              </tbody>
+          </table>
+      </div>
+      <!-- ket thuc form xem list -->
+      <!-- form add new begin -->
+      <label class="create-customer" *ngIf="formStatus==='create'">
+          <form id="formThemCustomer" (ngSubmit)="addNew()" [formGroup]="formAddNew">
+              <div class="form-row">
+                  <div class="form-group col-md-6">
+                      <label>Tên</label>
+                      <input type="text" class="form-control"  formControlName="ten" placeholder="Name">
+                  </div>
+                  <div class="form-group col-md-6">
+                      <label>Email</label>
+                      <input type="email" class="form-control"  formControlName="email" placeholder="Email">
+                  </div>
+                  <div class="form-group col-md-6">
+                      <label>Mật Khẩu</label>
+                      <input type="password" class="form-control"  formControlName="matkhau" placeholder="Password">
+                  </div>
+                  <div class="form-group col-md-6">
+                      <label>Confirm Mật Khẩu</label>
+                      <input type="password" class="form-control"  placeholder="Password">
+                  </div>
+                  <div class="form-group col-md-4">
+                      <label>Birth Day</label>
+                      <input type="date" class="form-control">
+                  </div>
+                  <div class="form-group col-md-8">
+                      <label>Avatar</label>
+                      <div class="custom-file">
+                          <input type="file" (change)="onFileChange($event)" class="custom-file-input" id="inputGroupFile01">
+                          <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                      </div>
+                  </div>
+              </div>
+              <div class="form-group col-md-4">
+                  <div class="form-check">
+                      <input class="form-check-input" type="checkbox" value="true" formControlName="thanhvien" id="gridCheck">
+                      <label class="form-check-label" for="gridCheck">
+                        Thành Viên
+                      </label>
+                  </div>
+              </div>
+              <button type="submit" class="btn btn-secondary">Sign up</button>
+              <button class="btn btn-warning" onclick="formReser()">Clear</button>
+          </form>
+      </label>
+      <!-- ket thuc form add new -->
+      <!-- bat dau form detail -->
+      <div class="view-detail" *ngIf="formStatus==='detail'">
+          <div class="row row-back">
+              <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8 xoac">
+                  <div class="edit-profile">
+                      <form (ngSubmit)="edit()" [formGroup]="frmSua">
+                          <div class="form-row">
+                              <div class="form-group col-md-6">
+                                  <label>Tên</label>
+                                  <input type="text" class="form-control" formControlName="ten" value="{{eData.ten}}">
+                                  
+                              </div>
+                              <div class="form-group col-md-6">
+                                  <label>Email</label>
+                                  <input type="email" class="form-control" formControlName="email" value="{{eData.email}}">
+                              </div>
+                              <div class="form-group col-md-6">
+                                  <label>Mật khẩu</label>
+                                  <input type="password" class="form-control" formControlName="matkhau" value="{{eData.matkhau}}">
+                              </div>
+                              <div class="col-md-12">
+                                  <label>Đia chỉ</label>
+                                  <input type="text" class="form-control">
+                              </div>
+                              <div class="form-row">
+                                  <div class="form-group col-md-6">
+                                      <label>Thành Viên</label>
+                                      <input type="text" formControlName="thanhvien" class="form-control" value="{{eData.thanhvien}}">
+                                  </div>
+                                  <div class="form-group col-md-6">
+                                      <label for="inputState">Điểm Tích Lũy</label>
+                                        <input type="number" formControlName="diem"  class="form-control" value="{{eData.diem}}">
+                                  </div>
+                              </div>
+                              <div class="form-group col-md-6">
+                                <button type="submit" class="btn btn-default">Edit</button>
+                                <button class="btn btn-warning" (click)="delete()">Xóa</button>
+                              </div>
+                          </div>
+                      </form>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <!-- ket thuc form detail -->
+  </div>
+</div>

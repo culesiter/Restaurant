@@ -1,0 +1,28 @@
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { Http } from '@angular/http';
+import { Icustomer } from '../entities/icustomer';
+@Injectable()
+export class StaffService {
+  private url = "http://localhost:3000/nhanvien";
+  constructor(private http: Http) { }
+  them(data): Observable<any> {
+    return this.http.post(this.url, data).map(res => {
+      return res.json();
+   });
+  }
+  xoa(id): Observable<any>{
+    return this.http.delete(this.url +'/'+ id).map(res => res.json() as any);
+  }
+  sua(id,data): Observable<any>{
+    return this.http.put(this.url + '/' + id, data).map(res => res.json() as any);
+  }
+  laydanhsach(): Observable<any[]> {
+    return this.http.get(this.url).map(respose =>  respose.json() as any[]);
+  }
+  upanhkh(id,img): Observable<any> {
+    return this.http.put(this.url +'/img/'+ id, img).map(res => {
+      return res.json();
+   });
+  }
+}

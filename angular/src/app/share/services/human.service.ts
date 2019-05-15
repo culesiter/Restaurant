@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Http } from '@angular/http';
 import { Icustomer } from '../entities/icustomer';
-
 @Injectable()
 export class HumanService {
   private url = "http://localhost:3000/khachhang";

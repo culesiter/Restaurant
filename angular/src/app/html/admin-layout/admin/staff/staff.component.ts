@@ -1,28 +1,23 @@
 import { Component, OnInit } from '@angular/core';
-import { Icustomer } from '../../../../share/entities/icustomer';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { HumanService } from '../../../../share/services/human.service';
-declare var $;
+import { StaffService } from '../../../../share/services/staff.service';
 @Component({
-  selector: 'app-customer-manager',
-  templateUrl: './customer-manager.component.html',
-  styleUrls: ['./customer-manager.component.scss']
+  selector: 'app-stafff',
+  templateUrl: './staff.component.html',
+  styleUrls: ['./staff.component.scss']
 })
-export class CustomerManagerComponent implements OnInit {
+export class StaffComponent implements OnInit {
   private formStatus = 'view';
-  private listData: Icustomer[] = [];
-  private eData: Icustomer = {};
+  private listData: any[] = [];
+  private eData: any = {};
   private formAddNew: FormGroup;
   private frmSua: FormGroup;
   private selectedFile: any;
   constructor(private formBuilder: FormBuilder,
-    private human: HumanService) { }
+    private staff: StaffService) { }
   ngOnInit() {
     this.taoForm();
     this.getList();
-    $(document).ready( function () {
-      $('#tester').DataTable();
-  } );
   }
   formShow(a, data) {
     this.formStatus = a;
@@ -57,19 +52,20 @@ export class CustomerManagerComponent implements OnInit {
     });
   }
   getList() {
-    this.human.laydanhsach().subscribe(res => { this.listData = res });
+    this.staff.laydanhsach().subscribe(res => { this.listData = res; console.log(res);
+     });
   }
   onFileChange(event) {
     this.selectedFile = event.target.files[0];
   }
   addNew() {
-    this.human.them(this.formAddNew.value).subscribe(res => {
+    this.staff.them(this.formAddNew.value).subscribe(res => {
       var data = res;
       console.log(data.values._id);
       const uploaddata = new FormData();
       uploaddata.append('khachhangimg', this.selectedFile);
       console.log(this.selectedFile,uploaddata);
-      this.human.upanhkh(data.values._id, uploaddata).subscribe(resq =>{
+      this.staff.upanhkh(data.values._id, uploaddata).subscribe(resq =>{
         console.log(resq);
         if(resq){
           alert('thanh cong!');
@@ -80,7 +76,7 @@ export class CustomerManagerComponent implements OnInit {
     })
   }
   edit() {
-    this.human.sua(this.eData._id, this.frmSua.value).subscribe(res => {
+    this.staff.sua(this.eData._id, this.frmSua.value).subscribe(res => {
       if (res) {
         alert('ok');
         this.getList();
@@ -91,7 +87,7 @@ export class CustomerManagerComponent implements OnInit {
     })
   }
   delete() {
-    this.human.xoa(this.eData._id).subscribe(res => {
+    this.staff.xoa(this.eData._id).subscribe(res => {
       this.getList();
       this.formStatus = 'view';
     });

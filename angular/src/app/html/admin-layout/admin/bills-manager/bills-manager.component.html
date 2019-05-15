@@ -1,5 +1,6 @@
 <div class="bills">
     <div class="list-table" *ngIf="xem===true">
+            <div class="excel-export" (click)="exportAsXLSX()"><i class="fa fa-file-excel-o"></i> Xuất Excel bảng dữ liệu</div>
         <table class="table table-hover list-table">
             <thead>
                 <tr>
@@ -25,25 +26,29 @@
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
             <form>
                 <div class="form-row">
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-3">
                         <label>Tên khách hàng</label>
-                        <input type="text" class="form-control" value="Giá">
+                        <input type="text" class="form-control" disabled value="{{ehoadon.ten}}">
                     </div>
                     <div class="form-group col-md-3">
                         <label>Thời điểm tạo</label>
-                        <input type="text" class="form-control" placeholder="Cơm chiên dương châu">
+                        <input type="text" class="form-control" disabled value="{{ehoadon.thoidiemtao}}">
                     </div>
                     <div class="form-group col-md-3">
                         <label>Thời điểm đến</label>
-                        <input type="text" class="form-control" placeholder="Giá">
+                        <input type="text" class="form-control" value="{{ehoadon.thoidiemden}}">
                     </div>
                     <div class="form-group col-md-3">
                         <label>Tổng tiền</label>
-                        <input type="text" class="form-control" placeholder="Giá">
+                        <input type="text" class="form-control" value="{{ehoadon.tongtien}}">
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label>Phòng</label>
+                        <input type="text" class="form-control" value="{{ehoadon._idphong.ten}}">
                     </div>
                     <div class="form-group col-md-3">
                         <label>Trạng thái</label>
-                        <select class="form-control">
+                        <select class="form-control"  >
                             <option value="0">Chưa Xác Nhận</option>
                             <option value="1">Đã Xác Nhận</option>
                             <option value="2">Đã Thanh Toán</option>
@@ -57,8 +62,34 @@
                         </select>
                     </div>
                     <div class="form-group col-md-12">
+                        <label style="width: 100%">Các món ăn đã chọn</label>
+                        <div *ngFor="let item of eCthd">
+                            <div class="form-group col-md-4">
+                                <label>Tên món ăn</label>
+                                <input type="text" class="form-control" disabled value="{{item._idmonan.ten}}">
+                            </div>
+                            <div class="form-group col-md-2">
+                                <label>Số lượng</label>
+                                <input type="number" class="form-control" value="{{item.soluongmonan}}">
+                            </div>
+                            <div class="form-group col-md-2">
+                                <label>Đơn giá</label>
+                                <input type="text" class="form-control" disabled value="{{item._idmonan.gia}}">
+                            </div>
+                            <div class="form-group col-md-2">
+                                <label>Khuyến mãi</label>
+                                <input type="text" class="form-control" value="{{item._idmonan.khuyenmai}}">
+                            </div>
+                            <div class="form-group col-md-2">
+                                <label>Thành tiền</label>
+                                <input type="text" class="form-control" disabled value="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-12">
                         <button type="submit" class="btn btn-secondary">Xác nhận đơn hàng</button>
-                        <button class="btn btn-warning" (click)="openDetail()">Back</button>
+                        <button class="btn btn-warning" (click)="openDetail()">Trở lại</button>
+                        <button class="btn btn-danger" (click)="deleteBill()">Xóa</button>
                     </div>
                 </div>
             </form>

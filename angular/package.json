@@ -25,6 +25,7 @@
     "angular2-datetimepicker": "^1.1.1",
     "bootstrap": "^3.1.1",
     "core-js": "^2.4.1",
+    "file-saver": "^2.0.2",
     "flickity": "^2.1.2",
     "moment": "^2.22.2",
     "ngx-bootstrap": "^3.0.1",
@@ -32,6 +33,7 @@
     "rxjs": "^5.5.6",
     "script-loader": "^0.7.2",
     "tiny-slider": "^2.8.7",
+    "xlsx": "^0.14.3",
     "zone.js": "^0.8.19"
   },
   "devDependencies": {

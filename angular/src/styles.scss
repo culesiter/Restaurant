@@ -47,3 +47,16 @@ li{
 .table>thead>tr>th, .table>tbody>tr>th, .table>tfoot>tr>th, .table>thead>tr>td, .table>tbody>tr>td, .table>tfoot>tr>td{
     vertical-align: middle;
 }
+.excel-export{
+    background: white;
+    padding: 5px 15px;
+    line-height: 30px;
+    border: none;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    cursor: pointer;
+    i{
+        font-size: 18px;
+        color: green;
+    }
+}
