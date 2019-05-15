@@ -11,6 +11,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { AngularDateTimePickerModule } from 'angular2-datetimepicker';
 import { OwlModule } from 'ngx-owl-carousel';
+import { DataTablesModule } from 'angular-datatables';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './html/home/home.component';
 import { HeaderComponent } from './html/header/header.component';
@@ -56,6 +57,7 @@ import { ThongtinnguoidungComponent } from './html/thongtinnguoidung/thongtinngu
 import { HoadonService } from './share/services/hoadon.service';
 import { AuthGuard } from './share/services/guard/auth.guard';
 import { OrderDetailComponent } from './html/order-detail/order-detail.component';
+
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   {
@@ -163,9 +165,19 @@ const routes: Routes = [
     HttpModule,
     BrowserAnimationsModule,
     BrowserModule,
+    DataTablesModule,
     RouterModule.forRoot(routes)
   ],
-  providers: [DichvuService, LoginService, AuthGuard, HoadonService, HumanService, ThucdonserviceService, DishserviceService, DataTransferService, CartserviceService, PhongserviceService],
+  providers: [DichvuService,
+    LoginService,
+    AuthGuard,
+    HoadonService,
+    HumanService,
+    ThucdonserviceService,
+    DishserviceService,
+    DataTransferService,
+    CartserviceService,
+    PhongserviceService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
