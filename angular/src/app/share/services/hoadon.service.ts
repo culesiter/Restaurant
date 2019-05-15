@@ -8,6 +8,7 @@ export class HoadonService {
   private url = "http://localhost:3000/hoadon";
   private urlcthd = "http://localhost:3000/chitiethoadon";
   private urlp = "http://localhost:3000/phong";
+  private urldv= "http://localhost:3000/chitietdichvu";
   constructor(private http: Http) { }
   them(data): Observable<Ihoadon> {
     console.log(data);
@@ -39,5 +40,8 @@ export class HoadonService {
   }
   layphongtheoid(id): Observable<any[]> {
     return this.http.get(this.urlp + '/ph?id=' + id).map(respose => respose.json() as any[]);
+  }
+  laydichvutheoid(id): Observable<any[]> {
+    return this.http.get(this.urldv + '/?id=' + id).map(respose => respose.json() as any[]);
   }
 }

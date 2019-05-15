@@ -110,7 +110,6 @@ export class CartComponent implements OnInit {
           buoidadat = false;
         }
       }
-      console.log(index);
       if (index > -1) {
         this.buoi.splice(index, 1);
         localStorage.setItem('buoi', JSON.stringify(this.buoi));
@@ -118,7 +117,6 @@ export class CartComponent implements OnInit {
         this.buoi.push(data);
         localStorage.setItem('buoi', JSON.stringify(this.buoi));
       } else {
-        console.log('clear');
         this.clearbuoi();
         this.buoi = [];
         this.buoi.push(data);
@@ -496,9 +494,6 @@ export class CartComponent implements OnInit {
     this.congthuctinhtongtienan();
   }
   thayDoiGiaTri(value, item) {
-
-
-
     this.cart = JSON.parse(localStorage.getItem('cart'));
     this.cart.forEach(element => {
       if (element.item._id == item.item._id) {

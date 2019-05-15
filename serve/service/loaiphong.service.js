@@ -119,7 +119,7 @@ function getProductById(req) {
             }).catch(err => reject(err + ""))
     });
 }
-function layLoaiPhong() {
+function layLoaiPhong(request) {
     return new Promise((resolve, reject) => {
         loaiphong.find({}).select('_id ten gia succhua mota hinhanh').exec(
             function (err, response) {

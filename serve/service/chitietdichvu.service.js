@@ -151,33 +151,6 @@ function getProductById(req) {
 }
 function layChiTietDichVu(request) {
     return new Promise((resolve, reject) => {
-        console.log(request);
-        
-        if(!request.id)
-        {
-            
-              chitietdichvu.find({}).select('_id _idchitiethoadon _iddichvu').populate('_iddichvu').populate('_idchitiethoadon').exec(
-                function (err, response) {
-                    if (err) {
-                        var err = {
-                            err: err
-                        }
-                        reject(err)
-                    } else {
-                        var data = response.map(res => {
-                            return {
-                                _id:res._id,
-                                _idchitiethoadon:res._idchitiethoadon,
-                                _iddichvu:res._iddichvu
-                            }
-                        }
-    
-                        )
-    
-                        resolve(data);
-                    }
-                })
-        }else{
                 chitietdichvu.find({_idhoadon:request.id}) .select('_id _idhoadon _iddichvu ').populate('_iddichvu ten').populate('_idhoadon').exec(
                     function (err, response) {
                         if (err) {
@@ -199,7 +172,7 @@ function layChiTietDichVu(request) {
                             resolve(data);
                         }
                     })
-        }
+        
    
     });
 }

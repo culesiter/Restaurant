@@ -11,6 +11,9 @@ export class OrderDetailComponent implements OnInit {
   private chitiet: any;
   private chitietma: any;
   private phong: any;
+  private dichvu: any;
+  private doi= false;
+  private fade=true;
   constructor(private hoadon: HoadonService) { }
 
   ngOnInit() {
@@ -23,19 +26,37 @@ export class OrderDetailComponent implements OnInit {
     });
   }
   toDetail(_id) {
+    this.doi = true;
+    this.fade=true;
+    this.layPhong(_id);
     this.hoadon.laydanhsachtheoid(_id).subscribe(Response => {
       this.chitiet = Response;
-      console.log(this.chitiet)
     });
     this.hoadon.getCTHDMA(_id).subscribe(Response => {
+      Response.forEach(element => {
+        if (element._idmonan.khuyenmai > 0) {
+          element._idmonan['giacu'] = element._idmonan.gia;
+          element._idmonan.gia = element._idmonan.gia * (100 - element._idmonan.khuyenmai) / 100;
+        }
+      });
       this.chitietma = Response;
     });
-    this.hoadon.laydanhsachtheoid(_id).subscribe(Response => {
-      this.hoadon.layphongtheoid(Response[0]._idphong._id).subscribe(res => {
-        this.phong = res;
-      });
+    this.hoadon.laydichvutheoid(_id).subscribe(Response => {
+      if (Response.length === 0) {
+        this.dichvu = false;
+        return false;
+      }
+      this.dichvu = Response;
     });
 
   }
-
+  layPhong(_id) {
+    this.hoadon.laydanhsachtheoid(_id).subscribe(Response => {
+      this.hoadon.layphongtheoid(Response[0]._idphong._id).subscribe(res => {
+        this.phong = res;
+        this.doi = false;
+        this.fade = false;
+      });
+    });
+  }
 }
