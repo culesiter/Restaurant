@@ -11,6 +11,7 @@ export class SalaryComponent implements OnInit {
   private listData: any[];
   private serchform: FormGroup;
   private data: any;
+  private tongluong: number;
   constructor(private staff: StaffService, private formBuilder: FormBuilder) { }
 
   ngOnInit() {
@@ -41,6 +42,10 @@ export class SalaryComponent implements OnInit {
   }
   calc(item) {
     this.data = item;
+  }
+  calc2(ngay, luong) {
+    console.log(ngay * luong);
+    this.tongluong = ngay * luong;
   }
   search() {
     console.log(this.serchform.value);

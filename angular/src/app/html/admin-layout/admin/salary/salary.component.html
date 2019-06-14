@@ -73,11 +73,14 @@
           </div>
         <div class="form-group">
           <label>Ngày làm:</label>
-          <input type="number" class="form-control" [(ngModel)]='ngay' placeholder="Nhập ngày đã làm trong tháng">
+          <input type="number" class="form-control" [(ngModel)]='ngay' [ngModelOptions]="{standalone: true}" placeholder="Nhập ngày đã làm trong tháng">
         </div>
-         <button (click)="calc2()">
-         Tính
+         <button (click)="calc2(data._idcapnhanvien.luongtheongay,ngay)">
+          Tính
          </button>  
+         <span *ngIf="tongluong">
+           Tổng lương:{{tongluong}}
+         </span>
       </form>
     </div>
   </div>
