@@ -172,15 +172,15 @@ export class PaymentComponent implements OnInit {
           }
         }
         alert('ok');
+        $('#xacNhan').modal('toggle');
+        $('body').removeClass('modal-open');
+        $('.modal-backdrop').removeClass('modal-backdrop fade in')
+        this.router.navigate(['/home']);
         localStorage.removeItem('cart');
         localStorage.removeItem('cart1');
         localStorage.removeItem('dichvu');
         localStorage.removeItem('thoidiemden');
         localStorage.removeItem('phong');
-        $('#xacNhan').modal('toggle');
-        $('body').removeClass('modal-open');
-        $('.modal-backdrop').removeClass('modal-backdrop fade in')
-        this.router.navigate(['/home']);
       });
     } else {
       this.customer.themtknoaccount(this.frmThanhToan.value).subscribe(Response => {
@@ -224,15 +224,15 @@ export class PaymentComponent implements OnInit {
               }
             }
             alert('ok');
+            $('#xacNhan').hide();
+            $('body').removeClass('modal-open');
+            $('.modal-backdrop').removeClass('modal-backdrop fade in');
+            this.router.navigate(['/home']);
             localStorage.removeItem('cart');
             localStorage.removeItem('cart1');
             localStorage.removeItem('dichvu');
             localStorage.removeItem('thoidiemden');
             localStorage.removeItem('phong');
-            $('#xacNhan').hide();
-            $('body').removeClass('modal-open');
-            $('.modal-backdrop').removeClass('modal-backdrop fade in')
-            this.router.navigate(['/home']);
           });
         }
       });

@@ -1,6 +1,6 @@
 <section >
   <div class="container">
-    <table  datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"  >
+    <table id="TableName"  datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"  >
       <thead>
         <tr>
           <th>#</th>
@@ -29,7 +29,7 @@
             {{item.tongtien}}
           </td>
           <td style="width:200px">
-            <div class="btn btn-danger">
+            <div class="btn btn-danger" (click)="delete(item._id)">
               Hủy
             </div>
             <div class="btn btn-primary" data-toggle="modal" data-target="#myModal" (click)="toDetail(item._id)">

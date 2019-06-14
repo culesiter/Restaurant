@@ -18,7 +18,11 @@ var nhanvienSchema=mongoose.Schema(
         },
         hinhanh:{
             type:String
-        }
+        },
+        _idcapnhanvien:{
+            type: mongoose.Schema.Types.ObjectId, ref: 'capnhanvien',
+            require:true
+        },
 
     }
 );

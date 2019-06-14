@@ -5,6 +5,7 @@ module.exports=function(){
   router.get('/',controller.layHoaDon);
   router.get('/ng/',controller.layHoaDonNguoiDung);
   router.get('/id/',controller.layHoaDonId);
+  router.get('/huy/:id',controller.huyHoaDonId);
   // router.get('/:id',controller.getProductById1);
   router.delete('/:id',controller.xoaHoaDon);
   router.post('/gettime/',controller.layHoaDonTheoDay);

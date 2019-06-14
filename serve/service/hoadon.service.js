@@ -15,7 +15,8 @@ module.exports = {
     updateProduct: updateProduct,
     layHoaDonTheoDay: layHoaDonTheoDay,
     layHoaDonNguoiDung:layHoaDonNguoiDung,
-    layHoaDonId:layHoaDonId
+    layHoaDonId:layHoaDonId,
+    huyHoaDonId:huyHoaDonId
 }
 function layHoaDonTheoDay(req) {
     return new Promise((resolve, reject) => {
@@ -35,6 +36,29 @@ function layHoaDonTheoDay(req) {
                     resolve(data);
                 }
             })
+    });
+}
+function huyHoaDonId(request){
+    return new Promise((resolve, reject) => {
+        hoadon.findOne({ _id: request.id }).exec(function (err, response) {
+            if (err) {
+                var err = {
+                    message: "khong tim thay"
+                }
+                reject(err);
+            } else {
+                response.tinhtrang=-1
+                return response.save()
+            }
+        }).then(result=>{
+            const data = {
+                message: "da huy",
+                values: {
+                    tinhtrang:result.tinhtrang
+                }
+            }
+            resolve(data);
+        })
     });
 }
 function xoaHoaDon(request) {

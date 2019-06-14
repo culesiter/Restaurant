@@ -181,7 +181,7 @@ function updateProduct(pramas, request) {
 }
 function layNhanVien(req) {
     return new Promise((resolve, reject) => {
-        nhanvien.find({}).select('_id ten email sdt matkhau hinhanh ').exec(
+        nhanvien.find({}).select('_id ten email sdt matkhau hinhanh _idcapnhanvien').populate('_idcapnhanvien').exec(
             function (err, response) {
                 if (err) {
                     var err = {
@@ -198,7 +198,8 @@ function layNhanVien(req) {
                             matkhau:res.matkhau,
                             hinhanh:res.hinhanh,
                             thanhvien:res.thanhvien,
-                            diem:res.diem                       
+                            diem:res.diem,
+                            _idcapnhanvien:res._idcapnhanvien                       
                         }
                     }
                     )
@@ -208,11 +209,7 @@ function layNhanVien(req) {
     });
 }
 function taoNhanVien(request) {
-console.log(request);
-
         return new Promise((resolve, reject) => {
-
-
         bcrypt.hash(request.matkhau, 10, (err, hash) => {
             if (err) {
                 reject(err);
@@ -222,7 +219,8 @@ console.log(request);
                     email:request.email,
                     sdt:request.sdt,
                     matkhau:hash,
-                    hinhanh:request.hinhanh
+                    hinhanh:request.hinhanh,
+                    _idcapnhanvien:request._idcapnhanvien
                 });
                 nhanVienMoi.save().then(result => {
                     const data = {

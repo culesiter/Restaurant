@@ -41,7 +41,6 @@ export class HeaderComponent implements OnInit {
     this.kiemTraUrl();
     this.kiemTraKhachHang();
 
-
   }
 
   kiemTraTop() {

@@ -1,4 +1,4 @@
-import { Component, OnInit , OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
 import { HoadonService } from '../../share/services/hoadon.service';
 import { Subject } from 'rxjs';
 declare var $: any;
@@ -7,7 +7,7 @@ declare var $: any;
   templateUrl: './order-detail.component.html',
   styleUrls: ['./order-detail.component.scss']
 })
-export class OrderDetailComponent implements OnDestroy, OnInit {
+export class OrderDetailComponent implements OnInit, AfterViewInit {
   private hoadonkh: any;
   private chitiet: any;
   private chitietma: any;
@@ -20,11 +20,23 @@ export class OrderDetailComponent implements OnDestroy, OnInit {
   constructor(private hoadon: HoadonService) { }
 
   ngOnInit() {
-    this.layhoadon();
+
     this.dtOptions = {
       pagingType: 'full_numbers',
-      pageLength: 2
+      pageLength: 2,
+      retrieve: true,
+      paging: false,
     };
+
+    this.layhoadon();
+  }
+  delete(id) {
+    this.hoadon.huy(id).subscribe(Response => {
+      this.layhoadon();
+    });
+  }
+  ngAfterViewInit(): void {
+    this.layhoadon();
   }
   layhoadon() {
     const khachhang = JSON.parse(localStorage.getItem('user'));
@@ -32,14 +44,6 @@ export class OrderDetailComponent implements OnDestroy, OnInit {
       this.hoadonkh = Response;
       this.dtTrigger.next();
     });
-  }
-  ngOnDestroy(): void {
-    // Do not forget to unsubscribe the event
-    this.dtTrigger.unsubscribe();
-  }
-  private extractData(res: Response) {
-    const body = res.json();
-    return body.data || {};
   }
   toDetail(_id) {
     this.doi = true;

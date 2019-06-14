@@ -23,6 +23,9 @@ export class HoadonService {
   sua(id, data): Observable<Ihoadon> {
     return this.http.put(this.url + '/' + id, data).map(res => res.json() as Ihoadon);
   }
+  huy(id): Observable<any[]> {
+    return this.http.get(this.url + '/huy/' + id).map(res => res.json() as any[]);
+  }
   laydanhsach(): Observable<Ihoadon[]> {
     return this.http.get(this.url).map(respose => respose.json() as Ihoadon[]);
   }

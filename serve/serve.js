@@ -26,6 +26,8 @@ app.use('/hoadon', require('./router/hoadon.router')());
 app.use('/chitiethoadon', require('./router/chitiethoadon.router.js')());
 app.use('/chitietdichvu', require('./router/chitietdichvu.router')());
 app.use('/chitietmonan', require('./router/chitietmonan.router')());
+app.use('/capnhanvien', require('./router/capnhanvien.router.js')());
+app.use('/bangluong', require('./router/bangluong.router.js')());
 
 app.listen(3000, () => {
     console.log("serve's running ...");
