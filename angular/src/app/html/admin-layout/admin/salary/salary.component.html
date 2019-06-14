@@ -21,8 +21,11 @@
             </select>
           </div>
         </div>
-        <div class="col-md-6" style="display: flex; align-items: center">
+        <div class="col-md-3" style="display: flex; align-items: center">
           <button type="submit" class="btn btn-primary">Chọn</button>
+        </div>
+        <div class="col-md-3" style="display: flex; align-items: center">
+          <strong>lương tháng: {{mounthde}}</strong>
         </div>
       </div>
     </form>
@@ -39,7 +42,7 @@
         </tr>
       </thead>
       <tbody class="tbody-list">
-        <tr *ngFor="let item of listData; let i = index" >
+        <tr *ngFor="let item of listData; let i = index">
           <th scope="row">{{i+1}}</th>
           <td>{{item.ten}}</td>
           <td>{{item.email}}</td>
@@ -47,8 +50,13 @@
           <td>{{item._idcapnhanvien.luongtheongay}} VND</td>
           <td>{{item.luong}}</td>
           <td>
-            <button class="btn btn-primary" (click)="calc(item)" data-toggle="modal" data-target="#myModal">
-              tính lương
+            <button *ngIf="item.luong==='chuatinh'" class="btn btn-primary" (click)="calc(item)" data-toggle="modal"
+              data-target="#myModal">
+              Tính lương
+            </button>
+            <button *ngIf="item.luong==='datinh'" class="btn btn-danger" (click)="detail(item)" data-toggle="modal"
+              data-target="#myModal2">
+              Xem chi tiết
             </button>
           </td>
         </tr>
@@ -68,20 +76,56 @@
           {{data.email}}
         </div>
         <div class="form-group">
-            <label>Lương theo ngày:</label>
-            {{data._idcapnhanvien.luongtheongay}} VND
-          </div>
+          <label>Lương theo ngày:</label>
+          {{data._idcapnhanvien.luongtheongay}} VND
+        </div>
         <div class="form-group">
           <label>Ngày làm:</label>
-          <input type="number" class="form-control" [(ngModel)]='ngay' [ngModelOptions]="{standalone: true}" placeholder="Nhập ngày đã làm trong tháng">
+          <input type="number" class="form-control" [(ngModel)]='ngay' [ngModelOptions]="{standalone: true}"
+            placeholder="Nhập ngày đã làm trong tháng">
         </div>
-         <button (click)="calc2(data._idcapnhanvien.luongtheongay,ngay)">
+        <button (click)="calc2(data._idcapnhanvien.luongtheongay,ngay)">
           Tính
-         </button>  
-         <span *ngIf="tongluong">
-           Tổng lương:{{tongluong}}
-         </span>
+        </button>
+        <div *ngIf="tongluong">
+          <span>
+            Tổng lương:{{tongluong}}
+          </span>
+          <button (click)="calc3(data,ngay,tongluong)">
+            Xác nhận
+          </button>
+        </div>
+
       </form>
+    </div>
+  </div>
+</div>
+<div class="modal" id="myModal2" *ngIf="bangluong">
+  <div class="modal-dialog">
+    <div class="modal-content" style="padding:15px">
+      <div class="wrap" style="width: 100%;display: inline-block">
+        <button style="font-size: 30px" type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="content">
+        <div class="row">
+          <h3 class="text-center">
+            Bảng lương tháng {{bangluong.thangtra}}
+          </h3>
+          <div class="col-md-12">
+            Tên:{{bangluong._idnhanvien.ten}}
+          </div>
+          <div class="col-md-12">
+            Email:{{bangluong._idnhanvien.email}}
+          </div>
+          <div class="col-md-12">
+            Số ngày làm:{{bangluong.songaylam}}
+          </div>
+          <div class="col-md-12">
+            Tổng lương:{{bangluong.tongluong}}
+          </div>
+
+        </div>
+      </div>
     </div>
   </div>
 </div>

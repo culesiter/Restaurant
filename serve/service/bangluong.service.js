@@ -13,6 +13,7 @@ module.exports = {
     taobangluong: taobangluong,
     laybangluong: laybangluong,
     xoabangluong: xoabangluong,
+    laybangluongtheoid:laybangluongtheoid
 }
 function xoabangluong(request) {
     return new Promise((resolve, reject) => {
@@ -61,6 +62,37 @@ function laybangluong() {
    
     });
 }
+function laybangluongtheoid(req) {
+    console.log(req.id)
+    return new Promise((resolve, reject) => {
+                bangluong.find({_idnhanvien:req.id}).select('_id _idnhanvien songaylam ghichu tongluong ngaytinh thangtra').populate('_idnhanvien').exec(
+                    function (err, response) {
+                        if (err) {
+                            var err = {
+                                err: err
+                            }
+                            reject(err)
+                        } else {
+                            var data = response.map(res => {
+                                return {
+                                    _id:res._id,
+                                    _idnhanvien:res._idnhanvien,
+                                    songaylam:res.songaylam,
+                                    ghichu:res.ghichu,
+                                    tongluong:res.tongluong,
+                                    ngaytinh:res.ngaytinh,
+                                    thangtra:res.thangtra
+                                }
+                            }
+        
+                            )
+                            resolve(data);
+                        }
+                    })
+        
+   
+    });
+}
 function taobangluong(request) {
     return new Promise((resolve, reject) => {
         var bangluongmoi = new bangluong({
@@ -71,23 +103,8 @@ function taobangluong(request) {
             ngaytinh:request.ngaytinh,
             thangtra:request.thangtra
         });
-        var thangtra = {
-            thangtra: new RegExp('^' + request.thangtra.trim() + '$', "i")
-        }
-        bangluong.find(thangtra).then(items => {
-            if (items.length > 0) {
-
-                var err = {
-                    message: "Đã tính!"
-                }
-                reject(err)
-
-            }
-            else {
-                return bangluongmoi.save()
-            }
-
-        }).then(result => {
+    
+        bangluongmoi.save().then(result => {
             const data = {
                 message: "luu thanh cong",
                 values: {
