@@ -60,23 +60,21 @@ export class StaffComponent implements OnInit {
     this.selectedFile = event.target.files[0];
   }
   addNew() {
-    console.log(this.formAddNew.value);
- 
-    // this.staff.them(this.formAddNew.value).subscribe(res => {
-    //   var data = res;
-    //   console.log(data.values._id);
-    //   const uploaddata = new FormData();
-    //   uploaddata.append('khachhangimg', this.selectedFile);
-    //   console.log(this.selectedFile, uploaddata);
-    //   this.staff.upanhkh(data.values._id, uploaddata).subscribe(resq => {
-    //     console.log(resq);
-    //     if (resq) {
-    //       alert('thanh cong!');
-    //       this.getList();
-    //       this.formStatus = 'view';
-    //     }
-    //   })
-    // })
+    this.staff.them(this.formAddNew.value).subscribe(res => {
+      var data = res;
+      console.log(data.values._id);
+      const uploaddata = new FormData();
+      uploaddata.append('nhanvienimg', this.selectedFile);
+      console.log(this.selectedFile, uploaddata);
+      this.staff.upanhkh(data.values._id, uploaddata).subscribe(resq => {
+        console.log(resq);
+        if (resq) {
+          alert('thanh cong!');
+          this.getList();
+          this.formStatus = 'view';
+        }
+      });
+    });
   }
   edit() {
     this.staff.sua(this.eData._id, this.frmSua.value).subscribe(res => {
@@ -87,7 +85,7 @@ export class StaffComponent implements OnInit {
       } else {
         alert('failed');
       }
-    })
+    });
   }
   delete() {
     this.staff.xoa(this.eData._id).subscribe(res => {

@@ -1,6 +1,6 @@
 var router=require("express").Router();
 var controller=require("../controller/nhanvien.controller");
-var multer = require('multer')
+var multer = require('multer');
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, './upload/nhanvien/');

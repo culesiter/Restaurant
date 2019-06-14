@@ -59,6 +59,7 @@ import { AuthGuard } from './share/services/guard/auth.guard';
 import { OrderDetailComponent } from './html/order-detail/order-detail.component';
 import { StaffComponent } from './html/admin-layout/admin/staff/staff.component';
 import { StaffService } from './share/services/staff.service';
+import { SalaryComponent } from './html/admin-layout/admin/salary/salary.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -108,6 +109,7 @@ const routes: Routes = [
           { path: 'roomtype', component: LoaiphongComponent },
           { path: 'booking', component: BooknowComponent },
           { path: 'staff', component: StaffComponent },
+          { path: 'salary', component: SalaryComponent },
           {
             path: 'bills', component: BillsManagerComponent, children: [
               { path: 'detail:/id', component: BillDetailComponent }
@@ -160,6 +162,7 @@ const routes: Routes = [
     ThongtinnguoidungComponent,
     OrderDetailComponent,
     StaffComponent,
+    SalaryComponent
   ],
   imports: [
     OwlModule,
@@ -173,8 +176,8 @@ const routes: Routes = [
     RouterModule.forRoot(routes)
   ],
   providers: [DichvuService,
-    StaffService, 
-    LoginService, 
+    StaffService,
+    LoginService,
     AuthGuard, HoadonService,
      HumanService, ThucdonserviceService,
       DishserviceService, DataTransferService, CartserviceService, PhongserviceService],

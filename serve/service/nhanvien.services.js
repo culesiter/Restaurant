@@ -12,6 +12,7 @@ module.exports = {
     capNhatHinh:capNhatHinh
 }
 function capNhatHinh(pramas, file) {
+    console.log(file.path)
 
     return new Promise((resolve, reject) => {
 

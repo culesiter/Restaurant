@@ -8,6 +8,7 @@ module.exports={
     capNhatHinh:capNhatHinh1
 }
 function capNhatHinh1(req,res){
+    console.log(1,res.file);
     service.capNhatHinh(req.params,req.file).then((result) => {
         res.send(result);
     }).catch((err) => {

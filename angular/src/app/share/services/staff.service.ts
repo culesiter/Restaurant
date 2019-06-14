@@ -5,6 +5,7 @@ import { Icustomer } from '../entities/icustomer';
 @Injectable()
 export class StaffService {
   private url = "http://localhost:3000/nhanvien";
+  private urll = "http://localhost:3000/bangluong";
   constructor(private http: Http) { }
   them(data): Observable<any> {
     return this.http.post(this.url, data).map(res => {
@@ -19,6 +20,9 @@ export class StaffService {
   }
   laydanhsach(): Observable<any[]> {
     return this.http.get(this.url).map(respose =>  respose.json() as any[]);
+  }
+  laydanhsachdatinh(): Observable<any[]> {
+    return this.http.get(this.urll).map(respose =>  respose.json() as any[]);
   }
   upanhkh(id,img): Observable<any> {
     return this.http.put(this.url +'/img/'+ id, img).map(res => {
