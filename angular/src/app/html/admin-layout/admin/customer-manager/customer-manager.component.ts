@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Icustomer } from '../../../../share/entities/icustomer';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { HumanService } from '../../../../share/services/human.service';
+import { Subject } from 'rxjs';
 declare var $;
 @Component({
   selector: 'app-customer-manager',
@@ -15,14 +16,19 @@ export class CustomerManagerComponent implements OnInit {
   private formAddNew: FormGroup;
   private frmSua: FormGroup;
   private selectedFile: any;
+  dtOptions: DataTables.Settings = {};
+  dtTrigger: Subject<any> = new Subject();
   constructor(private formBuilder: FormBuilder,
     private human: HumanService) { }
   ngOnInit() {
     this.taoForm();
     this.getList();
-    $(document).ready( function () {
-      $('#tester').DataTable();
-  } );
+    this.dtOptions = {
+      pagingType: 'full_numbers',
+      pageLength: 6,
+      retrieve: true,
+      paging: true,
+    };
   }
   formShow(a, data) {
     this.formStatus = a;
@@ -57,7 +63,7 @@ export class CustomerManagerComponent implements OnInit {
     });
   }
   getList() {
-    this.human.laydanhsach().subscribe(res => { this.listData = res });
+    this.human.laydanhsach().subscribe(res => { this.listData = res; this.dtTrigger.next(); });
   }
   onFileChange(event) {
     this.selectedFile = event.target.files[0];

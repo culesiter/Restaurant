@@ -37,10 +37,10 @@ export class StaffComponent implements OnInit {
         Validators.required,
         Validators.pattern('^[a-zA-Z0-9]{6,32$')
       ]],
-      thanhvien: ['', []],
-      diem: ['', [
-        Validators.required,
-        Validators.pattern('^[0-9]{8,32$')
+      sdt: ['', [
+      ]],
+      _idcapnhanvien: ['', [
+        Validators.pattern('^[a-zA-Z0-9]{6,32$')
       ]]
     });
     this.frmSua = this.formBuilder.group({
@@ -52,28 +52,31 @@ export class StaffComponent implements OnInit {
     });
   }
   getList() {
-    this.staff.laydanhsach().subscribe(res => { this.listData = res; console.log(res);
-     });
+    this.staff.laydanhsach().subscribe(res => {
+    this.listData = res; console.log(res);
+    });
   }
   onFileChange(event) {
     this.selectedFile = event.target.files[0];
   }
   addNew() {
-    this.staff.them(this.formAddNew.value).subscribe(res => {
-      var data = res;
-      console.log(data.values._id);
-      const uploaddata = new FormData();
-      uploaddata.append('khachhangimg', this.selectedFile);
-      console.log(this.selectedFile,uploaddata);
-      this.staff.upanhkh(data.values._id, uploaddata).subscribe(resq =>{
-        console.log(resq);
-        if(resq){
-          alert('thanh cong!');
-          this.getList();
-          this.formStatus = 'view';
-        }
-      })
-    })
+    console.log(this.formAddNew.value);
+ 
+    // this.staff.them(this.formAddNew.value).subscribe(res => {
+    //   var data = res;
+    //   console.log(data.values._id);
+    //   const uploaddata = new FormData();
+    //   uploaddata.append('khachhangimg', this.selectedFile);
+    //   console.log(this.selectedFile, uploaddata);
+    //   this.staff.upanhkh(data.values._id, uploaddata).subscribe(resq => {
+    //     console.log(resq);
+    //     if (resq) {
+    //       alert('thanh cong!');
+    //       this.getList();
+    //       this.formStatus = 'view';
+    //     }
+    //   })
+    // })
   }
   edit() {
     this.staff.sua(this.eData._id, this.frmSua.value).subscribe(res => {

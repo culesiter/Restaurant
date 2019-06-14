@@ -91,21 +91,7 @@ var err={message:err+""}
 }
 function xoaNhanVien(request) {
     return new Promise((resolve, reject) => {
-hoadon.findOne({_id:request.id}).exec().then(
-    response=>{
-        if(response)
-        {
-            var mes={
-                message:" tồn tại hóa đơn"
-            }
-            reject(mes)
-        }
-        else if(!response)
-        {
-          return  nguoidung.remove({ _id: request.id })
-        }
-    }
-).then(result => {
+        nhanvien.remove({ _id: request.id }).then(result => {
             const data = {
                 message: "xoa thanh cong"
             }

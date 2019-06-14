@@ -18,16 +18,16 @@
                       <th scope="col">Tên</th>
                       <th scope="col">Email</th>
                       <th scope="col">Chức vụ</th>
-                      <th scope="col">Thâm niên</th>
+                      <th scope="col">Lương theo ngày</th>
                   </tr>
               </thead>
               <tbody class="tbody-list">
-                  <tr *ngFor="let item of listData" (click)="formShow('detail',item)">
-                      <th scope="row">1</th>
+                  <tr *ngFor="let item of listData; let i = index" (click)="formShow('detail',item)">
+                      <th scope="row">{{i+1}}</th>
                       <td>{{item.ten}}</td>
                       <td>{{item.email}}</td>
-                      <td>{{item.thanhvien}}</td>
-                      <td>{{item.diem}}</td>
+                      <td>Nhân viên cấp {{item._idcapnhanvien.cap}}</td>
+                      <td>{{item._idcapnhanvien.luongtheongay}} VND</td>
                   </tr>
               </tbody>
           </table>
@@ -39,25 +39,34 @@
               <div class="form-row">
                   <div class="form-group col-md-6">
                       <label>Tên</label>
-                      <input type="text" class="form-control"  formControlName="ten" placeholder="Name">
+                      <input type="text" class="form-control"  formControlName="ten" placeholder="Nhập tên">
                   </div>
                   <div class="form-group col-md-6">
                       <label>Email</label>
-                      <input type="email" class="form-control"  formControlName="email" placeholder="Email">
+                      <input type="email" class="form-control"  formControlName="email" placeholder="Nhập email">
                   </div>
                   <div class="form-group col-md-6">
+                    <label>Số điện thoại</label>
+                    <input type="text" class="form-control"  formControlName="sdt" placeholder="Nhập số điện thoại">
+                 </div>
+                 <div class="form-group col-md-6">
+                    <label>Cấp nhân viên</label>
+                    <select class="form-control" formControlName="_idcapnhanvien">
+                        <option value="5d0377fad811143770b281e8">Cấp 1</option>
+                        <option value="5d0377c3d811143770b281e6">Cấp 2</option>
+                        <option value="5d0377cdd811143770b281e7">Cấp 3</option>
+                    </select>
+                 </div>
+                 <div class="form-group col-md-6">
                       <label>Mật Khẩu</label>
                       <input type="password" class="form-control"  formControlName="matkhau" placeholder="Password">
-                  </div>
+                 </div>
                   <div class="form-group col-md-6">
-                      <label>Confirm Mật Khẩu</label>
-                      <input type="password" class="form-control"  placeholder="Password">
-                  </div>
-                  <div class="form-group col-md-4">
-                      <label>Birth Day</label>
+                      <label>Ngày sinh</label>
                       <input type="date" class="form-control">
                   </div>
-                  <div class="form-group col-md-8">
+                
+                  <div class="form-group col-md-12">
                       <label>Avatar</label>
                       <div class="custom-file">
                           <input type="file" (change)="onFileChange($event)" class="custom-file-input" id="inputGroupFile01">
@@ -65,16 +74,10 @@
                       </div>
                   </div>
               </div>
-              <div class="form-group col-md-4">
-                  <div class="form-check">
-                      <input class="form-check-input" type="checkbox" value="true" formControlName="thanhvien" id="gridCheck">
-                      <label class="form-check-label" for="gridCheck">
-                        Thành Viên
-                      </label>
-                  </div>
+              <div class="col-md-12">
+                <button class="btn btn-warning" onclick="formReser()">Làm mới</button>
+                <button type="submit" class="btn btn-primary">Đăng ký</button>
               </div>
-              <button type="submit" class="btn btn-secondary">Sign up</button>
-              <button class="btn btn-warning" onclick="formReser()">Clear</button>
           </form>
       </label>
       <!-- ket thuc form add new -->

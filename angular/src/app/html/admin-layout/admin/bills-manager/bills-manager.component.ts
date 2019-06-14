@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Ihoadon } from '../../../../share/entities/ihoadon';
 import { HoadonService } from '../../../../share/services/hoadon.service';
-import { ExcelService } from '../../../../share/services/contacService/Excel.service';
+// import { ExcelService } from '../../../../share/services/contacService/Excel.service';
 @Component({
   selector: 'app-bills-manager',
   templateUrl: './bills-manager.component.html',
@@ -13,13 +13,13 @@ export class BillsManagerComponent implements OnInit {
   private lstHoadon: Ihoadon[] = [];
   ehoadon: Ihoadon ={};
   private eCthd: any[] = [];
-  constructor(private router: Router, private hoadonS: HoadonService, private excelService: ExcelService) { }
+  constructor(private router: Router, private hoadonS: HoadonService) { }
   ngOnInit() {
     this.laydsHoadon();
   }
-  exportAsXLSX():void {
-    this.excelService.exportAsExcelFile(this.lstHoadon, 'sample');
- }
+//   exportAsXLSX():void {
+//     this.excelService.exportAsExcelFile(this.lstHoadon, 'sample');
+//  }
   openDetail(data) {
     this.xem = !this.xem;
     this.ehoadon = data;

@@ -57,13 +57,9 @@ import { ThongtinnguoidungComponent } from './html/thongtinnguoidung/thongtinngu
 import { HoadonService } from './share/services/hoadon.service';
 import { AuthGuard } from './share/services/guard/auth.guard';
 import { OrderDetailComponent } from './html/order-detail/order-detail.component';
-<<<<<<< HEAD
-import { ExcelService } from '../app/share/services/contacService/Excel.service';
 import { StaffComponent } from './html/admin-layout/admin/staff/staff.component';
 import { StaffService } from './share/services/staff.service';
-=======
 
->>>>>>> e7e6667f4dab5606421735869a66bca360c10e30
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   {
@@ -121,7 +117,7 @@ const routes: Routes = [
       }
     ]
   }
-]
+];
 @NgModule({
   declarations: [
     AppComponent,
@@ -176,20 +172,12 @@ const routes: Routes = [
     DataTablesModule,
     RouterModule.forRoot(routes)
   ],
-<<<<<<< HEAD
-  providers: [DichvuService,StaffService, ExcelService, LoginService, AuthGuard, HoadonService, HumanService, ThucdonserviceService, DishserviceService, DataTransferService, CartserviceService, PhongserviceService],
-=======
   providers: [DichvuService,
-    LoginService,
-    AuthGuard,
-    HoadonService,
-    HumanService,
-    ThucdonserviceService,
-    DishserviceService,
-    DataTransferService,
-    CartserviceService,
-    PhongserviceService],
->>>>>>> e7e6667f4dab5606421735869a66bca360c10e30
+    StaffService, 
+    LoginService, 
+    AuthGuard, HoadonService,
+     HumanService, ThucdonserviceService,
+      DishserviceService, DataTransferService, CartserviceService, PhongserviceService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -11,7 +11,7 @@
     </div>
     <div class="content">
         <div class="list-customer" *ngIf="formStatus==='view'">
-            <table id="tester" class="table table-striped table-bordered" style="width:100%">
+            <table id="tester" class="table table-striped table-bordered" style="width:100%" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
                 <thead>
                     <tr>
                         <th>Tên</th>
