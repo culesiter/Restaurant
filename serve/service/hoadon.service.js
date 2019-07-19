@@ -16,8 +16,10 @@ module.exports = {
     layHoaDonTheoDay: layHoaDonTheoDay,
     layHoaDonNguoiDung:layHoaDonNguoiDung,
     layHoaDonId:layHoaDonId,
-    huyHoaDonId:huyHoaDonId
+    huyHoaDonId:huyHoaDonId,
+
 }
+
 function layHoaDonTheoDay(req) {
     return new Promise((resolve, reject) => {
         hoadon.find({}).select('_id thoidiemden thoidiemtao hinhthucthanhtoan tinhtrang _idkhachhang buoiDat _idphong').populate('_idkhachhang', 'ten').populate('_idphong').exec(

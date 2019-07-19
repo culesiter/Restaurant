@@ -8,10 +8,18 @@ module.exports = {
     layHoaDonTheoDay:layHoaDonTheoDay1,
     layHoaDonNguoiDung:layHoaDonNguoiDung1,
     layHoaDonId:layHoaDonId1,
-    huyHoaDonId:huyHoaDonId1
+    huyHoaDonId:huyHoaDonId1,
+    kiemTraNgay:kiemTraNgay1
 }
 function layHoaDonTheoDay1(req, res) {
     service.layHoaDonTheoDay(req.body).then((result) => {
+        res.send(result);
+    }).catch((err) => {
+        res.send(err);
+    });
+}
+function kiemTraNgay1(req, res) {
+    service.kiemTraNgay(req.body).then((result) => {
         res.send(result);
     }).catch((err) => {
         res.send(err);

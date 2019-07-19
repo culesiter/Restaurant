@@ -9,6 +9,7 @@ module.exports=function(){
   // router.get('/:id',controller.getProductById1);
   router.delete('/:id',controller.xoaHoaDon);
   router.post('/gettime/',controller.layHoaDonTheoDay);
+  router.post('/time/',controller.kiemTraNgay);
   // router.put('/:id',controller.capNhatLoaiMon)
     return router;
 }

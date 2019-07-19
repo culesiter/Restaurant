@@ -30,3 +30,23 @@
         font-style: italic;
     }
 }
+.selected{
+    background: red;
+    cursor: not-allowed;
+}
+.chuse{
+    background: green
+}
+button{
+    border: none;
+}
+.circle{
+    width: 24px;
+    height: 24px;
+    background: greenyellow;
+    overflow: hidden;
+    border-radius: 50%;
+}
+.registed{
+    background: #bf0000;
+}

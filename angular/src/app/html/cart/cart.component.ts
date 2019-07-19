@@ -45,6 +45,8 @@ export class CartComponent implements OnInit {
   private ngayden: string;
   private mochonphong = false;
   private buoi = [];
+  private time: any;
+  private room: any;
   constructor(private dichvuservice: DichvuService,
     private formbuilder: FormBuilder,
     private cartService: CartserviceService,
@@ -53,9 +55,9 @@ export class CartComponent implements OnInit {
 
 
   ngOnInit() {
-    this.cleartime();
-    this.clearphong();
-    this.clearbuoi();
+    // this.cleartime();
+    // this.clearphong();
+    // this.clearbuoi();
     this.taoFormTimKiem();    // this.layPhongStore();
     this.laydanhsachphong();
     this.taoCart();
@@ -76,8 +78,10 @@ export class CartComponent implements OnInit {
     this.kiemTraHienTienDichVu();
     this.kiemTraKhachhang();
     this.kiemTraPhongStore();
+    this.time = JSON.parse(localStorage.getItem('thoidiemden'));
+    this.room = JSON.parse(localStorage.getItem('phong'));
   }
-  cleartime(){
+  cleartime() {
     localStorage.removeItem('thoidiemden');
   }
   clearphong() {
@@ -193,6 +197,7 @@ export class CartComponent implements OnInit {
       if (phong.length == 0) {
         return false;
       }
+      this.mochonphong = true;
       return true;
     }
     else {

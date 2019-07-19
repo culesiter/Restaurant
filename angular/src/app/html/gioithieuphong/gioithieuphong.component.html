@@ -9,16 +9,77 @@
         <div class="title">
           CÁC LOẠI PHÒNG ĂN TRONG NHÀ HÀNG
         </div>
-        <div class="page-content">
-          <div *ngFor="let item of loaip" class="loai-phong">
-            <div class="tenloaiphong">
-              {{item.ten}}
-            </div>
-            <img src="http://localhost:3000/{{item.hinhanh}}" class="img-thumbnail" alt="Image">
-            <div class="mota">
-              {{item.mota}}
+        <div>
+          <div class="search" style="margin-bottom: 30px">
+            <div class="row" style="align-self: center;display: flex">
+              <div class="col-md-1 text-left" style="align-self: center;display: flex">
+                Ngày:
+              </div>
+              <div class="col-md-4">
+                <input id="thoidiemdat" type='date' class="form-control" (change)="laythoigian($event)" />
+              </div>
+              <div class="col-md-6 text-left" style="align-self: center;display: flex;font-size: 12px;color: #666">
+                Tìm kiếm phòng trống bằng cách chọn ngày!
+              </div>
             </div>
           </div>
+
+        </div>
+        <div class="page-content">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>Loai</th>
+                <th>Hình ảnh</th>
+                <th>Mô tả</th>
+                <th>Giá</th>
+              </tr>
+            </thead>
+            <tbody *ngFor="let item of loaip">
+              <tr class="loai-phong">
+                <td rowspan="2">
+                  {{item.ten}}
+                </td>
+                <td>
+                  <img src="http://localhost:3000/{{item.hinhanh}}" class="img-thumbnail" alt="Image">
+                </td>
+                <td style="text-align: justify">
+                  {{item.mota}}
+                </td>
+                <td>
+                  {{item.gia}} VNĐ
+                </td>
+              </tr>
+              <tr>
+                <td colspan="3" *ngIf="item.dsp">
+                  <div *ngFor="let ite of item.dsp">
+                    <div class="wrap" style="display: flex; justify-content: space-between;padding-bottom: 5px">
+                      <div class="name" style="width: 10%;">
+                        {{ite.ten}}
+                      </div>
+                      <div style="display: flex"  *ngIf="ite.buoidat">
+                        Buổi Sáng:
+                        <div class="circle" [ngClass]="{'registed':ite.buoidat.buoisang===false}">
+
+                        </div>
+                      </div>
+                      <div style="display:flex" *ngIf="ite.buoidat">
+                        Buổi Chiều:
+                        <div class="circle" [ngClass]="{'registed':ite.buoidat.buoichieu===false}">
+
+                        </div>
+                      </div>
+                      <button class="btn btn-primary" data-toggle="modal" (click)="modalShow(ite)"
+                        data-target="#myModal">Đặt</button>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+
+
+          </table>
+
         </div>
       </div>
       <div id="menu1" class="tab-pane fade">
@@ -43,5 +104,34 @@
         </div>
       </div>
     </div>
+  </div>
+</div>
+<div id="myModal" class="modal fade" role="dialog" *ngIf="modal">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">{{modal.ten}}</h4>
+      </div>
+      <div class="modal-body">
+        <input id="thoidiemdat" type='date' class="form-control" (change)="laythoigian($event,modal._id)" />
+        <div class="wrap" *ngIf="show==true" style="margin-top: 10px">
+          <button [ngClass]="{'selected':buoidat.buoisang===false,'chuse':kiemtrabuoi(1,modal._id)}"
+            (click)=chonBuoi(1,modal._id)>
+            Buổi Sáng
+          </button>
+          <button [ngClass]="{'selected':buoidat.buoichieu===false,'chuse':kiemtrabuoi(2,modal._id)}"
+            (click)=chonBuoi(2,modal._id)>
+            Buổi Chiều
+          </button>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" (click)="xacnhan(modal)">Xác Nhận</button>
+      </div>
+    </div>
+
   </div>
 </div>
