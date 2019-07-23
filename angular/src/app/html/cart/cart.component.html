@@ -222,6 +222,9 @@
                     </span>
                     <img style="" *ngIf="doi==true" src="../../../assets/images/load.svg" alt="">
                   </div>
+                  <div *ngIf="time" style="margin-left: 10px">
+                      {{time}}
+                    </div>
               </div>
               <span style="color:red" class="label" *ngIf="check===false">Đã qua ngày này!</span>
             </th>
