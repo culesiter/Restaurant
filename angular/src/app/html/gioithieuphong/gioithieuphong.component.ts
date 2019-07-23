@@ -114,6 +114,65 @@ export class GioithieuphongComponent implements OnInit {
       // this.ngay = moment(new Date(event.target.value)).format('DD-MM-YYYY');
     });
   }
+  nextDate() {
+    this.fromDate = moment(this.fromDate, 'YYYY-MM-DD').add(1, 'd').format('YYYY-MM-DD');
+    this.gettime.getlistblankroom(moment(this.fromDate).format('DD-MM-YYYY')).subscribe(res => {
+      this.loaip.forEach(element2 => {
+        element2.dsp.forEach(element3 => {
+          this.buoidat = {
+            buoisang: true,
+            buoichieu: true
+          };
+          res.forEach(element => {
+            if (element3._id === element._idphong._id) {
+              if (element.buoiDat === 1) {
+                this.buoidat.buoisang = false;
+              }
+              if (element.buoiDat === 2) {
+                this.buoidat.buoichieu = false;
+              }
+            }
+          });
+          element3['buoidat'] = this.buoidat;
+        });
+
+      });
+      console.log(this.loaip);
+      this.show = true;
+      this.ngay = moment(new Date(event.target.value)).format('DD-MM-YYYY');
+    });
+  }
+  prevDate() {
+    if (moment(this.fromDate).format('DD-MM-YYYY') === moment(new Date()).format('DD-MM-YYYY')) {
+      return false;
+    }
+    this.fromDate = moment(this.fromDate, 'YYYY-MM-DD').subtract(1, 'd').format('YYYY-MM-DD');
+    this.gettime.getlistblankroom(moment(this.fromDate).format('DD-MM-YYYY')).subscribe(res => {
+      this.loaip.forEach(element2 => {
+        element2.dsp.forEach(element3 => {
+          this.buoidat = {
+            buoisang: true,
+            buoichieu: true
+          };
+          res.forEach(element => {
+            if (element3._id === element._idphong._id) {
+              if (element.buoiDat === 1) {
+                this.buoidat.buoisang = false;
+              }
+              if (element.buoiDat === 2) {
+                this.buoidat.buoichieu = false;
+              }
+            }
+          });
+          element3['buoidat'] = this.buoidat;
+        });
+
+      });
+      console.log(this.loaip);
+      this.show = true;
+      this.ngay = moment(new Date(event.target.value)).format('DD-MM-YYYY');
+    });
+  }
   laythoigian(event) {
     // if (new Date(event.target.value) < this.today) {
     //   return false;
