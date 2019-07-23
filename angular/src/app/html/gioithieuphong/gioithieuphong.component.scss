@@ -55,14 +55,29 @@ button{
 .on-box{
     display:flex;
     align-items: center;
-    min-width: 160px;
+    min-width: 200px;
     justify-content: space-between;
+    .not-available {
+        color: red;
+        width: 60%;
+    }
 }
 .btn-adtocart.in-gt{
     height: 25px;
-    width: 70px;
+    width: 60%;
     line-height: 20px;
 }
-.not-available {
-    color: red;
+.room-line{
+    display: flex; justify-content: space-between;
+    padding: 15px 0;
+}
+.outline-rl{
+    border-bottom: 1px solid rgba(192, 192, 192, 0.42);
+    &:last-child{
+        border: none;
+    }
+}
+.room-name{
+    color: #aea512;
+    font-size: 20px;
 }

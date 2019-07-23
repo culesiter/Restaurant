@@ -58,9 +58,9 @@
               </tr>
               <tr>
                 <td colspan="3" *ngIf="item.dsp">
-                  <div *ngFor="let ite of item.dsp">
-                    <div class="wrap" style="display: flex; justify-content: space-between;padding-bottom: 5px">
-                      <div class="name text-left" style="width: 10%;" *ngIf="ite.buoidat">
+                  <div *ngFor="let ite of item.dsp" class="outline-rl">
+                    <div class="wrap room-line">
+                      <div class="room-name text-left" style="width: 10%;" *ngIf="ite.buoidat">
                         {{ite.ten}}
                       </div>
                       <div class="on-box" *ngIf="ite.buoidat">
@@ -92,10 +92,7 @@
                 </td>
               </tr>
             </tbody>
-
-
           </table>
-
         </div>
       </div>
       <div id="menu1" class="tab-pane fade">
