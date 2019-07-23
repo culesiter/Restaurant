@@ -57,23 +57,27 @@
                       <div class="name text-left" style="width: 10%;" *ngIf="ite.buoidat">
                         {{ite.ten}}
                       </div>
-                      <div style="display: flex;align-items: center" *ngIf="ite.buoidat">
-                        Buổi Sáng:
-                        <div class="circle" [ngClass]="{'registed':ite.buoidat.buoisang===false}">
-
+                      <div class="on-box" *ngIf="ite.buoidat">
+                        <div class="time">
+                            Buổi Sáng:
                         </div>
-                        <button *ngIf="ite.buoidat.buoisang===true" class="btn bnt-default" [ngClass]="{'btn-success':kiemtrabuoi(1,ite._id)}"  (click)=chonBuoi(1,ite._id)>
+                        <div class="not-available" *ngIf="ite.buoidat.buoisang===false">
+                          Không khả dụng
+                        </div>
+                        <a *ngIf="ite.buoidat.buoisang===true" class="btn-adtocart in-gt" [ngClass]="{'btn-success':kiemtrabuoi(1,ite._id)}"  (click)=chonBuoi(1,ite._id)>
                           Chọn
-                        </button>
+                        </a>
                       </div>
-                      <div style="display:flex;align-items: center" *ngIf="ite.buoidat">
-                        Buổi Chiều:
-                        <div class="circle" [ngClass]="{'registed':ite.buoidat.buoichieu===false}">
-
+                      <div class="on-box" *ngIf="ite.buoidat">
+                        <div class="time">
+                            Buổi Chiều:
                         </div>
-                        <button *ngIf="ite.buoidat.buoichieu===true" class="btn bnt-default" [ngClass]="{'btn-success':kiemtrabuoi(2,ite._id)}" (click)=chonBuoi(2,ite._id)>
+                        <div class="not-available" *ngIf="ite.buoidat.buoichieu===false">
+                          không khả dụng
+                        </div>
+                        <a *ngIf="ite.buoidat.buoichieu===true" class="btn-adtocart in-gt" [ngClass]="{'btn-success':kiemtrabuoi(2,ite._id)}" (click)=chonBuoi(2,ite._id)>
                           Chọn 
-                        </button>
+                        </a>
                       </div>
                       <button class="btn btn-primary" data-toggle="modal" (click)="storedate(ite)"
                         data-target="#myModal" *ngIf="ite.buoidat && ite._id">Đặt</button>
