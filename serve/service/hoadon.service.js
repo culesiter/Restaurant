@@ -12,11 +12,11 @@ module.exports = {
     taoHoaDon: taoHoaDon,
     layHoaDon: layHoaDon,
     xoaHoaDon: xoaHoaDon,
-    updateProduct: updateProduct,
     layHoaDonTheoDay: layHoaDonTheoDay,
     layHoaDonNguoiDung:layHoaDonNguoiDung,
     layHoaDonId:layHoaDonId,
     huyHoaDonId:huyHoaDonId,
+    suaHoaDon:suaHoaDon
 
 }
 
@@ -66,11 +66,12 @@ function huyHoaDonId(request){
 function xoaHoaDon(request) {
     return new Promise((resolve, reject) => {
         hoadon.remove({ _id: request.id }).exec(function (err, response) {
+                
             if (err) {
                 reject(err + "");
             } else {
                 var mes = {
-                    message: "xoa thanh cong"
+                    message: "Xóa thành công!"
                 }
                 resolve(mes);
             }
@@ -78,69 +79,35 @@ function xoaHoaDon(request) {
     });
 }
 
-function updateProduct(pramas, request) {
+function suaHoaDon(pramas, request) {
+    console.log(pramas)
 
     return new Promise((resolve, reject) => {
-
-        brand.findById(request._idbrand).then(
-            res => {
-                if (!res) {
-                    var err = {
-                        message: "brand not found"
+        hoadon.findOne({ _id: pramas.id }).exec(function (err, response) {
+            if (err) {
+                var err = {
+                    message: "khong tim thay"
+                }
+                reject(err);
+            } else {
+                response.tinhtrang=request.action;
+                response.save(function(err, result) {
+                    if (err) throw err;
+            
+                    if(result) {
+                        const data = {
+                            message: "thanh cong",
+                            values: {
+                                tinhtrang:result.tinhtrang
+                            }
+                        }
+                        resolve(data);
                     }
-                    reject(err)
-                }
-                else if (res) {
-                    return typeproduct.findById(request._idtypeproduct)
-                }
+                })
             }
-        ).then(tp => {
-            if (!tp) {
-                var err = {
-                    message: "typeproduct not found"
-                }
-                reject(err)
-            }
-            else if (tp) {
-                return product.findById({ _id: pramas.id })
-            }
-        }).then(res => {
-            if (!res) {
-                var err = {
-                    message: "product not found"
-                }
-                reject(err)
-            }
-            else if (res) {
-                res.name = request.name
-                res.img = request.img
-                res.price = request.price
-                res._idtypeproduct = request._idtypeproduct
-                res.discount = request.discount
-                res._idbrand = request._idbrand
-
-                return res.save()
-            }
-        }).then(result => {
-            const data = {
-                message: "product updated",
-                values: {
-                    _id: result._id,
-                    name: result.name,
-                    img: result.img,
-                    price: result.price,
-                    _idtypeproduct: result._idtypeproduct,
-                    discount: result.discount,
-                    _idbrand: result._idbrand
-                }
-            }
-            resolve(data);
-
-        }).catch(err => {
-            reject(err + "");
         })
-    })
-
+    });
+   
 }
 function layHoaDonId(request) {
     return new Promise((resolve, reject) => {

@@ -16,7 +16,7 @@
                 Ngày:
               </div>
               <div class="col-md-4">
-                <input id="thoidiemdat" type='date' class="form-control" (change)="laythoigian($event)" />
+                <input id="thoidiemdat" type='date' class="form-control" [(ngModel)]="fromDate" name="fromDate" (change)="laythoigian($event)" />
               </div>
               <div class="col-md-6 text-left" style="align-self: center;display: flex;font-size: 12px;color: #666">
                 Tìm kiếm phòng trống bằng cách chọn ngày!
@@ -54,23 +54,29 @@
                 <td colspan="3" *ngIf="item.dsp">
                   <div *ngFor="let ite of item.dsp">
                     <div class="wrap" style="display: flex; justify-content: space-between;padding-bottom: 5px">
-                      <div class="name" style="width: 10%;">
+                      <div class="name text-left" style="width: 10%;" *ngIf="ite.buoidat">
                         {{ite.ten}}
                       </div>
-                      <div style="display: flex"  *ngIf="ite.buoidat">
+                      <div style="display: flex;align-items: center" *ngIf="ite.buoidat">
                         Buổi Sáng:
                         <div class="circle" [ngClass]="{'registed':ite.buoidat.buoisang===false}">
 
                         </div>
+                        <button *ngIf="ite.buoidat.buoisang===true" class="btn bnt-default" [ngClass]="{'btn-success':kiemtrabuoi(1,ite._id)}"  (click)=chonBuoi(1,ite._id)>
+                          Chọn
+                        </button>
                       </div>
-                      <div style="display:flex" *ngIf="ite.buoidat">
+                      <div style="display:flex;align-items: center" *ngIf="ite.buoidat">
                         Buổi Chiều:
                         <div class="circle" [ngClass]="{'registed':ite.buoidat.buoichieu===false}">
 
                         </div>
+                        <button *ngIf="ite.buoidat.buoichieu===true" class="btn bnt-default" [ngClass]="{'btn-success':kiemtrabuoi(2,ite._id)}" (click)=chonBuoi(2,ite._id)>
+                          Chọn 
+                        </button>
                       </div>
-                      <button class="btn btn-primary" data-toggle="modal" (click)="modalShow(ite)"
-                        data-target="#myModal">Đặt</button>
+                      <button class="btn btn-primary" data-toggle="modal" (click)="storedate(ite)"
+                        data-target="#myModal" *ngIf="ite.buoidat && ite._id">Đặt</button>
                     </div>
                   </div>
                 </td>

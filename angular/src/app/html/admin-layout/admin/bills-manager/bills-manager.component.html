@@ -1,26 +1,101 @@
 <div class="bills">
+    <ul class="nav nav-tabs">
+        <li class="active"><a data-toggle="tab" href="#home">Chưa xác nhận</a></li>
+        <li><a data-toggle="tab" href="#menu1">Đã xác nhận</a></li>
+        <li><a data-toggle="tab" href="#menu2">Đã thanh toán</a></li>
+        <li><a data-toggle="tab" href="#menu3">Đã Hủy</a></li>
+    </ul>
+
+    <div class="tab-content">
+        <div id="home" class="tab-pane fade in active">
+            <table class="table table-hover list-table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Tên khách hàng</th>
+                        <th scope="col">Thời điểm tạo</th>
+                        <th scope="col">Tình Trạng</th>
+                    </tr>
+                </thead>
+                <tbody class="tbody-list">
+                    <tr *ngFor="let item of chuaxacnhan;let i = index" (click)="openDetail(item)">
+                        <th *ngIf="item.tinhtrang===0" scope="row">{{i+1}}</th>
+                        <td *ngIf="item.tinhtrang===0">{{item.ten}}</td>
+                        <td *ngIf="item.tinhtrang===0">{{item.thoidiemtao}}</td>
+                        <td *ngIf="item.tinhtrang===0" style="color:red">Chưa xác nhận</td>
+                        <td *ngIf="item.tinhtrang===2" style="color:yellow">Đã xác nhận</td>
+                        <td *ngIf="item.tinhtrang===3" style="color:green">Đã thanh toán</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div id="menu1" class="tab-pane fade">
+            <table class="table table-hover list-table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Tên khách hàng</th>
+                        <th scope="col">Thời điểm tạo</th>
+                        <th scope="col">Tình Trạng</th>
+                    </tr>
+                </thead>
+                <tbody class="tbody-list">
+                    <tr *ngFor="let item of daxacnhan;let i = index" (click)="openDetail(item)">
+                        <th *ngIf="item.tinhtrang===1" scope="row">{{i+1}}</th>
+                        <td *ngIf="item.tinhtrang===1">{{item.ten}}</td>
+                        <td *ngIf="item.tinhtrang===1">{{item.thoidiemtao}}</td>
+                        <td *ngIf="item.tinhtrang===1" style="color:yellow">Đã xác nhận</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div id="menu2" class="tab-pane fade">
+            <table class="table table-hover list-table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Tên khách hàng</th>
+                        <th scope="col">Thời điểm tạo</th>
+                        <th scope="col">Tình Trạng</th>
+                    </tr>
+                </thead>
+                <tbody class="tbody-list">
+                    <tr *ngFor="let item of dathanhtoan;let i = index" (click)="openDetail(item)">
+                        <th *ngIf="item.tinhtrang===2" scope="row">{{i+1}}</th>
+                        <td *ngIf="item.tinhtrang===2">{{item.ten}}</td>
+                        <td *ngIf="item.tinhtrang===2">{{item.thoidiemtao}}</td>
+                        <td *ngIf="item.tinhtrang===2" style="color:yellow">Đã thanh toán</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div id="menu3" class="tab-pane fade">
+            <table class="table table-hover list-table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Tên khách hàng</th>
+                        <th scope="col">Thời điểm tạo</th>
+                        <th scope="col">Tình Trạng</th>
+                    </tr>
+                </thead>
+                <tbody class="tbody-list">
+                    <tr *ngFor="let item of huy;let i = index" (click)="openDetail(item)">
+                        <th *ngIf="item.tinhtrang===-1" scope="row">{{i+1}}</th>
+                        <td *ngIf="item.tinhtrang===-1">{{item.ten}}</td>
+                        <td *ngIf="item.tinhtrang===-1">{{item.thoidiemtao}}</td>
+                        <td *ngIf="item.tinhtrang===-1" style="color:yellow">Đã hủy
+                            <button class="btn btn-danger" (click)="deleteBill(item._id)">Xóa</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
     <div class="list-table" *ngIf="xem===true">
-            <div class="excel-export" (click)="exportAsXLSX()"><i class="fa fa-file-excel-o"></i> Xuất Excel bảng dữ liệu</div>
-        <table class="table table-hover list-table">
-            <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Tên khách hàng</th>
-                    <th scope="col">Thời điểm tạo</th>
-                    <th scope="col">Tình Trạng</th>
-                </tr>
-            </thead>
-            <tbody class="tbody-list">
-                <tr *ngFor="let item of lstHoadon" (click)="openDetail(item)">
-                    <th scope="row">1</th>
-                    <td>{{item.ten}}</td>
-                    <td>{{item.thoidiemtao}}</td>
-                    <td *ngIf="item.tinhtrang===0" style="color:red">Chưa xác nhận</td>
-                    <td *ngIf="item.tinhtrang===2" style="color:yellow">Đã xác nhận</td>
-                    <td *ngIf="item.tinhtrang===3" style="color:green">Đã thanh toán</td>
-                </tr>
-            </tbody>
-        </table>
+        <div class="excel-export" (click)="exportAsXLSX()"><i class="fa fa-file-excel-o"></i> Xuất Excel bảng dữ liệu
+        </div>
+
     </div>
     <div class="detail" *ngIf="xem===false">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -48,7 +123,7 @@
                     </div>
                     <div class="form-group col-md-3">
                         <label>Trạng thái</label>
-                        <select class="form-control"  >
+                        <select class="form-control">
                             <option value="0">Chưa Xác Nhận</option>
                             <option value="1">Đã Xác Nhận</option>
                             <option value="2">Đã Thanh Toán</option>
@@ -87,9 +162,9 @@
                         </div>
                     </div>
                     <div class="form-group col-md-12">
-                        <button type="submit" class="btn btn-secondary">Xác nhận đơn hàng</button>
+                        <button type="submit" class="btn btn-secondary" (click)="confirm(ehoadon._id,1)">Xác nhận đơn hàng</button>
                         <button class="btn btn-warning" (click)="openDetail()">Trở lại</button>
-                        <button class="btn btn-danger" (click)="deleteBill()">Xóa</button>
+                        <button class="btn btn-danger" (click)="deleteBill(ehoadon._id)">Xóa</button>
                     </div>
                 </div>
             </form>

@@ -20,7 +20,7 @@ export class GioithieuphongComponent implements OnInit {
   private phong: any[] = [];
   private modal: any[] = [];
   private buoidat: any = {};
-  private buoi: any;
+  private buoi: any[] = [];
   private ngay: any;
   private phongChon: Iphong;
   private tienphong: number;
@@ -29,15 +29,12 @@ export class GioithieuphongComponent implements OnInit {
   private tinhtrangphongstore: number;
   today = new Date();
   private phongstore: Iphongstore[] = [];
+  private fromDate;
   constructor(private phongservice: PhongserviceService, private dvser: DichvuService, private gettime: LoginService,
     private router: Router) { }
 
   ngOnInit() {
-    const date = moment(new Date()).format('YYYY-MM-DD');
-    setTimeout(() => {
-      $('#thoidiemdat').val(date);
-    }, 1000);
-
+    this.fromDate = moment(new Date()).format('YYYY-MM-DD');
     this.phongservice.laydanhsachloaiphong().subscribe(res => {
       this.loaip = res;
       this.loaip.forEach(element => {
@@ -150,11 +147,26 @@ export class GioithieuphongComponent implements OnInit {
   }
   kiemtrabuoi(buoi, id) {
     this.buoi = JSON.parse(localStorage.getItem('buoi'));
-    for (let i = 0; i < this.buoi.length; i++) {
-      if (this.buoi[i].buoiDat === buoi && this.buoi[i]._idphong === id) {
-        return true;
+    const ngaytemp = JSON.parse(localStorage.getItem('thoidiemden_temp'));
+    if (ngaytemp) {
+      if (this.fromDate === ngaytemp) {
+        for (let i = 0; i < this.buoi.length; i++) {
+          if (this.buoi[i].buoiDat === buoi && this.buoi[i]._idphong === id) {
+            return true;
+          }
+        }
       }
+    } else {
+      if (this.buoi) {
+        for (let i = 0; i < this.buoi.length; i++) {
+          if (this.buoi[i].buoiDat === buoi && this.buoi[i]._idphong === id) {
+            return true;
+          }
+        }
+      }
+      return false;
     }
+
   }
   giatriphong(giatri: Iphong) {
     const phong = JSON.parse(localStorage.getItem('phong'));
@@ -192,11 +204,16 @@ export class GioithieuphongComponent implements OnInit {
   chonBuoi(buoi, idphong) {
     let buoidadat = true;
     let dem = 0;
+    this.buoi = [];
     const data = {
       buoiDat: buoi,
       _idphong: idphong
     };
-    if (localStorage.getItem('buoi') === null) {
+    console.log(data);
+    if (!localStorage.getItem('buoi')) {
+      this.buoi.push(data);
+      localStorage.setItem('buoi', JSON.stringify(this.buoi));
+    } else if (localStorage.getItem('buoi') === null) {
       this.buoi.push(data);
       localStorage.setItem('buoi', JSON.stringify(this.buoi));
     } else {
@@ -220,7 +237,9 @@ export class GioithieuphongComponent implements OnInit {
       } else {
         this.clearbuoi();
         this.buoi = [];
+        const phong = [];
         this.buoi.push(data);
+        localStorage.setItem('phong', JSON.stringify(phong));
         localStorage.setItem('buoi', JSON.stringify(this.buoi));
       }
     }
@@ -237,6 +256,37 @@ export class GioithieuphongComponent implements OnInit {
   cleartime() {
     const clear = [];
     localStorage.setItem('thoidiemden', JSON.stringify(clear));
+  }
+  storedate(item_p) {
+    const date = this.fromDate;
+    const tempDate = JSON.parse(localStorage.getItem('thoidiemden'));
+    const tempBuoi = JSON.parse(localStorage.getItem('buoi'));
+    const tempphong = JSON.parse(localStorage.getItem('phong'));
+    if (!tempBuoi || tempBuoi.length === 0) {
+      alert('vui long chọn buổi đến');
+    } else if (tempBuoi[0]._idphong !== item_p._id) {
+      alert('vui long chọn buổi đến cho phòng trên');
+    } else if (tempphong && tempphong.length !== 0) {
+      if (tempphong[0].item._id === item_p._id) {
+        alert('Phòng đã đặt, bạn hãy chọn món');
+      }
+    } else {
+      localStorage.setItem('thoidiemden', JSON.stringify(moment(date).format('DD-MM-YYYY')));
+      localStorage.setItem('thoidiemden_temp', JSON.stringify(this.fromDate));
+      if (tempBuoi.length === 2) {
+        item_p['giathat'] = item_p.gia;
+        item_p.gia = item_p.gia * 2;
+      }
+      const data = [{
+        item: item_p,
+        sl: 1
+      }];
+      localStorage.setItem('phong', JSON.stringify(data));
+      localStorage.setItem('phong_temp', JSON.stringify(data));
+      if (confirm('Đặt thành công! Mời bạn chọn món')) {
+        this.router.navigate(['/home/dish']);
+      }
+    }
   }
   xacnhan(item) {
     this.giatriphong(item);

@@ -216,7 +216,7 @@
               <div class="wrap" style="display:flex;align-items: center">
                   Ngày đến:
                   <div class='input-group date'>
-                    <input id="thoidiemdat" type='date' class="form-control" (change)="laythoigian($event)" />
+                    <input id="thoidiemdat" type='date' class="form-control" [(ngModel)]="fromDate" name="fromDate" (change)="laythoigian($event)" />
                     <span class="input-group-addon">
                       <span class="glyphicon glyphicon-calendar"></span>
                     </span>

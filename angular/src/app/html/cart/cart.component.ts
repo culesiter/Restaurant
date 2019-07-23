@@ -47,6 +47,7 @@ export class CartComponent implements OnInit {
   private buoi = [];
   private time: any;
   private room: any;
+  private fromDate: any;
   constructor(private dichvuservice: DichvuService,
     private formbuilder: FormBuilder,
     private cartService: CartserviceService,
@@ -55,10 +56,8 @@ export class CartComponent implements OnInit {
 
 
   ngOnInit() {
-    // this.cleartime();
-    // this.clearphong();
-    // this.clearbuoi();
-    this.taoFormTimKiem();    // this.layPhongStore();
+    this.checkdachon();
+    this.taoFormTimKiem();
     this.laydanhsachphong();
     this.taoCart();
     this.tienthucdon = this.tinhTienThucDon();
@@ -79,7 +78,47 @@ export class CartComponent implements OnInit {
     this.kiemTraKhachhang();
     this.kiemTraPhongStore();
     this.time = JSON.parse(localStorage.getItem('thoidiemden'));
-    this.room = JSON.parse(localStorage.getItem('phong'));
+
+    if (JSON.parse(localStorage.getItem('phong_temp'))) {
+      if (JSON.parse(localStorage.getItem('phong_temp')).length > 0) {
+        this.room = JSON.parse(localStorage.getItem('phong_temp'));
+      }
+    }
+  }
+  checkdachon() {
+    const buoi = JSON.parse(localStorage.getItem('buoi'));
+    const ngay = JSON.parse(localStorage.getItem('thoidiemden'));
+    const tempngay = JSON.parse(localStorage.getItem('thoidiemden_temp'));
+    if (tempngay) {
+      this.fromDate = moment(tempngay).format('YYYY-MM-DD');
+      this.gettime.getlistblankroom(moment(tempngay).format('DD-MM-YYYY')).subscribe(res => {
+        this.phongservice.laydanhsachphong().subscribe(response => {
+          this.phong = response;
+          this.phong.forEach(element => {
+            element['sang'] = 'trong';
+            element['chieu'] = 'trong';
+            if (res) {
+              res.forEach(element2 => {
+                if (element._id === element2._idphong._id) {
+                  if (element2.buoiDat === 1) {
+                    element['sang'] = 'dat';
+                  } else if (element2.buoiDat === 2) {
+                    element['chieu'] = 'dat';
+                  } else {
+                    element['sang'] = 'dat';
+                    element['chieu'] = 'dat';
+                  }
+                }
+              });
+            }
+          });
+          this.doi = false;
+          this.mochonphong = true;
+        });
+
+      });
+    }
+
   }
   cleartime() {
     localStorage.removeItem('thoidiemden');
