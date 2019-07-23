@@ -2,15 +2,14 @@
   <div id="contact">
     <app-header></app-header>
   </div>
-  <div [ngClass]="{'banner': banner===true}"  class="pa" style="margin-top: 90px; min-height:400px;">
+  <div [ngClass]="{'banner': banner===true}"  class="pa">
     <router-outlet></router-outlet>
     <div class="chid">
-
     </div>
   </div>
-  <div routerLink="/home/listcart" id="cart" (click)="nhay()" [ngClass]="{'animated jello': muaNhay}" class="cart" style="position: fixed; z-index: 1000; right: 15px;bottom: 50px">
+  <div routerLink="/home/listcart" id="cart" (click)="nhay()" [ngClass]="{'animated jello': muaNhay}" class="cart">
     <a>
-      <i style="font-size: 40px ;cursor: pointer;" class="fa fa-cart-arrow-down text-primary" aria-hidden="true">
+      <i class="fa fa-cart-arrow-down" aria-hidden="true">
         <span class="badge pull-right note">{{count}}</span>
       </i>
     </a>

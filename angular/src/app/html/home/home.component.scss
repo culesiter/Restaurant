@@ -1,5 +1,18 @@
 .cart
 {
+    position: fixed;
+    z-index: 1000;
+    right: 15px;
+    bottom: 50px;
+    width: 50px;
+    height: 50px;
+    border: 3px solid white;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 50px;
+    font-size: 30px;
+    box-shadow: 0 0 10px 4px rgba(175, 166, 166, 0.30980392156862746);
+    background: rgba(91, 192, 222, 0.6);
     outline: none;
     .note
     {

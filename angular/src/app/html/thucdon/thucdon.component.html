@@ -1,24 +1,37 @@
 <div class="animated slideInRight">
-  <div class="col-xs-12 col-md-3 ">
+  <div class="col-xs-12 col-md-4 ">
     <div class="panel panel-default">
       <div class="panel-heading">
         <h3 class="panel-title">
-          <strong style="color: white;">{{thucdon.ten | uppercase}}</strong>
+          <p>{{thucdon.ten | uppercase}}</p>
         </h3>
       </div>
       <div class="panel-body">
         <span *ngFor="let mon of thucdon.danhsachtenmonan">
-          <small>{{mon|uppercase}}</small>
+          <span class="md-name">
+              <div class="name">
+                <div class="big">
+                    {{mon}}
+                </div>
+                <div class="small">
+                    chilli spice, oregano beef
+                </div>
+              </div>
+              <div class="money">
+                  14,95$
+              </div>
+          </span>
         </span>
       </div>
-      <div class="panel-footer">
+      <div class="panel-footer t-center">
         <div class="row">
-          <div class="col-md-4">
+          <div class="col-md-12 all-price">
             {{thucdon.gia}} VNĐ
           </div>
-          <div class="col-md-8">
-            <a (click)="addToCart(thucdon)" class="btn btn-primary" role="button">Mua</a>
-            <a class="btn btn-default" role="button">Button</a>
+          <div class="col-md-12">
+            <a (click)="addToCart(thucdon)" class="btn-adtocart" role="button">
+                Thêm vào giỏ hàng <i class="fa fa-cart-plus" aria-hidden="true"></i>
+            </a>
           </div>
         </div>
       </div>

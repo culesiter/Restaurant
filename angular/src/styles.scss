@@ -65,3 +65,21 @@ li{
     overflow-y: auto;
     padding-right: 0 !important;
 }
+a.btn-adtocart {
+    height: 30px;
+    display: inline-block;
+    line-height: 30px;
+    padding: 0 10px;
+    border: 1px solid #333;
+    color: #333;
+    cursor: pointer;
+    &:hover{
+        text-decoration: none;
+    }
+}
+.t-center{
+    text-align: center;
+}
+.pdt-100{
+    padding-top: 100px;
+}

@@ -1,19 +1,13 @@
 <div style="position: relative;" class="container-fluid" style="min-height: 400px">
-  <div class="row">
+  <div class="row pdt-100">
     <div id="headseach"  style="background: #f8f8f8; " class="col-md-12">
-
-
       <div  class="row">
-
         <form (change)="layGiaTri() " [formGroup]="frmTimKiem">
           <div class="col-md-3">
             <div class="input-group">
-
               <div style="outline: none" (click)="moTab1()" routerLink="/home/dish/thucdon" routerLinkActive="active" class="btn">
                 <a style="text-decoration: none">  Thực Đơn</a>
               </div>
-
-
               <div style="outline: none" (click)="moTab2()" routerLink="/home/dish/monan" routerLinkActive="active" class="btn">
                 <a style="text-decoration: none"> Món Ăn</a>
               </div>
@@ -24,8 +18,6 @@
 
 
             </div>
-
-
           </div>
           <div [ngClass]="{'display':mo===2}" class="col-md-2">
             <div class="input-group">
@@ -63,7 +55,6 @@
 
         <div class="col-md-2 pull-right">
           <form class="input-group dropdown" role="search">
-
             <input class="dropdown-toggle" data-toggle="dropdown" type="text" class="form-control" placeholder="Search" [(ngModel)]="queryString"
               [ngModelOptions]="{standalone: true}">
             <span class="input-group-addon">
@@ -92,36 +83,32 @@
         <a href="#">Newer &rarr;</a>
       </li>
     </ul>
-    <div class="row text-center ">
-        <div style=" position: fixed;
-   
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        -ms-transform: translate(-50%, -50%);
-        
-        text-align: center;
-      
-        
-      
-        " class="loader1">
-        <img src="assets/images/backgroud/loader.gif" alt="">
+    <div class="container">
+        <div class="row text-center ">
+            <div style=" position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            -ms-transform: translate(-50%, -50%);
+            text-align: center;
+          
+            " class="loader1">
+            <img src="assets/images/backgroud/loader.gif" alt="">
+              </div>
+          <div class="conten">
+            <router-outlet></router-outlet>
+            <div [ngClass]="{'display':mo==2}" *ngFor="let item of dishs; let i = index ">
+              <app-dish [dish]="item">
+              </app-dish>
+            </div>
+            <!-- <div [ngClass]="{'display':mo==1}" *ngFor="let item of thucdons">
+              <app-thucdon [thucdon]="item" >
+              </app-thucdon>
+            </div> -->
           </div>
-      <div class="conten">
-        <router-outlet></router-outlet>
-
-        <div [ngClass]="{'display':mo==2}" *ngFor="let item of dishs; let i = index ">
-          <app-dish [dish]="item">
-          </app-dish>
+    
         </div>
-        <!-- <div [ngClass]="{'display':mo==1}" *ngFor="let item of thucdons">
-          <app-thucdon [thucdon]="item" >
-          </app-thucdon>
-        </div> -->
-      </div>
-
     </div>
-
     <ul class="pager">
       <li class="previous">
         <a href="#">&larr; Older</a>

@@ -1,11 +1,11 @@
 #slider{
   .slide-img{
-
   position: relative;
   img{
     width: 100%;
     height: 545px;
   }
+  
   .slide-text{
     position: absolute;
     top: 0;
@@ -48,8 +48,6 @@
     }
   }
   .cart-root:hover{
- 
-   
     .cart{
      transform: scale(1.1)
      
@@ -67,16 +65,12 @@
     height: auto;
   }
 }
-.left{
-  border-radius: 100px 0 0 100px;
-}
-.right{
-  border-radius: 0 100px 100px 0;
-}
 #faction{
+  padding-bottom: 100px;
   .effect{
     position: relative;
     overflow: hidden;
+    height: 300px;
     img{
       width: 100%;
       height: auto;
@@ -128,4 +122,24 @@
     font-size: 17px;
   }
   padding-bottom: 30px
+}
+.carousel-control {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 50px;
+  height: 50px;
+  border-radius: 5px;
+  background: grey;
+  font-size: 30px;
+  line-height: 50px;
+  &.left{
+    left: 115px;
+  }
+  &.right{
+    right: 115px;
+  }
+}
+.carousel-inner{
+  height: 400px;
 }

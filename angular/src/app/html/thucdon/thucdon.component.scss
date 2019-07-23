@@ -1,23 +1,62 @@
 ul{
     list-style: none;
 }
-.panel-body{
-    height: 140px;
-    overflow-y: scroll;
-}
 strong {
     font-weight: 900;
     font-size: 30px;
 }
-small{
-    font-size: 15px;
-    font-weight: bold;
-    display: block;
-    border-bottom: 1px solid #ddecf3;
-    color: #428bca;
-    text-align: left;
+.all-price {
+    padding: 10px 0;
+    color: #f28b1c;
+    font-size: 17px;
 }
+.panel-footer{
+    background: none;
+}
+.panel-body{
+    min-height: 200px;
+    padding: 15px;
+    border: none;
+    .md-name{
+        display: flex;
+        color: #2d2d2d;
+        padding: 7px 0;
+        .name {
+            width: 80%;
+            .big {
+                font-size: 17px;
+            }
+        }
+        .money {
+            width: 20%;
+            color: #f28b1c;
+            font-size: 17px;
+            display: flex;
+            align-items: center;
+        }
+    }
+}
+
 .panel-heading{
-    background:url('/assets/images/backgroud/dish.jpg') center no-repeat;
-    background-size: cover;
+    background: white;
+    position: relative;
+    border: none;
+    text-align: center;
+    &::before{
+        position: absolute;
+        content: '';
+        width: 10%;
+        height: 2px;
+        background: #aea512;
+        top: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    p{
+        color: #aea512;
+         font-size: 20px;
+    }
+}
+.panel{
+    border: none;
 }
