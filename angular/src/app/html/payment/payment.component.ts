@@ -47,6 +47,7 @@ export class PaymentComponent implements OnInit {
   today = new Date();
   ngOnInit() {
     this.newkhachhang = {};
+    this.thoiluong();
     this.taoFormThanhToan();
     this.sua = 0;
     this.kiemTraNguoiDung();
@@ -66,7 +67,16 @@ export class PaymentComponent implements OnInit {
     this.ngayden = JSON.parse(localStorage.getItem('thoidiemden'));
   }
 
-
+  thoiluong() {
+    const buoi = JSON.parse(localStorage.getItem('buoi'));
+    if (buoi.length === 2) {
+      this.buoiden = 'Cả ngày';
+    } else if (buoi[0].buoiDat === 1) {
+      this.buoiden = 'Buổi sáng';
+    } else {
+      this.buoiden = 'Buổi chiều';
+    }
+  }
   chonbuoisang() {
     this.buoiDat = 1;
     this.buoiden = "sang";
@@ -118,7 +128,7 @@ export class PaymentComponent implements OnInit {
     const khachhang = JSON.parse(localStorage.getItem('user'));
     const thoidiemden = JSON.parse(localStorage.getItem('thoidiemden'));
     let buoidat = JSON.parse(localStorage.getItem('buoi'))[0].buoiDat;
-    if (buoidat.length == 2) {
+    if (buoidat.length === 2) {
       buoidat = 3;
     }
     if (khachhang) {
@@ -176,11 +186,14 @@ export class PaymentComponent implements OnInit {
         $('body').removeClass('modal-open');
         $('.modal-backdrop').removeClass('modal-backdrop fade in')
         this.router.navigate(['/home']);
-        localStorage.removeItem('cart');
-        localStorage.removeItem('cart1');
-        localStorage.removeItem('dichvu');
+        localStorage.setItem('cart', JSON.stringify([]));
+        localStorage.setItem('cart1', JSON.stringify([]));
+        localStorage.setItem('dichvu', JSON.stringify([]));
         localStorage.removeItem('thoidiemden');
-        localStorage.removeItem('phong');
+        localStorage.setItem('phong', JSON.stringify([]));
+        localStorage.setItem('buoi', JSON.stringify([]));
+        localStorage.removeItem('thoidiemden_temp');
+        localStorage.setItem('phong_temp', JSON.stringify([]));
       });
     } else {
       this.customer.themtknoaccount(this.frmThanhToan.value).subscribe(Response => {
@@ -228,11 +241,11 @@ export class PaymentComponent implements OnInit {
             $('body').removeClass('modal-open');
             $('.modal-backdrop').removeClass('modal-backdrop fade in');
             this.router.navigate(['/home']);
-            localStorage.removeItem('cart');
-            localStorage.removeItem('cart1');
-            localStorage.removeItem('dichvu');
-            localStorage.removeItem('thoidiemden');
-            localStorage.removeItem('phong');
+            localStorage.setItem('cart', JSON.stringify([]));
+            localStorage.setItem('cart1', JSON.stringify([]));
+            localStorage.setItem('dichvu', JSON.stringify([]));
+            localStorage.setItem('thoidiemden', JSON.stringify([]));
+            localStorage.setItem('phong', JSON.stringify([]));
           });
         }
       });
@@ -260,8 +273,8 @@ export class PaymentComponent implements OnInit {
     console.log(this.frmThanhToan.value);
   }
   tinhTienDichVu() {
-    var dichvu: Idichvustore[] = JSON.parse(localStorage.getItem('dichvu'));
-    var tong: number = 0;
+    const dichvu: Idichvustore[] = JSON.parse(localStorage.getItem('dichvu'));
+    const tong: number = 0;
     if (dichvu) {
       dichvu.map(res => { return tong = tong + (res.item.gia) });
       return tong;
@@ -332,7 +345,7 @@ export class PaymentComponent implements OnInit {
   }
   thucDon() {
     this.cart = JSON.parse(localStorage.getItem('cart'));
-    var tong = 0;
+    const tong = 0;
     if (this.cart != null) {
       this.cart.forEach(element => {
         tong = tong + (element.item.gia * element.sl)
@@ -342,7 +355,7 @@ export class PaymentComponent implements OnInit {
   }
   thucDon1() {
     this.cart1 = JSON.parse(localStorage.getItem('cart1'));
-    var tong = 0;
+    const tong = 0;
     if (this.cart1 != null) {
       this.cart1.forEach(element => {
         tong = tong + (element.thucdon.gia * element.sl);

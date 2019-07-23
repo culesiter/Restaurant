@@ -4,14 +4,31 @@ module.exports = {
     layHoaDon: layHoaDon1,
     getProductById1: getProductById,
     xoaHoaDon: xoaHoaDon1,
-    updateProduct2: updateProduct1,
     layHoaDonTheoDay:layHoaDonTheoDay1,
     layHoaDonNguoiDung:layHoaDonNguoiDung1,
     layHoaDonId:layHoaDonId1,
-    huyHoaDonId:huyHoaDonId1
+    huyHoaDonId:huyHoaDonId1,
+    kiemTraNgay:kiemTraNgay1,
+    suaHoaDon:suaHoaDon1
+}
+function suaHoaDon1(req, res) {
+
+console.log(req.params)
+    service.suaHoaDon(req.params, req.body).then((result) => {
+        res.send(result);
+    }).catch((err) => {
+        res.send(err);
+    });
 }
 function layHoaDonTheoDay1(req, res) {
     service.layHoaDonTheoDay(req.body).then((result) => {
+        res.send(result);
+    }).catch((err) => {
+        res.send(err);
+    });
+}
+function kiemTraNgay1(req, res) {
+    service.kiemTraNgay(req.body).then((result) => {
         res.send(result);
     }).catch((err) => {
         res.send(err);
@@ -24,15 +41,7 @@ function taoHoaDon1(req, res) {
         res.send(err);
     });
 }
-function updateProduct1(req, res) {
 
-
-    service.updateProduct(req.params, req.body).then((result) => {
-        res.send(result);
-    }).catch((err) => {
-        res.send(err);
-    });
-}
 function layHoaDonId1(req, res) {
     service.layHoaDonId(req.query).then((result) => {
         res.send(result);

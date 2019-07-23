@@ -6,9 +6,10 @@ module.exports=function(){
   router.get('/ng/',controller.layHoaDonNguoiDung);
   router.get('/id/',controller.layHoaDonId);
   router.get('/huy/:id',controller.huyHoaDonId);
-  // router.get('/:id',controller.getProductById1);
+  router.put('/:id',controller.suaHoaDon);
   router.delete('/:id',controller.xoaHoaDon);
   router.post('/gettime/',controller.layHoaDonTheoDay);
+  router.post('/time/',controller.kiemTraNgay);
   // router.put('/:id',controller.capNhatLoaiMon)
     return router;
 }
