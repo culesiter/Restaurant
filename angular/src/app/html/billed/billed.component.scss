@@ -141,5 +141,50 @@
   }
 }
 .carousel-inner{
-  height: 400px;
+  height: 460px;
+}
+div#carts {
+  background: #000;
+  display: flex;
+  justify-content: space-between;
+  .contact{
+    width: 60%;
+    display: flex;
+    padding: 30px 50px 30px 120px;
+    justify-content: space-between;
+    .contact-item {
+      width: 32%;
+      padding: 0 15px;
+      display: flex;
+      justify-content: space-between;
+          .icon {
+            width: 10%;
+            color: #213f9a;
+        }
+        .content {
+          width: 80%;
+          .main {
+            font-size: 17px;
+            color: white;
+        }
+        .other {
+          color: gray;
+          font-size: 15px;
+      }
+        }
+    }
+  }
+  .socials{
+    width: 40%;
+    background: #ddecf3;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 0 50px;
+    a.social-item {
+      font-size: 37px;
+      margin: 0 15px;
+      color: #aea512;
+  }
+  }
 }
