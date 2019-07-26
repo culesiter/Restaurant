@@ -137,10 +137,7 @@
           </div>
         </div>
       </div>
-
-
       <table class="table table-striped">
-
         <thead>
           <tr>
             <td>Hinh Ảnh</td>
@@ -259,7 +256,6 @@
               <span [ngClass]="{'display':tinhtrangphongstore===0}">
                 Tiền phòng:{{tienphong}}
               </span>
-
             </th>
           </tr>
           <tr class="success">
@@ -267,16 +263,12 @@
               <div class="form-control text-center btn-success dropdown-toggle" data-toggle="dropdown">
                 Chọn dịch vụ
               </div>
-
               <form style="left: inherit; border: none; padding: 0"
                 class="form-control dropdown-menu dropdown-lr animated jello" role="menu">
                 <div *ngFor="let item of dichvus">
-
                   <div class="input-group">
-
                     <input (click)="chonDichVu(item)" type="button" class="form-control"
                       value="{{item.ten}}-{{item.gia}}">
-
                     <span class="input-group-addon">
                       <i style="width: 20px;" (click)="huyDichVu(item)"
                         [ngClass]="{'fa fa-check-square-o text-success':kiemTraDichVuCick(item)}"
@@ -285,15 +277,10 @@
                         [ngClass]="{'fa fa-square-o':!kiemTraDichVuCick(item)}" aria-hidden="true"></i>
                     </span>
                   </div>
-
                 </div>
-
               </form>
-
             </th>
-
             <th>
-
             </th>
             <th>
 
@@ -318,10 +305,7 @@
             <th class="text-right">Thành Tiền :{{tiendichvu+tienphong+tongTien}} VNG</th>
           </tr>
         </tfoot>
-
       </table>
-
-
     </div>
   </div>
   <div *ngIf="open==1" class="panel-footer text-right">
