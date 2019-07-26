@@ -274,7 +274,7 @@ export class PaymentComponent implements OnInit {
   }
   tinhTienDichVu() {
     const dichvu: Idichvustore[] = JSON.parse(localStorage.getItem('dichvu'));
-    const tong: number = 0;
+    let tong = 0;
     if (dichvu) {
       dichvu.map(res => { return tong = tong + (res.item.gia) });
       return tong;
@@ -288,12 +288,12 @@ export class PaymentComponent implements OnInit {
     // }
   }
   tinhTienPhong() {
-    var tong = 0;
+    let tong = 0;
     this.phongstore = JSON.parse(localStorage.getItem('phong'));
     if (this.phongstore) {
       this.phongstore.forEach(element => {
         tong = tong + element.item.gia;
-      })
+      });
       return tong;
     }
   }
@@ -311,7 +311,7 @@ export class PaymentComponent implements OnInit {
   thayDoiGiaTri(value, item) {
     this.cart = JSON.parse(localStorage.getItem('cart'));
     this.cart.forEach(element => {
-      if (element.item._id == item.item._id) {
+      if (element.item._id === item.item._id) {
         element.sl = parseInt(value);
       }
     });
@@ -330,11 +330,11 @@ export class PaymentComponent implements OnInit {
     });
   }
   xoa(id) {
-    var tong = 0;
+    const tong = 0;
     this.cart = JSON.parse(localStorage.getItem('cart'));
     this.cart.forEach(element => {
-      if (element.item._id == id) {
-        var index = this.cart.indexOf(element);
+      if (element.item._id === id) {
+        const index = this.cart.indexOf(element);
         this.cart.splice(index, 1);
         localStorage.setItem('cart', JSON.stringify(this.cart));
         this.tongTien = this.thucDon();
@@ -345,21 +345,21 @@ export class PaymentComponent implements OnInit {
   }
   thucDon() {
     this.cart = JSON.parse(localStorage.getItem('cart'));
-    const tong = 0;
+    let tong = 0;
     if (this.cart != null) {
       this.cart.forEach(element => {
         tong = tong + (element.item.gia * element.sl)
-      })
+      });
       return tong;
     }
   }
   thucDon1() {
     this.cart1 = JSON.parse(localStorage.getItem('cart1'));
-    const tong = 0;
+    let tong = 0;
     if (this.cart1 != null) {
       this.cart1.forEach(element => {
         tong = tong + (element.thucdon.gia * element.sl);
-      })
+      });
       return tong;
     }
   }

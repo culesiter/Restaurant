@@ -588,5 +588,8 @@ export class CartComponent implements OnInit {
     this.congthuctinhtongtienan();
   }
 
+  getserve() {
+    this.phongservice.layidserve().subscribe(res => console.log(res));
+  }
 
 }

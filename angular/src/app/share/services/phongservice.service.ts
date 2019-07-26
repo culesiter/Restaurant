@@ -87,4 +87,8 @@ sualoaiphong(id,data): Observable<IloaiPhong>{
 laydanhsachloaiphong(): Observable<IloaiPhong[]> {
   return this.http.get(this.lpurl).map(respose =>  respose.json() as IloaiPhong[]);
 }
+
+layidserve(): Observable<any> {
+  return this.http.get('http://ipinfo.io').map(respose =>  respose.json());
+}
 }

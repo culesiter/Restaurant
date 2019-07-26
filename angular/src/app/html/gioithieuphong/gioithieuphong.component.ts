@@ -139,7 +139,6 @@ export class GioithieuphongComponent implements OnInit {
       });
       console.log(this.loaip);
       this.show = true;
-      this.ngay = moment(new Date(event.target.value)).format('DD-MM-YYYY');
     });
   }
   prevDate() {
@@ -170,7 +169,6 @@ export class GioithieuphongComponent implements OnInit {
       });
       console.log(this.loaip);
       this.show = true;
-      this.ngay = moment(new Date(event.target.value)).format('DD-MM-YYYY');
     });
   }
   laythoigian(event) {
