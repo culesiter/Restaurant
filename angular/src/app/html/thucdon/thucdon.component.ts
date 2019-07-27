@@ -17,7 +17,6 @@ export class ThucdonComponent implements OnInit {
   constructor(private thucdonservice: ThucdonserviceService, private cartService: CartserviceService) { }
 
   ngOnInit() {
-    console.log(this.thucdon);
     this.trinhThucDon();
   }
   trinhThucDon() {
@@ -26,8 +25,8 @@ export class ThucdonComponent implements OnInit {
       this.thucdons.map(res => {
         res.gia = this.giaThucDon(res._id);
         res.danhsachtenmonan = this.danhSachMonAn(res._id);
-      })
-    })
+      });
+    });
   }
   giaThucDon(id) {
     var tong = 0;
@@ -40,14 +39,18 @@ export class ThucdonComponent implements OnInit {
     return tong;
   }
   danhSachMonAn(id) {
-    console.log(id);
-    var mang: string[] = [];
-    var thucdon: Ithucdon[] = JSON.parse(localStorage.getItem('thucdon'));
+    const mang: any[] = [];
+    const thucdon: Ithucdon[] = JSON.parse(localStorage.getItem('thucdon'));
     thucdon.forEach(element => {
-      if (element._idthucdon == id) {
-        mang.push(element.tenmonan)
+      if (element._idthucdon === id) {
+        const data = {
+          ten: element.tenmonan,
+          gia: element.gia
+        };
+        mang.push(data);
       }
-    })
+    });
+
     return mang;
   }
   addToCart(thucdon) {

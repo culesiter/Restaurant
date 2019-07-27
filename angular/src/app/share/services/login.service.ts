@@ -45,7 +45,7 @@ export class LoginService {
   }
   thanhtoan(data): Observable<any> {
     return this.http.post('https://manhrestaurant.herokuapp.com/payment/checkout', data).map(res => {
-      return res.json();
+      return res;
     });
   }
 }

@@ -26,31 +26,34 @@ export class ThucdonExampleComponent implements OnInit {
         res.gia = this.giaThucDon(res._id);
         res.danhsachtenmonan = this.danhSachMonAn(res._id);
       })
-      for (let i = 0; i<this.thucdons.length; i++) {
+      for (let i = 0; i < this.thucdons.length; i++) {
         this.thucdonexs.push(this.thucdons[i]);
-
       }
-    })
+      console.log(this.thucdonexs);
+    });
   }
   giaThucDon(id) {
-    var tong = 0;
-    var thucdon: Ithucdon[] = JSON.parse(localStorage.getItem('thucdon'));
+    let tong = 0;
+    const thucdon: Ithucdon[] = JSON.parse(localStorage.getItem('thucdon'));
     thucdon.forEach(element => {
-      if (element._idthucdon == id)
-
+      if (element._idthucdon === id) {
         tong = tong + element.gia;
+      }
     })
     return tong;
   }
   danhSachMonAn(id) {
-    var mang: string[] = [];
-    var thucdon: Ithucdon[] = JSON.parse(localStorage.getItem('thucdon'));
+    const mang: any[] = [];
+    const thucdon: Ithucdon[] = JSON.parse(localStorage.getItem('thucdon'));
     thucdon.forEach(element => {
-
-      if (element._idthucdon == id) {
-        mang.push(element.tenmonan)
+      if (element._idthucdon === id) {
+        const data = {
+          ten: element.tenmonan,
+          gia: element.gia
+        };
+        mang.push(data);
       }
-    })
+    });
     return mang;
   }
 
