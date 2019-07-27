@@ -20,6 +20,7 @@ export class PaymentComponent implements OnInit {
 
   private thoidiemtao: Date;
   private khachhang: Icustomer;
+  private khachhang2: Icustomer;
   private newkhachhang: Icustomer;
   private cart: Icart[] = [];
   private cart1: Icart[] = [];
@@ -50,7 +51,6 @@ export class PaymentComponent implements OnInit {
     this.thoiluong();
     this.taoFormThanhToan();
     this.sua = 0;
-    this.kiemTraNguoiDung();
     this.tongTien = this.thucDon();
     this.tienthucdon = this.thucDon1();
     if (this.tienthucdon && !this.thucDon()) {
@@ -65,6 +65,7 @@ export class PaymentComponent implements OnInit {
     this.layPhongStore();
     this.layDichVuStore();
     this.ngayden = JSON.parse(localStorage.getItem('thoidiemden'));
+    console.log(this.khachhang);
   }
 
   thoiluong() {
@@ -118,10 +119,11 @@ export class PaymentComponent implements OnInit {
   }
   time() {
     const thoidiemden = JSON.parse(localStorage.getItem('thoidiemden'));
-    this.khachhang = {
+    this.khachhang2 = {
       ten: this.frmThanhToan.value.ten,
       sdt: this.frmThanhToan.value.sdt
     };
+    console.log(this.khachhang);
   }
   taohoadon() {
     const phong = JSON.parse(localStorage.getItem('phong'));
@@ -197,7 +199,6 @@ export class PaymentComponent implements OnInit {
       });
     } else {
       this.customer.themtknoaccount(this.frmThanhToan.value).subscribe(Response => {
-        console.log(Response);
         if (Response.message === 'tao thanh cong') {
           const data = {
             _idphong: phong[0].item._id,
@@ -207,7 +208,7 @@ export class PaymentComponent implements OnInit {
             tongtien: this.tongTien + this.tinhTienPhong() + this.tinhTienDichVu()
           };
           this.gettime.themhoadon(data).subscribe(response => {
-            console.log(response.values);
+            const hoadon = response;
             if (response.message === 'luu thanh cong') {
               const monan = JSON.parse(localStorage.getItem('cart'));
               if (monan) {
@@ -218,7 +219,6 @@ export class PaymentComponent implements OnInit {
                     soluongmonan: monan[i].sl
                   };
                   this.gettime.themcthd(rr).subscribe(res => {
-                    console.log(res);
                   });
                 }
               }
@@ -231,21 +231,23 @@ export class PaymentComponent implements OnInit {
                     soluongmonan: thucDon[i].soluong
                   };
                   this.gettime.themcthd(rr).subscribe(res => {
-                    console.log(res);
                   });
                 }
               }
+              this.gettime.thanhtoan(hoadon).subscribe(res => {
+                console.log(res);
+              });
             }
-            alert('ok');
-            $('#xacNhan').hide();
-            $('body').removeClass('modal-open');
-            $('.modal-backdrop').removeClass('modal-backdrop fade in');
-            this.router.navigate(['/home']);
-            localStorage.setItem('cart', JSON.stringify([]));
-            localStorage.setItem('cart1', JSON.stringify([]));
-            localStorage.setItem('dichvu', JSON.stringify([]));
-            localStorage.setItem('thoidiemden', JSON.stringify([]));
-            localStorage.setItem('phong', JSON.stringify([]));
+            // alert('ok');
+            // $('#xacNhan').hide();
+            // $('body').removeClass('modal-open');
+            // $('.modal-backdrop').removeClass('modal-backdrop fade in');
+            // this.router.navigate(['/home']);
+            // localStorage.setItem('cart', JSON.stringify([]));
+            // localStorage.setItem('cart1', JSON.stringify([]));
+            // localStorage.setItem('dichvu', JSON.stringify([]));
+            // localStorage.setItem('thoidiemden', JSON.stringify([]));
+            // localStorage.setItem('phong', JSON.stringify([]));
           });
         }
       });
@@ -363,13 +365,13 @@ export class PaymentComponent implements OnInit {
       return tong;
     }
   }
-  kiemTraNguoiDung() {
-    this.khachhang = JSON.parse(localStorage.getItem('user'));
-    if (!this.khachhang) {
-      this.khachhang = {
-        ten: '',
-        sdt: ''
-      };
-    }
-  }
+  // kiemTraNguoiDung() {
+  //   this.khachhang = JSON.parse(localStorage.getItem('user'));
+  //   if (!this.khachhang) {
+  //     this.khachhang = {
+  //       ten: '',
+  //       sdt: ''
+  //     };
+  //   }
+  // }
 }

@@ -6,7 +6,7 @@
 <form [formGroup]="frmThanhToan">
   <div class="container">
     <p class="text-center " style="font-size: 40px">THANH TOÁN</p>
-    <div *ngIf="khachhang.ten!==''">
+    <div *ngIf="khachhang">
       <div class="row">
 
         <div class="col-md-4">
@@ -53,7 +53,7 @@
         </div>
       </div>
     </div>
-    <div *ngIf="khachhang.ten===''">
+    <div *ngIf="!khachhang">
       <div class="row">
         <div class="col-md-4">
           <div class="form-group">
@@ -336,9 +336,9 @@
     </div>
   </div>
   <div class="row">
-    <input *ngIf="khachhang.ten===''"  data-toggle="modal" data-target="#xacNhan" [disabled]="frmThanhToan.invalid||check===false" type="button" class="btn btn-lg btn-primary pull-right"
+    <input *ngIf="!khachhang"  data-toggle="modal" data-target="#xacNhan" [disabled]="frmThanhToan.invalid||check===false" type="button" class="btn btn-lg btn-primary pull-right"
       value="Xác Nhận" (click)="time()">
-      <input *ngIf="khachhang.ten!==''"  data-toggle="modal" data-target="#xacNhan" [disabled]="check===false" type="button" class="btn btn-lg btn-primary pull-right"
+      <input *ngIf="khachhang"  data-toggle="modal" data-target="#xacNhan" [disabled]="check===false" type="button" class="btn btn-lg btn-primary pull-right"
       value="Xác Nhận">
   </div>
   <!-- Modal -->
@@ -377,13 +377,37 @@
                 Thời lượng:
               </div>
             </div>
-            <div class="col-md-9">
-              <div class="bill-temp">
-                <div class="form-group">
+            <div class="col-md-9" >
+              <div class="bill-temp" *ngIf="khachhang">
+                <div class="form-group" >
                   <input disabled value="{{khachhang.ten}}" type="text" class="form-control">
                 </div>
                 <div class="form-group">
                   <input disabled value="{{khachhang.sdt}}" type="text" class="form-control">
+                </div>
+                <div class="form-group">
+                  <input disabled value="{{tongTien}} VND" type="text" class="form-control">
+                </div>
+                <div class="form-group">
+                  <input disabled value="{{tinhTienPhong()+tinhTienDichVu()}} VND" type="text" class="form-control">
+                </div>
+                <div class="form-group">
+                  <input disabled value="{{tinhTienPhong()+tinhTienDichVu()+tongTien}} VND" type="text"
+                    class="form-control tongtien">
+                </div>
+                <div class="form-group">
+                  <input disabled value="{{ngayden}}" type="text" class="form-control">
+                </div>
+                <div class="form-group">
+                  <input disabled value="{{buoiden}}" type="text" class="form-control">
+                </div>
+              </div>
+              <div class="bill-temp" *ngIf="khachhang2">
+                <div class="form-group">
+                  <input disabled value="{{khachhang2.ten}}" type="text" class="form-control">
+                </div>
+                <div class="form-group">
+                  <input disabled value="{{khachhang2.sdt}}" type="text" class="form-control">
                 </div>
                 <div class="form-group">
                   <input disabled value="{{tongTien}} VND" type="text" class="form-control">
@@ -414,7 +438,5 @@
   </div>
   </div>
 </form>
-
 <app-footer>
-
 </app-footer>

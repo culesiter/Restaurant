@@ -48,14 +48,7 @@ module.exports = function () {
       totalItem: '1'
     };
 
-    var key = 'H*';
-    var data = '6D0870CDE5F24F34F3915FB0045120DB';
-
-    function getHash(string) {
-      var hmac = crypto.createHmac('SHA256', key);
-      hmac.update(string);
-      return hmac.digest('Hex');
-    };
+     console.log(checkoutData)
 
     process.stdout.write(getHash(data).toUpperCase());
     // buildCheckoutUrl is async operation and will return a Promise

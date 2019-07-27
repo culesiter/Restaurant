@@ -112,11 +112,11 @@
               </ul>
             </li>
 
-            <li *ngIf="!khachhang" class="dropdown">
-              <a style="cursor: pointer;padding-top: 5px;padding-bottom: 5px" class="dropdown-toggle" data-toggle="dropdown">Đăng Nhập
+            <li *ngIf="!khachhang" >
+              <a style="cursor: pointer;padding-top: 5px;padding-bottom: 5px" data-target="#cl" data-toggle="collapse">Đăng Nhập
                 <span class="caret"></span>
               </a>
-              <ul class="dropdown-menu dropdown-lr animated slideInRight" role="menu">
+              <ul class=" collapse" id="cl"  role="menu">
                 <div class="col-lg-12">
 
                   <form (ngSubmit)="dangNhap()" style="width: 300px;">
