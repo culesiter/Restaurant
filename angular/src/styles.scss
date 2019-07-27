@@ -8,7 +8,7 @@ body{
     font-size: 15px; 
 }
 ::-webkit-scrollbar {
-    width: 8px;
+    width: 3px;
 }
 
 ::-webkit-scrollbar-track {
@@ -86,4 +86,12 @@ li{
 }
 .pdt-50{
     padding-top: 50px;
+}
+.content-head {
+    position: fixed;
+    z-index: 9;
+}
+.content-main {
+    height: 600px;
+    overflow-y: scroll;
 }

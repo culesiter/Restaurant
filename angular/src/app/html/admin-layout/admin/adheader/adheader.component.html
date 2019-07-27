@@ -7,12 +7,12 @@
     <ul class="nav flex-column main-nav">
         <li class="nav-item" routerLink="/admin/dashboard/customer" routerLinkActive="active" (click)="activeRouter('Quản Lý Khách Hàng')">
             <a class="nav-link">
-                <span>Khách hàng</span>
+                <i class="fa fa-user" aria-hidden="true"></i>  <span>Khách hàng</span>
             </a>
         </li>
         <li class="nav-item" routerLink="/admin/dashboard/dish" routerLinkActive="active" (click)="activeRouter1('Quản Lý Món Ăn')">
             <a class="nav-link">
-                <span>Món ăn</span>
+                <i class="fa fa-coffee" aria-hidden="true"></i><span>Món ăn</span>
             </a>
         </li>
         <li class="nav-item" (click)="activeRouter('Quản Lý Loại Món Ăn')" [ngStyle]="{'display': styleExp}">
@@ -22,7 +22,7 @@
         </li>
         <li class="nav-item" routerLink="/admin/dashboard/room" routerLinkActive="active" (click)="activeRouter2('Phòng Ăn')">
             <a class="nav-link">
-                <span>Phòng Ăn</span>
+                <i class="fa fa-university" aria-hidden="true"></i> <span>Phòng Ăn</span>
             </a>
         </li>
         <li class="nav-item" (click)="activeRouter('Quản Lý Loại Món Ăn')" [ngStyle]="{'display': styleExp2}">
@@ -32,28 +32,28 @@
         </li>
         <li class="nav-item" routerLink="/admin/dashboard/menu" routerLinkActive="active" (click)="activeRouter('Quản Lý Menu')">
             <a class="nav-link">
-                <span>Thực Đơn</span>
+                <i class="fa fa-sitemap" aria-hidden="true"></i>  <span>Thực Đơn</span>
             </a>
         </li>
         <li class="nav-item" routerLink="/admin/dashboard/bills" routerLinkActive="active" (click)="activeRouter('Hóa Đơn')">
             <a class="nav-link">
-                <span>Hóa Đơn</span>
+                <i class="fa fa-indent" aria-hidden="true"></i>  <span>Hóa Đơn</span>
                 <span class="demhd">2</span>
             </a>
         </li>
         <li class="nav-item" routerLink="/admin/dashboard/services" routerLinkActive="active" (click)="activeRouter('Dịch Vụ')">
             <a class="nav-link">
-                <span>Dịch Vụ</span>
+                <i class="fa fa-puzzle-piece" aria-hidden="true"></i>  <span>Dịch Vụ</span>
             </a>
         </li>
         <li class="nav-item" routerLink="/admin/dashboard/staff" routerLinkActive="active" (click)="activeRouter('Nhân Viên')">
             <a class="nav-link">
-                <span>Nhân viên</span>
+                <i class="fa fa-users" aria-hidden="true"></i>  <span>Nhân viên</span>
             </a>
         </li>
         <li class="nav-item" routerLink="/admin/dashboard/salary" routerLinkActive="active" (click)="activeRouter('Tính Lương')">
             <a class="nav-link">
-                <span>Tính lương</span>
+                <i class="fa fa-money" aria-hidden="true"></i>  <span>Tính lương</span>
             </a>
         </li>
     </ul>
