@@ -236,7 +236,7 @@ export class PaymentComponent implements OnInit {
               }
               this.gettime.thanhtoan(hoadon).subscribe(res => {
                 console.log(res);
-                window.location = res._body;
+                this.router.navigateByUrl(res._body);
               });
             }
             // alert('ok');
