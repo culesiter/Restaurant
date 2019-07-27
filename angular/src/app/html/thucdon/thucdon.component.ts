@@ -33,7 +33,6 @@ export class ThucdonComponent implements OnInit {
     var thucdon: Ithucdon[] = JSON.parse(localStorage.getItem('thucdon'));
     thucdon.forEach(element => {
       if (element._idthucdon == id)
-
         tong = tong + element.gia;
     })
     return tong;
