@@ -39,6 +39,7 @@ export class PaymentComponent implements OnInit {
   private dem = 0;
   private check = true;
   private phong;
+  private href;
   private doi = false;
   constructor(private formBuilder: FormBuilder,
     private gettime: LoginService,
@@ -130,6 +131,7 @@ export class PaymentComponent implements OnInit {
     const khachhang = JSON.parse(localStorage.getItem('user'));
     const thoidiemden = JSON.parse(localStorage.getItem('thoidiemden'));
     let buoidat = JSON.parse(localStorage.getItem('buoi'))[0].buoiDat;
+    $('#load').css('display', 'block');
     if (buoidat.length === 2) {
       buoidat = 3;
     }
@@ -234,9 +236,20 @@ export class PaymentComponent implements OnInit {
                   });
                 }
               }
-              this.gettime.thanhtoan(hoadon).subscribe(res => {
-                console.log(res);
-                this.router.navigateByUrl(res._body);
+              const payment_data = {
+                amount: this.tinhTienPhong() + this.tinhTienDichVu() + this.tongTien,
+                customerId: data._idkhachhang,
+                customerEmail: this.khachhang2.email,
+                customerPhone: this.khachhang2.sdt,
+                orderId: response.values._id
+              };
+              this.gettime.thanhtoan(payment_data).subscribe(res => {
+                $('#load').css('display', 'none');
+                this.href = res._body;
+
+                // setTimeout(() => {
+                //   $('#href').attr('href', res._body);
+                // }, 200);
               });
             }
             // alert('ok');
