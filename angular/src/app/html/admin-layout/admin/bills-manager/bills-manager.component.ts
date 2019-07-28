@@ -43,6 +43,7 @@ export class BillsManagerComponent implements OnInit {
         } else if (element.tinhtrang === -1) {
           this.huy.push(element);
         }
+        this.ehoadon = this.chuaxacnhan[1];
       });
     });
   }
