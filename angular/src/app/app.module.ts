@@ -60,6 +60,7 @@ import { OrderDetailComponent } from './html/order-detail/order-detail.component
 import { StaffComponent } from './html/admin-layout/admin/staff/staff.component';
 import { StaffService } from './share/services/staff.service';
 import { SalaryComponent } from './html/admin-layout/admin/salary/salary.component';
+import { PaymentEndComponent } from './html/payment-end/payment-end.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -90,7 +91,7 @@ const routes: Routes = [
     ]
   },
   { path: 'payment', component: PaymentComponent },
-
+  { path: 'payment_end', component: PaymentEndComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'test', component: PhongComponent },
   {
@@ -162,7 +163,8 @@ const routes: Routes = [
     ThongtinnguoidungComponent,
     OrderDetailComponent,
     StaffComponent,
-    SalaryComponent
+    SalaryComponent,
+    PaymentEndComponent
   ],
   imports: [
     OwlModule,
