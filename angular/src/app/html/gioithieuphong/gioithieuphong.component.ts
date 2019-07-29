@@ -104,6 +104,10 @@ export class GioithieuphongComponent implements OnInit {
                 if (element.buoiDat === 2) {
                   this.buoidat.buoichieu = false;
                 }
+                if (element.buoiDat === 3) {
+                  this.buoidat.buoichieu = false;
+                  this.buoidat.buoisang = false;
+                }
               }
             });
             element3['buoidat'] = this.buoidat;
@@ -130,6 +134,10 @@ export class GioithieuphongComponent implements OnInit {
               }
               if (element.buoiDat === 2) {
                 this.buoidat.buoichieu = false;
+              }
+              if (element.buoiDat === 3) {
+                this.buoidat.buoichieu = false;
+                this.buoidat.buoisang = false;
               }
             }
           });
@@ -161,6 +169,10 @@ export class GioithieuphongComponent implements OnInit {
               if (element.buoiDat === 2) {
                 this.buoidat.buoichieu = false;
               }
+              if (element.buoiDat === 3) {
+                this.buoidat.buoichieu = false;
+                this.buoidat.buoisang = false;
+              }
             }
           });
           element3['buoidat'] = this.buoidat;
@@ -191,6 +203,10 @@ export class GioithieuphongComponent implements OnInit {
               if (element.buoiDat === 2) {
                 this.buoidat.buoichieu = false;
               }
+              if (element.buoiDat === 3) {
+                this.buoidat.buoichieu = false;
+                this.buoidat.buoisang = false;
+              }
             }
           });
           element3['buoidat'] = this.buoidat;
@@ -205,7 +221,8 @@ export class GioithieuphongComponent implements OnInit {
   kiemtrabuoi(buoi, id) {
     this.buoi = JSON.parse(localStorage.getItem('buoi'));
     const ngaytemp = JSON.parse(localStorage.getItem('thoidiemden_temp'));
-    if (ngaytemp) {
+
+    if (ngaytemp && ngaytemp.length) {
       if (this.fromDate === ngaytemp) {
         for (let i = 0; i < this.buoi.length; i++) {
           if (this.buoi[i].buoiDat === buoi && this.buoi[i]._idphong === id) {

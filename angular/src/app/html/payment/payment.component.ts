@@ -41,6 +41,10 @@ export class PaymentComponent implements OnInit {
   private phong;
   private href;
   private doi = false;
+  private gio;
+  private phut;
+  private select;
+  private total;
   constructor(private formBuilder: FormBuilder,
     private gettime: LoginService,
     private router: Router,
@@ -49,6 +53,7 @@ export class PaymentComponent implements OnInit {
   today = new Date();
   ngOnInit() {
     this.newkhachhang = {};
+    this.khachhang = JSON.parse(localStorage.getItem('user'));
     this.thoiluong();
     this.taoFormThanhToan();
     this.sua = 0;
@@ -66,7 +71,8 @@ export class PaymentComponent implements OnInit {
     this.layPhongStore();
     this.layDichVuStore();
     this.ngayden = JSON.parse(localStorage.getItem('thoidiemden'));
-    console.log(this.khachhang);
+    this.phut = 0;
+    this.select = 1;
   }
 
   thoiluong() {
@@ -120,20 +126,43 @@ export class PaymentComponent implements OnInit {
   }
   time() {
     const thoidiemden = JSON.parse(localStorage.getItem('thoidiemden'));
+    this.total = this.tinhTienPhong() + this.tinhTienDichVu() + this.tongTien;
+    if (this.select == 2) {
+      this.total = this.total * 0.1;
+    }
     this.khachhang2 = {
       ten: this.frmThanhToan.value.ten,
+      email: this.frmThanhToan.value.email,
       sdt: this.frmThanhToan.value.sdt
     };
-    console.log(this.khachhang);
+  }
+  time2() {
+    const thoidiemden = JSON.parse(localStorage.getItem('thoidiemden'));
+    this.total = this.tinhTienPhong() + this.tinhTienDichVu() + this.tongTien;
+    if (this.select == 2) {
+      this.total = this.total * 0.1;
+    }
+  }
+  laygio(event) {
+
+  }
+  layphut(event) {
+
   }
   taohoadon() {
     const phong = JSON.parse(localStorage.getItem('phong'));
     const khachhang = JSON.parse(localStorage.getItem('user'));
     const thoidiemden = JSON.parse(localStorage.getItem('thoidiemden'));
-    let buoidat = JSON.parse(localStorage.getItem('buoi'))[0].buoiDat;
+    let buoidat = JSON.parse(localStorage.getItem('buoi'));
+    this.total = this.tinhTienPhong() + this.tinhTienDichVu() + this.tongTien;
+    if (this.select == 2) {
+      this.total = this.total * 0.1;
+    }
     $('#load').css('display', 'block');
     if (buoidat.length === 2) {
       buoidat = 3;
+    } else {
+      buoidat = JSON.parse(localStorage.getItem('buoi'))[0].buoiDat;
     }
     if (khachhang) {
       const data = {
@@ -141,7 +170,9 @@ export class PaymentComponent implements OnInit {
         _idkhachhang: khachhang._id,
         thoidiemden: thoidiemden,
         buoiDat: buoidat,
-        tongtien: this.tongTien + this.tinhTienPhong() + this.tinhTienDichVu()
+        tongtien: this.tongTien + this.tinhTienPhong() + this.tinhTienDichVu(),
+        gioden: this.gio + ' giờ' + this.phut + ' phút',
+        hinhthucthanhtoan: this.select
       };
       this.gettime.themhoadon(data).subscribe(response => {
         console.log(response.values);
@@ -184,20 +215,31 @@ export class PaymentComponent implements OnInit {
               });
             }
           }
+          const payment_data = {
+            amount: this.total,
+            customerId: khachhang._id,
+            customerEmail: this.khachhang.email,
+            customerPhone: this.khachhang.sdt,
+            orderId: response.values._id
+          };
+          this.gettime.thanhtoan(payment_data).subscribe(res => {
+            $('#load').css('display', 'none');
+            this.href = res._body;
+          });
         }
-        alert('ok');
-        $('#xacNhan').modal('toggle');
-        $('body').removeClass('modal-open');
-        $('.modal-backdrop').removeClass('modal-backdrop fade in')
-        this.router.navigate(['/home']);
-        localStorage.setItem('cart', JSON.stringify([]));
-        localStorage.setItem('cart1', JSON.stringify([]));
-        localStorage.setItem('dichvu', JSON.stringify([]));
-        localStorage.removeItem('thoidiemden');
-        localStorage.setItem('phong', JSON.stringify([]));
-        localStorage.setItem('buoi', JSON.stringify([]));
-        localStorage.removeItem('thoidiemden_temp');
-        localStorage.setItem('phong_temp', JSON.stringify([]));
+        // alert('ok');
+        // $('#xacNhan').modal('toggle');
+        // $('body').removeClass('modal-open');
+        // $('.modal-backdrop').removeClass('modal-backdrop fade in')
+        // this.router.navigate(['/home']);
+        // localStorage.setItem('cart', JSON.stringify([]));
+        // localStorage.setItem('cart1', JSON.stringify([]));
+        // localStorage.setItem('dichvu', JSON.stringify([]));
+        // localStorage.removeItem('thoidiemden');
+        // localStorage.setItem('phong', JSON.stringify([]));
+        // localStorage.setItem('buoi', JSON.stringify([]));
+        // localStorage.removeItem('thoidiemden_temp');
+        // localStorage.setItem('phong_temp', JSON.stringify([]));
       });
     } else {
       this.customer.themtknoaccount(this.frmThanhToan.value).subscribe(Response => {
@@ -236,8 +278,20 @@ export class PaymentComponent implements OnInit {
                   });
                 }
               }
+              const dichvu = JSON.parse(localStorage.getItem('dichvu'));
+              if (dichvu) {
+                for (let i = 0; i < dichvu.length; i++) {
+                  const rr = {
+                    _idhoadon: response.values._id,
+                    _iddichvu: dichvu[i].item._id,
+                  };
+                  this.dichvu.themCtdv(rr).subscribe(res => {
+                    console.log(res);
+                  });
+                }
+              }
               const payment_data = {
-                amount: this.tinhTienPhong() + this.tinhTienDichVu() + this.tongTien,
+                amount: this.total,
                 customerId: data._idkhachhang,
                 customerEmail: this.khachhang2.email,
                 customerPhone: this.khachhang2.sdt,
@@ -246,10 +300,6 @@ export class PaymentComponent implements OnInit {
               this.gettime.thanhtoan(payment_data).subscribe(res => {
                 $('#load').css('display', 'none');
                 this.href = res._body;
-
-                // setTimeout(() => {
-                //   $('#href').attr('href', res._body);
-                // }, 200);
               });
             }
             // alert('ok');
@@ -257,15 +307,18 @@ export class PaymentComponent implements OnInit {
             // $('body').removeClass('modal-open');
             // $('.modal-backdrop').removeClass('modal-backdrop fade in');
             // this.router.navigate(['/home']);
-            // localStorage.setItem('cart', JSON.stringify([]));
-            // localStorage.setItem('cart1', JSON.stringify([]));
-            // localStorage.setItem('dichvu', JSON.stringify([]));
-            // localStorage.setItem('thoidiemden', JSON.stringify([]));
-            // localStorage.setItem('phong', JSON.stringify([]));
+
           });
         }
       });
     }
+  }
+  clearalllocal() {
+    localStorage.setItem('cart', JSON.stringify([]));
+    localStorage.setItem('cart1', JSON.stringify([]));
+    localStorage.setItem('dichvu', JSON.stringify([]));
+    localStorage.setItem('thoidiemden', JSON.stringify([]));
+    localStorage.setItem('phong', JSON.stringify([]));
   }
   giatri(time) {
     console.log(time);

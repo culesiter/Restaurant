@@ -26,8 +26,11 @@ var hoadonSchema = mongoose.Schema(
             type: Number,
             default:0
         },
+        gioden:{
+            type:String
+        },
         hinhthucthanhtoan: {
-            type: String
+            type: Number
         },
         _idphong: {
             type: mongoose.Schema.Types.ObjectId, ref: 'phong',

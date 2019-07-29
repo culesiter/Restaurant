@@ -128,7 +128,9 @@ function layHoaDonId(request) {
                         tinhtrang: res.tinhtrang,
                         buoiDat: res.buoiDat,
                         _idphong: res._idphong,
-                        tongtien:res.tongtien
+                        tongtien:res.tongtien,
+                        gioden:res.gioden,
+                        hinhthucthanhtoan:res.hinhthucthanhtoan
                     }
                 }
                 )
@@ -156,7 +158,9 @@ function layHoaDonNguoiDung(request) {
                         tinhtrang: res.tinhtrang,
                         buoiDat: res.buoiDat,
                         _idphong: res._idphong,
-                        tongtien:res.tongtien
+                        tongtien:res.tongtien,
+                        gioden:res.gioden,
+                        hinhthucthanhtoan:res.hinhthucthanhtoan
                     }
                 }
                 )
@@ -184,7 +188,9 @@ function layHoaDon() {
                             tinhtrang: res.tinhtrang,
                             buoiDat: res.buoiDat,
                             _idphong: res._idphong,
-                            tongtien:res.tongtien
+                            tongtien:res.tongtien,
+                            gioden:res.gioden,
+                            hinhthucthanhtoan:res.hinhthucthanhtoan
                         }
                     }
                     )
@@ -202,7 +208,8 @@ function taoHoaDon(request) {
         hinhthucthanhtoan: request.hinhthucthanhtoan,
         _idphong: request._idphong,
         buoiDat: request.buoiDat,
-        tongtien:request.tongtien
+        tongtien:request.tongtien,
+        gioden:request.gioden,
     });
     return new Promise((resolve, reject) => {
         phong.findById(request._idphong).exec().then(
@@ -230,6 +237,7 @@ function taoHoaDon(request) {
                 }
             }
         ).then(result => {
+            console.log(result)
             const data = {
                 message: "luu thanh cong",
                 values: {

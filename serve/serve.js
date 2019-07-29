@@ -3,6 +3,7 @@ var app = express();
 var bodyParser = require('body-parser');
 var cors = require('cors');
 var logger = require('morgan')
+var http=require('http');
 
 
 var database = require("./database/index");
@@ -10,7 +11,7 @@ app.use(logger('dev'));
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json());
 app.use(cors());
-app.use('/upload',express.static('upload'));
+app.use('/upload', express.static('upload'));
 
 app.use('/loaimon', require('./router/loaimonan.router.js')());
 app.use('/monan', require('./router/monan.router.js')());
@@ -30,7 +31,12 @@ app.use('/capnhanvien', require('./router/capnhanvien.router.js')());
 app.use('/bangluong', require('./router/bangluong.router.js')());
 app.use('/payment', require('./router/payment.router.js')());
 
-app.listen(3000, () => {
+var a= app.listen(process.env.PORT || 3000, () => {
     console.log("serve's running ...");
 
 })
+// var serve=http.createServer(a);
+// var io=require('socket.io').listen(serve);
+// io.on('connection',(socket)=>{
+//     console.log('someone conect');
+// })

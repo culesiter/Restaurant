@@ -3,9 +3,9 @@
 
   </app-header>
 </div>
-<form [formGroup]="frmThanhToan">
-  <div class="container">
-    <p class="text-center " style="font-size: 40px">THANH TOÁN</p>
+<div class="container">
+  <p class="text-center " style="font-size: 40px">THANH TOÁN</p>
+  <form [formGroup]="frmThanhToan">
     <div *ngIf="khachhang">
       <div class="row">
 
@@ -45,7 +45,7 @@
                 <span class="input-group-addon">
                   <i class="fa fa-user fa" aria-hidden="true"></i>
                 </span>
-                <input disabled value="{{khachhang.sdt}}" type="text" class="form-control" name="name"
+                <input disabled value="{{khachhang.sdt}}" type="text" class="form-control" name="phone"
                   placeholder="Nhập Tên" />
               </div>
             </div>
@@ -82,31 +82,32 @@
               </div>
               <span style="color:red" class="label" *ngIf="frmThanhToan.controls.email.dirty && 
               frmThanhToan.controls.email.errors?.required">Vui lòng điền email!</span>
-            <span style="color:red" class="label" *ngIf="frmThanhToan.controls.email.dirty && 
+              <span style="color:red" class="label" *ngIf="frmThanhToan.controls.email.dirty && 
             frmThanhToan.controls.email.errors?.pattern">Vui lòng điền đúng mail!</span>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="col-md-4">
-        <div class="form-group">
-          <label for="name" class="cols-sm-2 control-label">Số Điện Thoại:</label>
-          <div class="cols-sm-10 wrong">
-            <div class="input-group">
-              <span class="input-group-addon">
-                <i class="fa fa-phone-square" aria-hidden="true"></i>
-              </span>
-              <input type="text" formControlName="sdt" class="form-control" name="name"
-                placeholder="Nhập số điệc thoại" />
-            </div>
-            <span style="color:red" class="label" *ngIf="frmThanhToan.controls.sdt.dirty && 
+        <div class="col-md-4">
+          <div class="form-group">
+            <label for="name" class="cols-sm-2 control-label">Số Điện Thoại:</label>
+            <div class="cols-sm-10 wrong">
+              <div class="input-group">
+                <span class="input-group-addon">
+                  <i class="fa fa-phone-square" aria-hidden="true"></i>
+                </span>
+                <input type="text" formControlName="sdt" class="form-control" name="phone"
+                  placeholder="Nhập số điệc thoại" />
+              </div>
+              <span style="color:red" class="label" *ngIf="frmThanhToan.controls.sdt.dirty && 
             frmThanhToan.controls.sdt.errors?.required">Vui lòng điền số điện thoại!</span>
-            <span style="color:red" class="label" *ngIf="frmThanhToan.controls.sdt.dirty && 
+              <span style="color:red" class="label" *ngIf="frmThanhToan.controls.sdt.dirty && 
             frmThanhToan.controls.sdt.errors?.pattern">Số điên thoại gồm số gồm 10-11 số!</span>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
+  </form>
   <hr />
   <div class="row">
     <div class="col-md-4">
@@ -330,7 +331,7 @@
       <div class="form-group">
         <label for="name" class="cols-sm-2 control-label">Ngày Đặt: </label>
         <div class="cols-sm-10 wrong">
-            {{ngayden}}
+          {{ngayden}}
         </div>
       </div>
     </div>
@@ -345,9 +346,13 @@
     <div class="col-md-3">
       <div class="form-group">
         <label for="name" class="cols-sm-2 control-label">giờ đến:</label>
-        <div class="cols-sm-10 wrong">
-          <input  type="text" class="form-control" name="name"
-            value="" />
+        <div class="cols-sm-10 wrong" style="display:flex;align-items: center;line-height: 1">
+          <input type="number" min="6" max="21" class="form-control text-center" value="" [(ngModel)]="gio"
+            (change)="laygio($event)" />
+          Giờ:
+          <input type="number" min="0" max="60" class="form-control text-center" value="0" [(ngModel)]="phut"
+            (change)="layphut($event)" />
+          Phút
         </div>
       </div>
     </div>
@@ -355,23 +360,24 @@
       <div class="form-group">
         <label for="name" class="cols-sm-2 control-label">Hình thức thanh toán:</label>
         <div class="cols-sm-10 wrong">
-         <select name="" id="" class="form-control">
-           <option value="2">
-             Trả trước 10 % hóa đơn
-           </option>
-           <option value="1">
-             Trả hết
-          </option>
-         </select>
+          <select name="" id="" class="form-control" [(ngModel)]="select">
+            <option value="2">
+              Trả trước 10 % hóa đơn
+            </option>
+            <option value="1">
+              Trả hết
+            </option>
+          </select>
         </div>
       </div>
     </div>
   </div>
   <div class="row">
-    <input *ngIf="!khachhang"  data-toggle="modal" data-target="#xacNhan" [disabled]="frmThanhToan.invalid||check===false" type="button" class="btn btn-lg btn-primary pull-right"
-      value="Xác Nhận" (click)="time()">
-      <input *ngIf="khachhang"  data-toggle="modal" data-target="#xacNhan" [disabled]="check===false" type="button" class="btn btn-lg btn-primary pull-right"
-      value="Xác Nhận">
+    <input *ngIf="!khachhang" data-toggle="modal" data-target="#xacNhan"
+      [disabled]="frmThanhToan.invalid||check===false||!gio||!select" type="button"
+      class="btn btn-lg btn-primary pull-right" value="Xác Nhận" (click)="time()">
+    <input *ngIf="khachhang" data-toggle="modal" data-target="#xacNhan" [disabled]="check===false||!gio||!select" type="button"
+      class="btn btn-lg btn-primary pull-right" value="Xác Nhận" (click)="time2()">
   </div>
   <!-- Modal -->
   <div class="modal fade" id="xacNhan" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -391,6 +397,9 @@
                 Tên khách hàng:
               </div>
               <div class="form-group">
+                Email
+              </div>
+              <div class="form-group">
                 Số Điện Thoại:
               </div>
               <div class="form-group">
@@ -408,11 +417,20 @@
               <div class="form-group">
                 Thời lượng:
               </div>
+              <div class="form-group">
+                Hình thức thanh toán:
+              </div>
+              <div class="form-group">
+                Cân Thanh toán:
+              </div>
             </div>
-            <div class="col-md-9" >
+            <div class="col-md-9">
               <div class="bill-temp" *ngIf="khachhang">
-                <div class="form-group" >
+                <div class="form-group">
                   <input disabled value="{{khachhang.ten}}" type="text" class="form-control">
+                </div>
+                <div class="form-group">
+                  <input disabled value="{{khachhang.email}}" type="text" class="form-control">
                 </div>
                 <div class="form-group">
                   <input disabled value="{{khachhang.sdt}}" type="text" class="form-control">
@@ -428,17 +446,27 @@
                     class="form-control tongtien">
                 </div>
                 <div class="form-group">
-                  <input disabled value="{{ngayden}}" type="text" class="form-control">
+                  <input disabled value="{{gio}} giờ {{phut}} phút, ngày: {{ngayden}}" type="text" class="form-control">
                 </div>
                 <div class="form-group">
                   <input disabled value="{{buoiden}}" type="text" class="form-control">
                 </div>
+                <div class="form-group">
+                    <input *ngIf="select==1" disabled value="Trả hết" type="text" class="form-control">
+                    <input *ngIf="select==2" disabled value="Trả trước 10%" type="text" class="form-control">
+                  </div>
+                  <div class="form-group">
+                      <input disabled value="{{total}}" type="text" class="form-control">
+                    </div>
               </div>
               <div class="bill-temp" *ngIf="khachhang2">
                 <div class="form-group">
                   <input disabled value="{{khachhang2.ten}}" type="text" class="form-control">
                 </div>
                 <div class="form-group">
+                  <div class="form-group">
+                    <input disabled value="{{khachhang2.email}}" type="text" class="form-control">
+                  </div>
                   <input disabled value="{{khachhang2.sdt}}" type="text" class="form-control">
                 </div>
                 <div class="form-group">
@@ -452,11 +480,18 @@
                     class="form-control tongtien">
                 </div>
                 <div class="form-group">
-                  <input disabled value="{{ngayden}}" type="text" class="form-control">
+                  <input disabled value="{{gio}} giờ {{phut}} phút, ngày: {{ngayden}}" type="text" class="form-control">
                 </div>
                 <div class="form-group">
                   <input disabled value="{{buoiden}}" type="text" class="form-control">
                 </div>
+                <div class="form-group">
+                  <input *ngIf="select==1" disabled value="Trả hết" type="text" class="form-control">
+                  <input *ngIf="select==2" disabled value="Trả trước 10%" type="text" class="form-control">
+                </div>
+                <div class="form-group">
+                    <input disabled value="{{total}}" type="text" class="form-control">
+                  </div>
               </div>
             </div>
           </div>
@@ -464,13 +499,12 @@
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
           <button type="button" class="btn btn-primary" (click)="taohoadon()">Tạo</button>
-          <img style="display: none;" id="load"  src="../../../assets/images/load.svg" alt="">
+          <img style="display: none;" id="load" src="../../../assets/images/load.svg" alt="">
           <a *ngIf="href" href="{{href}}" id="href" class="btn btn-success">Đến Trang Thanh Toán</a>
         </div>
       </div>
     </div>
   </div>
-  </div>
-</form>
+</div>
 <app-footer>
 </app-footer>

@@ -86,6 +86,8 @@ export class HeaderComponent implements OnInit {
     localStorage.removeItem('dichvu');
     localStorage.removeItem('thoidiemden');
     localStorage.removeItem('phong');
+    localStorage.removeItem('thoidiemden_temp');
+    localStorage.removeItem('phong_temp');
     this.kiemTraKhachHang();
   }
   kiemTraKhachHang() {

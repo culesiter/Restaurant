@@ -48,4 +48,11 @@ export class LoginService {
       return res;
     });
   }
+  checkthanhtoan(query): Observable<any> {
+    console.log(query);
+
+    return this.http.get('https://manhrestaurant.herokuapp.com/payment/callback' + query).map(res => {
+      return res.json();
+    });
+  }
 }
