@@ -160,6 +160,14 @@
                                     <input type="text" class="form-control" disabled value="{{ehoadon.ten}}">
                                 </div>
                                 <div class="form-group col-md-6">
+                                        <label>Số điện thoại</label>
+                                        <input type="text" class="form-control" disabled value="INSERT VALUE">
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                            <label>Email</label>
+                                            <input type="text" class="form-control" disabled value="INSERT VALUE">
+                                        </div>
+                                <div class="form-group col-md-6">
                                     <label>Thời điểm tạo</label>
                                     <input type="text" class="form-control" disabled value="{{ehoadon.thoidiemtao}}">
                                 </div>
@@ -176,31 +184,49 @@
                                     <input type="text" class="form-control" value="{{ehoadon._idphong.ten}}">
                                 </div>
                                 <div class="form-group col-md-12 ">
-                                    <label style="width: 100%">Các món ăn đã chọn</label>
-                                    <div class="dish-loop" *ngFor="let item of eCthd">
-                                        <div class="form-group col-md-12">
-                                            <label>Tên món ăn</label>
-                                            <input type="text" class="form-control" disabled
-                                                value="{{item._idmonan.ten}}">
-                                        </div>
-                                        <div class="form-group col-md-3">
-                                            <label>Số lượng</label>
-                                            <input type="number" class="form-control" value="{{item.soluongmonan}}">
-                                        </div>
-                                        <div class="form-group col-md-3">
-                                            <label>Đơn giá</label>
-                                            <input type="text" class="form-control" disabled
-                                                value="{{item._idmonan.gia}}">
-                                        </div>
-                                        <div class="form-group col-md-3">
-                                            <label>Khuyến mãi</label>
-                                            <input type="text" class="form-control" value="{{item._idmonan.khuyenmai}}">
-                                        </div>
-                                        <div class="form-group col-md-3">
-                                            <label>Thành tiền</label>
-                                            <input type="text" class="form-control" disabled value="INSERT VALUE">
+                                    <label data-toggle="collapse" href="#dish-colapse" style="width: 100%">Các món ăn đã
+                                        chọn <i class="fa fa-caret-down" aria-hidden="true"></i></label>
+                                    <div class="collapse" id="dish-colapse">
+                                        <div class="dish-loop" *ngFor="let item of eCthd">
+                                            <div class="form-group col-md-12">
+                                                <label>Tên món ăn</label>
+                                                <input type="text" class="form-control" disabled
+                                                    value="{{item._idmonan.ten}}">
+                                            </div>
+                                            <div class="form-group col-md-3">
+                                                <label>Số lượng</label>
+                                                <input type="number" class="form-control" value="{{item.soluongmonan}}">
+                                            </div>
+                                            <div class="form-group col-md-3">
+                                                <label>Đơn giá</label>
+                                                <input type="text" class="form-control" disabled
+                                                    value="{{item._idmonan.gia}}">
+                                            </div>
+                                            <div class="form-group col-md-3">
+                                                <label>Khuyến mãi</label>
+                                                <input type="text" class="form-control"
+                                                    value="{{item._idmonan.khuyenmai}}">
+                                            </div>
+                                            <div class="form-group col-md-3">
+                                                <label>Thành tiền</label>
+                                                <input type="text" class="form-control" disabled value="INSERT VALUE">
+                                            </div>
                                         </div>
                                     </div>
+                                    <label data-toggle="collapse" href="#services-colapse" style="width: 100%"> Dịch vụ đã chọn <i class="fa fa-caret-down" aria-hidden="true"></i></label>
+                                        <div class="collapse" id="services-colapse">
+                                            <div class="dish-loop" *ngFor="let item of eCthd">
+                                                <div class="form-group col-md-12">
+                                                    <label>Tên dịch vụ</label>
+                                                    <input type="text" class="form-control" disabled
+                                                        value="INSERT VALUE">
+                                                </div>
+                                                <div class="form-group col-md-3">
+                                                    <label>Thành tiền</label>
+                                                    <input type="text" class="form-control" disabled value="INSERT VALUE">
+                                                </div>
+                                            </div>
+                                        </div>
                                     <div class="row mgt-30">
                                         <div class="form-group col-md-4">
                                             <label>Tổng tiền</label>
