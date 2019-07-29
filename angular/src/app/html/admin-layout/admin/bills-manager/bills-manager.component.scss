@@ -22,3 +22,16 @@
 .mgt-30{
     margin-top: 30px;
 }
+div#menu2 {
+    display: flex;
+    flex-wrap: wrap;
+    ul.nav.nav-tabs {
+        display: flex;
+        flex-wrap: wrap;
+        width: 100%;
+        margin-top: 15px;
+    }
+    .tab-content {
+        width: 100%;
+    }
+}
