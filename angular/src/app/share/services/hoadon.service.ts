@@ -8,7 +8,7 @@ export class HoadonService {
   private url = "http://localhost:3000/hoadon";
   private urlcthd = "http://localhost:3000/chitiethoadon";
   private urlp = "http://localhost:3000/phong";
-  private urldv= "http://localhost:3000/chitietdichvu";
+  private urldv = "http://localhost:3000/chitietdichvu";
   constructor(private http: Http) { }
   them(data): Observable<Ihoadon> {
     console.log(data);
@@ -30,24 +30,27 @@ export class HoadonService {
     return this.http.put(this.url + '/' + id, action).map(res => res.json() as any[]);
   }
   laydanhsach(): Observable<Ihoadon[]> {
-    return this.http.get(this.url).map(respose => respose.json() as Ihoadon[]);
-  }
-  laydanhsachtheokh(id): Observable<any[]> {
-    return this.http.get(this.url + '/ng/?idkh=' + id).map(respose => respose.json() as any[]);
-  }
-  laydanhsachtheoid(id): Observable<any[]> {
-    return this.http.get(this.url + '/id/?id=' + id).map(respose => respose.json() as any[]);
-  }
-  getCTHD(id): Observable<any> {
-    return this.http.get(this.urlcthd + '/' + id).map(res => res.json());
-  }
-  getCTHDMA(id): Observable<any> {
-    return this.http.get(this.urlcthd + '/' + id).map(res => res.json());
-  }
-  layphongtheoid(id): Observable<any[]> {
-    return this.http.get(this.urlp + '/ph?id=' + id).map(respose => respose.json() as any[]);
-  }
-  laydichvutheoid(id): Observable<any[]> {
-    return this.http.get(this.urldv + '/?id=' + id).map(respose => respose.json() as any[]);
-  }
+    return this.http.get(this.url).map(respose => {
+      console.log(respose);
+      return respose.json() ;
+    });
+}
+laydanhsachtheokh(id): Observable < any[] > {
+  return this.http.get(this.url + '/ng/?idkh=' + id).map(respose => respose.json() as any[]);
+}
+laydanhsachtheoid(id): Observable < any[] > {
+  return this.http.get(this.url + '/id/?id=' + id).map(respose => respose.json() as any[]);
+}
+getCTHD(id): Observable < any > {
+  return this.http.get(this.urlcthd + '/' + id).map(res => res.json());
+}
+getCTHDMA(id): Observable < any > {
+  return this.http.get(this.urlcthd + '/' + id).map(res => res.json());
+}
+layphongtheoid(id): Observable < any[] > {
+  return this.http.get(this.urlp + '/ph?id=' + id).map(respose => respose.json() as any[]);
+}
+laydichvutheoid(id): Observable < any[] > {
+  return this.http.get(this.urldv + '/?id=' + id).map(respose => respose.json() as any[]);
+}
 }

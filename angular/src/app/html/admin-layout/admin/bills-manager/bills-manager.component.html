@@ -128,15 +128,27 @@
                                     <label>Tên khách hàng</label>
                                     <input type="text" class="form-control" disabled value="{{ehoadon.ten}}">
                                 </div>
-                                <div class="form-group col-md-6">
+                                <div class="form-group col-md-4">
                                     <label>Thời điểm tạo</label>
                                     <input type="text" class="form-control" disabled value="{{ehoadon.thoidiemtao}}">
                                 </div>
-                                <div class="form-group col-md-6">
+                                <div class="form-group col-md-4">
                                     <label>Thời điểm đến</label>
-                                    <input type="text" class="form-control" value="{{ehoadon.thoidiemden}}">
+                                    <input type="text" class="form-control"
+                                        value="{{ehoadon.gioden}}, {{ehoadon.thoidiemden}}">
                                 </div>
-
+                                <div class="form-group col-md-4">
+                                    <label>Thời lượng</label>
+                                    <div *ngIf="ehoadon.buoiDat===1">
+                                        Buối sáng
+                                    </div>
+                                    <div *ngIf="ehoadon.buoiDat===2">
+                                        Buối chiều
+                                    </div>
+                                    <div *ngIf="ehoadon.buoiDat===3">
+                                        Cả ngày
+                                    </div>
+                                </div>
                                 <div class="form-group col-md-4">
                                     <label>Phòng</label>
                                     <input type="text" class="form-control" value="{{ehoadon._idphong.ten}}">
@@ -164,7 +176,8 @@
                                         </div>
                                         <div class="form-group col-md-3">
                                             <label>Thành tiền</label>
-                                            <input type="text" class="form-control" disabled value="INSERT VALUE">
+                                            <input *ngIf="item._idmonan.khuyenmai==0" type="text" class="form-control" disabled value="{{item._idmonan.gia*item.soluongmonan}}">
+                                            <input *ngIf="item._idmonan.khuyenmai!=0" type="text" class="form-control" disabled value="{{item._idmonan.gia*item.soluongmonan-(item._idmonan.gia*item.soluongmonan*item._idmonan.khuyenmai/100)}}">
                                         </div>
                                     </div>
                                     <div class="row mgt-30">
@@ -174,7 +187,7 @@
                                         </div>
                                         <div class="form-group col-md-4">
                                             <label>Đã thanh toán</label>
-                                            <input type="text" class="form-control" value="INSERT VALUE">
+                                            <input type="text" class="form-control" value="Ơ">
                                         </div>
                                         <div class="form-group col-md-4">
                                             <label>Còn lại</label>
@@ -182,14 +195,15 @@
                                         </div>
                                     </div>
                                 </div>
-                            
+
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="submit" class="btn btn-secondary" (click)="confirm(ehoadon._id,1)">Xác nhận đơn hàng</button>
+                <button type="submit" class="btn btn-secondary" (click)="confirm(ehoadon._id,1)">Xác nhận đơn
+                    hàng</button>
                 <button class="btn btn-danger" (click)="deleteBill(ehoadon._id)">Xóa</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             </div>

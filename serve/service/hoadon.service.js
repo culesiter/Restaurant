@@ -111,7 +111,7 @@ function suaHoaDon(pramas, request) {
 }
 function layHoaDonId(request) {
     return new Promise((resolve, reject) => {
-    hoadon.find({ _id: request.id }).select('_id thoidiemden thoidiemtao hinhthucthanhtoan tinhtrang _idkhachhang _idphong buoiDat tongtien').populate('_idkhachhang', 'ten').populate('_idphong').exec(
+    hoadon.find({ _id: request.id }).select('_id thoidiemden thoidiemtao hinhthucthanhtoan tinhtrang _idkhachhang _idphong gioden buoiDat tongtien').populate('_idkhachhang', 'ten').populate('_idphong').exec(
         function (err, response) {
             if (err) {
                 var err = {
@@ -141,7 +141,7 @@ function layHoaDonId(request) {
 }
 function layHoaDonNguoiDung(request) {
     return new Promise((resolve, reject) => {
-    hoadon.find({ _idkhachhang: request.idkh }).select('_id thoidiemden thoidiemtao hinhthucthanhtoan tinhtrang _idkhachhang _idphong buoiDat tongtien').populate('_idkhachhang', 'ten').populate('_idphong').exec(
+    hoadon.find({ _idkhachhang: request.idkh }).select('_id thoidiemden thoidiemtao hinhthucthanhtoan tinhtrang _idkhachhang _idphong gioden buoiDat tongtien').populate('_idkhachhang', 'ten').populate('_idphong').exec(
         function (err, response) {
             if (err) {
                 var err = {
@@ -171,7 +171,7 @@ function layHoaDonNguoiDung(request) {
 }
 function layHoaDon() {
     return new Promise((resolve, reject) => {
-        hoadon.find({}).select('_id thoidiemden thoidiemtao hinhthucthanhtoan tinhtrang _idkhachhang _idphong buoiDat tongtien').populate('_idkhachhang', 'ten').populate('_idphong').exec(
+        hoadon.find({}).select('_id thoidiemden thoidiemtao hinhthucthanhtoan tinhtrang _idkhachhang _idphong buoiDat gioden tongtien').populate('_idkhachhang', 'ten').populate('_idphong').exec(
             function (err, response) {
                 if (err) {
                     var err = {

@@ -27,6 +27,7 @@ export class BillsManagerComponent implements OnInit {
   //  }
   laydsHoadon() {
     this.hoadonS.laydanhsach().subscribe(res => {
+      console.log(res);
       this.lstHoadon = res;
       this.chuaxacnhan = [];
       this.daxacnhan = [];
@@ -43,7 +44,6 @@ export class BillsManagerComponent implements OnInit {
         } else if (element.tinhtrang === -1) {
           this.huy.push(element);
         }
-        this.ehoadon = this.chuaxacnhan[1];
       });
     });
   }
@@ -56,8 +56,7 @@ export class BillsManagerComponent implements OnInit {
   laycthd(id) {
     this.hoadonS.getCTHD(id).subscribe(res => {
       if (res) {
-        this.eCthd = res
-          ;
+        this.eCthd = res;
       }
     });
   }
