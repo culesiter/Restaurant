@@ -53,3 +53,24 @@
 .bill-temp input{
     height: 21px;
 }
+table.temp_bill{
+    width: 100%;
+    tr{
+        width: 100%;
+     }
+    td{
+        padding: 5px;
+        border: 1px solid rgba(167, 165, 165, 0.445);
+        &.name{
+            width: 30%;
+            font-family: dark-b;
+            color: green;
+        }
+    }
+}
+h4#myModalLabel{
+    font-family: dark-b;
+    font-size: 20px;
+    text-transform: uppercase;
+    color: green;
+}

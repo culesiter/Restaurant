@@ -2,6 +2,10 @@
 @media (max-width: 767px) {    body { font-size: 12px; }
 .btn{ font-size: 14px}
 } 
+@font-face {
+    font-family: dark-b;
+    src: url(../src/assets/font-web/DarkerGrotesque-Bold.ttf);
+  }
 body{
     font-family: 'Darker Grotesque', sans-serif;
     overflow-x:hidden; 

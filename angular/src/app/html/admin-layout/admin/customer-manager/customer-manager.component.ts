@@ -71,7 +71,6 @@ export class CustomerManagerComponent implements OnInit {
   addNew() {
     this.human.them(this.formAddNew.value).subscribe(res => {
       var data = res;
-      console.log(data.values._id);
       const uploaddata = new FormData();
       uploaddata.append('khachhangimg', this.selectedFile);
       console.log(this.selectedFile,uploaddata);

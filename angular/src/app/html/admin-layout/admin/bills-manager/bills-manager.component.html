@@ -18,16 +18,17 @@
                     </tr>
                 </thead>
                 <tbody class="tbody-list">
-                    <tr *ngFor="let item of chuaxacnhan;let i = index" >
+                    <tr *ngFor="let item of chuaxacnhan;let i = index">
                         <th *ngIf="item.tinhtrang===0" scope="row">{{i+1}}</th>
                         <td *ngIf="item.tinhtrang===0">{{item.ten}}</td>
                         <td *ngIf="item.tinhtrang===0">{{item.thoidiemtao}}</td>
                         <td *ngIf="item.tinhtrang===0" style="color:red">Chưa xác nhận</td>
                         <td *ngIf="item.tinhtrang===2" style="color:yellow">Đã xác nhận</td>
                         <td *ngIf="item.tinhtrang===3" style="color:green">Đã thanh toán</td>
-                        <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#detail_modal" (click)="openDetail(item)">
-                            Xem chi tiết
-                          </button></td>
+                        <td><button type="button" class="btn btn-primary" data-toggle="modal"
+                                data-target="#detail_modal" (click)="openDetail(item)">
+                                Xem chi tiết
+                            </button></td>
                     </tr>
                 </tbody>
             </table>
@@ -43,14 +44,15 @@
                     </tr>
                 </thead>
                 <tbody class="tbody-list">
-                    <tr *ngFor="let item of daxacnhan;let i = index" >
+                    <tr *ngFor="let item of daxacnhan;let i = index">
                         <th *ngIf="item.tinhtrang===1" scope="row">{{i+1}}</th>
                         <td *ngIf="item.tinhtrang===1">{{item.ten}}</td>
                         <td *ngIf="item.tinhtrang===1">{{item.thoidiemtao}}</td>
                         <td *ngIf="item.tinhtrang===1" style="color:yellow">Đã xác nhận</td>
-                        <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#detail_modal" (click)="openDetail(item)">
-                            Xem chi tiết
-                          </button></td>
+                        <td><button type="button" class="btn btn-primary" data-toggle="modal"
+                                data-target="#detail_modal" (click)="openDetail(item)">
+                                Xem chi tiết
+                            </button></td>
                     </tr>
                 </tbody>
             </table>
@@ -70,10 +72,11 @@
                         <th *ngIf="item.tinhtrang===2" scope="row">{{i+1}}</th>
                         <td *ngIf="item.tinhtrang===2">{{item.ten}}</td>
                         <td *ngIf="item.tinhtrang===2">{{item.thoidiemtao}}</td>
-                        <td *ngIf="item.tinhtrang===2" style="color:yellow">Đã thanh toán</td> 
-                        <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#detail_modal" (click)="openDetail(item)">
-                            Xem chi tiết
-                          </button></td>
+                        <td *ngIf="item.tinhtrang===2" style="color:yellow">Đã thanh toán</td>
+                        <td><button type="button" class="btn btn-primary" data-toggle="modal"
+                                data-target="#detail_modal" (click)="openDetail(item)">
+                                Xem chi tiết
+                            </button></td>
                     </tr>
                 </tbody>
             </table>
@@ -89,16 +92,17 @@
                     </tr>
                 </thead>
                 <tbody class="tbody-list">
-                    <tr *ngFor="let item of huy;let i = index" >
+                    <tr *ngFor="let item of huy;let i = index">
                         <th *ngIf="item.tinhtrang===-1" scope="row">{{i+1}}</th>
                         <td *ngIf="item.tinhtrang===-1">{{item.ten}}</td>
                         <td *ngIf="item.tinhtrang===-1">{{item.thoidiemtao}}</td>
                         <td *ngIf="item.tinhtrang===-1" style="color:yellow">Đã hủy
                             <button class="btn btn-danger" (click)="deleteBill(item._id)">Xóa</button>
                         </td>
-                        <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#detail_modal" (click)="openDetail(item)">
-                            Xem chi tiết
-                          </button></td>
+                        <td><button type="button" class="btn btn-primary" data-toggle="modal"
+                                data-target="#detail_modal" (click)="openDetail(item)">
+                                Xem chi tiết
+                            </button></td>
                     </tr>
                 </tbody>
             </table>
@@ -109,90 +113,86 @@
         </div>
 
     </div>
-    
+
 </div>
-<div class="modal fade" id="detail_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="detail_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-body">
-            <div class="detail">
-                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                    <form *ngIf="ehoadon.ten">
-                        <div class="form-row">
-                            <div class="form-group col-md-3">
-                                <label>Tên khách hàng</label>
-                                <input type="text" class="form-control" disabled value="{{ehoadon.ten}}">
-                            </div>
-                            <div class="form-group col-md-3">
-                                <label>Thời điểm tạo</label>
-                                <input type="text" class="form-control" disabled value="{{ehoadon.thoidiemtao}}">
-                            </div>
-                            <div class="form-group col-md-3">
-                                <label>Thời điểm đến</label>
-                                <input type="text" class="form-control" value="{{ehoadon.thoidiemden}}">
-                            </div>
-                            <div class="form-group col-md-3">
-                                <label>Tổng tiền</label>
-                                <input type="text" class="form-control" value="{{ehoadon.tongtien}}">
-                            </div>
-                            <div class="form-group col-md-3">
-                                <label>Phòng</label>
-                                <input type="text" class="form-control" value="{{ehoadon._idphong.ten}}">
-                            </div>
-                            <div class="form-group col-md-3">
-                                <label>Trạng thái</label>
-                                <select class="form-control">
-                                    <option value="0">Chưa Xác Nhận</option>
-                                    <option value="1">Đã Xác Nhận</option>
-                                    <option value="2">Đã Thanh Toán</option>
-                                </select>
-                            </div>
-                            <div class="form-group col-md-3">
-                                <label>Hình thức thanh toán</label>
-                                <select class="form-control">
-                                    <option value="0">Trả trước</option>
-                                    <option value="1">Trả sau</option>
-                                </select>
-                            </div>
-                            <div class="form-group col-md-12">
-                                <label style="width: 100%">Các món ăn đã chọn</label>
-                                <div *ngFor="let item of eCthd">
-                                    <div class="form-group col-md-4">
-                                        <label>Tên món ăn</label>
-                                        <input type="text" class="form-control" disabled value="{{item._idmonan.ten}}">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="detail">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <form *ngIf="ehoadon.ten">
+                            <div class="form-row">
+                                <div class="form-group col-md-12">
+                                    <label>Tên khách hàng</label>
+                                    <input type="text" class="form-control" disabled value="{{ehoadon.ten}}">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label>Thời điểm tạo</label>
+                                    <input type="text" class="form-control" disabled value="{{ehoadon.thoidiemtao}}">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label>Thời điểm đến</label>
+                                    <input type="text" class="form-control" value="{{ehoadon.thoidiemden}}">
+                                </div>
+
+                                <div class="form-group col-md-4">
+                                    <label>Phòng</label>
+                                    <input type="text" class="form-control" value="{{ehoadon._idphong.ten}}">
+                                </div>
+                                <div class="form-group col-md-12 ">
+                                    <label style="width: 100%">Các món ăn đã chọn</label>
+                                    <div class="dish-loop" *ngFor="let item of eCthd">
+                                        <div class="form-group col-md-12">
+                                            <label>Tên món ăn</label>
+                                            <input type="text" class="form-control" disabled
+                                                value="{{item._idmonan.ten}}">
+                                        </div>
+                                        <div class="form-group col-md-3">
+                                            <label>Số lượng</label>
+                                            <input type="number" class="form-control" value="{{item.soluongmonan}}">
+                                        </div>
+                                        <div class="form-group col-md-3">
+                                            <label>Đơn giá</label>
+                                            <input type="text" class="form-control" disabled
+                                                value="{{item._idmonan.gia}}">
+                                        </div>
+                                        <div class="form-group col-md-3">
+                                            <label>Khuyến mãi</label>
+                                            <input type="text" class="form-control" value="{{item._idmonan.khuyenmai}}">
+                                        </div>
+                                        <div class="form-group col-md-3">
+                                            <label>Thành tiền</label>
+                                            <input type="text" class="form-control" disabled value="">
+                                        </div>
                                     </div>
-                                    <div class="form-group col-md-2">
-                                        <label>Số lượng</label>
-                                        <input type="number" class="form-control" value="{{item.soluongmonan}}">
-                                    </div>
-                                    <div class="form-group col-md-2">
-                                        <label>Đơn giá</label>
-                                        <input type="text" class="form-control" disabled value="{{item._idmonan.gia}}">
-                                    </div>
-                                    <div class="form-group col-md-2">
-                                        <label>Khuyến mãi</label>
-                                        <input type="text" class="form-control" value="{{item._idmonan.khuyenmai}}">
-                                    </div>
-                                    <div class="form-group col-md-2">
-                                        <label>Thành tiền</label>
-                                        <input type="text" class="form-control" disabled value="">
+                                    <div class="row mgt-30">
+                                        <div class="form-group col-md-4">
+                                            <label>Tổng tiền</label>
+                                            <input type="text" class="form-control" value="{{ehoadon.tongtien}}">
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label>Đã thanh toán</label>
+                                            <input type="text" class="form-control" value="INSERT VALUE">
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label>Còn lại</label>
+                                            <input type="text" class="form-control" value="INSERT VALUE">
+                                        </div>
                                     </div>
                                 </div>
+                            
                             </div>
-                            <div class="form-group col-md-12">
-                                <button type="submit" class="btn btn-secondary" (click)="confirm(ehoadon._id,1)">Xác nhận đơn hàng</button>
-                                <button class="btn btn-warning" (click)="openDetail()">Trở lại</button>
-                                <button class="btn btn-danger" (click)="deleteBill(ehoadon._id)">Xóa</button>
-                            </div>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
                 </div>
             </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-secondary" (click)="confirm(ehoadon._id,1)">Xác nhận đơn hàng</button>
+                <button class="btn btn-danger" (click)="deleteBill(ehoadon._id)">Xóa</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
-        </div>
-      </div>
     </div>
-  </div>
+</div>

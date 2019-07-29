@@ -11,3 +11,14 @@
     }
 
 }
+.dish-loop{
+    display: block;
+    width: 100%;
+    height: 148px;
+    &:nth-child(2n+1){
+        background: #ececec69;
+    }
+}
+.mgt-30{
+    margin-top: 30px;
+}

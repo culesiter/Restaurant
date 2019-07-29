@@ -50,6 +50,7 @@ export class BillsManagerComponent implements OnInit {
   openDetail(data) {
     this.xem = !this.xem;
     this.ehoadon = data;
+    console.log(this.ehoadon);
     this.laycthd(data._id);
   }
   laycthd(id) {
