@@ -24,8 +24,8 @@ export class CartserviceService {
     this.guinhay.next(this.biennhay = true);
   }
   doi() {
-    
-    
+
+
   }
   layketqua() {
     return this.guinhay.asObservable();
@@ -84,6 +84,37 @@ export class CartserviceService {
       }
     }
   }
+
+  addTotd(sp: Idish, slma) {
+    if (sp) {
+      this.cart = { item: sp, sl: slma };
+
+      if (sessionStorage.getItem('admintd') === null) {
+        this.carts.push(this.cart);
+        sessionStorage.setItem('admintd', JSON.stringify(this.carts));
+      } else {
+
+        this.carts = JSON.parse(sessionStorage.getItem('admintd'));
+        let index = -1;
+        for (let i = 0; i < this.carts.length; i++) {
+          if (this.carts[i].item._id === sp._id) {
+            index = i;
+            break;
+          }
+        }
+        if (index === -1) {
+          this.carts.push(this.cart);
+          sessionStorage.setItem('admintd', JSON.stringify(this.carts));
+        } else {
+          const temp: Icart = this.carts[index];
+          temp.sl = slma;
+          this.carts[index] = temp;
+          sessionStorage.setItem('admintd', JSON.stringify(this.carts));
+        }
+      }
+    }
+  }
+
   addTocart1(sp2: Ithucdoninter) {
 
     this.cart1 = { thucdon: sp2, sl: 1 };

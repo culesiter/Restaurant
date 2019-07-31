@@ -67,22 +67,25 @@ export class CustomerManagerComponent implements OnInit {
   }
   onFileChange(event) {
     this.selectedFile = event.target.files[0];
+    console.log(this.selectedFile);
   }
   addNew() {
     this.human.them(this.formAddNew.value).subscribe(res => {
-      var data = res;
-      const uploaddata = new FormData();
-      uploaddata.append('khachhangimg', this.selectedFile);
-      console.log(this.selectedFile,uploaddata);
-      this.human.upanhkh(data.values._id, uploaddata).subscribe(resq =>{
-        console.log(resq);
-        if(resq){
-          alert('thanh cong!');
-          this.getList();
-          this.formStatus = 'view';
-        }
-      })
-    })
+      if (res.message === 'tao thanh cong') {
+        const data = res;
+        const uploaddata = new FormData();
+        uploaddata.append('khachhangimg', this.selectedFile);
+        console.log(this.selectedFile, uploaddata);
+        this.human.upanhkh(data.values._id, uploaddata).subscribe(resq => {
+          console.log(resq);
+          if (resq) {
+            alert('thanh cong!');
+            this.getList();
+            this.formStatus = 'view';
+          }
+        });
+      }
+    })''
   }
   edit() {
     this.human.sua(this.eData._id, this.frmSua.value).subscribe(res => {

@@ -9,33 +9,33 @@ import { IloaiPhong } from '../entities/iloai-phong';
 @Injectable()
 export class PhongserviceService {
   private phongurl = "http://localhost:3000/phong";
-  private lpurl ='http://localhost:3000/loaiphong';
+  private lpurl = 'http://localhost:3000/loaiphong';
   private phong: Iphongstore = {};
   private phongs: Iphongstore[] = [];
   constructor(private http: Http) { }
-  upanh(id,img): Observable<any> {
-    return this.http.put(this.phongurl +'/img/'+ id, img).map(res => {
+  upanh(id, img): Observable<any> {
+    return this.http.put(this.phongurl + '/img/' + id, img).map(res => {
       return res.json();
-   });
+    });
   }
-  upanhloai(id,img): Observable<any> {
-    return this.http.put(this.lpurl +'/img/'+ id, img).map(res => {
+  upanhloai(id, img): Observable<any> {
+    return this.http.put(this.lpurl + '/img/' + id, img).map(res => {
       return res.json();
-   });
+    });
   }
   themphong(data): Observable<any> {
     return this.http.post(this.phongurl, data).map(res => {
       return res.json();
-   });
+    });
   }
-  xoaphong(id): Observable<Iphong>{
-    return this.http.delete(this.phongurl +'/'+ id).map(res => res.json() as Iphong);
+  xoaphong(id): Observable<Iphong> {
+    return this.http.delete(this.phongurl + '/' + id).map(res => res.json() as Iphong);
   }
-  suaphong(id,data): Observable<Iphong>{
+  suaphong(id, data): Observable<Iphong> {
     return this.http.put(this.phongurl + '/' + id, data).map(res => res.json() as Iphong);
   }
   laydanhsachphong(): Observable<Iphong[]> {
-    return this.http.get(this.phongurl).map(respose =>  respose.json() as Iphong[]);
+    return this.http.get(this.phongurl).map(respose => respose.json() as Iphong[]);
   }
   // laydanhsachphongtheoid(id): Observable<Iphong[]> {
   //   return this.laydanhsachphong().map(response => response)
@@ -72,23 +72,28 @@ export class PhongserviceService {
     })
 
   }
-//loaiphong
-themloaiphong(data): Observable<any> {
-  return this.http.post(this.lpurl, data).map(res => {
-    return res.json();
- });
-}
-xoaloaiphong(id): Observable<IloaiPhong>{
-  return this.http.delete(this.lpurl +'/'+ id).map(res => res.json() as IloaiPhong);
-}
-sualoaiphong(id,data): Observable<IloaiPhong>{
-  return this.http.put(this.lpurl + '/' + id, data).map(res => res.json() as IloaiPhong);
-}
-laydanhsachloaiphong(): Observable<IloaiPhong[]> {
-  return this.http.get(this.lpurl).map(respose =>  respose.json() as IloaiPhong[]);
-}
+  //loaiphong
+  themloaiphong(data): Observable<any> {
+    return this.http.post(this.lpurl, data).map(res => {
+      return res.json();
+    });
+  }
+  layloaiphong(id): Observable<any> {
+    return this.http.get('http://localhost:3000/phong/ph/?id=' + id).map(res => {
+      return res.json();
+    });
+  }
+  xoaloaiphong(id): Observable<IloaiPhong> {
+    return this.http.delete(this.lpurl + '/' + id).map(res => res.json() as IloaiPhong);
+  }
+  sualoaiphong(id, data): Observable<IloaiPhong> {
+    return this.http.put(this.lpurl + '/' + id, data).map(res => res.json() as IloaiPhong);
+  }
+  laydanhsachloaiphong(): Observable<IloaiPhong[]> {
+    return this.http.get(this.lpurl).map(respose => respose.json() as IloaiPhong[]);
+  }
 
-layidserve(): Observable<any> {
-  return this.http.get('http://ipinfo.io').map(respose =>  respose.json());
-}
+  layidserve(): Observable<any> {
+    return this.http.get('http://ipinfo.io').map(respose => respose.json());
+  }
 }

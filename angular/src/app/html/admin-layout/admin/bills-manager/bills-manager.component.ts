@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Ihoadon } from '../../../../share/entities/ihoadon';
 import { HoadonService } from '../../../../share/services/hoadon.service';
+import { PhongserviceService } from '../../../../share/services/phongservice.service';
 // import { ExcelService } from '../../../../share/services/contacService/Excel.service';
 const moment = require('moment');
 @Component({
@@ -18,7 +19,8 @@ export class BillsManagerComponent implements OnInit {
   private dathanhtoan: any = [];
   private huy: any = [];
   private eCthd: any[] = [];
-  constructor(private router: Router, private hoadonS: HoadonService) { }
+  private pongdt;
+  constructor(private router: Router, private hoadonS: HoadonService, private phongsv: PhongserviceService) { }
   ngOnInit() {
     this.laydsHoadon();
   }
@@ -27,7 +29,6 @@ export class BillsManagerComponent implements OnInit {
   //  }
   laydsHoadon() {
     this.hoadonS.laydanhsach().subscribe(res => {
-      console.log(res);
       this.lstHoadon = res;
       this.chuaxacnhan = [];
       this.daxacnhan = [];
@@ -50,8 +51,18 @@ export class BillsManagerComponent implements OnInit {
   openDetail(data) {
     this.xem = !this.xem;
     this.ehoadon = data;
-    console.log(this.ehoadon);
+    if (data.buoiDat === 1 || data.buoiDat === 2) {
+      this.layloaiphong(data._idphong._id, 1);
+    } else {
+      this.layloaiphong(data._idphong._id, 2);
+    }
     this.laycthd(data._id);
+  }
+  layloaiphong(id, number) {
+    this.phongsv.layloaiphong(id).subscribe(res => {
+      this.pongdt = res[0];
+      this.pongdt.gia = this.pongdt.gia * number;
+    });
   }
   laycthd(id) {
     this.hoadonS.getCTHD(id).subscribe(res => {
@@ -66,7 +77,6 @@ export class BillsManagerComponent implements OnInit {
     };
     this.hoadonS.suahoadon(id, action).subscribe(res => {
       if (res) {
-        console.log(res);
       }
     });
   }

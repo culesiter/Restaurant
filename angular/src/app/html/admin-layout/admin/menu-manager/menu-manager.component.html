@@ -25,7 +25,8 @@
                         <th scope="row">1</th>
                         <td (click)="formShow('detail',item._id)">{{item.ten}}</td>
                         <td (click)="formShow('detail',item._id)">{{item.khuyenmai}}%</td>
-                        <td class="optiond" (click)="xoatd(item._id)"><i class="fa fa-trash-o" aria-hidden="true"></i></td>
+                        <td class="optiond" (click)="xoatd(item._id)"><i class="fa fa-trash-o" aria-hidden="true"></i>
+                        </td>
                     </tr>
                 </tbody>
             </table>
@@ -49,14 +50,17 @@
                 </div>
             </form>
         </div>
-        <div class="create-menu" *ngIf="formStatus==='addmon'">
+        <div class="create-menu" *ngIf="formStatus==='addmon'&&currenttd">
             <div class="menu-title">
                 <div class="row">
-                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                        Tên thực đơn: <span>haha</span>
+                    <div class="col-xs-4 col-sm-6 col-md-6 col-lg-6">
+                        Tên thực đơn: <span>{{currenttd.values.ten}}</span>
                     </div>
-                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                        Khuyến Mãi: <span>10%</span>
+                    <div class="col-xs-4 col-sm-6 col-md-6 col-lg-6">
+                        Khuyến Mãi: <span>{{currenttd.values.khuyenmai}}</span>
+                    </div>
+                    <div class="col-xs-4 col-sm-6 col-md-6 col-lg-6">
+                        Giá: <span>{{tdtotal}}</span>
                     </div>
                 </div>
             </div>
@@ -75,7 +79,7 @@
                             </thead>
                             <tbody class="tbody-list">
                                 <tr *ngFor="let item of listmon">
-                                    <th scope="row">1</th>
+                                    <th scope="row"></th>
                                     <td class="ten-mon">
                                         <div class="form-group">
                                             <input type="text" disabled value="{{item.ten}}" class="form-control">
@@ -83,25 +87,26 @@
                                     </td>
                                     <td>
                                         <div class="form-group">
-                                            <input type="number" class="form-control" (change)="laysl($event)">
+                                            <input type="number" class="form-control" value="{{item.slma}}"   (change)="laysl($event,item)">
                                         </div>
                                     </td>
                                     <td class="ten-mon">
                                         <div class="form-group">
-                                            <input type="number" disabled value="1000" class="form-control">
+                                            <input type="number" disabled value="{{item.gia}}" class="form-control">
                                         </div>
                                     </td>
                                     <td>
                                         <div class="form-group">
-                                            <button class="btn btn-danger" (click)="themmonanhd(item._id)">Thêm</button>
+                                            <button class="btn btn-danger" *ngIf="kiemtramondachonchotd(item)===false"  (click)="themmonanhd(item)">Thêm</button>
+                                            <button *ngIf="kiemtramondachonchotd(item)===true" (click)="huymonantrongthucdon(item)">Hủy</button>
                                         </div>
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
                         <div class="form-group">
-                                <button class="btn btn-success" (click)="back()">Hoàn Thành</button>
-                            </div>
+                            <button class="btn btn-success" (click)="themtdvaocsdl()">Hoàn Thành</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -112,7 +117,8 @@
             <form action="">
                 <div class="col-xs-12 col-sm-6 col-md-1 col-lg-2">
                     <div class="form-group">
-                        <button class="btn btn-secondary" type="submit" (click)="themmonanhd(item._id)">Chỉnh sửa</button>
+                        <button class="btn btn-secondary" type="submit" (click)="themmonanhd(item._id)">Chỉnh
+                            sửa</button>
                     </div>
                 </div>
                 <div class="col-xs-12 col-sm-6 col-md-1 col-lg-2">

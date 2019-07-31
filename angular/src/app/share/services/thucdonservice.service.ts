@@ -35,7 +35,7 @@ export class ThucdonserviceService {
         return this.http.get(this.thucdoninterurl).map(respose => respose.json() as Ithucdoninter[])
     }
     getmonantheoIdthucdon(id): Observable<any[]> {
-        return this.http.get(this.thucdoninterurl + '/monantheothucdon/' + id).map(respose => respose.json())
+        return this.http.get(this.thucdoninterurl + '/monantheothucdon/' + id).map(respose => respose.json());
     }
     // thucdonmonan
     taothucdonmonan(data): Observable<Ithucdonmonan> {

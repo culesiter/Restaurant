@@ -177,7 +177,8 @@ function taoThucDon(request) {
                 values: {
                     _id: result._id,
                     ten: result.ten,
-                    khuyenmai: result.khuyenmai
+                    khuyenmai: result.khuyenmai,
+                    gia: result.gia,
                 }
             }
             resolve(data);

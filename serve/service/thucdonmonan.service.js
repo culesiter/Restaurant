@@ -200,6 +200,7 @@ function taoThucDonMonAn(request) {
         _idthucdon: request._idthucdon,
         soluong:request.soluong
     });
+    console.log(request);
     return new Promise((resolve, reject) => {
         thucdon.findById(request._idthucdon).exec().then(
             res => {

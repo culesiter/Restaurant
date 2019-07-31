@@ -23,6 +23,7 @@ module.exports=function(){
   router.post('/',controller.taoNguoiDung);
   router.post('/noaccount/',controller.taoNguoiDungK);
   router.get('/',controller.layNguoiDung);
+  router.get('/id',controller.layNguoiDungtheoid);
   router.post('/login/',controller.dangNhap)
   // router.get('/:id',controller.getProductById1);
   router.delete('/:id',controller.xoaNguoiDung);

@@ -141,7 +141,7 @@ function layHoaDonId(request) {
 }
 function layHoaDonNguoiDung(request) {
     return new Promise((resolve, reject) => {
-    hoadon.find({ _idkhachhang: request.idkh }).select('_id thoidiemden thoidiemtao hinhthucthanhtoan tinhtrang _idkhachhang _idphong gioden buoiDat tongtien').populate('_idkhachhang', 'ten').populate('_idphong').exec(
+    hoadon.find({ _idkhachhang: request.idkh }).select('_id thoidiemden thoidiemtao hinhthucthanhtoan tinhtrang _idkhachhang _idphong gioden buoiDat tongtien').populate('_idkhachhang').populate('_idphong').exec(
         function (err, response) {
             if (err) {
                 var err = {
@@ -152,7 +152,7 @@ function layHoaDonNguoiDung(request) {
                 var data = response.map(res => {
                     return {
                         _id: res._id,
-                        ten: res._idkhachhang.ten,
+                        _idkhachhang: res._idkhachhang,
                         thoidiemtao: moment(new Date(res.thoidiemtao)).format("DD/MM/YYYY"),
                         thoidiemden: res.thoidiemden,
                         tinhtrang: res.tinhtrang,
@@ -171,7 +171,7 @@ function layHoaDonNguoiDung(request) {
 }
 function layHoaDon() {
     return new Promise((resolve, reject) => {
-        hoadon.find({}).select('_id thoidiemden thoidiemtao hinhthucthanhtoan tinhtrang _idkhachhang _idphong buoiDat gioden tongtien').populate('_idkhachhang', 'ten').populate('_idphong').exec(
+        hoadon.find({}).select('_id thoidiemden thoidiemtao hinhthucthanhtoan tinhtrang _idkhachhang _idphong buoiDat gioden tongtien').populate('_idkhachhang').populate('_idphong').exec(
             function (err, response) {
                 if (err) {
                     var err = {
@@ -182,7 +182,7 @@ function layHoaDon() {
                     var data = response.map(res => {
                         return {
                             _id: res._id,
-                            ten: res._idkhachhang.ten,
+                            _idkhachhang: res._idkhachhang,
                             thoidiemtao: res.thoidiemtao,
                             thoidiemden:res.thoidiemden,
                             tinhtrang: res.tinhtrang,

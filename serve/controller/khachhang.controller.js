@@ -7,7 +7,15 @@ module.exports={
     capNhatKhachHang:capNhatKhachHang1,
     dangNhap:dangNhap,
     capNhatHinh:capNhatHinh1,
-    taoNguoiDungK:taoNguoiDungK1
+    taoNguoiDungK:taoNguoiDungK1,
+    layNguoiDungtheoid:layNguoiDungtheoid1
+}
+function layNguoiDungtheoid1(req,res){
+    service.layNguoiDungtheoid(req.query).then((result) => {
+        res.send(result);
+    }).catch((err) => {
+        res.send(err);
+    });
 }
 function capNhatHinh1(req,res){
     service.capNhatHinh(req.params,req.file).then((result) => {

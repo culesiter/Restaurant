@@ -19,7 +19,7 @@
                 <tbody class="tbody-list">
                     <tr *ngFor="let item of chuaxacnhan;let i = index">
                         <th *ngIf="item.tinhtrang===0" scope="row">{{i+1}}</th>
-                        <td *ngIf="item.tinhtrang===0">{{item.ten}}</td>
+                        <td *ngIf="item.tinhtrang===0">{{item._idkhachhang.ten}}</td>
                         <td *ngIf="item.tinhtrang===0">{{item.thoidiemtao}}</td>
                         <td *ngIf="item.tinhtrang===0" style="color:red">Chưa xác nhận</td>
                         <td *ngIf="item.tinhtrang===2" style="color:yellow">Đã xác nhận</td>
@@ -75,7 +75,7 @@
                         <tbody class="tbody-list">
                             <tr *ngFor="let item of dathanhtoan;let i = index">
                                 <th *ngIf="item.tinhtrang===2" scope="row">{{i+1}}</th>
-                                <td *ngIf="item.tinhtrang===2">{{item.ten}}</td>
+                                <td *ngIf="item.tinhtrang===2">{{item._idkhachhang.ten}}</td>
                                 <td *ngIf="item.tinhtrang===2">{{item.thoidiemtao}}</td>
                                 <td *ngIf="item.tinhtrang===2" style="color:yellow">Đã thanh toán</td>
                                 <td><button type="button" class="btn btn-primary" data-toggle="modal"
@@ -99,7 +99,7 @@
                         <tbody class="tbody-list">
                             <tr *ngFor="let item of dathanhtoan;let i = index">
                                 <th *ngIf="item.tinhtrang===2" scope="row">{{i+1}}</th>
-                                <td *ngIf="item.tinhtrang===2">{{item.ten}}</td>
+                                <td *ngIf="item.tinhtrang===2">{{item._idkhachhang.ten}}</td>
                                 <td *ngIf="item.tinhtrang===2">{{item.thoidiemtao}}</td>
                                 <td *ngIf="item.tinhtrang===2" style="color:yellow">Đã thanh toán</td>
                                 <td><button type="button" class="btn btn-primary" data-toggle="modal"
@@ -126,7 +126,7 @@
                 <tbody class="tbody-list">
                     <tr *ngFor="let item of huy;let i = index">
                         <th *ngIf="item.tinhtrang===-1" scope="row">{{i+1}}</th>
-                        <td *ngIf="item.tinhtrang===-1">{{item.ten}}</td>
+                        <td *ngIf="item.tinhtrang===-1">{{item._idkhachhang.ten}}</td>
                         <td *ngIf="item.tinhtrang===-1">{{item.thoidiemtao}}</td>
                         <td *ngIf="item.tinhtrang===-1" style="color:yellow">Đã hủy
                             <button class="btn btn-danger" (click)="deleteBill(item._id)">Xóa</button>
@@ -153,19 +153,19 @@
             <div class="modal-body">
                 <div class="detail">
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                        <form *ngIf="ehoadon.ten">
+                        <form *ngIf="ehoadon._idkhachhang">
                             <div class="form-row">
                                 <div class="form-group col-md-12">
                                     <label>Tên khách hàng</label>
-                                    <input type="text" class="form-control" disabled value="{{ehoadon.ten}}">
+                                    <input type="text" class="form-control" disabled value="{{ehoadon._idkhachhang.ten}}">
                                 </div>
                                 <div class="form-group col-md-6">
                                         <label>Số điện thoại</label>
-                                        <input type="text" class="form-control" disabled value="INSERT VALUE">
+                                        <input type="text" class="form-control" disabled value="{{ehoadon._idkhachhang.sdt}}">
                                     </div>
                                     <div class="form-group col-md-6">
                                             <label>Email</label>
-                                            <input type="text" class="form-control" disabled value="INSERT VALUE">
+                                            <input type="text" class="form-control" disabled value="{{ehoadon._idkhachhang.email}}">
                                         </div>
                                 <div class="form-group col-md-6">
                                     <label>Thời điểm tạo</label>
@@ -190,12 +190,16 @@
                                 </div>
                                 <div class="form-group col-md-3">
                                     <label>Giờ đến</label>
-                                    <input type="text" class="form-control" value="INSERT VALUE">
+                                    <input type="text" class="form-control" value="{{ehoadon.gioden}}">
                                 </div>
                                 <div class="form-group col-md-4">
                                     <label>Phòng</label>
                                     <input type="text" class="form-control" value="{{ehoadon._idphong.ten}}">
                                 </div>
+                                <div class="form-group col-md-4" >
+                                        <label>giá phòng</label>
+                                        <input *ngIf="pongdt"  type="text" class="form-control" value="{{pongdt.gia}}">
+                                    </div>
                                 <div class="form-group col-md-12 ">
                                     <label data-toggle="collapse" href="#dish-colapse" style="width: 100%">Các món ăn đã
                                         chọn <i class="fa fa-caret-down" aria-hidden="true"></i></label>
@@ -222,7 +226,8 @@
                                             </div>
                                             <div class="form-group col-md-3">
                                                 <label>Thành tiền</label>
-                                                <input type="text" class="form-control" disabled value="INSERT VALUE">
+                                                <input type="text" *ngIf="item._idmonan.khuyenmai===0" class="form-control" disabled value="{{item.soluongmonan*item._idmonan.gia}}">
+                                                <input type="text" *ngIf="item._idmonan.khuyenmai!==0" class="form-control" disabled value="{{item.soluongmonan*item._idmonan.gia-(item.soluongmonan*item._idmonan.gia*item._idmonan.khuyenmai/100)}}">
                                             </div>
                                         </div>
                                     </div>

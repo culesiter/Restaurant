@@ -17,7 +17,8 @@ module.exports = {
     capNhatKhachHang: capNhatKhachHang,
     dangNhap: dangNhap,
 
-    capNhatHinh: capNhatHinh
+    capNhatHinh: capNhatHinh,
+    layNguoiDungtheoid:layNguoiDungtheoid
 }
 function capNhatHinh(pramas, file) {
 
@@ -182,6 +183,35 @@ function capNhatKhachHang(pramas, request) {
     });
 }
 
+function layNguoiDungtheoid(req) {
+    return new Promise((resolve, reject) => {
+        khachhang.find({_id:req.id}).select('_id ten email sdt matkhau hinhanh thanhvien diem ').populate('_idkhachhang', 'ten').exec(
+            function (err, response) {
+                if (err) {
+                    var err = {
+                        err: err
+                    }
+                    reject(err)
+                } else {
+                    console.log(response)
+                    var data = response.map(res => {
+                        return {
+                            _id: res._id,
+                            ten: res.ten,
+                            email: res.email,
+                            sdt: res.sdt,
+                            matkhau: res.matkhau,
+                            hinhanh: res.hinhanh,
+                            thanhvien: res.thanhvien,
+                            diem: res.diem
+                        }
+                    }
+                    )
+                    resolve(data);
+                }
+            })
+    });
+}
 
 
 function layNguoiDung(req) {
