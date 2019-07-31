@@ -28,6 +28,7 @@
     "core-js": "^2.4.1",
     "datatables.net": "^1.10.19",
     "datatables.net-dt": "^1.10.19",
+    "file-saver": "^2.0.2",
     "flickity": "^2.1.2",
     "moment": "^2.22.2",
     "ngx-bootstrap": "^3.0.1",

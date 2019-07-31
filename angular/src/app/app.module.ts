@@ -61,6 +61,7 @@ import { StaffComponent } from './html/admin-layout/admin/staff/staff.component'
 import { StaffService } from './share/services/staff.service';
 import { SalaryComponent } from './html/admin-layout/admin/salary/salary.component';
 import { PaymentEndComponent } from './html/payment-end/payment-end.component';
+import { ExcelService } from './share/services/contacService/Excel.service';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -178,6 +179,7 @@ const routes: Routes = [
     RouterModule.forRoot(routes)
   ],
   providers: [DichvuService,
+    ExcelService,
     StaffService,
     LoginService,
     AuthGuard, HoadonService,

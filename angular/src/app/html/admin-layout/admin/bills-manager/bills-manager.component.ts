@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Ihoadon } from '../../../../share/entities/ihoadon';
 import { HoadonService } from '../../../../share/services/hoadon.service';
-// import { ExcelService } from '../../../../share/services/contacService/Excel.service';
+import { ExcelService } from '../../../../share/services/contacService/Excel.service';
 const moment = require('moment');
 @Component({
   selector: 'app-bills-manager',
@@ -18,13 +18,13 @@ export class BillsManagerComponent implements OnInit {
   private dathanhtoan: any = [];
   private huy: any = [];
   private eCthd: any[] = [];
-  constructor(private router: Router, private hoadonS: HoadonService) { }
+  constructor(private router: Router, private hoadonS: HoadonService, private excelService: ExcelService) { }
   ngOnInit() {
     this.laydsHoadon();
   }
-  //   exportAsXLSX():void {
-  //     this.excelService.exportAsExcelFile(this.lstHoadon, 'sample');
-  //  }
+    exportAsXLSX():void {
+      this.excelService.exportAsExcelFile(this.lstHoadon, 'sample');
+   }
   laydsHoadon() {
     this.hoadonS.laydanhsach().subscribe(res => {
       console.log(res);
@@ -50,7 +50,6 @@ export class BillsManagerComponent implements OnInit {
   openDetail(data) {
     this.xem = !this.xem;
     this.ehoadon = data;
-    console.log(this.ehoadon);
     this.laycthd(data._id);
   }
   laycthd(id) {
