@@ -23,6 +23,7 @@ export class MenuManagerComponent implements OnInit {
   private formAddNewMenu: FormGroup;
   private tdmnTemp: Ithucdonmonan ={};
   private countTemp: number = 0;
+  private del_id: any;
   private styletemp = {};
   constructor(private formBuilder: FormBuilder,
     private dishS: DishserviceService, private menuS: ThucdonserviceService) { }
@@ -47,7 +48,20 @@ export class MenuManagerComponent implements OnInit {
   }
   formShow(a, id) {
     this.formStatus = a;
-    this.menuS.getmonantheoIdthucdon(id).subscribe(res => this.lstmontheothucdon = res);
+    this.del_id = id;
+    this.menuS.getmonantheoIdthucdon(id).subscribe(res => {
+      this.lstmontheothucdon = res;
+    });
+  }
+  delete_menu(){
+    var mconfirm = confirm('Bạn có muốn xóa thực đơn này?');
+    if(mconfirm == true){
+      this.menuS.xoathucdon(this.del_id).subscribe(res => {
+        alert('Xóa thành công!');
+        this.getlistthucdon();
+        this.formStatus = 'view';
+      })
+    }
   }
   getlistthucdon() {
     this.menuS.laydstd().subscribe(res => this.listThucdon = res);
