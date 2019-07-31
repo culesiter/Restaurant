@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { StaffService } from '../../../../share/services/staff.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-
+import { ExcelService } from '../../../../share/services/contacService/Excel.service';
 @Component({
   selector: 'app-salary',
   templateUrl: './salary.component.html',
@@ -14,12 +14,18 @@ export class SalaryComponent implements OnInit {
   private tongluong: number;
   private mounthde = '1';
   private bangluong: any[];
-  constructor(private staff: StaffService, private formBuilder: FormBuilder) { }
+  constructor(private staff: StaffService, private formBuilder: FormBuilder, private excelService: ExcelService) { }
 
   ngOnInit() {
     this.form();
     this.getList('1');
   }
+
+  exportAsXLSX():void {
+    var salary_arr = [];
+    salary_arr.push(this.bangluong);
+    this.excelService.exportAsExcelFile( salary_arr, 'Bang_luong_');
+ }
   form() {
     this.serchform = this.formBuilder.group({
       thang: ['', [
@@ -39,11 +45,11 @@ export class SalaryComponent implements OnInit {
           });
         });
       });
-      console.log(this.listData);
     });
   }
   calc(item) {
     this.data = item;
+    console.log(this.data);
   }
   calc2(ngay, luong) {
     console.log(ngay * luong);
@@ -57,7 +63,6 @@ export class SalaryComponent implements OnInit {
       thangtra: '1'
     };
     this.staff.thembangluong(wrap).subscribe(response => {
-      console.log(response);
       this.getList(this.mounthde);
     });
   }

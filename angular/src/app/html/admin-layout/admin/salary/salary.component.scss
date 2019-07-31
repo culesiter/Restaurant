@@ -1,3 +1,48 @@
 table{
     background: white
 }
+.salary-tit{
+    margin: 0 0 15px;
+    padding-bottom: 7px;
+    border-bottom: 1px solid green;
+    font-family: dark-b;
+    text-transform: uppercase;
+    font-size: 18px; 
+    color: green;
+}
+.myModal2{
+    .modal-content{
+        padding: 15px; 
+    }
+}
+table.salary {
+    width: 100%;
+    td{
+        padding: 5px;
+        border: 1px solid green;
+        text-align: right;
+        &.tit{
+            font-family: dark-b;
+            text-transform: uppercase;
+            text-align: center;
+        }
+        &.total{
+            color: red;
+            font-family: dark-b;
+        }
+    }
+}
+.total-salary{
+    margin-top: 15px;
+    span{
+        font-family: dark-b;
+        margin-right: 30px;
+        small{
+            font-size: 15px;
+            color: red;
+        }
+    }
+}
+.btn-adtocart{
+    background: none
+}

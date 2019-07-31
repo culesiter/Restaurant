@@ -2,8 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Ihoadon } from '../../../../share/entities/ihoadon';
 import { HoadonService } from '../../../../share/services/hoadon.service';
+<<<<<<< HEAD
 import { PhongserviceService } from '../../../../share/services/phongservice.service';
 // import { ExcelService } from '../../../../share/services/contacService/Excel.service';
+=======
+import { ExcelService } from '../../../../share/services/contacService/Excel.service';
+>>>>>>> 56d1b38ff1d1acab2f58bc46448b9d241b8f8cc9
 const moment = require('moment');
 @Component({
   selector: 'app-bills-manager',
@@ -20,13 +24,14 @@ export class BillsManagerComponent implements OnInit {
   private huy: any = [];
   private eCthd: any[] = [];
   private pongdt;
-  constructor(private router: Router, private hoadonS: HoadonService, private phongsv: PhongserviceService) { }
+  // tslint:disable-next-line:max-line-length
+  constructor(private router: Router, private hoadonS: HoadonService, private phongsv: PhongserviceService, private excelService: ExcelService) { }
   ngOnInit() {
     this.laydsHoadon();
   }
-  //   exportAsXLSX():void {
-  //     this.excelService.exportAsExcelFile(this.lstHoadon, 'sample');
-  //  }
+  exportAsXLSX(): void {
+    this.excelService.exportAsExcelFile(this.lstHoadon, 'sample');
+  }
   laydsHoadon() {
     this.hoadonS.laydanhsach().subscribe(res => {
       this.lstHoadon = res;
@@ -51,11 +56,14 @@ export class BillsManagerComponent implements OnInit {
   openDetail(data) {
     this.xem = !this.xem;
     this.ehoadon = data;
+<<<<<<< HEAD
     if (data.buoiDat === 1 || data.buoiDat === 2) {
       this.layloaiphong(data._idphong._id, 1);
     } else {
       this.layloaiphong(data._idphong._id, 2);
     }
+=======
+>>>>>>> 56d1b38ff1d1acab2f58bc46448b9d241b8f8cc9
     this.laycthd(data._id);
   }
   layloaiphong(id, number) {
