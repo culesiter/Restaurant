@@ -44,17 +44,16 @@ function capNhatHinh(pramas, file) {
 }
 function xoaMonAn(request) {
     return new Promise((resolve, reject) => {
-        thucdonmonan.findOne({ _idmonan: request.id }).exec().then(
+        thucdonmonan.find({ _idmonan: request.id }).then(
             response => {
-                console.log(response);
+                console.log(request.id);
                 
                 if (response) {
                     var mes = {
                         message: "rangbuoc"
                     }
                     reject(mes)
-                }
-                else if (!response) {
+                }else if (!response) {
                     console.log(3);
                     
                     return chitiethoadon.findOne({ _idmonan: request.id })
@@ -72,7 +71,7 @@ function xoaMonAn(request) {
                 else if (!res) {
                     console.log(2);
                     
-                    return monan.remove({ _id: request.id })
+                    return monan.deleteOne({ _id: request.id })
                 }
             }
         ).then(result => {
