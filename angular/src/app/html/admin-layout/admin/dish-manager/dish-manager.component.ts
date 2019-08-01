@@ -4,6 +4,7 @@ import { DishserviceService } from '../../../../share/services/dishservice.servi
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { iloaimon } from '../../../../share/entities/iloaimon';
 import { log } from 'util';
+declare var $: any;
 @Component({
   selector: 'app-dish-manager',
   templateUrl: './dish-manager.component.html',
@@ -68,7 +69,7 @@ export class DishManagerComponent implements OnInit {
       console.log(uploaddata);
       this.dishserviceService.upanh(data.values._id, uploaddata).subscribe(resq =>{
         if(resq){
-          alert('thanh cong!');
+          $.notify("Đã thêm 1 mục", "success");
           this.getAllDish();
           this.formStatus = 'view';
         }
@@ -89,7 +90,7 @@ export class DishManagerComponent implements OnInit {
       this.dishserviceService.xoaMonAn(id).subscribe(res =>{
         console.log(res);
         if(res){
-          alert('success');
+          $.notify("Đã xóa 1 mục", "success");
           this.getAllDish();
           this.formStatus = 'view';
         } else{
@@ -119,7 +120,7 @@ export class DishManagerComponent implements OnInit {
     })
   }
   xoaAnhluon() {
-    alert('ok');
+    $.notify("Đã xóa 1 ảnh", "success");
   }
   mouseEnterDelete() {
     this.styleExp = 'block';
