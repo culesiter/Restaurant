@@ -21,7 +21,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let item of listData" (click)="formShow('detail',item)">
+                    <tr *ngFor="let item of listData" data-toggle="modal" data-target="#cusdetail" (click)="openDetailInModal(item)">
                         <td>{{item.ten}}</td>
                         <td>{{item.email}}</td>
                         <td>{{item.thanhvien}}</td>
@@ -31,6 +31,62 @@
             </table>
         </div>
         <!-- ket thuc form xem list -->
+        <div class="modal fade" id="cusdetail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-body">
+                    <div class="view-detail">
+                        <div class="row row-back">
+                            <div class="col-md-12 xoac">
+                                <div class="edit-profile">
+                                    <form (ngSubmit)="edit()" [formGroup]="frmSua">
+                                        <div class="form-row">
+                                            <div class="form-group col-md-6">
+                                                <label>Tên</label>
+                                                <input type="text" class="form-control" formControlName="ten" value="{{eData.ten}}">
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label>Email</label>
+                                                <input type="email" class="form-control" formControlName="email"
+                                                    value="{{eData.email}}">
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label>Mật khẩu</label>
+                                                <input type="password" class="form-control" formControlName="matkhau"
+                                                    value="{{eData.matkhau}}">
+                                            </div>
+                                            <div class="col-md-12">
+                                                <label>Đia chỉ</label>
+                                                <input type="text" class="form-control">
+                                            </div>
+                                            <div class="form-row">
+                                                <div class="form-group col-md-6">
+                                                    <label>Thành Viên</label>
+                                                    <input type="text" formControlName="thanhvien" class="form-control"
+                                                        value="{{eData.thanhvien}}">
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label for="inputState">Điểm Tích Lũy</label>
+                                                    <input type="number" formControlName="diem" class="form-control"
+                                                        value="{{eData.diem}}">
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <button type="submit" class="btn btn-default">Edit</button>
+                                                <button class="btn btn-warning" (click)="delete()">Xóa</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
         <!-- form add new begin -->
         <label class="create-customer" *ngIf="formStatus==='create'">
             <form id="formThemCustomer" (ngSubmit)="addNew()" [formGroup]="formAddNew">
@@ -78,75 +134,5 @@
             </form>
         </label>
         <!-- ket thuc form add new -->
-        <!-- bat dau form detail -->
-        <div class="view-detail" *ngIf="formStatus==='detail'">
-            <div class="row row-back">
-                <!-- <div class=" col-xs-12 col-sm-12 col-md-4 col-lg-4 xoac">
-                    <div class="avatar-show">
-                        <div class="img-frame">
-                            <div class="cover-frame">
-                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTkxnJeLmF4z8S1gFvDit0no_6yZp50GY8HG4Gh2CwLPuASzyCy"
-                                    alt="">
-                            </div>
-                            <div class="avatart-frame">
-                                <img src="https://i2.wp.com/top10reviewof.com/wp-content/uploads/2017/10/3.-Omar-Borkan-Al-Gala.jpg?resize=420%2C420&ssl=1"
-                                    alt="">
-                                <div class="change-avatar">
-                                    <i class="fas fa-camera"></i>
-                                </div>
-                            </div>
-                            <div class="tittle">
-                                <h4>David Copperfield</h4>
-                                <small>@david121</small>
-                            </div>
-                        </div>
-                    </div>
-                </div> -->
-                <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8 xoac">
-                    <div class="edit-profile">
-                        <form (ngSubmit)="edit()" [formGroup]="frmSua">
-                            <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    <label>Tên</label>
-                                    <input type="text" class="form-control" formControlName="ten" value="{{eData.ten}}">
-
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label>Email</label>
-                                    <input type="email" class="form-control" formControlName="email"
-                                        value="{{eData.email}}">
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label>Mật khẩu</label>
-                                    <input type="password" class="form-control" formControlName="matkhau"
-                                        value="{{eData.matkhau}}">
-                                </div>
-                                <div class="col-md-12">
-                                    <label>Đia chỉ</label>
-                                    <input type="text" class="form-control">
-                                </div>
-                                <div class="form-row">
-                                    <div class="form-group col-md-6">
-                                        <label>Thành Viên</label>
-                                        <input type="text" formControlName="thanhvien" class="form-control"
-                                            value="{{eData.thanhvien}}">
-                                    </div>
-                                    <div class="form-group col-md-6">
-                                        <label for="inputState">Điểm Tích Lũy</label>
-                                        <input type="number" formControlName="diem" class="form-control"
-                                            value="{{eData.diem}}">
-                                    </div>
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <button type="submit" class="btn btn-default">Edit</button>
-                                    <button class="btn btn-warning" (click)="delete()">Xóa</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- ket thuc form detail -->
     </div>
 </div>
