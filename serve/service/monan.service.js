@@ -173,6 +173,7 @@ function layMonAN() {
                             hinhanh: res.hinhanh,
                             gia: res.gia,
                             loai: res._idloai.ten,
+                            _idloai:res._idloai._id,
                             khuyenmai: res.khuyenmai
                         }
                     }

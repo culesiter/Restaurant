@@ -7,7 +7,7 @@ module.exports = {
     layThucDon: layThucDon,
     monAnTheothucDon: monAnTheothucDon,
     xoaThucDon: xoaThucDon,
-    updateProduct: updateProduct
+    suathucdon: suathucdon
 
 }
 function xoaThucDon(request) {
@@ -48,67 +48,59 @@ function xoaThucDon(request) {
         });
     });
 }
-function updateProduct(pramas, request) {
-
+function suathucdon(pramas, request) {
     return new Promise((resolve, reject) => {
-
-        brand.findOne({
-            _id: pramas.id
-        }).exec(function (err, response) {
-            if (err) {
-                reject({
-                    message: err.message
-                });
-            } else {
-                if (!response) {
-                    reject({
-                        statusCode: message.STATUS_CODE.NOT_FOUND,
-                        message: message.ERROR_MESSAGE.USER.NOT_FOUND
-                    })
-                } else {
-
-
-                    response.name = request.name,
-
-                        response.save((err, result) => {
-                            if (err) {
-                                reject(err + "");
-                            }
-                            resolve(result);
-                        })
-
-
-
-
+        thucdon.findById({ _id: pramas.id }).then(res => {
+            if (!res) {
+                var err = {
+                    message: "khong ton tai"
+                }
+                reject(err)
+            }
+            else if (res) {
+                res.khuyenmai = request.khuyenmai || res.khuyenmai
+                res.gia = request.gia || res.gia
+                return res.save()
+            }
+        }).then(result => {
+            const data = {
+                message: "thanh cong",
+                values: {
+                    gia: result.gia,
+                    khuyenmai: result.khuyenmai
                 }
             }
-        });
-    });
+            resolve(data);
+
+        }).catch(err => {
+            reject(err + "");
+        })
+    })
 }
 function monAnTheothucDon(req) {
     console.log(req.pramas);
-    
+
     return new Promise((resolve, reject) => {
-        thucdonmonan.find({_idthucdon:req.id}).select('_id _idthucdon _idmonan soluong').populate('_idmonan', '_id ten gia hinhanh _idloai').then(response => {
+        thucdonmonan.find({ _idthucdon: req.id }).select('_id _idthucdon _idmonan soluong').populate('_idmonan', '_id ten gia hinhanh _idloai').then(response => {
             console.log(response);
-            
-            
-                if (response.length<0) {
-                    var mes = { message: "khong ton tai" }
-                    reject(mes);
-                }
-                else if (response) { 
-                    var data = response.map(res => {
-                        return {
-                            _idmonan: res._idmonan._id,
-                            tenmonan: res._idmonan.ten,
-                            soluong:res.soluong,
-                            gia:res._idmonan.gia,
-                            _idloai:res._idmonan._idloai.ten
-                        }
-                    })
-                    resolve(data);
-                
+
+
+            if (response.length < 0) {
+                var mes = { message: "khong ton tai" }
+                reject(mes);
+            }
+            else if (response) {
+                var data = response.map(res => {
+                    return {
+                        _idmonan: res._idmonan._id,
+                        tenmonan: res._idmonan.ten,
+                        soluong: res.soluong,
+                        gia: res._idmonan.gia,
+                        _idloai: res._idmonan._idloai.ten
+                    }
+                })
+                resolve(data);
+
             }
         }).catch(err => {
             var err = {
@@ -120,7 +112,7 @@ function monAnTheothucDon(req) {
 }
 function layThucDon() {
     return new Promise((resolve, reject) => {
-        thucdon.find({}).select('_id ten khuyenmai  ').exec(
+        thucdon.find({}).select('_id ten khuyenmai gia').exec(
             function (err, response) {
                 if (err) {
                     var err = {
@@ -132,7 +124,8 @@ function layThucDon() {
                         return {
                             _id: res._id,
                             ten: res.ten,
-                            khuyenmai: res.khuyenmai
+                            khuyenmai: res.khuyenmai,
+                            gia:res.gia
                         }
                     }
 

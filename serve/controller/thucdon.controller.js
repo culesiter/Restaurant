@@ -4,7 +4,7 @@ module.exports={
     layThucDon:layThucDon1,
     monAnTheothucDon:monAnTheothucDon1,
     xoaThucDon:xoaThucDon1,
-    updateProduct2:updateProduct1
+    suathucdon:suathucdon1
 }
 function taoThucDon1(req,res){
     service.taoThucDon(req.body).then((result) => {
@@ -13,10 +13,8 @@ function taoThucDon1(req,res){
         res.send(err);
     });
 }
-function updateProduct1(req,res){
-   
-   
-    service.updateProduct(req.params,req.body).then((result) => {
+function suathucdon1(req,res){
+    service.suathucdon(req.params,req.body).then((result) => {
         res.send(result);
     }).catch((err) => {
         res.send(err);

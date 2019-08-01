@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { StaffService } from '../../../../share/services/staff.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ExcelService } from '../../../../share/services/contacService/Excel.service';
+//import { ExcelService } from '../../../../share/services/contacService/Excel.service';
 @Component({
   selector: 'app-salary',
   templateUrl: './salary.component.html',
@@ -14,18 +14,18 @@ export class SalaryComponent implements OnInit {
   private tongluong: number;
   private mounthde = '1';
   private bangluong: any[];
-  constructor(private staff: StaffService, private formBuilder: FormBuilder, private excelService: ExcelService) { }
+  constructor(private staff: StaffService, private formBuilder: FormBuilder) { }
 
   ngOnInit() {
     this.form();
     this.getList('1');
   }
 
-  exportAsXLSX():void {
-    var salary_arr = [];
-    salary_arr.push(this.bangluong);
-    this.excelService.exportAsExcelFile( salary_arr, 'Bang_luong_');
- }
+//   exportAsXLSX():void {
+//     const salary_arr = [];
+//     salary_arr.push(this.bangluong);
+//     this.excelService.exportAsExcelFile( salary_arr, 'Bang_luong_');
+//  }
   form() {
     this.serchform = this.formBuilder.group({
       thang: ['', [

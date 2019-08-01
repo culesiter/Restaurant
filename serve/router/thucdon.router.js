@@ -5,6 +5,6 @@ module.exports=function(){
   router.get('/',controller.layThucDon);
   router.get('/monantheothucdon/:id',controller.monAnTheothucDon);
   router.delete('/:id',controller.xoaThucDon);
-  // router.put('/:id',controller.updateProduct2);
+  router.put('/:id',controller.suathucdon);
     return router;
 }

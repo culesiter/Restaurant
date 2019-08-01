@@ -51,4 +51,7 @@ export class DishserviceService {
     sualoaimon(id, data): Observable<iloaimon> {
         return this.http.put(this.loaimonURL + '/' + id, data).map(res => res.json() as iloaimon);
     }
+    suathucdon(id, data): Observable<any> {
+        return this.http.put('http://localhost:3000/thucdon' + '/' + id, data).map(res => res.json());
+    }
 }

@@ -8,6 +8,7 @@ import { Ithucdon } from '../../../../share/entities/ithucdon';
 import { Ithucdonmonan } from '../../../../share/entities/ithucdonmonan';
 import { log } from 'util';
 import { CartserviceService } from '../../../../share/services/cartservice.service';
+declare var $: any;
 
 @Component({
   selector: 'app-menu-manager',
@@ -24,12 +25,8 @@ export class MenuManagerComponent implements OnInit {
   private formAddNewMenu: FormGroup;
   private tdmnTemp: Ithucdonmonan = {};
   private countTemp: number = 0;
-<<<<<<< HEAD
   private currenttd;
   private tdtotal = 0;
-=======
-  private del_id: any;
->>>>>>> 56d1b38ff1d1acab2f58bc46448b9d241b8f8cc9
   private styletemp = {};
   private slma = 0;
   constructor(private formBuilder: FormBuilder,
@@ -71,27 +68,10 @@ export class MenuManagerComponent implements OnInit {
   }
   formShow(a, id) {
     this.formStatus = a;
-<<<<<<< HEAD
     if (a === 'detail') {
       this.menuS.getmonantheoIdthucdon(id).subscribe(res => this.lstmontheothucdon = res);
     }
     sessionStorage.setItem('admintd', JSON.stringify([]));
-=======
-    this.del_id = id;
-    this.menuS.getmonantheoIdthucdon(id).subscribe(res => {
-      this.lstmontheothucdon = res;
-    });
-  }
-  delete_menu(){
-    var mconfirm = confirm('Bạn có muốn xóa thực đơn này?');
-    if(mconfirm == true){
-      this.menuS.xoathucdon(this.del_id).subscribe(res => {
-        alert('Xóa thành công!');
-        this.getlistthucdon();
-        this.formStatus = 'view';
-      })
-    }
->>>>>>> 56d1b38ff1d1acab2f58bc46448b9d241b8f8cc9
   }
   getlistthucdon() {
     this.menuS.laydstd().subscribe(res => this.listThucdon = res);
@@ -181,6 +161,7 @@ export class MenuManagerComponent implements OnInit {
   }
   themtdvaocsdl() {
     const td = JSON.parse(sessionStorage.getItem('admintd'));
+    $('#load').css('display', 'block');
     td.forEach(element => {
       const data = {
         _idthucdon: this.currenttd.values._id,
@@ -190,6 +171,17 @@ export class MenuManagerComponent implements OnInit {
       this.menuS.taothucdonmonan(data).subscribe(res => {
         console.log(res);
       });
+    });
+    const value = {
+      gia: this.tdtotal
+    };
+    this.dishS.suathucdon(this.currenttd.values._id, value).subscribe(res => {
+      console.log(res);
+      if (res.message === 'thanh cong') {
+        $('#load').css('display', 'none');
+        this.getlistthucdon();
+        this.formStatus = 'view';
+      }
     });
   }
   xoatd(id) {

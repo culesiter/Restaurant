@@ -85,7 +85,7 @@ export class CustomerManagerComponent implements OnInit {
           }
         });
       }
-    })''
+    });
   }
   edit() {
     this.human.sua(this.eData._id, this.frmSua.value).subscribe(res => {
@@ -96,7 +96,7 @@ export class CustomerManagerComponent implements OnInit {
       } else {
         alert('failed');
       }
-    })
+    });
   }
   delete() {
     this.human.xoa(this.eData._id).subscribe(res => {
