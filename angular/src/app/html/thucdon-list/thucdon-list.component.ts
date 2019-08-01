@@ -25,7 +25,7 @@ export class ThucdonListComponent implements OnInit {
       this.thucdons.map(res => {
         res.gia = this.giaThucDon(res._id);
         res.danhsachtenmonan = this.danhSachMonAn(res._id);
-      })
+      });
       for (let i = 0; i < this.thucdons.length; i++) {
         this.thucdonexs.push(this.thucdons[i]);
       }

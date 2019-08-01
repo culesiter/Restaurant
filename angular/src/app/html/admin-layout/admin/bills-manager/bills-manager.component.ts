@@ -21,6 +21,9 @@ export class BillsManagerComponent implements OnInit {
   private huy: any = [];
   private eCthd: any[] = [];
   private pongdt;
+  private ectdv: any[] = [];
+  private totalma;
+  private totaldv;
   // tslint:disable-next-line:max-line-length
   constructor(private router: Router, private hoadonS: HoadonService, private phongsv: PhongserviceService) { }
   ngOnInit() {
@@ -59,6 +62,7 @@ export class BillsManagerComponent implements OnInit {
       this.layloaiphong(data._idphong._id, 2);
     }
     this.laycthd(data._id);
+    this.laydichvutheohoadon(data._id);
   }
   layloaiphong(id, number) {
     this.phongsv.layloaiphong(id).subscribe(res => {
@@ -71,6 +75,30 @@ export class BillsManagerComponent implements OnInit {
       if (res) {
         this.eCthd = res;
       }
+      let tong = 0;
+      this.eCthd.forEach(element => {
+        if (element._idmonan) {
+          // tslint:disable-next-line:max-line-length
+          tong = tong + (element._idmonan.gia * element.soluongmonan - (element._idmonan.gia * element.soluongmonan * element._idmonan.khuyenmai / 100));
+        }
+        if (element._idthucdon) {
+          // tslint:disable-next-line:max-line-length
+          tong = tong + (element._idmonan.gia * element.soluongmonan);
+        }
+      });
+      this.totalma = tong;
+      console.log(tong);
+    });
+  }
+  laydichvutheohoadon(id) {
+    this.hoadonS.laydichvutheoid(id).subscribe(res => {
+      console.log(res);
+      this.ectdv = res;
+      let tong = 0;
+      this.ectdv.forEach(element => {
+        tong = tong + element._iddichvu.gia;
+      });
+      this.totaldv = tong;
     });
   }
   confirm(id, action) {
