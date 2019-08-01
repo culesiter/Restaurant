@@ -56,10 +56,10 @@
                     <div class="col-xs-4 col-sm-6 col-md-6 col-lg-6">
                         Tên thực đơn: <span>{{currenttd.values.ten}}</span>
                     </div>
-                    <div class="col-xs-4 col-sm-6 col-md-6 col-lg-6">
+                    <div class="col-xs-4 col-sm-6 col-md-3 col-lg-3">
                         Khuyến Mãi: <span>{{currenttd.values.khuyenmai}}</span>
                     </div>
-                    <div class="col-xs-4 col-sm-6 col-md-6 col-lg-6">
+                    <div class="col-xs-4 col-sm-6 col-md-3 col-lg-3">
                         Giá: <span>{{tdtotal}}</span>
                     </div>
                 </div>
@@ -97,8 +97,8 @@
                                     </td>
                                     <td>
                                         <div class="form-group">
-                                            <button class="btn btn-danger" *ngIf="kiemtramondachonchotd(item)===false"  (click)="themmonanhd(item)">Thêm</button>
-                                            <button *ngIf="kiemtramondachonchotd(item)===true" (click)="huymonantrongthucdon(item)">Hủy</button>
+                                            <button class="btn btn-info" *ngIf="kiemtramondachonchotd(item)===false"  (click)="themmonanhd(item)">Thêm</button>
+                                            <button class="btn btn-danger" *ngIf="kiemtramondachonchotd(item)===true" (click)="huymonantrongthucdon(item)">Hủy</button>
                                         </div>
                                     </td>
                                 </tr>
@@ -127,11 +127,6 @@
                         <button class="btn btn-danger" (click)="back()">Quay lại</button>
                     </div>
                 </div>
-                <div class="col-xs-12 col-sm-6 col-md-1 col-lg-2">
-                        <div class="form-group">
-                            <button class="btn btn-default" (click)="delete_menu()">Xóa menu này</button>
-                        </div>
-                    </div>
                 <table class="table table-hover list-table">
                     <thead>
                         <tr>

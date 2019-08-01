@@ -32,6 +32,8 @@ export class CustomerManagerComponent implements OnInit {
   }
   formShow(a, data) {
     this.formStatus = a;
+  }
+  openDetailInModal(data){
     this.eData = data;
   }
   taoForm() {
@@ -90,7 +92,7 @@ export class CustomerManagerComponent implements OnInit {
   edit() {
     this.human.sua(this.eData._id, this.frmSua.value).subscribe(res => {
       if (res) {
-        alert('ok');
+        $.notify("Đã sửa 1 mục", "success");
         this.getList();
         this.formStatus = 'view';
       } else {
