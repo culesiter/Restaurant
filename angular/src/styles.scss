@@ -104,3 +104,27 @@ li{
        padding-top: 100px;
     }
 }
+div#tester_length, div#tester_filter,div#tester_paginate,div#tester_info {
+    padding: 10px 0;
+}
+div#tester_wrapper{
+    padding:  15px;
+    margin-bottom: 20px;
+}
+div#tester_length select{
+    width: 58px;
+    border-radius: 5px;
+    margin: 0 5px;
+}
+div#tester_filter input{
+    border: none;
+    border-bottom: 1px solid brown;
+    text-align: center;
+    &:focus{
+        outline: none;
+    }
+}
+a.paginate_button.current {
+    padding: 5px !important;
+    background: white !important;
+}

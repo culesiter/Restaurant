@@ -90,8 +90,7 @@ export class MenuManagerComponent implements OnInit {
       if (res.message === 'luu thanh cong') {
         this.menuTemp._id = res.values._id;
         this.currenttd = res;
-        console.log(res.values._id);
-        alert('Tạo thực đơn thành công! Chọn món và số lượng vào thực đơn vừa tạo!');
+        $.notify("Tạo thực đơn thành công! Chọn món và số lượng vào thực đơn vừa tạo!", "success");
         this.getlistthucdon();
         this.formStatus = 'addmon';
       }
@@ -176,7 +175,6 @@ export class MenuManagerComponent implements OnInit {
       gia: this.tdtotal
     };
     this.dishS.suathucdon(this.currenttd.values._id, value).subscribe(res => {
-      console.log(res);
       if (res.message === 'thanh cong') {
         $('#load').css('display', 'none');
         this.getlistthucdon();
@@ -185,11 +183,14 @@ export class MenuManagerComponent implements OnInit {
     });
   }
   xoatd(id) {
-    this.menuS.xoaThucDonMonAn(id).subscribe(res => {
-      this.menuS.xoathucdon(id).subscribe(res => {
-        alert('xoa thanh cong!');
-        this.getlistthucdon();
+    var temp_confirm = confirm('Bạn có chắc chắn muốn xóa mục này?');
+    if(temp_confirm == true){
+      this.menuS.xoaThucDonMonAn(id).subscribe(res => {
+        this.menuS.xoathucdon(id).subscribe(res => {
+          $.notify("Đã xóa 1 mục", "success");
+          this.getlistthucdon();
+        })
       })
-    })
+    }
   }
 }
