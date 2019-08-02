@@ -54,6 +54,9 @@ export class DishManagerComponent implements OnInit {
     this.formStatus = a;
     this.editDish = data;
   }
+  detailview(data){
+    this.editDish = data;
+  }
   xoaForm() {
     this.formAdd.reset();
   }

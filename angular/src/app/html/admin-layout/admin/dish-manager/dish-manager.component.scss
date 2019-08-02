@@ -24,12 +24,25 @@
 .content{
     width: 90%;
     margin: auto;
-    margin-top: 5%;
+    margin-top: 15px;
     height: auto;
     background: white;
     border-radius: 5px;
 }
 
+#add-dish{
+    .modal-content {
+        height: 420px;
+    }
+}
+#detailmd .modal-content {
+    height: 550px;
+}
+.headmd{
+    padding: 10px 0;
+    text-align: center;
+    font-family: dark-b;
+}
 .dish-detail{
     width: 100%;
     height: 100%;

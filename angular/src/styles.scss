@@ -107,16 +107,16 @@ li{
 div#tester_length, div#tester_filter,div#tester_paginate,div#tester_info {
     padding: 10px 0;
 }
-div#tester_wrapper{
+div#tester_wrapper,div.dataTables_wrapper {
     padding:  15px;
     margin-bottom: 20px;
 }
-div#tester_length select{
+div#tester_length select, .dataTables_length select{
     width: 58px;
     border-radius: 5px;
     margin: 0 5px;
 }
-div#tester_filter input{
+div#tester_filter input, .dataTables_wrapper .dataTables_filter input{
     border: none;
     border-bottom: 1px solid brown;
     text-align: center;
