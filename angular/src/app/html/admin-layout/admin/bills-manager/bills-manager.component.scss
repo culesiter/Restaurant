@@ -22,7 +22,33 @@
 .mgt-30{
     margin-top: 30px;
 }
-div#menu2 {
+.cancel-text{
+    color: black;
+    padding: 5px 0;
+    margin-right: 10px;
+    border-bottom: 1px solid grey;
+    &.payed{
+        color: green;
+        border-color: green;
+    }
+    &.confirmed{
+        color: rgba(48, 48, 134, 0.589);
+        border-color: rgba(48, 48, 134, 0.589);
+    }
+}
+.lbrela{
+    position: relative;
+    padding: 10px 0;
+    border-bottom: 1px solid grey;
+    span{
+        position: absolute;
+        top: 50%;
+        right: 0;
+        transform: translateY(-50%);
+        color: burlywood;
+    }
+}
+div#menu2 .in-m2 {
     display: flex;
     flex-wrap: wrap;
     ul.nav.nav-tabs {
