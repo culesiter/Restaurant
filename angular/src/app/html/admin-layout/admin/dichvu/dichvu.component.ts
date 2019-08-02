@@ -21,8 +21,7 @@ export class DichvuComponent implements OnInit {
     this.taoForm();
     this.getList();
   }
-  formShow(a,data) {
-    this.formStatus = a;
+  formShow(data) {
     this.eData = data;
   }
   taoForm() {
