@@ -24,13 +24,14 @@
 .content{
     width: 90%;
     margin: auto;
-    margin-top: 5%;
     height: auto;
     background: white;
     border-radius: 5px;
- 
 }
-
+.head-cus {
+    width: 90%;
+    margin: 0 auto 20px;
+}
 .view-detail {
     width: 100%;
     height: auto;
@@ -117,6 +118,12 @@
     width: 100%;
     height: 100%;
 }
+#addc{
+    .modal-content {
+        padding: 15px;
+    }
+}
+
 // responsive
 
 @media (max-width: 768px) { 

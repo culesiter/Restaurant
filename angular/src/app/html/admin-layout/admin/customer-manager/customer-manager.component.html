@@ -1,16 +1,7 @@
 <div class="container-fluid">
-    <div class="customer-head">
-        <div class="btn-group group-them" data-toggle="buttons">
-            <label class="btn btn-default btn-lg bnt-them" (click)="formShow('view')">
-                View List Customers
-            </label>
-            <label class="btn btn-primary btn-lg bnt-them " (click)="formShow('create')">
-                Create New Customer
-            </label>
-        </div>
+    <div class="head-cus"> 
+        <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#addc"><i class="fa fa-user-plus" aria-hidden="true"></i> Thêm người dùng mới</button>
     </div>
-<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#addc">Open Modal</button>
-
 <div id="addc" class="modal fade" role="dialog">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -54,8 +45,10 @@
                             </label>
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-secondary">Sign up</button>
-                    <button class="btn btn-warning" onclick="formReser()">Clear</button>
+                    <div class="col-12">
+                            <button type="submit" class="btn btn-secondary">Sign up</button>
+                            <button class="btn btn-warning" onclick="formReser()">Clear</button>
+                    </div>
                 </form>
     </div>
   </div>
