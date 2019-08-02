@@ -1,130 +1,153 @@
 <div class="container-fluid">
-  <div class="customer-head">
-      <div class="btn-group group-them" data-toggle="buttons">
-          <label class="btn btn-default btn-lg bnt-them" (click)="formShow('view')">
-              View List Staffs
-          </label>
-          <label class="btn btn-primary btn-lg bnt-them " (click)="formShow('create')">
-              Create New Staff
-          </label>
-      </div>
-  </div>
-  <div class="content">
-      <div class="list-customer" *ngIf="formStatus==='view'">
-          <table class="table table-hover list-table">
-              <thead>
-                  <tr>
-                      <th scope="col">#</th>
-                      <th scope="col">Tên</th>
-                      <th scope="col">Email</th>
-                      <th scope="col">Chức vụ</th>
-                      <th scope="col">Lương theo ngày</th>
-                  </tr>
-              </thead>
-              <tbody class="tbody-list">
-                  <tr *ngFor="let item of listData; let i = index" (click)="formShow('detail',item)">
-                      <th scope="row">{{i+1}}</th>
-                      <td>{{item.ten}}</td>
-                      <td>{{item.email}}</td>
-                      <td>Nhân viên cấp {{item._idcapnhanvien.cap}}</td>
-                      <td>{{item._idcapnhanvien.luongtheongay}} VND</td>
-                  </tr>
-              </tbody>
-          </table>
-      </div>
-      <!-- ket thuc form xem list -->
-      <!-- form add new begin -->
-      <label class="create-customer" *ngIf="formStatus==='create'">
-          <form id="formThemCustomer" (ngSubmit)="addNew()" [formGroup]="formAddNew">
-              <div class="form-row">
-                  <div class="form-group col-md-6">
-                      <label>Tên</label>
-                      <input type="text" class="form-control"  formControlName="ten" placeholder="Nhập tên">
-                  </div>
-                  <div class="form-group col-md-6">
-                      <label>Email</label>
-                      <input type="email" class="form-control"  formControlName="email" placeholder="Nhập email">
-                  </div>
-                  <div class="form-group col-md-6">
-                    <label>Số điện thoại</label>
-                    <input type="text" class="form-control"  formControlName="sdt" placeholder="Nhập số điện thoại">
-                 </div>
-                 <div class="form-group col-md-6">
-                    <label>Cấp nhân viên</label>
-                    <select class="form-control" formControlName="_idcapnhanvien">
-                        <option selected value="5d0377fad811143770b281e8">Cấp 1</option>
-                        <option value="5d0377c3d811143770b281e6">Cấp 2</option>
-                        <option value="5d0377cdd811143770b281e7">Cấp 3</option>
-                    </select>
-                 </div>
-                 <div class="form-group col-md-6">
-                      <label>Mật Khẩu</label>
-                      <input type="password" class="form-control"  formControlName="matkhau" placeholder="Password">
-                 </div>
-                  <div class="form-group col-md-6">
-                      <label>Ngày sinh</label>
-                      <input type="date" class="form-control">
-                  </div>
-                
-                  <div class="form-group col-md-12">
-                      <label>Avatar</label>
-                      <div class="custom-file">
-                          <input type="file" (change)="onFileChange($event)" class="custom-file-input" id="inputGroupFile01">
-                          <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
-                      </div>
-                  </div>
-              </div>
-              <div class="col-md-12">
-                <button class="btn btn-warning" onclick="formReser()">Làm mới</button>
-                <button type="submit" class="btn btn-primary">Đăng ký</button>
-              </div>
-          </form>
-      </label>
-      <!-- ket thuc form add new -->
-      <!-- bat dau form detail -->
-      <div class="view-detail" *ngIf="formStatus==='detail'">
-          <div class="row row-back">
-              <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8 xoac">
-                  <div class="edit-profile">
-                      <form (ngSubmit)="edit()" [formGroup]="frmSua">
-                          <div class="form-row">
-                              <div class="form-group col-md-6">
-                                  <label>Tên</label>
-                                  <input type="text" class="form-control" formControlName="ten" value="{{eData.ten}}">
-                                  
-                              </div>
-                              <div class="form-group col-md-6">
-                                  <label>Email</label>
-                                  <input type="email" class="form-control" formControlName="email" value="{{eData.email}}">
-                              </div>
-                              <div class="form-group col-md-6">
-                                  <label>Mật khẩu</label>
-                                  <input type="password" class="form-control" formControlName="matkhau" value="{{eData.matkhau}}">
-                              </div>
-                              <div class="col-md-12">
-                                  <label>Đia chỉ</label>
-                                  <input type="text" class="form-control">
-                              </div>
-                              <div class="form-row">
-                                  <div class="form-group col-md-6">
-                                      <label>Thành Viên</label>
-                                      <input type="text" formControlName="thanhvien" class="form-control" value="{{eData.thanhvien}}">
-                                  </div>
-                                  <div class="form-group col-md-6">
-                                      <label for="inputState">Điểm Tích Lũy</label>
-                                        <input type="number" formControlName="diem"  class="form-control" value="{{eData.diem}}">
-                                  </div>
-                              </div>
-                              <div class="form-group col-md-6">
-                                <button type="submit" class="btn btn-default">Edit</button>
-                                <button class="btn btn-warning" (click)="delete()">Xóa</button>
-                              </div>
-                          </div>
-                      </form>
-                  </div>
-              </div>
-          </div>
-      </div>
-      <!-- ket thuc form detail -->
-  </div>
+    <div class="head-cus">
+        <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#addstaff"><i
+                class="fa fa-user-plus" aria-hidden="true"></i> Thêm nhân viên mới</button>
+    </div>
+    <div class="content">
+        <div class="list-customer">
+            <table class="table table-hover list-table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Tên</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Chức vụ</th>
+                        <th scope="col">Lương theo ngày</th>
+                    </tr>
+                </thead>
+                <tbody class="tbody-list">
+                    <tr *ngFor="let item of listData; let i = index" data-toggle="modal" data-target="#detailstaff" (click)="showdetail(item)">
+                        <th scope="row">{{i+1}}</th>
+                        <td>{{item.ten}}</td>
+                        <td>{{item.email}}</td>
+                        <td>Nhân viên cấp {{item._idcapnhanvien.cap}}</td>
+                        <td>{{item._idcapnhanvien.luongtheongay}} VND</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <!-- ket thuc form xem list -->
+        <!-- form add new begin -->
+        <div class="modal fade" id="addstaff" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="create-customer">
+                            <form id="formThemCustomer" (ngSubmit)="addNew()" [formGroup]="formAddNew">
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label>Tên</label>
+                                        <input type="text" class="form-control" formControlName="ten"
+                                            placeholder="Nhập tên">
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label>Email</label>
+                                        <input type="email" class="form-control" formControlName="email"
+                                            placeholder="Nhập email">
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label>Số điện thoại</label>
+                                        <input type="text" class="form-control" formControlName="sdt"
+                                            placeholder="Nhập số điện thoại">
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label>Cấp nhân viên</label>
+                                        <select class="form-control" formControlName="_idcapnhanvien">
+                                            <option selected value="5d0377fad811143770b281e8">Cấp 1</option>
+                                            <option value="5d0377c3d811143770b281e6">Cấp 2</option>
+                                            <option value="5d0377cdd811143770b281e7">Cấp 3</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label>Mật Khẩu</label>
+                                        <input type="password" class="form-control" formControlName="matkhau"
+                                            placeholder="Password">
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label>Ngày sinh</label>
+                                        <input type="date" class="form-control">
+                                    </div>
+
+                                    <div class="form-group col-md-12">
+                                        <label>Avatar</label>
+                                        <div class="custom-file">
+                                            <input type="file" (change)="onFileChange($event)" class="custom-file-input"
+                                                id="inputGroupFile01">
+                                            <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <button class="btn btn-warning" onclick="formReser()">Làm mới</button>
+                                    <button type="submit" class="btn btn-primary">Đăng ký</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- ket thuc form add new -->
+        <!-- bat dau form detail -->
+        <div class="modal fade" id="detailstaff" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="view-detail">
+                            <div class="row row-back">
+                                <div class="col-md-12 xoac">
+                                    <div class="edit-profile">
+                                        <form (ngSubmit)="edit()" [formGroup]="frmSua">
+                                            <div class="form-row">
+                                                <div class="form-group col-md-6">
+                                                    <label>Tên</label>
+                                                    <input type="text" class="form-control" formControlName="ten"
+                                                        value="{{eData.ten}}">
+
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label>Email</label>
+                                                    <input type="email" class="form-control" formControlName="email"
+                                                        value="{{eData.email}}">
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label>Mật khẩu</label>
+                                                    <input type="password" class="form-control"
+                                                        formControlName="matkhau" value="{{eData.matkhau}}">
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <label>Đia chỉ</label>
+                                                    <input type="text" class="form-control">
+                                                </div>
+                                                <div class="form-row">
+                                                    <div class="form-group col-md-6">
+                                                        <label>Thành Viên</label>
+                                                        <input type="text" formControlName="thanhvien"
+                                                            class="form-control" value="{{eData.thanhvien}}">
+                                                    </div>
+                                                    <div class="form-group col-md-6">
+                                                        <label for="inputState">Điểm Tích Lũy</label>
+                                                        <input type="number" formControlName="diem" class="form-control"
+                                                            value="{{eData.diem}}">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <button type="submit" class="btn btn-default">Edit</button>
+                                                    <button class="btn btn-warning" (click)="delete()">Xóa</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ket thuc form detail -->
+    </div>
 </div>
