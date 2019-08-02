@@ -6,7 +6,7 @@
     </div>
     <div class="content">
         <div class="list-customer">
-            <table class="table table-hover list-table">
+            <table class="table table-hover list-table" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
                 <thead>
                     <tr>
                         <th scope="col">#</th>
@@ -17,8 +17,8 @@
                     </tr>
                 </thead>
                 <tbody class="tbody-list">
-                    <tr *ngFor="let item of listDish" data-toggle="modal" data-target="#detailmd" (click)="detailview(item)">
-                        <th scope="row">1</th>
+                    <tr *ngFor="let item of listDish; let i = index" data-toggle="modal" data-target="#detailmd" (click)="detailview(item)">
+                        <th scope="row">{{i+1}}</th>
                         <td>{{item.ten}}</td>
                         <td>{{item.gia}}</td>
                         <td>{{item.loai}}</td>

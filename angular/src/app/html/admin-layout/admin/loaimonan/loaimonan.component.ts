@@ -3,7 +3,7 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { DishserviceService } from '../../../../share/services/dishservice.service';
 import { iloaimon } from '../../../../share/entities/iloaimon';
 import { Subject } from 'rxjs';
-
+declare var $:any;
 @Component({
   selector: 'app-loaimonan',
   templateUrl: './loaimonan.component.html',
@@ -26,7 +26,6 @@ export class LoaimonanComponent implements OnInit {
     this.getListType();
     this.dtOptions = {
       pagingType: 'full_numbers',
-      pageLength: 6,
       retrieve: true,
       paging: true,
       ordering: false,
@@ -80,11 +79,13 @@ export class LoaimonanComponent implements OnInit {
   taoMoi() {
     this.dishserviceService.themloaimon(this.formAddNew.value).subscribe(res => {
       if (res) {
-        alert('Them thanh cong!');
+        console.log(res);
+        $.notify('Đã tạo một món ăn mới!', 'success');
+        this.formStatus = 'view';
         this.getListType();
         this.formStatus = 'view';
       }
-    })
+    });
   }
   sua() {
     this.dishserviceService.sualoaimon(this.eLoaiMon._id, this.frmSua.value).subscribe(res => {

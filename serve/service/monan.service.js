@@ -157,7 +157,7 @@ function getProductById(req) {
 }
 function layMonAN() {
     return new Promise((resolve, reject) => {
-        monan.find({}).select('_id ten hinhanh gia khuyenmai _idloai ').populate('_idloai', '_id ten').exec(
+        monan.find({}).sort( { _id: -1 } ).select('_id ten hinhanh gia khuyenmai _idloai ').populate('_idloai', '_id ten').exec(
             function (err, response) {
                 if (err) {
                     var err = {

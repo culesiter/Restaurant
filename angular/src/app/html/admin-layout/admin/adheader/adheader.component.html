@@ -15,14 +15,10 @@
                 <i class="fa fa-coffee" aria-hidden="true"></i><span>Món ăn</span>
             </a>
         </li>
-        <li class="nav-item" (click)="activeRouter('Quản Lý Loại Món Ăn')" [ngStyle]="{'display': styleExp}">
-            <a class="nav-link loai" routerLink="/admin/dashboard/dishtype" routerLinkActive="active">
-                <span>Loại Món ăn</span>
-            </a>
-        </li>
-        <li class="nav-item" (click)="activeRouter('Thống kê món ăn')" [ngStyle]="{'display': styleExp}">
-                <a class="nav-link loai" routerLink="/admin/dashboard/dish-statistical" routerLinkActive="active">
-                    <span>Thống kê</span>
+        
+        <li class="nav-item" (click)="activeRouter('Loại Món Ăn')" [ngStyle]="{'display': styleExp}">
+                <a class="nav-link loai" routerLink="/admin/dashboard/dishtype" routerLinkActive="active">
+                    <span>Loại Món</span>
                 </a>
             </li>
         <li class="nav-item" routerLink="/admin/dashboard/room" routerLinkActive="active" (click)="activeRouter2('Phòng Ăn')">

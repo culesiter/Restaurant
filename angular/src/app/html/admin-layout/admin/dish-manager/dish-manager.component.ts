@@ -4,6 +4,7 @@ import { DishserviceService } from '../../../../share/services/dishservice.servi
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { iloaimon } from '../../../../share/entities/iloaimon';
 import { log } from 'util';
+import { Subject } from 'rxjs';
 declare var $: any;
 @Component({
   selector: 'app-dish-manager',
@@ -14,12 +15,14 @@ export class DishManagerComponent implements OnInit {
   private formStatus = 'view';
   private newDish: Idish = {};
   private editDish: Idish = {};
-  private listDish: Idish[]=[];
-  private lstType: iloaimon[]=[];
+  private listDish: Idish[] = [];
+  private lstType: iloaimon[] = [];
   private formAdd: FormGroup;
   private formEdit: FormGroup;
   private styleExp = 'none';
   private selectedFile: any;
+  dtOptions: DataTables.Settings = {};
+  dtTrigger: Subject<any> = new Subject();
   constructor(private dishserviceService: DishserviceService,
     private formBuilder: FormBuilder,
   ) { }
@@ -28,9 +31,37 @@ export class DishManagerComponent implements OnInit {
     this.taoForm();
     this.getAllDish();
     this.getListType();
+    this.dtOptions = {
+      pagingType: 'full_numbers',
+      retrieve: true,
+      paging: true,
+      ordering: false,
+      language: {
+        processing: 'Procesando...',
+        search: 'Tìm Kiếm:',
+        lengthMenu: 'Hiển thị _MENU_ mục',
+        info: 'Hiển thị từ _START_ đến _END_ mục trong _TOTAL_ mục',
+        infoEmpty: 'Không có mục nào',
+        infoFiltered: "(filtrado _MAX_ elementos total)",
+        infoPostFix: "",
+        loadingRecords: "Cargando registros...",
+        zeroRecords: "Không có mục nào",
+        emptyTable: "No hay datos disponibles en la tabla",
+        paginate: {
+          first: 'Đầu tiên',
+          previous: 'Trở về',
+          next: 'Kế tiếp',
+          last: 'Cuối cùng'
+        },
+        aria: {
+          sortAscending: ": Activar para ordenar la tabla en orden ascendente",
+          sortDescending: ": Activar para ordenar la tabla en orden descendente"
+        }
+      }
+    };
   }
-  getListType(){
-    this.dishserviceService.laydsloaimon().subscribe(res=> this.lstType = res);
+  getListType() {
+    this.dishserviceService.laydsloaimon().subscribe(res => this.lstType = res);
   }
   taoForm() {
     this.formAdd = this.formBuilder.group({
@@ -50,11 +81,11 @@ export class DishManagerComponent implements OnInit {
   taoMon() {
     console.log(this.formAdd.value);
   }
-  formShow(a,data) {
+  formShow(a, data) {
     this.formStatus = a;
     this.editDish = data;
   }
-  detailview(data){
+  detailview(data) {
     this.editDish = data;
   }
   xoaForm() {
@@ -70,33 +101,37 @@ export class DishManagerComponent implements OnInit {
       const uploaddata = new FormData();
       uploaddata.append('monanimg', this.selectedFile);
       console.log(uploaddata);
-      this.dishserviceService.upanh(data.values._id, uploaddata).subscribe(resq =>{
-        if(resq){
+      this.dishserviceService.upanh(data.values._id, uploaddata).subscribe(resq => {
+        if (resq) {
           $.notify("Đã thêm 1 mục", "success");
+          setTimeout(() => {
+            $('#add-dish').modal('hide');
+          }, 150);
           this.getAllDish();
           this.formStatus = 'view';
         }
       })
     });
   }
-  getAllDish(){
-    this.dishserviceService.laydanhsachmonan().subscribe(res=>{
-      if(res){
+  getAllDish() {
+    this.dishserviceService.laydanhsachmonan().subscribe(res => {
+      if (res) {
         this.listDish = res;
-      } else{
+        this.dtTrigger.next();
+      } else {
         console.log('Err');
       }
-    })
+    });
   }
   deleteDish(id) {
-    if(confirm('Bạn có muốn xóa món ăn này?')){
-      this.dishserviceService.xoaMonAn(id).subscribe(res =>{
+    if (confirm('Bạn có muốn xóa món ăn này?')) {
+      this.dishserviceService.xoaMonAn(id).subscribe(res => {
         console.log(res);
-        if(res){
+        if (res) {
           $.notify("Đã xóa 1 mục", "success");
           this.getAllDish();
           this.formStatus = 'view';
-        } else{
+        } else {
           alert('err');
         }
       })
@@ -105,19 +140,19 @@ export class DishManagerComponent implements OnInit {
   editExistDish() {
     const id = this.editDish._id;
     this.dishserviceService.suaMonAn(id, this.formEdit.value).subscribe(res => {
-      if(res){
+      if (res) {
         var data = res;
-      const uploaddata = new FormData();
-      uploaddata.append('monanimg', this.selectedFile);
-      console.log(uploaddata);
-      this.dishserviceService.upanh(id, uploaddata).subscribe(resq =>{
-        if(resq){
-          alert('thanh cong!');
-          this.getAllDish();
-          this.formStatus = 'view';
-        }
-      })
-      }else{
+        const uploaddata = new FormData();
+        uploaddata.append('monanimg', this.selectedFile);
+        console.log(uploaddata);
+        this.dishserviceService.upanh(id, uploaddata).subscribe(resq => {
+          if (resq) {
+            alert('thanh cong!');
+            this.getAllDish();
+            this.formStatus = 'view';
+          }
+        })
+      } else {
         alert('failed');
       }
     })

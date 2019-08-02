@@ -87,7 +87,7 @@ function getProductById(req) {
 }
 function layLoaiMon() {
     return new Promise((resolve, reject) => {
-        loaimonan.find({}).select('_id ten').exec(
+        loaimonan.find({}).sort( { _id: -1 } ).select('_id ten').exec(
             function (err, response) {
                 if (err) {
                     reject(err)
