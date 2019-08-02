@@ -88,11 +88,10 @@ export class CustomerManagerComponent implements OnInit {
     });
   }
   getList() {
-    this.human.laydanhsach().subscribe(res => { console.log(res); this.listData = res; this.dtTrigger.next(); });
+    this.human.laydanhsach().subscribe(res => { this.listData = res; this.dtTrigger.next(); });
   }
   onFileChange(event) {
     this.selectedFile = event.target.files[0];
-    console.log(this.selectedFile);
   }
   addNew() {
     this.human.them(this.formAddNew.value).subscribe(res => {
@@ -100,9 +99,7 @@ export class CustomerManagerComponent implements OnInit {
         const data = res;
         const uploaddata = new FormData();
         uploaddata.append('khachhangimg', this.selectedFile);
-        console.log(this.selectedFile, uploaddata);
         this.human.upanhkh(data.values._id, uploaddata).subscribe(resq => {
-          console.log(resq);
           if (resq.message === 'thanh cong') {
             $.notify('Đã tạo một khách hàng mới!', 'success');
             this.getList();
