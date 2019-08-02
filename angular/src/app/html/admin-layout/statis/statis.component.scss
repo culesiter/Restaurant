@@ -1,0 +1,22 @@
+.my-statis {
+    padding: 0 50px;
+    > div{
+        margin: 0 20px;
+        .btn{
+            display: block;
+            width: 100%;
+            margin-bottom: 20px;
+            overflow: hidden;
+            i{
+                margin-right: 5px;
+            }
+        }
+    }
+}
+.modal .modal-dialog{
+    width: 800px;
+    .modal-content {
+        width: 100%;
+        height: 475px;
+    }
+}
