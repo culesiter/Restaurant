@@ -148,7 +148,7 @@ function layLoaiPhong(request) {
 }
 function layPhong() {
     return new Promise((resolve, reject) => {
-        phong.find({}).select('_id ten _idloai tinhtrang hinhanh').populate('_idloai', '_id ten gia succhua').exec(
+        phong.find({}).sort( { _id: -1 } ).select('_id ten _idloai tinhtrang hinhanh').populate('_idloai', '_id ten gia succhua').exec(
             function (err, response) {
                 if (err) {
                     var err = {

@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { PhongserviceService } from '../../../../share/services/phongservice.service';
 import { IloaiPhong } from '../../../../share/entities/iloai-phong';
 import { Subject } from 'rxjs';
-
+declare var $: any;
 @Component({
   selector: 'app-room-manager',
   templateUrl: './room-manager.component.html',
@@ -13,7 +13,7 @@ import { Subject } from 'rxjs';
 export class RoomManagerComponent implements OnInit {
   private formStatus = 'view';
   private lstType: IloaiPhong[] = [];
-  private  listData: Iphong[] = [];
+  private listData: Iphong[] = [];
   private eData: Iphong = {};
   private formAddNew: FormGroup;
   private frmSua: FormGroup;
@@ -21,7 +21,7 @@ export class RoomManagerComponent implements OnInit {
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject();
   constructor(private formBuilder: FormBuilder,
-              private phongserviceService: PhongserviceService) { }
+    private phongserviceService: PhongserviceService) { }
   ngOnInit() {
     this.taoForm();
     this.getList();
@@ -55,8 +55,8 @@ export class RoomManagerComponent implements OnInit {
       }
     };
   }
-  getListType(){
-    this.phongserviceService.laydanhsachloaiphong().subscribe(res =>{ this.lstType = res});
+  getListType() {
+    this.phongserviceService.laydanhsachloaiphong().subscribe(res => { this.lstType = res });
   }
   formShow(data) {
     this.eData = data;
@@ -77,8 +77,8 @@ export class RoomManagerComponent implements OnInit {
       tinhtrang: ['', []]
     });
   }
-  getList(){
-    this.phongserviceService.laydanhsachphong().subscribe(res =>{ 
+  getList() {
+    this.phongserviceService.laydanhsachphong().subscribe(res => {
       this.listData = res;
       this.dtTrigger.next();
     });
@@ -86,33 +86,38 @@ export class RoomManagerComponent implements OnInit {
   onFileChange(event) {
     this.selectedFile = event.target.files[0];
   }
-  addNew(){
+  addNew() {
     this.phongserviceService.themphong(this.formAddNew.value).subscribe(res => {
       var data = res;
       console.log(data);
       const uploaddata = new FormData();
       uploaddata.append('phongimg', this.selectedFile);
-      this.phongserviceService.upanh(data.values._id, uploaddata).subscribe(resq =>{
-        if(resq){
-          alert('thanh cong!');
+      this.phongserviceService.upanh(data.values._id, uploaddata).subscribe(resq => {
+        if (resq.message === 'luu thanh cong') {
+          $.notify('Đã tạo phòng mới');
+          setTimeout(() => {
+            $('#addroom').modal('hide');
+          }, 150);
           this.getList();
           this.formStatus = 'view';
+        } else {
+          $.notify('có lỗi xảy ra');
         }
-      })
-    })
+      });
+    });
   }
-  edit(){
+  edit() {
     this.phongserviceService.suaphong(this.eData._id, this.frmSua.value).subscribe(res => {
-      if(res){
+      if (res) {
         alert('ok');
         this.getList();
         this.formStatus = 'view';
       } else {
-        alert ('failed');
+        alert('failed');
       }
     })
   }
-  delete(){
+  delete() {
     this.phongserviceService.xoaphong(this.eData._id).subscribe(res => {
       this.getList();
       this.formStatus = 'view';

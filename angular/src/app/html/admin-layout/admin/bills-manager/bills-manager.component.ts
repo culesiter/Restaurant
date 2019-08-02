@@ -18,6 +18,8 @@ export class BillsManagerComponent implements OnInit {
   private chuaxacnhan: any = [];
   private daxacnhan: any = [];
   private dathanhtoan: any = [];
+  private dathanhtoan1: any = [];
+  private dathanhtoan2: any = [];
   private huy: any = [];
   private eCthd: any[] = [];
   private pongdt;
@@ -38,6 +40,8 @@ export class BillsManagerComponent implements OnInit {
       this.chuaxacnhan = [];
       this.daxacnhan = [];
       this.dathanhtoan = [];
+      this.dathanhtoan1 = [];
+      this.dathanhtoan2 = [];
       this.huy = [];
       res.forEach(element => {
         element.thoidiemtao = moment(element.thoidiemtao).format(' h:mm:ss a, Ngày: DD-MM-YYYY');
@@ -47,6 +51,12 @@ export class BillsManagerComponent implements OnInit {
           this.daxacnhan.push(element);
         } else if (element.tinhtrang === 2) {
           this.dathanhtoan.push(element);
+          if (element.hinhthucthanhtoan == 2) {
+            this.dathanhtoan2.push(element);
+          } else {
+            this.dathanhtoan1.push(element);
+          }
+
         } else if (element.tinhtrang === -1) {
           this.huy.push(element);
         }
