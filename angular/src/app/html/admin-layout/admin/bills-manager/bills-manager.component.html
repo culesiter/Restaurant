@@ -45,7 +45,7 @@
                 <tbody class="tbody-list">
                     <tr *ngFor="let item of daxacnhan;let i = index">
                         <th *ngIf="item.tinhtrang===1" scope="row">{{i+1}}</th>
-                        <td *ngIf="item.tinhtrang===1">{{item.ten}}</td>
+                        <td *ngIf="item.tinhtrang===1">{{item._idkhachhang.ten}}</td>
                         <td *ngIf="item.tinhtrang===1">{{item.thoidiemtao}}</td>
                         <td *ngIf="item.tinhtrang===1">
                                 <span class="cancel-text confirmed">Đã xác nhận</span>

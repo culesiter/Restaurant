@@ -4,7 +4,7 @@ export class Ihoadon {
     _idmonan?: number;
     _idphong?: string;
     _iddichvu?: number;
-    tongtien?: string;
+    tongtien?: number;
     gioden?: string;
     hinhthucthanhtoan?: number;
     thoidiemtao?: string;
