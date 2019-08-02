@@ -58,8 +58,7 @@ export class RoomManagerComponent implements OnInit {
   getListType(){
     this.phongserviceService.laydanhsachloaiphong().subscribe(res =>{ this.lstType = res});
   }
-  formShow(a,data) {
-    this.formStatus = a;
+  formShow(data) {
     this.eData = data;
   }
   taoForm() {

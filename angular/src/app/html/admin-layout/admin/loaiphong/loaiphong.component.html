@@ -1,16 +1,9 @@
 <div class="container-fluid">
-    <div class="customer-head">
-        <div class="btn-group group-them" data-toggle="buttons">
-            <label class="btn btn-default btn-lg bnt-them" (click)="formShow('view')">
-                Danh sách Loại Phòng
-            </label>
-            <label class="btn btn-primary btn-lg bnt-them " (click)="formShow('create')">
-                Thêm Loại Phòng Mới
-            </label>
-        </div>
-    </div>
+        <div class="head-cus">
+                <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#addnl"> Thêm loại phòng mới</button>
+            </div>
     <div class="content">
-        <div class="list-customer" *ngIf="formStatus==='view'">
+        <div class="list-customer">
             <table class="table table-hover list-table">
                 <thead>
                     <tr>
@@ -21,7 +14,7 @@
                     </tr>
                 </thead>
                 <tbody class="tbody-list">
-                    <tr *ngFor="let item of listData" (click)="formShow('detail',item)">
+                    <tr *ngFor="let item of listData" data-toggle="modal" data-target="#detaillp" (click)="formShow(item)">
                         <th scope="row">1</th>
                         <td>{{item.ten}}</td>
                         <td>{{item.gia}}</td>
@@ -32,79 +25,96 @@
         </div>
         <!-- ket thuc form xem list -->
         <!-- form add new begin -->
-        <div class="create-customer" *ngIf="formStatus==='create'">
-            <form (ngSubmit)="addNew()" [formGroup]="formAddNew">
-                <div class="form-row">
-                    <div class="form-group col-md-5">
-                        <label>Tên Loại</label>
-                        <input type="text" class="form-control" formControlName="ten" placeholder="Tên">
+        <div class="modal fade" id="addnl" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-body">
+                            <div class="create-customer" >
+                                    <form (ngSubmit)="addNew()" [formGroup]="formAddNew">
+                                        <div class="form-row">
+                                            <div class="form-group col-md-5">
+                                                <label>Tên Loại</label>
+                                                <input type="text" class="form-control" formControlName="ten" placeholder="Tên">
+                                            </div>
+                                            <div class="form-group col-md-5">
+                                                <label>Giá</label>
+                                                <input type="text" class="form-control" formControlName="gia" placeholder="Giá">
+                                            </div>
+                                            <div class="form-group col-md-2">
+                                                <label>Sức chứa</label>
+                                                <input type="number" class="form-control" formControlName="succhua" placeholder="10">
+                                            </div>
+                                            <div class="form-group col-md-2">
+                                                <label>Mô tả</label>
+                                                <input type="text" class="form-control" formControlName="mota" placeholder="10">
+                                            </div>
+                                            <div class="form-group col-md-12">
+                                                <label>Image</label>
+                                                <div class="custom-file">
+                                                    <input type="file" class="custom-file-input" (change)="onFileChange($event)" id="inputGroupFile01">
+                                                    <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-md-12">
+                                                <button type="submit" class="btn btn-secondary">Thêm</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
                     </div>
-                    <div class="form-group col-md-5">
-                        <label>Giá</label>
-                        <input type="text" class="form-control" formControlName="gia" placeholder="Giá">
-                    </div>
-                    <div class="form-group col-md-2">
-                        <label>Sức chứa</label>
-                        <input type="number" class="form-control" formControlName="succhua" placeholder="10">
-                    </div>
-                    <div class="form-group col-md-2">
-                        <label>Mô tả</label>
-                        <input type="text" class="form-control" formControlName="mota" placeholder="10">
-                    </div>
-                    <div class="form-group col-md-12">
-                        <label>Image</label>
-                        <div class="custom-file">
-                            <input type="file" class="custom-file-input" (change)="onFileChange($event)" id="inputGroupFile01">
-                            <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
-                        </div>
-                    </div>
-                    <div class="form-group col-md-12">
-                        <button type="submit" class="btn btn-secondary">Thêm</button>
-                    </div>
+                  </div>
                 </div>
-            </form>
-        </div>
+              </div>
         <!-- ket thuc form add new -->
         <!-- bat dau form detail -->
-        <div *ngIf="formStatus==='detail'">
-            <div class="dish-detail">
-                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 carosel">
-                </div>
-                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                    <form (ngSubmit)="edit()" [formGroup]="frmSua">
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                <label>Tên Loại phòng</label>
-                                <input type="text" class="form-control" formControlName="ten" value="{{eData.ten}}">
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label>Giá</label>
-                                <input type="text" class="form-control" formControlName="gia" value="{{eData.gia}}">
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label>Sức chứa</label>
-                                <input type="number" class="form-control" formControlName="succhua" value="{{eData.succhua}}">
-                            </div>
-                            <div class="form-group col-md-2">
-                                <label>Mô tả</label>
-                                <input type="text" class="form-control" formControlName="mota" placeholder="10">
-                            </div>
-                            <div class="form-group col-md-12">
-                                <label>Image</label>
-                                <div class="custom-file">
-                                    <input type="file" class="custom-file-input" (change)="onFileChange($event)" id="inputGroupFile01">
-                                    <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+        <div class="modal fade" id="detaillp" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-body">
+                            <div>
+                                    <div class="dish-detail">
+                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 carosel">
+                                        </div>
+                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                            <form (ngSubmit)="edit()" [formGroup]="frmSua">
+                                                <div class="form-row">
+                                                    <div class="form-group col-md-6">
+                                                        <label>Tên Loại phòng</label>
+                                                        <input type="text" class="form-control" formControlName="ten" value="{{eData.ten}}">
+                                                    </div>
+                                                    <div class="form-group col-md-6">
+                                                        <label>Giá</label>
+                                                        <input type="text" class="form-control" formControlName="gia" value="{{eData.gia}}">
+                                                    </div>
+                                                    <div class="form-group col-md-6">
+                                                        <label>Sức chứa</label>
+                                                        <input type="number" class="form-control" formControlName="succhua" value="{{eData.succhua}}">
+                                                    </div>
+                                                    <div class="form-group col-md-2">
+                                                        <label>Mô tả</label>
+                                                        <input type="text" class="form-control" formControlName="mota" placeholder="10">
+                                                    </div>
+                                                    <div class="form-group col-md-12">
+                                                        <label>Image</label>
+                                                        <div class="custom-file">
+                                                            <input type="file" class="custom-file-input" (change)="onFileChange($event)" id="inputGroupFile01">
+                                                            <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group col-md-12">
+                                                        <button type="submit" class="btn btn-secondary">Cập Nhật</button>
+                                                        <button class="btn btn-warning" (click)="delete()">Xóa</button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="form-group col-md-12">
-                                <button type="submit" class="btn btn-secondary">Cập Nhật</button>
-                                <button class="btn btn-warning" (click)="delete()">Xóa</button>
-                            </div>
-                        </div>
-                    </form>
+                    </div>
+                  </div>
                 </div>
-            </div>
-        </div>
+              </div>
+      
         <!-- ket thuc form detail -->
     </div>
 </div>
