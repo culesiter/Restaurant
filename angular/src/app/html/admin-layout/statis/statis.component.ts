@@ -12,6 +12,7 @@ export class StatisComponent implements OnInit {
   @Input() chartData2: any[] = [{ data: [] }];
   @Input() chartData3: any[] = [{ data: [] }];
   @Input() chartData4: any[] = [{ data: [] }];
+  @Input() chartData5: any[] = [{ data: [] }];
   private data1 = [{
     label: '1st Year',
     data: [21, 56, 4, 31, 45, 15, 57, 61, 9, 17, 24, 59]
@@ -27,6 +28,7 @@ export class StatisComponent implements OnInit {
   private mchart2 = [];
   private mchart3 = [];
   private mchart4 = [];
+  private mchart5 = [];
   private labels;
   private colors;
   private title2: any;
@@ -41,6 +43,10 @@ export class StatisComponent implements OnInit {
   private chartOptions4;
   private labels4;
   private colors4;
+  private title5: any;
+  private chartOptions5;
+  private labels5;
+  private colors5;
   constructor(private hoadonS: HoadonService) { }
 
   ngOnInit() {
@@ -249,6 +255,52 @@ export class StatisComponent implements OnInit {
       this.chartData4 = JSON.parse(sessionStorage.getItem('chart4'));
     });
   }
+  laydsHoadon5() {
+    this.hoadonS.laydanhsach().subscribe(res => {
+      this.hddm = [];
+      res.forEach(element => {
+        if (element.tinhtrang === 2) {
+          this.hddm.push(element);
+          const m = element.thoidiemtao;
+          this.laycthd4(element._id, moment(element.thoidiemden, 'DD/MM/YYYY').month());
+          const month = moment(element.thoidiemden, 'DD/MM/YYYY').month();
+          const value = {
+            label: 'Tháng ' + (month + 1),
+            id: month,
+            data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+          };
+          // tslint:disable-next-line:max-line-length
+          value.data[month] = element.tongtien;
+
+          if (sessionStorage.getItem('chart5') === null || JSON.parse(sessionStorage.getItem('chart5')).length === 0) {
+            this.mchart5.push(value);
+            sessionStorage.setItem('chart5', JSON.stringify(this.mchart5));
+          } else {
+            this.mchart5 = JSON.parse(sessionStorage.getItem('chart5'));
+            let index = -1;
+            for (let i = 0; i < this.mchart5.length; i++) {
+              if (this.mchart5[i].id === month) {
+                index = i;
+                break;
+              }
+            }
+            if (index === -1) {
+              this.mchart5.push(value);
+              sessionStorage.setItem('chart5', JSON.stringify(this.mchart5));
+            } else {
+              const temp = this.mchart5[index];
+              // tslint:disable-next-line:max-line-length
+              temp.data[month] = temp.data[month] + element.tongtien;
+              this.mchart5[index] = temp;
+              sessionStorage.setItem('chart5', JSON.stringify(this.mchart5));
+            }
+          }
+
+        }
+      });
+      this.chartData5 = JSON.parse(sessionStorage.getItem('chart5'));
+    });
+  }
   showmodal() {
     this.mchart = [];
     sessionStorage.setItem('chart', JSON.stringify([]));
@@ -366,6 +418,37 @@ export class StatisComponent implements OnInit {
       };
       // tslint:disable-next-line:max-line-length
       this.labels4 = ['Tháng 1', 'Tháng 2', 'Tháng 2', 'Tháng 4', 'Tháng 5', 'Tháng 6', 'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'];
+      // setTimeout(() => {
+      //   console.log(JSON.parse(sessionStorage.getItem('chart')));
+
+      // }, 3000);
+    }
+  }
+  showmodal5() {
+    this.mchart5 = [];
+    sessionStorage.setItem('chart5', JSON.stringify([]));
+    this.laydsHoadon5();
+    if (sessionStorage.getItem('chart5')) {
+
+      this.title4 = 'Biểu Đồ Thu Nhập 2019';
+
+      // ADD CHART OPTIONS.
+      this.chartOptions5 = {
+        responsive: true,   // THIS WILL MAKE THE CHART RESPONSIVE (VISIBLE IN ANY DEVICE).
+        scales: {
+          yAxes: [{
+            ticks: {
+              stepSize: 100000
+            },
+            scaleLabel: {
+              display: true,
+              labelString: 'VNĐ'
+            }
+          }]
+        }
+      };
+      // tslint:disable-next-line:max-line-length
+      this.labels5 = ['Tháng 1', 'Tháng 2', 'Tháng 2', 'Tháng 4', 'Tháng 5', 'Tháng 6', 'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'];
       // setTimeout(() => {
       //   console.log(JSON.parse(sessionStorage.getItem('chart')));
 

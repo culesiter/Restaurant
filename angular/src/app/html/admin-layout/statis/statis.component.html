@@ -110,9 +110,9 @@
   <div id="myModal5" class="modal fade" role="dialog">
       <div class="modal-dialog">
         <div class="modal-content">
-          <div *ngIf="chartData4">
+          <div *ngIf="chartData5">
             <canvas baseChart 
-            [chartType]="'line'" 
+            [chartType]="'bar'" 
             [datasets]="chartData5" 
             [labels]="labels5" 
             [options]="chartOptions5"
@@ -121,7 +121,7 @@
             (chartClick)="onChartClick($event)">
             </canvas>
             <h2 class="text-center">
-              {{title2}}
+              {{title5}}
             </h2>
           </div>
         </div>
