@@ -8,6 +8,9 @@
 .tbody-list{
     font-weight: 100;
 }
+form{
+    display: inline-block;
+}
 .customer-head{
     width: 90%;
     margin: auto;
@@ -24,7 +27,7 @@
 .content{
     width: 90%;
     margin: auto;
-    margin-top: 5%;
+    margin-top: 15px;
     height: auto;
     background: white;
     border-radius: 5px;
@@ -32,8 +35,8 @@
 
 .dish-detail{
     width: 100%;
+    display: inline-block;
     height: 100%;
-    background: orangered;
     .carosel{
         max-height: 380px;
         overflow: hidden;
