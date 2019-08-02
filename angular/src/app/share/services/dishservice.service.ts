@@ -40,9 +40,9 @@ export class DishserviceService {
     laydsloaimon(): Observable<Idish[]> {
         return this.http.get(this.loaimonURL).map(respose => respose.json() as iloaimon[]);
     }
-    themloaimon(data): Observable<iloaimon> {
+    themloaimon(data): Observable<any> {
         return this.http.post(this.loaimonURL, data).map(res => {
-            return res.json as iloaimon;
+            return res.json();
         });
     }
     xoaloaimon(id): Observable<iloaimon> {

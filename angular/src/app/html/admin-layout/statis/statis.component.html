@@ -5,10 +5,6 @@
             <i class="fa fa-line-chart" aria-hidden="true"></i> Biểu đồ số lượng món ăn được mua trong năm</button>
     </div>
     <div class="col-md-4">
-        <button type="button" class="btn btn-info btn-md" data-toggle="modal" (click)='showmodal()' data-target="#myModal">
-            <i class="fa fa-line-chart" aria-hidden="true"></i>  Biểu đồ số lượng món ăn được mua trong năm</button>
-    </div>
-    <div class="col-md-4">
         <button type="button" class="btn btn-info btn-md" data-toggle="modal" (click)='showmodal2()'
         data-target="#myModal2"> <i class="fa fa-line-chart" aria-hidden="true"></i>Biểu đồ thu nhập nhận từng món ăn bán được</button>
     </div>
@@ -19,6 +15,10 @@
     <div class="col-md-4">
         <button type="button" class="btn btn-info btn-md" data-toggle="modal" (click)='showmodal4()'
         data-target="#myModal4"><i class="fa fa-line-chart" aria-hidden="true"></i>Biểu đồ thu nhập nhận từ thực đơn được mua trong năm</button>
+    </div>
+    <div class="col-md-4">
+        <button type="button" class="btn btn-info btn-md" data-toggle="modal" (click)='showmodal5()' data-target="#myModal5">
+            <i class="fa fa-line-chart" aria-hidden="true"></i> Biểu đồ số lượng món ăn được mua trong năm</button>
     </div>
   </div>
 </div>
@@ -53,7 +53,7 @@
         [datasets]="chartData2" 
         [labels]="labels2" 
         [options]="chartOptions2"
-        [legend]="true2" 
+        [legend]="true" 
         [colors]="colors2" 
         (chartClick)="onChartClick($event)">
         </canvas>
@@ -74,7 +74,7 @@
         [datasets]="chartData3" 
         [labels]="labels3" 
         [options]="chartOptions3"
-        [legend]="true3" 
+        [legend]="true" 
         [colors]="colors3" 
         (chartClick)="onChartClick($event)">
         </canvas>
@@ -95,7 +95,7 @@
           [datasets]="chartData4" 
           [labels]="labels4" 
           [options]="chartOptions4"
-          [legend]="true4" 
+          [legend]="true" 
           [colors]="colors4" 
           (chartClick)="onChartClick($event)">
           </canvas>
@@ -107,3 +107,24 @@
   
     </div>
   </div>
+  <div id="myModal5" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div *ngIf="chartData4">
+            <canvas baseChart 
+            [chartType]="'line'" 
+            [datasets]="chartData5" 
+            [labels]="labels5" 
+            [options]="chartOptions5"
+            [legend]="true" 
+            [colors]="colors5" 
+            (chartClick)="onChartClick($event)">
+            </canvas>
+            <h2 class="text-center">
+              {{title2}}
+            </h2>
+          </div>
+        </div>
+    
+      </div>
+    </div>

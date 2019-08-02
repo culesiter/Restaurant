@@ -3,7 +3,7 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { DishserviceService } from '../../../../share/services/dishservice.service';
 import { iloaimon } from '../../../../share/entities/iloaimon';
 import { Subject } from 'rxjs';
-declare var $:any;
+declare var $: any;
 @Component({
   selector: 'app-loaimonan',
   templateUrl: './loaimonan.component.html',
@@ -78,12 +78,14 @@ export class LoaimonanComponent implements OnInit {
   }
   taoMoi() {
     this.dishserviceService.themloaimon(this.formAddNew.value).subscribe(res => {
-      if (res) {
+      if (res.message === 'luu thanh cong') {
         console.log(res);
         $.notify('Đã tạo một món ăn mới!', 'success');
         this.formStatus = 'view';
         this.getListType();
         this.formStatus = 'view';
+      } else {
+        $.notify('Thử lại với tên khác!', 'error');
       }
     });
   }
