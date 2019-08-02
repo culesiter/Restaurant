@@ -36,7 +36,7 @@ export class StatisComponent implements OnInit {
         if (element.tinhtrang === 2) {
           this.hddm.push(element);
           const m = element.thoidiemtao;
-          this.laycthd(element._id, moment(m).month());
+          this.laycthd(element._id, moment(element.thoidiemden, 'DD/MM/YYYY').month());
         }
       });
     });
@@ -57,26 +57,22 @@ export class StatisComponent implements OnInit {
           } else {
             this.mchart = JSON.parse(sessionStorage.getItem('chart'));
             let index = -1;
-            for (let i = 0; i <= this.mchart.length; i++) {
-              console.log(this.mchart[i].id);
-              console.log(element._idmonan._id);
+            for (let i = 0; i < this.mchart.length; i++) {
               if (this.mchart[i].id === element._idmonan._id) {
                 index = i;
                 break;
               }
             }
-            console.log('index', index);
             if (index === -1) {
               this.mchart.push(value);
               sessionStorage.setItem('chart', JSON.stringify(this.mchart));
             } else {
               const temp = this.mchart[index];
               temp.data[month] = temp.data[month] + element.soluongmonan;
-              this.mchart = temp;
+              this.mchart[index] = temp;
               sessionStorage.setItem('chart', JSON.stringify(this.mchart));
             }
           }
-          console.log(this.mchart);
         }
       });
       this.chartData = JSON.parse(sessionStorage.getItem('chart'));
