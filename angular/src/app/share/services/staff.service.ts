@@ -6,6 +6,7 @@ import { Icustomer } from '../entities/icustomer';
 export class StaffService {
   private url = "http://localhost:3000/nhanvien";
   private urll = "http://localhost:3000/bangluong";
+
   constructor(private http: Http) { }
   them(data): Observable<any> {
     return this.http.post(this.url, data).map(res => {
@@ -34,6 +35,17 @@ export class StaffService {
   }
   upanhkh(id, img): Observable<any> {
     return this.http.put(this.url + '/img/' + id, img).map(res => {
+      return res.json();
+    });
+  }
+  laydscapnv(): Observable<any[]> {
+    return this.http.get('http://localhost:3000/capnhanvien').map(respose => respose.json() as any[]);
+  }
+  xoacbnv(id): Observable<any> {
+    return this.http.delete('http://localhost:3000/capnhanvien' + '/' + id).map(res => res.json() as any);
+  }
+  themcbnv(data): Observable<any> {
+    return this.http.post('http://localhost:3000/capnhanvien', data).map(res => {
       return res.json();
     });
   }

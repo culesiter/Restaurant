@@ -23,7 +23,7 @@ export class ThucdonExampleComponent implements OnInit {
     this.thucdonservice.laydanhsachmonanTrungBay().subscribe(response => {
       this.thucdons = response;
       this.thucdons.map(res => {
-        res.gia = this.giaThucDon(res._id);
+        //res.gia = this.giaThucDon(res._id);
         res.danhsachtenmonan = this.danhSachMonAn(res._id);
       })
       for (let i = 0; i < this.thucdons.length; i++) {
@@ -44,12 +44,14 @@ export class ThucdonExampleComponent implements OnInit {
   }
   danhSachMonAn(id) {
     const mang: any[] = [];
-    const thucdon: Ithucdon[] = JSON.parse(localStorage.getItem('thucdon'));
+    const thucdon: any[] = JSON.parse(localStorage.getItem('thucdon'));
     thucdon.forEach(element => {
       if (element._idthucdon === id) {
         const data = {
           ten: element.tenmonan,
-          gia: element.gia
+          gia: element.gia,
+          soluong: element.soluong,
+          khuyenmai: element.khuyenmai
         };
         mang.push(data);
       }

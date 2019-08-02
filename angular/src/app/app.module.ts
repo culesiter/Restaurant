@@ -61,6 +61,7 @@ import { StaffComponent } from './html/admin-layout/admin/staff/staff.component'
 import { StaffService } from './share/services/staff.service';
 import { SalaryComponent } from './html/admin-layout/admin/salary/salary.component';
 import { PaymentEndComponent } from './html/payment-end/payment-end.component';
+import { RankStaffComponent } from './html/admin-layout/rank-staff/rank-staff.component';
 //import { ExcelService } from './share/services/contacService/Excel.service';
 
 const routes: Routes = [
@@ -111,6 +112,7 @@ const routes: Routes = [
           { path: 'roomtype', component: LoaiphongComponent },
           { path: 'booking', component: BooknowComponent },
           { path: 'staff', component: StaffComponent },
+          { path: 'rank', component: RankStaffComponent },
           { path: 'salary', component: SalaryComponent },
           {
             path: 'bills', component: BillsManagerComponent, children: [
@@ -165,7 +167,8 @@ const routes: Routes = [
     OrderDetailComponent,
     StaffComponent,
     SalaryComponent,
-    PaymentEndComponent
+    PaymentEndComponent,
+    RankStaffComponent
   ],
   imports: [
     OwlModule,

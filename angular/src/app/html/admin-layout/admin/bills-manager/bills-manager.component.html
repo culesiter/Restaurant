@@ -259,8 +259,8 @@
                                                         </div>
                                                         <div class="form-group col-md-3">
                                                             <label>Thành tiền</label>
-                                                            <!-- <input type="text" *ngIf="item._idmonan.khuyenmai===0" class="form-control" disabled value="{{item.soluongmonan*item._idmonan.gia}}">
-                                                            <input type="text" *ngIf="item._idmonan.khuyenmai!==0" class="form-control" disabled value="{{item.soluongmonan*item._idmonan.gia-(item.soluongmonan*item._idmonan.gia*item._idmonan.khuyenmai/100)}}"> -->
+                                                             <input type="text"  class="form-control" disabled value="{{item.soluongthucdon*item._idthucdon.gia}}">
+                                                          
                                                         </div>
                                             </div>
                                           
@@ -288,11 +288,13 @@
 
                                         <div class="form-group col-md-4" *ngIf="ehoadon.tinhtrang==2">
                                             <label>Đã thanh toán</label>
-                                            <input type="text" class="form-control" value="Ơ">
+                                            <input *ngIf="ehoadon.hinhthucthanhtoan===1" type="text" class="form-control" value="{{ehoadon.tongtien}}">
+                                            <input *ngIf="ehoadon.hinhthucthanhtoan===2" type="text" class="form-control" value="{{ehoadon.tongtien*0.1}}">
                                         </div>
                                         <div class="form-group col-md-4" *ngIf="ehoadon.tinhtrang==2">
                                             <label>Còn lại</label>
-                                            <input type="text" class="form-control" value="INSERT VALUE">
+                                            <input *ngIf="ehoadon.hinhthucthanhtoan===1" type="text" class="form-control" value="0">
+                                            <input *ngIf="ehoadon.hinhthucthanhtoan===2" type="text" class="form-control" value="{{ehoadon.tongtien-ehoadon.tongtien*0.1}}">
                                         </div>
                                     </div>
                                 </div>

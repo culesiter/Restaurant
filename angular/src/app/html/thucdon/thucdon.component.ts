@@ -23,7 +23,7 @@ export class ThucdonComponent implements OnInit {
     this.thucdonservice.laydanhsachmonanTrungBay().subscribe(response => {
       this.thucdons = response;
       this.thucdons.map(res => {
-        res.gia = this.giaThucDon(res._id);
+        //res.gia = this.giaThucDon(res._id);
         res.danhsachtenmonan = this.danhSachMonAn(res._id);
       });
     });
