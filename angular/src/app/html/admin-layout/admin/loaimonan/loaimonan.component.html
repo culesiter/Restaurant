@@ -11,17 +11,17 @@
     </div>
     <div class="content">
         <div class="list-customer" *ngIf="formStatus==='view'">
-            <table class="table table-hover list-table">
+            <table class="table table-hover list-table" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
                 <thead>
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col">Tên Loại</th>
-                        <th scope="col">Description</th>
+                        <th scope="col">Giá</th>
                     </tr>
                 </thead>
                 <tbody class="tbody-list">
-                    <tr  *ngFor="let item of listLoaiMon" (click)="formShow('detail',item)">
-                        <th scope="row">1</th>
+                    <tr  *ngFor="let item of listLoaiMon; let i = index" (click)="formShow('detail',item)">
+                        <th scope="row">{{i+1}}</th>
                         <td>{{item.ten}}</td>
                         <td>50000</td>
                     </tr>
