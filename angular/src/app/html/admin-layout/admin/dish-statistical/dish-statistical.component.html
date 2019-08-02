@@ -1,0 +1,19 @@
+<p>
+  dish-statistical works!
+</p>
+<h1>
+    {{title}}!
+  </h1>
+  
+  <div>
+      <canvas
+      baseChart
+      [chartType]="'bar'"
+      [datasets]="chartData"
+      [labels]="labels"
+      [options]="chartOptions"
+      [legend]="true"
+      [colors]="colors"
+      (chartClick)="onChartClick($event)">
+  </canvas>
+    </div>
