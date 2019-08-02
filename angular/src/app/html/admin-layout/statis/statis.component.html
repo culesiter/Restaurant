@@ -1,0 +1,23 @@
+
+
+  <button type="button" class="btn btn-info btn-lg" data-toggle="modal" (click)='showmodal()' data-target="#myModal">hiển thị biểu đồ mua món ăn</button>
+
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+        <div>
+            <canvas
+            baseChart
+            [chartType]="'line'"
+            [datasets]="chartData"
+            [labels]="labels"
+            [options]="chartOptions"
+            [legend]="true"
+            [colors]="colors"
+            (chartClick)="onChartClick($event)">
+        </canvas>
+          </div>
+    </div>
+
+  </div>
+</div>

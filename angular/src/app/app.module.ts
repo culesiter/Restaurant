@@ -64,6 +64,7 @@ import { PaymentEndComponent } from './html/payment-end/payment-end.component';
 import { RankStaffComponent } from './html/admin-layout/rank-staff/rank-staff.component';
 import { ChartsModule } from 'ng4-charts/ng4-charts';
 import { DishStatisticalComponent } from './html/admin-layout/admin/dish-statistical/dish-statistical.component';
+import { StatisComponent } from './html/admin-layout/statis/statis.component';
 //import { ExcelService } from './share/services/contacService/Excel.service';
 
 const routes: Routes = [
@@ -116,6 +117,7 @@ const routes: Routes = [
           { path: 'booking', component: BooknowComponent },
           { path: 'staff', component: StaffComponent },
           { path: 'rank', component: RankStaffComponent },
+          { path: 'statistical', component: StatisComponent },
           { path: 'salary', component: SalaryComponent },
           {
             path: 'bills', component: BillsManagerComponent, children: [
@@ -172,7 +174,8 @@ const routes: Routes = [
     SalaryComponent,
     PaymentEndComponent,
     RankStaffComponent,
-    DishStatisticalComponent
+    DishStatisticalComponent,
+    StatisComponent
   ],
   imports: [
     ChartsModule,
