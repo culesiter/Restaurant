@@ -62,6 +62,8 @@ import { StaffService } from './share/services/staff.service';
 import { SalaryComponent } from './html/admin-layout/admin/salary/salary.component';
 import { PaymentEndComponent } from './html/payment-end/payment-end.component';
 import { RankStaffComponent } from './html/admin-layout/rank-staff/rank-staff.component';
+import { ChartsModule } from 'ng4-charts/ng4-charts';
+import { DishStatisticalComponent } from './html/admin-layout/admin/dish-statistical/dish-statistical.component';
 //import { ExcelService } from './share/services/contacService/Excel.service';
 
 const routes: Routes = [
@@ -105,6 +107,7 @@ const routes: Routes = [
           { path: '', redirectTo: 'customer', pathMatch: 'full' },
           { path: 'customer', component: CustomerManagerComponent },
           { path: 'dish', component: DishManagerComponent },
+          { path: 'dish-statistical', component: DishStatisticalComponent },
           { path: 'dishtype', component: LoaimonanComponent },
           { path: 'menu', component: MenuManagerComponent },
           { path: 'services', component: DichvuComponent },
@@ -168,9 +171,11 @@ const routes: Routes = [
     StaffComponent,
     SalaryComponent,
     PaymentEndComponent,
-    RankStaffComponent
+    RankStaffComponent,
+    DishStatisticalComponent
   ],
   imports: [
+    ChartsModule,
     OwlModule,
     AngularDateTimePickerModule,
     FormsModule,
