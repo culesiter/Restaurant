@@ -20,3 +20,27 @@
         height: 475px;
     }
 }
+.chart-open {
+    padding: 15px;
+    background-color: rgba(212, 212, 214, 0.32);
+    cursor: pointer;
+    margin-bottom: 30px;
+    border-radius: 5px;
+    .icon {
+        width: 80px;
+        height: 80px;
+        background: rgba(159, 154, 154, 0.33);
+        border-radius: 50%;
+        line-height: 80px;
+        text-align: center;
+        font-size: 25px;
+        margin: auto;
+        color: #3276B1;
+    }
+    .text {
+        padding: 10px 0;
+        text-align: center;
+        text-transform: uppercase;
+        color: #3276B1;
+    }
+}
