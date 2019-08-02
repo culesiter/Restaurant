@@ -6,7 +6,7 @@
         <li><a data-toggle="tab" href="#menu3">Đã Hủy</a></li>
     </ul>
     <div class="tab-content">
-        <div id="home" class="tab-pane fade in active">
+        <div id="home" class="tab-pane in active">
             <table class="table table-hover list-table">
                 <thead>
                     <tr>
@@ -47,7 +47,9 @@
                         <th *ngIf="item.tinhtrang===1" scope="row">{{i+1}}</th>
                         <td *ngIf="item.tinhtrang===1">{{item.ten}}</td>
                         <td *ngIf="item.tinhtrang===1">{{item.thoidiemtao}}</td>
-                        <td *ngIf="item.tinhtrang===1" style="color:yellow">Đã xác nhận</td>
+                        <td *ngIf="item.tinhtrang===1">
+                                <span class="cancel-text confirmed">Đã xác nhận</span>
+                        </td>
                         <td><button type="button" class="btn btn-primary" data-toggle="modal"
                                 data-target="#detail_modal" (click)="openDetail(item)">
                                 Xem chi tiết
@@ -57,61 +59,66 @@
             </table>
         </div>
         <div id="menu2" class="tab-pane fade">
-            <ul class="nav nav-tabs">
-                <li class="active"><a data-toggle="tab" href="#hmtt">Đã thanh toán 10%</a></li>
-                <li><a data-toggle="tab" href="#hmtt2">Đã thanh toán 100%</a></li>
-            </ul>
-            <div class="tab-content">
-                <div id="hmtt" class="tab-pane in active">
-                    <table class="table table-hover list-table">
-                        <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Tên khách hàng</th>
-                                <th scope="col">Thời điểm tạo</th>
-                                <th scope="col">Tình Trạng</th>
-                            </tr>
-                        </thead>
-                        <tbody class="tbody-list">
-                            <tr *ngFor="let item of dathanhtoan;let i = index">
-                                <th *ngIf="item.tinhtrang===2" scope="row">{{i+1}}</th>
-                                <td *ngIf="item.tinhtrang===2">{{item._idkhachhang.ten}}</td>
-                                <td *ngIf="item.tinhtrang===2">{{item.thoidiemtao}}</td>
-                                <td *ngIf="item.tinhtrang===2" style="color:yellow">Đã thanh toán</td>
-                                <td><button type="button" class="btn btn-primary" data-toggle="modal"
-                                        data-target="#detail_modal" (click)="openDetail(item)">
-                                        Xem chi tiết
-                                    </button></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div id="hmtt2" class="tab-pane fade">
-                    <table class="table table-hover list-table">
-                        <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Tên khách hàng</th>
-                                <th scope="col">Thời điểm tạo</th>
-                                <th scope="col">Tình Trạng</th>
-                            </tr>
-                        </thead>
-                        <tbody class="tbody-list">
-                            <tr *ngFor="let item of dathanhtoan;let i = index">
-                                <th *ngIf="item.tinhtrang===2" scope="row">{{i+1}}</th>
-                                <td *ngIf="item.tinhtrang===2">{{item._idkhachhang.ten}}</td>
-                                <td *ngIf="item.tinhtrang===2">{{item.thoidiemtao}}</td>
-                                <td *ngIf="item.tinhtrang===2" style="color:yellow">Đã thanh toán</td>
-                                <td><button type="button" class="btn btn-primary" data-toggle="modal"
-                                        data-target="#detail_modal" (click)="openDetail(item)">
-                                        Xem chi tiết
-                                    </button></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+            <div class="in-m2">
+                    <ul class="nav nav-tabs">
+                            <li class="active"><a data-toggle="tab" href="#hmtt">Đã thanh toán 10%</a></li>
+                            <li><a data-toggle="tab" href="#hmtt2">Đã thanh toán 100%</a></li>
+                        </ul>
+                        <div class="tab-content">
+                            <div id="hmtt" class="tab-pane in active">
+                                <table class="table table-hover list-table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">Tên khách hàng</th>
+                                            <th scope="col">Thời điểm tạo</th>
+                                            <th scope="col">Tình Trạng</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="tbody-list">
+                                        <tr *ngFor="let item of dathanhtoan;let i = index">
+                                            <th *ngIf="item.tinhtrang===2" scope="row">{{i+1}}</th>
+                                            <td *ngIf="item.tinhtrang===2">{{item._idkhachhang.ten}}</td>
+                                            <td *ngIf="item.tinhtrang===2">{{item.thoidiemtao}}</td>
+                                            <td *ngIf="item.tinhtrang===2">
+                                                    <span class="cancel-text payed">Đã thanh toán</span>
+                                            </td>
+                                            <td><button type="button" class="btn btn-primary" data-toggle="modal"
+                                                    data-target="#detail_modal" (click)="openDetail(item)">
+                                                    Xem chi tiết
+                                                </button></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div id="hmtt2" class="tab-pane fade">
+                                <table class="table table-hover list-table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">Tên khách hàng</th>
+                                            <th scope="col">Thời điểm tạo</th>
+                                            <th scope="col">Tình Trạng</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="tbody-list">
+                                        <tr *ngFor="let item of dathanhtoan;let i = index">
+                                            <th *ngIf="item.tinhtrang===2" scope="row">{{i+1}}</th>
+                                            <td *ngIf="item.tinhtrang===2">{{item._idkhachhang.ten}}</td>
+                                            <td *ngIf="item.tinhtrang===2">{{item.thoidiemtao}}</td>
+                                            <td *ngIf="item.tinhtrang===2">
+                                                    <span class="cancel-text payed">Đã thanh toán</span>
+                                            </td>
+                                            <td><button type="button" class="btn btn-primary" data-toggle="modal"
+                                                    data-target="#detail_modal" (click)="openDetail(item)">
+                                                    Xem chi tiết
+                                                </button></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
             </div>
-
         </div>
         <div id="menu3" class="tab-pane fade">
             <table class="table table-hover list-table">
@@ -128,7 +135,8 @@
                         <th *ngIf="item.tinhtrang===-1" scope="row">{{i+1}}</th>
                         <td *ngIf="item.tinhtrang===-1">{{item._idkhachhang.ten}}</td>
                         <td *ngIf="item.tinhtrang===-1">{{item.thoidiemtao}}</td>
-                        <td *ngIf="item.tinhtrang===-1" style="color:yellow">Đã hủy
+                        <td *ngIf="item.tinhtrang===-1">
+                            <span class="cancel-text">Đã hủy</span>
                             <button class="btn btn-danger" (click)="deleteBill(item._id)">Xóa</button>
                         </td>
                         <td><button type="button" class="btn btn-primary" data-toggle="modal"
@@ -158,15 +166,15 @@
                                     <label>Tên khách hàng</label>
                                     <input type="text" class="form-control" disabled value="{{ehoadon._idkhachhang.ten}}">
                                 </div>
-                                <div class="form-group col-md-6">
+                                <div class="form-group col-md-4">
                                         <label>Số điện thoại</label>
                                         <input type="text" class="form-control" disabled value="{{ehoadon._idkhachhang.sdt}}">
                                     </div>
-                                    <div class="form-group col-md-6">
+                                    <div class="form-group col-md-4">
                                             <label>Email</label>
                                             <input type="text" class="form-control" disabled value="{{ehoadon._idkhachhang.email}}">
                                         </div>
-                                <div class="form-group col-md-6">
+                                <div class="form-group col-md-4">
                                     <label>Thời điểm tạo</label>
                                     <input type="text" class="form-control" disabled value="{{ehoadon.thoidiemtao}}">
                                 </div>
@@ -187,18 +195,20 @@
                                         Cả ngày
                                     </div>
                                 </div>
-                              
                                 <div class="form-group col-md-4">
+                                    <label>Giờ đến</label>
+                                    <input type="text" class="form-control" value="{{ehoadon.gioden}}">
+                                </div>
+                                <div class="form-group col-md-6">
                                     <label>Phòng</label>
                                     <input type="text" class="form-control" value="{{ehoadon._idphong.ten}}">
                                 </div>
-                                <div class="form-group col-md-4" >
-                                        <label>giá phòng</label>
+                                <div class="form-group col-md-6" >
+                                        <label>Giá phòng</label>
                                         <input *ngIf="pongdt"  type="text" class="form-control" value="{{pongdt.gia}}">
                                     </div>
                                 <div class="form-group col-md-12 ">
-                                    <label data-toggle="collapse" href="#dish-colapse" style="width: 100%">Các món ăn đã
-                                        chọn <i class="fa fa-caret-down" aria-hidden="true"></i></label>{{totalma}}
+                                    <label data-toggle="collapse" href="#dish-colapse" style="width: 100%" class="lbrela">Các món ăn đã chọn <i class="fa fa-caret-down" aria-hidden="true"></i> <span class="tong">Tổng đã mua: {{totalma}}</span> </label>
                                     <div class="collapse" id="dish-colapse">
                                         <div class="dish-loop" *ngFor="let item of eCthd">
                                             <div class="cover1" *ngIf="item._idmonan">
@@ -256,7 +266,7 @@
                                           
                                         </div>
                                     </div>
-                                    <label data-toggle="collapse" href="#services-colapse" style="width: 100%" > Dịch vụ đã chọn <i class="fa fa-caret-down" aria-hidden="true"></i></label>{{totaldv}}
+                                    <label data-toggle="collapse" href="#services-colapse" style="width: 100%" class="lbrela" > Dịch vụ đã chọn <i class="fa fa-caret-down" aria-hidden="true"></i> <span class="tong">Tổng đã mua: {{totaldv}}</span> </label>
                                         <div class="collapse" id="services-colapse" >
                                             <div class="dish-loop" *ngFor="let item of ectdv">
                                                 <div class="form-group col-md-12">
