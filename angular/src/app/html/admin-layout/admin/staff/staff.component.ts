@@ -51,6 +51,9 @@ export class StaffComponent implements OnInit {
       diem: ['', []]
     });
   }
+  showdetail(data){
+    this.eData = data;
+  }
   getList() {
     this.staff.laydanhsach().subscribe(res => {
     this.listData = res; console.log(res);

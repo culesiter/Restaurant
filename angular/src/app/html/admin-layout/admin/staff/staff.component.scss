@@ -21,16 +21,24 @@
     width: 50%;
     overflow: hidden;
 }
+.head-cus {
+    width: 90%;
+    margin: 0 auto 20px;
+}
 .content{
     width: 90%;
     margin: auto;
-    margin-top: 5%;
+    margin-top: 15px;
     height: auto;
     background: white;
     border-radius: 5px;
  
 }
-
+#addstaff{
+    .modal-body {
+        height: 400px;
+    }
+}
 .view-detail {
     width: 100%;
     height: auto;
