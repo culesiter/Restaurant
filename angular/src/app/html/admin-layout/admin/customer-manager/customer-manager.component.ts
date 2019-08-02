@@ -30,21 +30,21 @@ export class CustomerManagerComponent implements OnInit {
       paging: true,
       ordering: false,
       language: {
-        processing: "Procesando...",
-        search: "Buscar:",
-        lengthMenu: "Mostrar _MENU_ &eacute;l&eacute;ments",
-        info: "Mostrando desde _START_ al _END_ de _TOTAL_ elementos",
-        infoEmpty: "Mostrando ningún elemento.",
+        processing: 'Procesando...',
+        search: 'Tìm Kiếm:',
+        lengthMenu: 'Hiển thị _MENU_ mục',
+        info: 'Hiển thị từ _START_ đến _END_ mục trong _TOTAL_ mục',
+        infoEmpty: 'Không có mục nào',
         infoFiltered: "(filtrado _MAX_ elementos total)",
         infoPostFix: "",
         loadingRecords: "Cargando registros...",
-        zeroRecords: "No se encontraron registros",
+        zeroRecords: "Không có mục nào",
         emptyTable: "No hay datos disponibles en la tabla",
         paginate: {
-          first: "Primero",
-          previous: "Anterior",
-          next: "Siguiente",
-          last: "Último"
+          first: 'Đầu tiên',
+          previous: 'Trở về',
+          next: 'Kế tiếp',
+          last: 'Cuối cùng'
         },
         aria: {
           sortAscending: ": Activar para ordenar la tabla en orden ascendente",
@@ -103,12 +103,19 @@ export class CustomerManagerComponent implements OnInit {
         console.log(this.selectedFile, uploaddata);
         this.human.upanhkh(data.values._id, uploaddata).subscribe(resq => {
           console.log(resq);
-          if (resq) {
-            alert('thanh cong!');
+          if (resq.message === 'thanh cong') {
+            $.notify('Đã tạo một khách hàng mới!', 'success');
             this.getList();
             this.formStatus = 'view';
+            setTimeout(() => {
+              $('#addc').modal('hide');
+            }, 150);
+          } else {
+            $.notify('Gặp lỗi khi với hình của khách hàng', 'error');
           }
         });
+      } else {
+        $.notify('Trùng email', 'error');
       }
     });
   }
