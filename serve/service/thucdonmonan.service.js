@@ -159,7 +159,7 @@ function layMonAN() {
 }
 function layThucDonMonAn() {  
     return new Promise((resolve, reject) => {
-        thucdonmonan.find({}).select('_id _idthucdon _idmonan soluong').populate('_idthucdon', '_id ten').populate('_idmonan', '_id ten gia').exec(
+        thucdonmonan.find({}).select('_id _idthucdon _idmonan soluong').populate('_idthucdon', '_id ten').populate('_idmonan', '_id ten gia khuyenmai').exec(
             function (err, response) {
                 if (err) {
                     var err = {
@@ -184,7 +184,8 @@ function layThucDonMonAn() {
                                 tenthucdon: res._idthucdon.ten,
                                 tenmonan: res._idmonan.ten,
                                 soluong:res.soluong,
-                                gia:res._idmonan.gia
+                                gia:res._idmonan.gia,
+                                khuyenmai:res._idmonan.khuyenmai
                             }
                         }
                       

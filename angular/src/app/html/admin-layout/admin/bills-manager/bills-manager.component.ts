@@ -83,7 +83,7 @@ export class BillsManagerComponent implements OnInit {
         }
         if (element._idthucdon) {
           // tslint:disable-next-line:max-line-length
-          tong = tong + (element._idmonan.gia * element.soluongmonan);
+          tong = tong + (element._idthucdon.gia * element.soluongthucdon);
         }
       });
       this.totalma = tong;
