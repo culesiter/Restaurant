@@ -28,12 +28,35 @@ export class CustomerManagerComponent implements OnInit {
       pageLength: 6,
       retrieve: true,
       paging: true,
+      ordering: false,
+      language: {
+        processing: "Procesando...",
+        search: "Buscar:",
+        lengthMenu: "Mostrar _MENU_ &eacute;l&eacute;ments",
+        info: "Mostrando desde _START_ al _END_ de _TOTAL_ elementos",
+        infoEmpty: "Mostrando ningún elemento.",
+        infoFiltered: "(filtrado _MAX_ elementos total)",
+        infoPostFix: "",
+        loadingRecords: "Cargando registros...",
+        zeroRecords: "No se encontraron registros",
+        emptyTable: "No hay datos disponibles en la tabla",
+        paginate: {
+          first: "Primero",
+          previous: "Anterior",
+          next: "Siguiente",
+          last: "Último"
+        },
+        aria: {
+          sortAscending: ": Activar para ordenar la tabla en orden ascendente",
+          sortDescending: ": Activar para ordenar la tabla en orden descendente"
+        }
+      }
     };
   }
   formShow(a, data) {
     this.formStatus = a;
   }
-  openDetailInModal(data){
+  openDetailInModal(data) {
     this.eData = data;
   }
   taoForm() {
@@ -65,7 +88,7 @@ export class CustomerManagerComponent implements OnInit {
     });
   }
   getList() {
-    this.human.laydanhsach().subscribe(res => { this.listData = res; this.dtTrigger.next(); });
+    this.human.laydanhsach().subscribe(res => { console.log(res); this.listData = res; this.dtTrigger.next(); });
   }
   onFileChange(event) {
     this.selectedFile = event.target.files[0];

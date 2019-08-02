@@ -216,7 +216,7 @@ function layNguoiDungtheoid(req) {
 
 function layNguoiDung(req) {
     return new Promise((resolve, reject) => {
-        khachhang.find({}).select('_id ten email sdt matkhau hinhanh thanhvien diem ').populate('_idkhachhang', 'ten').exec(
+        khachhang.find({}).sort( { _id: -1 } ).select('_id ten email sdt matkhau hinhanh thanhvien diem ').populate('_idkhachhang', 'ten').exec(
             function (err, response) {
                 if (err) {
                     var err = {
