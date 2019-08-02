@@ -1,63 +1,64 @@
-<section>
-  <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#add">Thêm mới</button>
-
+<section id="ranking">
+  <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#addranking">Thêm mới</button>
   <!-- Modal -->
-  <div id="add" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-
-      <!-- Modal content-->
-      <div class="modal-content">
-          <form (ngSubmit)="taoMoi()" [formGroup]="formAddNew">
-              <div class="form-row">
-                  <div class="form-group col-md-6">
-                      <label>Tên cấp bậc</label>
-                      <input type="text" class="form-control" formControlName="cap" placeholder="">
+  <div id="addranking" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+              <form (ngSubmit)="taoMoi()" [formGroup]="formAddNew">
+                  <div class="form-row">
+                      <div class="form-group col-md-6">
+                          <label>Tên cấp bậc</label>
+                          <input type="text" class="form-control" formControlName="cap" placeholder="">
+                      </div>
+                      <div class="form-group col-md-12">
+                          <label>lương theo ngày</label>
+                          <input type="number" class="form-control" formControlName="luongtheongay" placeholder="">
+                      </div>
+                      <div class="form-group col-md-12">
+                          <button type="submit" class="btn btn-secondary">Sign up</button>
+                          <button class="btn btn-warning" (click)="XoaForm(formAddNew)">Clear</button>
+                      </div>
                   </div>
-                  <div class="form-group col-md-12">
-                      <label>lương theo ngày</label>
-                      <input type="number" class="form-control" formControlName="luongtheongay" placeholder="">
-                  </div>
-                  <div class="form-group col-md-12">
-                      <button type="submit" class="btn btn-secondary">Sign up</button>
-                      <button class="btn btn-warning" (click)="XoaForm(formAddNew)">Clear</button>
-                  </div>
-              </div>
-          </form>
+              </form>
+        </div>
       </div>
-
     </div>
-  </div>
-  <table class="table">
-    <thead>
-      <tr>
-        <td>
-          #
-        </td>
-        <td>
-          Tên
-        </td>
-        <td>
-          Lương theo ngày
-        </td>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let item of listcb; let i = index">
-        <td>
-          {{i+1}}
-        </td>
-        <td>
-          {{item.cap}}
-        </td>
-        <td>
-          {{item.luongtheongay}}
-        </td>
-        <td>
-          <button class="btn" (click)="xoacbnv(item._id)">
-            Xóa
-          </button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+ <div class="ranking-content">
+    <table class="table ranking">
+        <thead>
+          <tr>
+            <td>
+              #
+            </td>
+            <td>
+              Tên
+            </td>
+            <td>
+              Lương theo ngày
+            </td>
+            <td>
+              </td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of listcb; let i = index">
+            <td>
+              {{i+1}}
+            </td>
+            <td>
+              {{item.cap}}
+            </td>
+            <td>
+              {{item.luongtheongay}}
+            </td>
+            <td>
+              <button class="btn btn-danger" (click)="xoacbnv(item._id)">
+                Xóa
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+ </div>
 </section>
