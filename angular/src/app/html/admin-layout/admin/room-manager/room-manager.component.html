@@ -11,7 +11,7 @@
     </div>
     <div class="content">
         <div class="list-customer" *ngIf="formStatus==='view'">
-            <table class="table table-hover list-table">
+            <table class="table table-hover list-table" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
                 <thead>
                     <tr>
                         <th scope="col">#</th>
@@ -23,8 +23,8 @@
                     </tr>
                 </thead>
                 <tbody class="tbody-list">
-                    <tr *ngFor="let item of listData" (click)="formShow('detail',item)">
-                        <th scope="row">1</th>
+                    <tr *ngFor="let item of listData; let i = index" (click)="formShow('detail',item)">
+                        <th scope="row">{{i+1}}</th>
                         <td>{{item.ten}}</td>
                         <td>{{item.loai}}</td>
                         <td>{{item.gia}}</td>
