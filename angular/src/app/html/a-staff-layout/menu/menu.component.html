@@ -1,71 +1,63 @@
 <div class="main-header">
-  <div class="top-header">
-      <div class="logo-content">
-          <img src="../../../../../assets/images/logo/logo1.png" alt="">
-      </div>
-  </div>
-  <ul class="nav flex-column main-nav">
-      <li class="nav-item" routerLink="/admin/dashboard/customer" routerLinkActive="active" (click)="activeRouter('Quản Lý Khách Hàng')">
-          <a class="nav-link">
-              <i class="fa fa-user" aria-hidden="true"></i>  <span>Khách hàng</span>
-          </a>
-      </li>
-      <li class="nav-item" routerLink="/admin/dashboard/dish" routerLinkActive="active" (click)="activeRouter1('Quản Lý Món Ăn')">
-          <a class="nav-link">
-              <i class="fa fa-coffee" aria-hidden="true"></i><span>Món ăn</span>
-          </a>
-      </li>
-      
-      <li class="nav-item" (click)="activeRouter('Loại Món Ăn')" [ngStyle]="{'display': styleExp}">
-              <a class="nav-link loai" routerLink="/admin/dashboard/dishtype" routerLinkActive="active">
-                  <span>Loại Món</span>
-              </a>
-          </li>
-      <li class="nav-item" routerLink="/admin/dashboard/room" routerLinkActive="active" (click)="activeRouter2('Phòng Ăn')">
-          <a class="nav-link">
-              <i class="fa fa-university" aria-hidden="true"></i> <span>Phòng Ăn</span>
-          </a>
-      </li>
-      <li class="nav-item" (click)="activeRouter('Quản Lý Loại Món Ăn')" [ngStyle]="{'display': styleExp2}">
-          <a class="nav-link loai" routerLink="/admin/dashboard/roomtype" routerLinkActive="active">
-              <span>Loại Phòng Ăn</span>
-          </a>
-      </li>
-      <li class="nav-item" routerLink="/admin/dashboard/menu" routerLinkActive="active" (click)="activeRouter('Quản Lý Menu')">
-          <a class="nav-link">
-              <i class="fa fa-sitemap" aria-hidden="true"></i>  <span>Thực Đơn</span>
-          </a>
-      </li>
-      <li class="nav-item" routerLink="/admin/dashboard/bills" routerLinkActive="active" (click)="activeRouter('Hóa Đơn')">
-          <a class="nav-link">
-              <i class="fa fa-indent" aria-hidden="true"></i>  <span>Hóa Đơn</span>
-              <span class="demhd">2</span>
-          </a>
-      </li>
-      <li class="nav-item" routerLink="/admin/dashboard/services" routerLinkActive="active" (click)="activeRouter('Dịch Vụ')">
-          <a class="nav-link">
-              <i class="fa fa-puzzle-piece" aria-hidden="true"></i>  <span>Dịch Vụ</span>
-          </a>
-      </li>
-      <li class="nav-item" routerLink="/admin/dashboard/staff" routerLinkActive="active" (click)="activeRouter('Nhân Viên')">
-          <a class="nav-link">
-              <i class="fa fa-users" aria-hidden="true"></i>  <span>Nhân viên</span>
-          </a>
-      </li>
-      <li class="nav-item" routerLink="/admin/dashboard/rank" routerLinkActive="active" (click)="activeRouter('Chức Vụ')">
-          <a class="nav-link">
-                  <i class="fa fa-diamond" aria-hidden="true"></i>  <span>Chức vụ</span>
-          </a>
-      </li>
-      <li class="nav-item" routerLink="/admin/dashboard/salary" routerLinkActive="active" (click)="activeRouter('Tính Lương')">
-          <a class="nav-link">
-              <i class="fa fa-money" aria-hidden="true"></i>  <span>Tính lương</span>
-          </a>
-      </li>
-      <li class="nav-item" routerLink="/admin/dashboard/statistical" routerLinkActive="active" (click)="activeRouter('Thống Kê')">
-          <a class="nav-link">
-                  <i class="fa fa-area-chart" aria-hidden="true"></i>  <span>Thống Kê</span>
-          </a>
-      </li>
-  </ul>
+    <div class="top-header">
+        <div class="logo-content">
+            <img src="../../../../../assets/images/logo/logo1.png" alt="">
+        </div>
+    </div>
+    <ul class="nav flex-column main-nav">
+        <li class="nav-item" routerLink="/staff/dashboard/customer" routerLinkActive="active"
+            (click)="activeRouter('Quản Lý Khách Hàng')">
+            <a class="nav-link">
+                <i class="fa fa-user" aria-hidden="true"></i> <span>Khách hàng</span>
+            </a>
+        </li>
+        <li class="nav-item" routerLink="/staff/dashboard/dish" routerLinkActive="active"
+            (click)="activeRouter1('Quản Lý Món Ăn')">
+            <a class="nav-link">
+                <i class="fa fa-coffee" aria-hidden="true"></i><span>Món ăn</span>
+            </a>
+        </li>
+
+        <li class="nav-item" (click)="activeRouter('Loại Món Ăn')" [ngStyle]="{'display': styleExp}">
+            <a class="nav-link loai" routerLink="/admin/dashboard/dishtype" routerLinkActive="active">
+                <span>Loại Món</span>
+            </a>
+        </li>
+        <li class="nav-item" routerLink="/staff/dashboard/room" routerLinkActive="active"
+            (click)="activeRouter2('Phòng Ăn')">
+            <a class="nav-link">
+                <i class="fa fa-university" aria-hidden="true"></i> <span>Phòng Ăn</span>
+            </a>
+        </li>
+        <li class="nav-item" (click)="activeRouter('Quản Lý Loại Món Ăn')" [ngStyle]="{'display': styleExp2}">
+            <a class="nav-link loai" routerLink="/staff/dashboard/roomtype" routerLinkActive="active">
+                <span>Loại Phòng Ăn</span>
+            </a>
+        </li>
+        <li class="nav-item" routerLink="/staff/dashboard/menu" routerLinkActive="active"
+            (click)="activeRouter('Quản Lý Menu')">
+            <a class="nav-link">
+                <i class="fa fa-sitemap" aria-hidden="true"></i> <span>Thực Đơn</span>
+            </a>
+        </li>
+        <li class="nav-item" routerLink="/staff/dashboard/order" routerLinkActive="active"
+            (click)="activeRouter('Hóa Đơn')">
+            <a class="nav-link">
+                <i class="fa fa-indent" aria-hidden="true"></i> <span>Hóa Đơn</span>
+                <span class="demhd">2</span>
+            </a>
+        </li>
+        <li class="nav-item" routerLink="/staff/dashboard/services" routerLinkActive="active"
+            (click)="activeRouter('Dịch Vụ')">
+            <a class="nav-link">
+                <i class="fa fa-puzzle-piece" aria-hidden="true"></i> <span>Dịch Vụ</span>
+            </a>
+        </li>
+        <li class="nav-item" routerLink="/staff/dashboard/form" routerLinkActive="active"
+            (click)="activeRouter('Biểu Mẫu')">
+            <a class="nav-link">
+                <i class="fa fa-puzzle-piece" aria-hidden="true"></i> <span>Biểu mẫu</span>
+            </a>
+        </li>
+    </ul>
 </div>

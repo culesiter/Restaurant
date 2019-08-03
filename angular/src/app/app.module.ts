@@ -70,6 +70,11 @@ import { AStaffLayoutComponent } from './html/a-staff-layout/a-staff-layout.comp
 import { StaffDbComponent } from './html/a-staff-layout/staff-db/staff-db.component';
 import { MenuComponent } from './html/a-staff-layout/menu/menu.component';
 import { StaffLoginComponent } from './html/a-staff-layout/staff-login/staff-login.component';
+import { SBillComponent } from './html/a-staff-layout/staff-db/s-bill/s-bill.component';
+import { SCustomerComponent } from './html/a-staff-layout/staff-db/s-customer/s-customer.component';
+import { SDishComponent } from './html/a-staff-layout/staff-db/s-dish/s-dish.component';
+import { SRoomComponent } from './html/a-staff-layout/staff-db/s-room/s-room.component';
+import { SFormComponent } from './html/a-staff-layout/staff-db/s-form/s-form.component';
 
 
 const routes: Routes = [
@@ -137,7 +142,14 @@ const routes: Routes = [
     path: 'staff', component: AStaffLayoutComponent, children: [
       { path: '', redirectTo: 'login', pathMatch: 'full' },
       { path: 'staff_login', component: StaffLoginComponent },
-      { path: 'dashboard', component: StaffDbComponent }
+      {
+        path: 'dashboard', component: StaffDbComponent, children: [
+          { path: 'order', component: SBillComponent },
+          { path: 'customer', component: SCustomerComponent },
+          { path: 'dish', component: SDishComponent },
+          { path: 'form', component: SFormComponent }
+        ]
+      }
     ]
   }
 ];
@@ -191,7 +203,12 @@ const routes: Routes = [
     AStaffLayoutComponent,
     StaffDbComponent,
     MenuComponent,
-    StaffLoginComponent
+    StaffLoginComponent,
+    SBillComponent,
+    SCustomerComponent,
+    SDishComponent,
+    SRoomComponent,
+    SFormComponent
   ],
   imports: [
     ChartsModule,
