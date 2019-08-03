@@ -8,6 +8,7 @@ export class Ihoadon {
     gioden?: string;
     hinhthucthanhtoan?: number;
     thoidiemtao?: string;
+    thoidiemden?: string;
     tinhtrang?: number;
     message?: string;
 }
