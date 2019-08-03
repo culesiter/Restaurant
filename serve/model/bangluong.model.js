@@ -14,10 +14,14 @@ var bangluongSchema = mongoose.Schema(
         ngaytinh: {
             type: String
         },
-        thangtra:{
+        thangtra: {
             type: String
         },
-        ghichu:{
+        namtra: {
+            type: String
+        }
+        ,
+        ghichu: {
             type: String
         }
     }

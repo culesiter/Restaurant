@@ -34,7 +34,7 @@ function xoabangluong(request) {
 }
 function laybangluong() {
     return new Promise((resolve, reject) => {
-                bangluong.find({}).select('_id _idnhanvien songaylam ghichu tongluong ngaytinh thangtra').populate('_idnhanvien').exec(
+                bangluong.find({}).select('_id _idnhanvien songaylam ghichu tongluong ngaytinh thangtra namtra').populate('_idnhanvien').exec(
                     function (err, response) {
                         if (err) {
                             var err = {
@@ -50,7 +50,8 @@ function laybangluong() {
                                     ghichu:res.ghichu,
                                     tongluong:res.tongluong,
                                     ngaytinh:res.ngaytinh,
-                                    thangtra:res.thangtra
+                                    thangtra:res.thangtra,
+                                    namtra:res.namtra
                                 }
                             }
         
@@ -65,7 +66,7 @@ function laybangluong() {
 function laybangluongtheoid(req) {
     console.log(req.id)
     return new Promise((resolve, reject) => {
-                bangluong.find({_idnhanvien:req.id}).select('_id _idnhanvien songaylam ghichu tongluong ngaytinh thangtra').populate('_idnhanvien').exec(
+                bangluong.find({_idnhanvien:req.id}).select('_id _idnhanvien songaylam ghichu tongluong ngaytinh thangtra namtra').populate('_idnhanvien').exec(
                     function (err, response) {
                         if (err) {
                             var err = {
@@ -81,7 +82,8 @@ function laybangluongtheoid(req) {
                                     ghichu:res.ghichu,
                                     tongluong:res.tongluong,
                                     ngaytinh:res.ngaytinh,
-                                    thangtra:res.thangtra
+                                    thangtra:res.thangtra,
+                                    namtra:res.namtra
                                 }
                             }
         
@@ -101,9 +103,10 @@ function taobangluong(request) {
             ghichu:request.ghichu,
             tongluong:request.tongluong,
             ngaytinh:request.ngaytinh,
-            thangtra:request.thangtra
+            thangtra:request.thangtra,
+            namtra:request.namtra
         });
-    
+         console.log(bangluongmoi);
         bangluongmoi.save().then(result => {
             const data = {
                 message: "luu thanh cong",
