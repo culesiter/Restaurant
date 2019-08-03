@@ -17,7 +17,7 @@ private eData: Icustomer = {};
   ngOnInit() {
     this.usertempForid=JSON.parse(localStorage.getItem('user'));
     this.human.laythongtinkhachhangtheoid(this.usertempForid._id).subscribe(res =>{
-      this.usertemp = res;
+      this.usertemp = res[0];
       console.log(this.usertemp);
     })
     this.taoForm();
@@ -33,7 +33,7 @@ private eData: Icustomer = {};
     this.human.sua(this.usertemp._id, this.frmSua.value).subscribe(res => {
       if (res) {
         this.human.laythongtinkhachhangtheoid(this.usertemp._id).subscribe(responsive =>{
-          this.usertemp = responsive;
+          this.usertemp = responsive[0];
         })
         $('#editmd').modal('toggle'); 
         $.notify("Đã cập nhật", "success");
