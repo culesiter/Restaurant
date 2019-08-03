@@ -1,0 +1,23 @@
+<div class="login-part">
+
+</div>
+<div class="login-content">
+  <div class="toplg">
+    <div class="tde">
+      <p>ADMIN LOGIN</p>
+    </div>
+  </div>
+  <div class="flg">
+    <form (ngSubmit)="dangNhap()" [formGroup]="frmDangNhap" class="lgform">
+      <div class="tut">
+        <i class="fa fa-user"></i>
+      </div>
+      <input formControlName="email"  type="text" class="inp" placeholder="example@gts.com">
+      <div class="tut">
+        <i class="fa fa-lock"></i>
+      </div>
+      <input formControlName="matkhau" type="password" class="inp" placeholder="example">
+      <button type="submit" class="smit">SUBMIT</button>
+    </form>
+  </div>
+</div>

@@ -8,19 +8,11 @@ const moment = require('moment');
   styleUrls: ['./statis.component.scss']
 })
 export class StatisComponent implements OnInit {
-  @Input() chartData: any[] = [{ data: [] }];
-  @Input() chartData2: any[] = [{ data: [] }];
-  @Input() chartData3: any[] = [{ data: [] }];
-  @Input() chartData4: any[] = [{ data: [] }];
-  @Input() chartData5: any[] = [{ data: [] }];
-  private data1 = [{
-    label: '1st Year',
-    data: [21, 56, 4, 31, 45, 15, 57, 61, 9, 17, 24, 59]
-  },
-  {
-    label: '2nd Year',
-    data: [47, 9, 28, 54, 77, 51, 24]
-  }];
+  @Input() chartData: any[] = [{ label: [], data: [] }];
+  @Input() chartData2: any[] = [{ label: [], data: [] }];
+  @Input() chartData3: any[] = [{ label: [], data: [] }];
+  @Input() chartData4: any[] = [{ label: [], data: [] }];
+  @Input() chartData5: any[] = [{ label: [], data: [] }];
   private hddm;
   private title: any;
   private chartOptions;
@@ -29,6 +21,11 @@ export class StatisComponent implements OnInit {
   private mchart3 = [];
   private mchart4 = [];
   private mchart5 = [];
+  // private chartData: any[] = [{ label: '', data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] }];
+  // private chartData2: any[] = [{ label: '', data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] }];
+  // private chartData3: any[] = [{ label: '', data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] }];
+  // private chartData4: any[] = [{ label: '', data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] }];
+  // private chartData5: any[] = [{ label: '', data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] }];
   private labels;
   private colors;
   private title2: any;
