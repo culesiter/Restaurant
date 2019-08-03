@@ -1,0 +1,30 @@
+#staff-doc{
+    padding: 0 50px;
+    .row{
+        >div{
+            padding: 55px;
+            a {
+                display: block;
+                background: rgba(151, 150, 148, 0.23137254901960785);
+                text-align: center;
+                padding: 30px 0;
+                border-radius: 5px;
+            }
+            .icon {
+                text-align: center;
+                width: 50px;
+                height: 50px;
+                line-height: 50px;
+                margin: auto;
+                border-radius: 50%;
+                background: rgba(255, 255, 255, 0.42);
+                font-size: 23px;
+                color: cadetblue;
+            }
+            .text {
+                margin-top: 20px;
+                font-size: 18px;
+            }
+        }
+    }
+}

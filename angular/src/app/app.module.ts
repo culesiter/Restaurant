@@ -75,8 +75,7 @@ import { SCustomerComponent } from './html/a-staff-layout/staff-db/s-customer/s-
 import { SDishComponent } from './html/a-staff-layout/staff-db/s-dish/s-dish.component';
 import { SRoomComponent } from './html/a-staff-layout/staff-db/s-room/s-room.component';
 import { SFormComponent } from './html/a-staff-layout/staff-db/s-form/s-form.component';
-
-
+import { MbscModule } from '@mobiscroll/angular';
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   {
@@ -212,6 +211,7 @@ const routes: Routes = [
   ],
   imports: [
     ChartsModule,
+    MbscModule,
     OwlModule,
     AngularDateTimePickerModule,
     FormsModule,
