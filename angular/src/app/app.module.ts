@@ -65,7 +65,17 @@ import { RankStaffComponent } from './html/admin-layout/rank-staff/rank-staff.co
 import { ChartsModule } from 'ng4-charts/ng4-charts';
 import { DishStatisticalComponent } from './html/admin-layout/admin/dish-statistical/dish-statistical.component';
 import { StatisComponent } from './html/admin-layout/statis/statis.component';
-//import { ExcelService } from './share/services/contacService/Excel.service';
+import { ExcelService } from './share/services/contacService/Excel.service';
+import { AStaffLayoutComponent } from './html/a-staff-layout/a-staff-layout.component';
+import { StaffDbComponent } from './html/a-staff-layout/staff-db/staff-db.component';
+import { MenuComponent } from './html/a-staff-layout/menu/menu.component';
+import { StaffLoginComponent } from './html/a-staff-layout/staff-login/staff-login.component';
+import { SBillComponent } from './html/a-staff-layout/staff-db/s-bill/s-bill.component';
+import { SCustomerComponent } from './html/a-staff-layout/staff-db/s-customer/s-customer.component';
+import { SDishComponent } from './html/a-staff-layout/staff-db/s-dish/s-dish.component';
+import { SRoomComponent } from './html/a-staff-layout/staff-db/s-room/s-room.component';
+import { SFormComponent } from './html/a-staff-layout/staff-db/s-form/s-form.component';
+
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -127,6 +137,20 @@ const routes: Routes = [
         ]
       }
     ]
+  },
+  {
+    path: 'staff', component: AStaffLayoutComponent, children: [
+      { path: '', redirectTo: 'login', pathMatch: 'full' },
+      { path: 'staff_login', component: StaffLoginComponent },
+      {
+        path: 'dashboard', component: StaffDbComponent, children: [
+          { path: 'order', component: SBillComponent },
+          { path: 'customer', component: SCustomerComponent },
+          { path: 'dish', component: SDishComponent },
+          { path: 'form', component: SFormComponent }
+        ]
+      }
+    ]
   }
 ];
 @NgModule({
@@ -175,7 +199,16 @@ const routes: Routes = [
     PaymentEndComponent,
     RankStaffComponent,
     DishStatisticalComponent,
-    StatisComponent
+    StatisComponent,
+    AStaffLayoutComponent,
+    StaffDbComponent,
+    MenuComponent,
+    StaffLoginComponent,
+    SBillComponent,
+    SCustomerComponent,
+    SDishComponent,
+    SRoomComponent,
+    SFormComponent
   ],
   imports: [
     ChartsModule,
@@ -190,6 +223,7 @@ const routes: Routes = [
     RouterModule.forRoot(routes)
   ],
   providers: [DichvuService,
+    ExcelService,
     StaffService,
     LoginService,
     AuthGuard, HoadonService,
