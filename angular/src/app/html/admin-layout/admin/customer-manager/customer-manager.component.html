@@ -1,11 +1,12 @@
 <div class="container-fluid">
-    <div class="head-cus"> 
-        <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#addc"><i class="fa fa-user-plus" aria-hidden="true"></i> Thêm người dùng mới</button>
+    <div class="head-cus">
+        <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#addc"><i
+                class="fa fa-user-plus" aria-hidden="true"></i> Thêm người dùng mới</button>
     </div>
-<div id="addc" class="modal fade" role="dialog">
-  <div class="modal-dialog">
-    <div class="modal-content">
-            <form id="formThemCustomer" (ngSubmit)="addNew()" [formGroup]="formAddNew">
+    <div id="addc" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form id="formThemCustomer" (ngSubmit)="addNew()" [formGroup]="formAddNew">
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label>Tên</label>
@@ -17,7 +18,8 @@
                         </div>
                         <div class="form-group col-md-6">
                             <label>Mật Khẩu</label>
-                            <input type="password" class="form-control" formControlName="matkhau" placeholder="Password">
+                            <input type="password" class="form-control" formControlName="matkhau"
+                                placeholder="Password">
                         </div>
                         <div class="form-group col-md-6">
                             <label>Confirm Mật Khẩu</label>
@@ -46,16 +48,17 @@
                         </div>
                     </div>
                     <div class="col-12">
-                            <button type="submit" class="btn btn-secondary">Sign up</button>
-                            <button class="btn btn-warning" onclick="formReser()">Clear</button>
+                        <button type="submit" class="btn btn-secondary">Sign up</button>
+                        <button class="btn btn-warning" onclick="formReser()">Clear</button>
                     </div>
                 </form>
+            </div>
+        </div>
     </div>
-  </div>
-</div>
     <div class="content">
         <div class="list-customer" *ngIf="formStatus==='view'">
-            <table id="tester" class="table table-striped table-bordered" style="width:100%" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
+            <table id="tester" class="table table-striped table-bordered" style="width:100%" datatable
+                [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
                 <thead>
                     <tr>
                         <th>Tên</th>
@@ -65,7 +68,8 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let item of listData" data-toggle="modal" data-target="#cusdetail" (click)="openDetailInModal(item)">
+                    <tr *ngFor="let item of listData" data-toggle="modal" data-target="#cusdetail"
+                        (click)="openDetailInModal(item)">
                         <td>{{item.ten}}</td>
                         <td>{{item.email}}</td>
                         <td>{{item.thanhvien}}</td>
@@ -75,65 +79,67 @@
             </table>
         </div>
         <!-- ket thuc form xem list -->
-        <div class="modal fade" id="cusdetail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="cusdetail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
             <div class="modal-dialog" role="document">
-              <div class="modal-content">
-                <div class="modal-body">
-                    <div class="view-detail">
-                        <div class="row row-back">
-                            <div class="col-md-12 xoac">
-                                <div class="edit-profile">
-                                    <form (ngSubmit)="edit()" [formGroup]="frmSua">
-                                        <div class="form-row">
-                                            <div class="form-group col-md-6">
-                                                <label>Tên</label>
-                                                <input type="text" class="form-control" formControlName="ten" value="{{eData.ten}}">
-                                            </div>
-                                            <div class="form-group col-md-6">
-                                                <label>Email</label>
-                                                <input type="email" class="form-control" formControlName="email"
-                                                    value="{{eData.email}}">
-                                            </div>
-                                            <div class="form-group col-md-6">
-                                                <label>Mật khẩu</label>
-                                                <input type="password" class="form-control" formControlName="matkhau"
-                                                    value="{{eData.matkhau}}">
-                                            </div>
-                                            <div class="col-md-12">
-                                                <label>Đia chỉ</label>
-                                                <input type="text" class="form-control">
-                                            </div>
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="view-detail">
+                            <div class="row row-back">
+                                <div class="col-md-12 xoac">
+                                    <div class="edit-profile">
+                                        <form (ngSubmit)="edit()" [formGroup]="frmSua">
                                             <div class="form-row">
                                                 <div class="form-group col-md-6">
-                                                    <label>Thành Viên</label>
-                                                    <input type="text" formControlName="thanhvien" class="form-control"
-                                                        value="{{eData.thanhvien}}">
+                                                    <label>Tên</label>
+                                                    <input type="text" class="form-control" formControlName="ten"
+                                                        value="{{eData.ten}}">
                                                 </div>
                                                 <div class="form-group col-md-6">
-                                                    <label for="inputState">Điểm Tích Lũy</label>
-                                                    <input type="number" formControlName="diem" class="form-control"
-                                                        value="{{eData.diem}}">
+                                                    <label>Email</label>
+                                                    <input type="email" class="form-control" formControlName="email"
+                                                        value="{{eData.email}}">
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label>Mật khẩu</label>
+                                                    <input type="password" class="form-control"
+                                                        formControlName="matkhau" value="{{eData.matkhau}}">
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <label>Đia chỉ</label>
+                                                    <input type="text" class="form-control">
+                                                </div>
+                                                <div class="form-row">
+                                                    <div class="form-group col-md-6">
+                                                        <label>Thành Viên</label>
+                                                        <input type="text" formControlName="thanhvien"
+                                                            class="form-control" value="{{eData.thanhvien}}">
+                                                    </div>
+                                                    <div class="form-group col-md-6">
+                                                        <label for="inputState">Điểm Tích Lũy</label>
+                                                        <input type="number" formControlName="diem" class="form-control"
+                                                            value="{{eData.diem}}">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <button type="submit" class="btn btn-default">Edit</button>
+                                                    <button class="btn btn-warning" (click)="delete()">Xóa</button>
                                                 </div>
                                             </div>
-                                            <div class="form-group col-md-6">
-                                                <button type="submit" class="btn btn-default">Edit</button>
-                                                <button class="btn btn-warning" (click)="delete()">Xóa</button>
-                                            </div>
-                                        </div>
-                                    </form>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
                     </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
-              </div>
             </div>
-          </div>
-        <!-- form add new begin -->
-        <label class="create-customer" *ngIf="formStatus==='create'">
-            <!-- <form id="formThemCustomer" (ngSubmit)="addNew()" [formGroup]="formAddNew">
+            <!-- form add new begin -->
+            <label class="create-customer" *ngIf="formStatus==='create'">
+                <!-- <form id="formThemCustomer" (ngSubmit)="addNew()" [formGroup]="formAddNew">
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label>Tên</label>
@@ -176,7 +182,7 @@
                 <button type="submit" class="btn btn-secondary">Sign up</button>
                 <button class="btn btn-warning" onclick="formReser()">Clear</button>
             </form> -->
-        </label>
-        <!-- ket thuc form add new -->
+            </label>
+            <!-- ket thuc form add new -->
+        </div>
     </div>
-</div>

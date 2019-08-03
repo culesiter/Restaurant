@@ -1,6 +1,5 @@
 <div id="thongtinngdung">
   <div class="container">
-    <div id="gradient"></div>
     <div id="card">
       <div class="col-md-3">
         <a href="">
@@ -12,23 +11,71 @@
           <h2>{{usertemp.ten}}</h2>
         </a>
         <div class="form-tt">
-          <form>
-            <div class="form-row">
-              <div class="form-group col-md-12">
-                <label>Tên Khách Hàng</label>
-                <input type="text" disabled class="form-control" value="{{usertemp.ten}}">
-              </div>
-              <div class="form-group col-md-12">
-                <label>Email</label>
-                <input type="email" class="form-control" disabled value="{{usertemp.email}}">
-              </div>
-              <div class="form-group col-md-12">
-                <button type="submit" class="btn btn-secondary">Cập Nhật</button>
+          <div class="col-md-6">
+            <div class="row">
+              <div class="col-md-4 tit">Tên hiển thị:</div>
+              <div class="col-md-8">{{usertemp.ten}}</div>
+            </div>
+            <div class="row">
+              <div class="col-md-4 tit">Email:</div>
+              <div class="col-md-8">{{usertemp.email}}</div>
+            </div>
+            <div class="row mgt-30">
+              <div class="btn-adtocart"  data-toggle="modal" data-target="#editmd">
+                Chỉnh sửa thông tin cá nhân
               </div>
             </div>
-          </form>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </div>
+<div class="modal fade" id="editmd" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title center" id="exampleModalLabel">CHỈNH SỬA THÔNG TIN CÁ NHÂN</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <div class="view-detail">
+                <div class="row row-back">
+                    <div class="col-md-12 xoac">
+                        <div class="edit-profile">
+                            <form (ngSubmit)="edit()" [formGroup]="frmSua">
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label>Tên</label>
+                                        <input type="text" class="form-control" formControlName="ten"
+                                            value="{{usertemp.ten}}">
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label>Email</label>
+                                        <input type="email" class="form-control" formControlName="email"
+                                            value="{{usertemp.email}}">
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label>Mật khẩu</label>
+                                        <input type="password" class="form-control"
+                                            formControlName="matkhau" value="{{usertemp.matkhau}}">
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label>Đia chỉ</label>
+                                        <input type="text" class="form-control">
+                                    </div>
+                                    <div class="form-group col-md-12 mgt-30">
+                                        <button type="submit" class="btn btn-default">Cập nhật</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>

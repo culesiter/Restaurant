@@ -51,5 +51,4 @@ export class HumanService {
   laythongtinkhachhangtheoid(id): Observable<any> {
     return this.http.get('http://localhost:3000/khachhang/id?id=' + id).map(res => res.json());
   }
-
 }
