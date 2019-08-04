@@ -77,6 +77,10 @@ import { SRoomComponent } from './html/a-staff-layout/staff-db/s-room/s-room.com
 import { SFormComponent } from './html/a-staff-layout/staff-db/s-form/s-form.component';
 import { MbscModule } from '@mobiscroll/angular';
 import { SViewsalaryComponent } from './html/a-staff-layout/staff-db/s-viewsalary/s-viewsalary.component';
+import { SroomtypeComponent } from './html/a-staff-layout/staff-db/sroomtype/sroomtype.component';
+import { SServicesComponent } from './html/a-staff-layout/staff-db/s-services/s-services.component';
+import { SMenuComponent } from './html/a-staff-layout/staff-db/s-menu/s-menu.component';
+import { SDishTypeComponent } from './html/a-staff-layout/staff-db/s-dish-type/s-dish-type.component';
 import { ScheduleComponent } from './html/admin-layout/admin/schedule/schedule.component';
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -150,7 +154,12 @@ const routes: Routes = [
           { path: 'customer', component: SCustomerComponent },
           { path: 'dish', component: SDishComponent },
           { path: 'form', component: SFormComponent },
-          { path: 'salary', component: SViewsalaryComponent }
+          { path: 'salary', component: SViewsalaryComponent },
+          { path: 'services', component: SServicesComponent },
+          { path: 'menu', component: SMenuComponent },
+          { path: 'roomtype', component: SroomtypeComponent },
+          { path: 'room', component: SRoomComponent },
+          { path: 'dishtype', component: SDishTypeComponent },
         ]
       }
     ]
@@ -213,6 +222,10 @@ const routes: Routes = [
     SRoomComponent,
     SFormComponent,
     SViewsalaryComponent,
+    SroomtypeComponent,
+    SServicesComponent,
+    SMenuComponent,
+    SDishTypeComponent,
     ScheduleComponent
   ],
   imports: [
