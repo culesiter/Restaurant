@@ -188,6 +188,7 @@ export class BillsManagerComponent implements OnInit {
       });
       this.dtTrigger.next();
       $.notify('Hiển thị dữ liệu!', 'success');
+      $('.modal').modal('hide');
     });
   }
   openDetail(data) {
@@ -252,7 +253,7 @@ export class BillsManagerComponent implements OnInit {
     if (check === true) {
       this.hoadonS.xoa(id).subscribe(res => {
         alert(res.message);
-        this.laydsHoadon();
+        this.laydsHoadon(false, false);
         this.xem = true;
       });
     }

@@ -44,6 +44,30 @@ button.gr-down{
     border-radius: 50%;
    
 }
+.userinfor{
+    list-style: none;
+    padding: 0;
+    background: white;
+    width: 200px;
+    li{
+        button{
+            display: block;
+            background: none;
+            padding: 5px 10px;
+            width: 100%;
+            border: none;
+            border-bottom: 1px solid gray;
+        }
+    }
+}
+.show-profile {
+    padding: 10px 0;
+}
+#inforstaff{
+    .modal-content{
+        padding: 30px;
+    }
+}
 .noti-down{
     width: 800%;
     margin-top: 25%;

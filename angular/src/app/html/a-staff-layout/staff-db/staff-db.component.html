@@ -15,18 +15,16 @@
                 </div>
 
                 <div class="col-xs-6 col-sm-6 col-md-8 col-lg-8 down-menu">
-
                     <div class="col-xs-3 col-sm-4 col-md-5 col-lg-5">
                         <div class="wrap" *ngIf="user">
-                            <button data-toggle="collapse" data-target="#demo">
-                                      {{user.ten}}
-                            </button>
-
+                            <div class="show-profile" data-toggle="collapse" data-target="#demo">
+                                    <i class="fa fa-user-circle-o" aria-hidden="true"></i>    Chào {{user.ten}}
+                            </div>
                             <div id="demo" class="collapse">
-                               <ul>
+                               <ul class="userinfor">
                                    <li>
                                        <button data-toggle="modal" data-target="#inforstaff">
-                                           Thông Tin Người dùng
+                                           Thông tin Người dùng
                                        </button>
                                    </li>
                                    <li>
