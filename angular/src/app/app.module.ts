@@ -76,6 +76,7 @@ import { SDishComponent } from './html/a-staff-layout/staff-db/s-dish/s-dish.com
 import { SRoomComponent } from './html/a-staff-layout/staff-db/s-room/s-room.component';
 import { SFormComponent } from './html/a-staff-layout/staff-db/s-form/s-form.component';
 import { MbscModule } from '@mobiscroll/angular';
+import { SViewsalaryComponent } from './html/a-staff-layout/staff-db/s-viewsalary/s-viewsalary.component';
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   {
@@ -139,14 +140,15 @@ const routes: Routes = [
   },
   {
     path: 'staff', component: AStaffLayoutComponent, children: [
-      { path: '', redirectTo: 'login', pathMatch: 'full' },
+      { path: '', redirectTo: 'staff_login', pathMatch: 'full' },
       { path: 'staff_login', component: StaffLoginComponent },
       {
         path: 'dashboard', component: StaffDbComponent, children: [
           { path: 'order', component: SBillComponent },
           { path: 'customer', component: SCustomerComponent },
           { path: 'dish', component: SDishComponent },
-          { path: 'form', component: SFormComponent }
+          { path: 'form', component: SFormComponent },
+          { path: 'salary', component: SViewsalaryComponent }
         ]
       }
     ]
@@ -207,7 +209,8 @@ const routes: Routes = [
     SCustomerComponent,
     SDishComponent,
     SRoomComponent,
-    SFormComponent
+    SFormComponent,
+    SViewsalaryComponent
   ],
   imports: [
     ChartsModule,

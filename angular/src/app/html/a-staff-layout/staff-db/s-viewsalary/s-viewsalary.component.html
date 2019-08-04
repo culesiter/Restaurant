@@ -1,0 +1,40 @@
+<h1>
+  Năm: {{currentyear}}
+</h1>
+<h2>
+  BẢNG LƯƠNG THÁNG {{currentmonth}}
+</h2>
+<button (click)="bangluongtruoc()">
+  bang luong thang truoc
+</button>
+<button (click)="bangluongsau()">
+  bang luong sau
+</button>
+<section>
+  <div class="wrap-sla">
+    <div *ngIf="!currentsalary">
+      <h1>LƯƠNG THÁNG {{currentmonth}} CHƯA ĐƯỢC TÍNH</h1>
+    </div>
+    <div *ngIf="currentsalary">
+      <p>
+        ten:{{currentsalary._idnhanvien.ten}}
+      </p>
+      <p>
+        email:{{currentsalary._idnhanvien.email}}
+      </p>
+      <p>
+        cap:{{currentsalary.cap}}
+      </p>
+      <p>
+        tổng ngày làm:{{currentsalary.songaylam}}
+      </p>
+      <p>
+        luong theo ngay:{{currentsalary.luongtheongay}}
+      </p>
+      <p>
+        tổng lương:{{currentsalary.tongluong}}
+      </p>
+    </div>
+  </div>
+
+</section>

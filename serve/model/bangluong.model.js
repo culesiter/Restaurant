@@ -8,6 +8,12 @@ var bangluongSchema = mongoose.Schema(
             type: Number,
             require: true
         },
+        luongtheongay: {
+            type: Number
+        },
+        cap:{
+            type: String
+        },
         tongluong: {
             type: Number
         },

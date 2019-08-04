@@ -4,16 +4,45 @@
         <li><a data-toggle="tab" href="#menu1">Đã xác nhận</a></li>
         <li><a data-toggle="tab" href="#menu2">Đã thanh toán</a></li>
         <li><a data-toggle="tab" href="#menu3">Đã Hủy</a></li>
+        <li>
+            <button data-toggle="collapse" data-target="#search">
+                + Tìm Kiếm Nâng Cao
+            </button>
+            <div id="search" class="collapse">
+                <button data-toggle="modal" data-target="#range">
+                    khoảng ngày
+                </button>
+
+            </div>
+        </li>
     </ul>
+    <div id="range" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form (submit)="filterById()">
+                    <label>
+                        Min
+                        <input type="date" name="min" id="min" [(ngModel)]="min" />
+                    </label>
+                    <label>
+                        Max
+                        <input type="date" name="max" id="max" [(ngModel)]="max" />
+                    </label>
+                    <button class="btn btn-primary" type="submit">Filter by ID</button>
+                </form>
+            </div>
+        </div>
+    </div>
     <div class="tab-content">
         <div id="home" class="tab-pane in active">
-            <table class="table table-hover list-table">
+            <table class="table table-hover list-table" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
                 <thead>
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col">Tên khách hàng</th>
                         <th scope="col">Thời điểm tạo</th>
                         <th scope="col">Tình Trạng</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody class="tbody-list">
@@ -22,8 +51,6 @@
                         <td *ngIf="item.tinhtrang===0">{{item._idkhachhang.ten}}</td>
                         <td *ngIf="item.tinhtrang===0">{{item.thoidiemtao}}</td>
                         <td *ngIf="item.tinhtrang===0" style="color:red">Chưa xác nhận</td>
-                        <td *ngIf="item.tinhtrang===2" style="color:yellow">Đã xác nhận</td>
-                        <td *ngIf="item.tinhtrang===3" style="color:green">Đã thanh toán</td>
                         <td><button type="button" class="btn btn-primary" data-toggle="modal"
                                 data-target="#detail_modal" (click)="openDetail(item)">
                                 Xem chi tiết
@@ -48,7 +75,7 @@
                         <td *ngIf="item.tinhtrang===1">{{item._idkhachhang.ten}}</td>
                         <td *ngIf="item.tinhtrang===1">{{item.thoidiemtao}}</td>
                         <td *ngIf="item.tinhtrang===1">
-                                <span class="cancel-text confirmed">Đã xác nhận</span>
+                            <span class="cancel-text confirmed">Đã xác nhận</span>
                         </td>
                         <td><button type="button" class="btn btn-primary" data-toggle="modal"
                                 data-target="#detail_modal" (click)="openDetail(item)">
@@ -60,64 +87,68 @@
         </div>
         <div id="menu2" class="tab-pane fade">
             <div class="in-m2">
-                    <ul class="nav nav-tabs">
-                            <li class="active"><a data-toggle="tab" href="#hmtt">Đã thanh toán 10%</a></li>
-                            <li><a data-toggle="tab" href="#hmtt2">Đã thanh toán 100%</a></li>
-                        </ul>
-                        <div class="tab-content">
-                            <div id="hmtt" class="tab-pane in active">
-                                <table class="table table-hover list-table">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col">#</th>
-                                            <th scope="col">Tên khách hàng</th>
-                                            <th scope="col">Thời điểm tạo</th>
-                                            <th scope="col">Tình Trạng</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="tbody-list">
-                                        <tr *ngFor="let item of dathanhtoan2;let i = index">
-                                            <th *ngIf="item.tinhtrang===2" scope="row">{{i+1}}</th>
-                                            <td *ngIf="item.tinhtrang===2">{{item._idkhachhang.ten}}</td>
-                                            <td *ngIf="item.tinhtrang===2">{{item.thoidiemtao}}</td>
-                                            <td *ngIf="item.tinhtrang===2">
-                                                    <span class="cancel-text payed">Đã thanh toán</span>
-                                            </td>
-                                            <td><button type="button" class="btn btn-primary" data-toggle="modal"
-                                                    data-target="#detail_modal" (click)="openDetail(item)">
-                                                    Xem chi tiết
-                                                </button></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div id="hmtt2" class="tab-pane fade">
-                                <table class="table table-hover list-table">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col">#</th>
-                                            <th scope="col">Tên khách hàng</th>
-                                            <th scope="col">Thời điểm tạo</th>
-                                            <th scope="col">Tình Trạng</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="tbody-list">
-                                        <tr *ngFor="let item of dathanhtoan1;let i = index">
-                                            <th *ngIf="item.tinhtrang===2" scope="row">{{i+1}}</th>
-                                            <td *ngIf="item.tinhtrang===2">{{item._idkhachhang.ten}}</td>
-                                            <td *ngIf="item.tinhtrang===2">{{item.thoidiemtao}}</td>
-                                            <td *ngIf="item.tinhtrang===2">
-                                                    <span class="cancel-text payed">Đã thanh toán</span>
-                                            </td>
-                                            <td><button type="button" class="btn btn-primary" data-toggle="modal"
-                                                    data-target="#detail_modal" (click)="openDetail(item)">
-                                                    Xem chi tiết
-                                                </button></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
+                <ul class="nav nav-tabs">
+                    <li class="active"><a data-toggle="tab" href="#hmtt">Đã thanh toán 10%</a></li>
+                    <li><a data-toggle="tab" href="#hmtt2">Đã thanh toán 100%</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div id="hmtt" class="tab-pane in active">
+                        <table class="table table-hover list-table" datatable [dtOptions]="dtOptions"
+                            [dtTrigger]="dtTrigger">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Tên khách hàng</th>
+                                    <th scope="col">Thời điểm tạo</th>
+                                    <th scope="col">Tình Trạng</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody class="tbody-list">
+                                <tr *ngFor="let item of dathanhtoan2;let i = index">
+                                    <th *ngIf="item.tinhtrang===2" scope="row">{{i+1}}</th>
+                                    <td *ngIf="item.tinhtrang===2">{{item._idkhachhang.ten}}</td>
+                                    <td *ngIf="item.tinhtrang===2">{{item.thoidiemtao}}</td>
+                                    <td *ngIf="item.tinhtrang===2">
+                                        <span class="cancel-text payed">Đã thanh toán</span>
+                                    </td>
+                                    <td><button type="button" class="btn btn-primary" data-toggle="modal"
+                                            data-target="#detail_modal" (click)="openDetail(item)">
+                                            Xem chi tiết
+                                        </button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div id="hmtt2" class="tab-pane fade">
+                        <table class="table table-hover list-table" datatable [dtOptions]="dtOptions"
+                            [dtTrigger]="dtTrigger">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Tên khách hàng</th>
+                                    <th scope="col">Thời điểm tạo</th>
+                                    <th scope="col">Tình Trạng</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody class="tbody-list">
+                                <tr *ngFor="let item of dathanhtoan1;let i = index">
+                                    <th *ngIf="item.tinhtrang===2" scope="row">{{i+1}}</th>
+                                    <td *ngIf="item.tinhtrang===2">{{item._idkhachhang.ten}}</td>
+                                    <td *ngIf="item.tinhtrang===2">{{item.thoidiemtao}}</td>
+                                    <td *ngIf="item.tinhtrang===2">
+                                        <span class="cancel-text payed">Đã thanh toán</span>
+                                    </td>
+                                    <td><button type="button" class="btn btn-primary" data-toggle="modal"
+                                            data-target="#detail_modal" (click)="openDetail(item)">
+                                            Xem chi tiết
+                                        </button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
         <div id="menu3" class="tab-pane fade">
@@ -164,16 +195,19 @@
                             <div class="form-row">
                                 <div class="form-group col-md-12">
                                     <label>Tên khách hàng</label>
-                                    <input type="text" class="form-control" disabled value="{{ehoadon._idkhachhang.ten}}">
+                                    <input type="text" class="form-control" disabled
+                                        value="{{ehoadon._idkhachhang.ten}}">
                                 </div>
                                 <div class="form-group col-md-4">
-                                        <label>Số điện thoại</label>
-                                        <input type="text" class="form-control" disabled value="{{ehoadon._idkhachhang.sdt}}">
-                                    </div>
-                                    <div class="form-group col-md-4">
-                                            <label>Email</label>
-                                            <input type="text" class="form-control" disabled value="{{ehoadon._idkhachhang.email}}">
-                                        </div>
+                                    <label>Số điện thoại</label>
+                                    <input type="text" class="form-control" disabled
+                                        value="{{ehoadon._idkhachhang.sdt}}">
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label>Email</label>
+                                    <input type="text" class="form-control" disabled
+                                        value="{{ehoadon._idkhachhang.email}}">
+                                </div>
                                 <div class="form-group col-md-4">
                                     <label>Thời điểm tạo</label>
                                     <input type="text" class="form-control" disabled value="{{ehoadon.thoidiemtao}}">
@@ -203,83 +237,97 @@
                                     <label>Phòng</label>
                                     <input type="text" class="form-control" value="{{ehoadon._idphong.ten}}">
                                 </div>
-                                <div class="form-group col-md-6" >
-                                        <label>Giá phòng</label>
-                                        <input *ngIf="pongdt"  type="text" class="form-control" value="{{pongdt.gia}}">
-                                    </div>
+                                <div class="form-group col-md-6">
+                                    <label>Giá phòng</label>
+                                    <input *ngIf="pongdt" type="text" class="form-control" value="{{pongdt.gia}}">
+                                </div>
                                 <div class="form-group col-md-12 ">
-                                    <label data-toggle="collapse" href="#dish-colapse" style="width: 100%" class="lbrela">Các món ăn đã chọn <i class="fa fa-caret-down" aria-hidden="true"></i> <span class="tong">Tổng đã mua: {{totalma}}</span> </label>
+                                    <label data-toggle="collapse" href="#dish-colapse" style="width: 100%"
+                                        class="lbrela">Các món ăn đã chọn <i class="fa fa-caret-down"
+                                            aria-hidden="true"></i> <span class="tong">Tổng đã mua: {{totalma}}</span>
+                                    </label>
                                     <div class="collapse" id="dish-colapse">
                                         <div class="dish-loop" *ngFor="let item of eCthd">
                                             <div class="cover1" *ngIf="item._idmonan">
-                                                    <div class="form-group col-md-12">
-                                                            <label>Tên món ăn</label>
-                                                            <input type="text" class="form-control" disabled
-                                                                value="{{item._idmonan.ten}}">
-                                                        </div>
-                                                        <div class="form-group col-md-3">
-                                                            <label>Số lượng</label>
-                                                            <input type="number" class="form-control" value="{{item.soluongmonan}}">
-                                                        </div>
-                                                        <div class="form-group col-md-3">
-                                                            <label>Đơn giá</label>
-                                                            <input type="text" class="form-control" disabled
-                                                                value="{{item._idmonan.gia}}">
-                                                        </div>
-                                                        <div class="form-group col-md-3">
-                                                            <label>Khuyến mãi</label>
-                                                            <input type="text" class="form-control"
-                                                                value="{{item._idmonan.khuyenmai}}">
-                                                        </div>
-                                                        <div class="form-group col-md-3">
-                                                            <label>Thành tiền</label>
-                                                            <input type="text" *ngIf="item._idmonan.khuyenmai===0" class="form-control" disabled value="{{item.soluongmonan*item._idmonan.gia}}">
-                                                            <input type="text" *ngIf="item._idmonan.khuyenmai!==0" class="form-control" disabled value="{{item.soluongmonan*item._idmonan.gia-(item.soluongmonan*item._idmonan.gia*item._idmonan.khuyenmai/100)}}">
-                                                        </div>
-                                            </div>
-                                            <div class="cover2" *ngIf="item._idthucdon">
-                                                    <div class="form-group col-md-12">
-                                                            <label>Tên món ăn</label>
-                                                            <input type="text" class="form-control" disabled
-                                                                value="{{item._idthucdon.ten}}">
-                                                        </div>
-                                                        <div class="form-group col-md-3">
-                                                            <label>Số lượng</label>
-                                                            <input type="number" class="form-control" value="{{item.soluongthucdon}}">
-                                                        </div>
-                                                        <div class="form-group col-md-3">
-                                                            <label>Đơn giá</label>
-                                                            <input type="text" class="form-control" disabled
-                                                                value="{{item._idthucdon.gia}}">
-                                                        </div>
-                                                        <div class="form-group col-md-3">
-                                                            <label>Khuyến mãi</label>
-                                                            <input type="text" class="form-control"
-                                                                value="{{item._idthucdon.khuyenmai}}">
-                                                        </div>
-                                                        <div class="form-group col-md-3">
-                                                            <label>Thành tiền</label>
-                                                             <input type="text"  class="form-control" disabled value="{{item.soluongthucdon*item._idthucdon.gia}}">
-                                                          
-                                                        </div>
-                                            </div>
-                                          
-                                        </div>
-                                    </div>
-                                    <label data-toggle="collapse" href="#services-colapse" style="width: 100%" class="lbrela" > Dịch vụ đã chọn <i class="fa fa-caret-down" aria-hidden="true"></i> <span class="tong">Tổng đã mua: {{totaldv}}</span> </label>
-                                        <div class="collapse" id="services-colapse" >
-                                            <div class="dish-loop" *ngFor="let item of ectdv">
                                                 <div class="form-group col-md-12">
-                                                    <label>Tên dịch vụ</label>
+                                                    <label>Tên món ăn</label>
                                                     <input type="text" class="form-control" disabled
-                                                        value="{{item._iddichvu.ten}}">
+                                                        value="{{item._idmonan.ten}}">
+                                                </div>
+                                                <div class="form-group col-md-3">
+                                                    <label>Số lượng</label>
+                                                    <input type="number" class="form-control"
+                                                        value="{{item.soluongmonan}}">
+                                                </div>
+                                                <div class="form-group col-md-3">
+                                                    <label>Đơn giá</label>
+                                                    <input type="text" class="form-control" disabled
+                                                        value="{{item._idmonan.gia}}">
+                                                </div>
+                                                <div class="form-group col-md-3">
+                                                    <label>Khuyến mãi</label>
+                                                    <input type="text" class="form-control"
+                                                        value="{{item._idmonan.khuyenmai}}">
                                                 </div>
                                                 <div class="form-group col-md-3">
                                                     <label>Thành tiền</label>
-                                                    <input type="text" class="form-control" disabled value="{{item._iddichvu.gia}}">
+                                                    <input type="text" *ngIf="item._idmonan.khuyenmai===0"
+                                                        class="form-control" disabled
+                                                        value="{{item.soluongmonan*item._idmonan.gia}}">
+                                                    <input type="text" *ngIf="item._idmonan.khuyenmai!==0"
+                                                        class="form-control" disabled
+                                                        value="{{item.soluongmonan*item._idmonan.gia-(item.soluongmonan*item._idmonan.gia*item._idmonan.khuyenmai/100)}}">
                                                 </div>
                                             </div>
+                                            <div class="cover2" *ngIf="item._idthucdon">
+                                                <div class="form-group col-md-12">
+                                                    <label>Tên món ăn</label>
+                                                    <input type="text" class="form-control" disabled
+                                                        value="{{item._idthucdon.ten}}">
+                                                </div>
+                                                <div class="form-group col-md-3">
+                                                    <label>Số lượng</label>
+                                                    <input type="number" class="form-control"
+                                                        value="{{item.soluongthucdon}}">
+                                                </div>
+                                                <div class="form-group col-md-3">
+                                                    <label>Đơn giá</label>
+                                                    <input type="text" class="form-control" disabled
+                                                        value="{{item._idthucdon.gia}}">
+                                                </div>
+                                                <div class="form-group col-md-3">
+                                                    <label>Khuyến mãi</label>
+                                                    <input type="text" class="form-control"
+                                                        value="{{item._idthucdon.khuyenmai}}">
+                                                </div>
+                                                <div class="form-group col-md-3">
+                                                    <label>Thành tiền</label>
+                                                    <input type="text" class="form-control" disabled
+                                                        value="{{item.soluongthucdon*item._idthucdon.gia}}">
+
+                                                </div>
+                                            </div>
+
                                         </div>
+                                    </div>
+                                    <label data-toggle="collapse" href="#services-colapse" style="width: 100%"
+                                        class="lbrela"> Dịch vụ đã chọn <i class="fa fa-caret-down"
+                                            aria-hidden="true"></i> <span class="tong">Tổng đã mua: {{totaldv}}</span>
+                                    </label>
+                                    <div class="collapse" id="services-colapse">
+                                        <div class="dish-loop" *ngFor="let item of ectdv">
+                                            <div class="form-group col-md-12">
+                                                <label>Tên dịch vụ</label>
+                                                <input type="text" class="form-control" disabled
+                                                    value="{{item._iddichvu.ten}}">
+                                            </div>
+                                            <div class="form-group col-md-3">
+                                                <label>Thành tiền</label>
+                                                <input type="text" class="form-control" disabled
+                                                    value="{{item._iddichvu.gia}}">
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="row mgt-30">
                                         <div class="form-group col-md-4">
                                             <label>Tổng tiền</label>
@@ -288,13 +336,17 @@
 
                                         <div class="form-group col-md-4" *ngIf="ehoadon.tinhtrang==2">
                                             <label>Đã thanh toán</label>
-                                            <input *ngIf="ehoadon.hinhthucthanhtoan===1" type="text" class="form-control" value="{{ehoadon.tongtien}}">
-                                            <input *ngIf="ehoadon.hinhthucthanhtoan===2" type="text" class="form-control" value="{{ehoadon.tongtien*0.1}}">
+                                            <input *ngIf="ehoadon.hinhthucthanhtoan===1" type="text"
+                                                class="form-control" value="{{ehoadon.tongtien}}">
+                                            <input *ngIf="ehoadon.hinhthucthanhtoan===2" type="text"
+                                                class="form-control" value="{{ehoadon.tongtien*0.1}}">
                                         </div>
                                         <div class="form-group col-md-4" *ngIf="ehoadon.tinhtrang==2">
                                             <label>Còn lại</label>
-                                            <input *ngIf="ehoadon.hinhthucthanhtoan===1" type="text" class="form-control" value="0">
-                                            <input *ngIf="ehoadon.hinhthucthanhtoan===2" type="text" class="form-control" value="{{ehoadon.tongtien-ehoadon.tongtien*0.1}}">
+                                            <input *ngIf="ehoadon.hinhthucthanhtoan===1" type="text"
+                                                class="form-control" value="0">
+                                            <input *ngIf="ehoadon.hinhthucthanhtoan===2" type="text"
+                                                class="form-control" value="{{ehoadon.tongtien-ehoadon.tongtien*0.1}}">
                                         </div>
                                     </div>
                                 </div>

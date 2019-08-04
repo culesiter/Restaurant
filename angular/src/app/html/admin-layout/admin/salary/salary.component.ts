@@ -97,8 +97,10 @@ export class SalaryComponent implements OnInit {
       _idnhanvien: data._id,
       songaylam: ngay,
       tongluong: tongluong,
-      thangtra: this.currentmonth,
-      namtra: this.currentyear
+      thangtra: this.serchform.value.thang || this.currentmonth,
+      namtra: this.currentyear,
+      cap: data._idcapnhanvien.cap,
+      luongtheongay: data._idcapnhanvien.luongtheongay
     };
     this.staff.thembangluong(wrap).subscribe(response => {
       console.log(response);

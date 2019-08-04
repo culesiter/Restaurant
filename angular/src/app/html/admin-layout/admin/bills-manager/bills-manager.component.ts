@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Ihoadon } from '../../../../share/entities/ihoadon';
 import { HoadonService } from '../../../../share/services/hoadon.service';
 import { PhongserviceService } from '../../../../share/services/phongservice.service';
+import { Subject } from 'rxjs';
 // import { ExcelService } from '../../../../share/services/contacService/Excel.service';
 //import { ExcelService } from '../../../../share/services/contacService/Excel.service';
 const moment = require('moment');
@@ -26,17 +27,55 @@ export class BillsManagerComponent implements OnInit {
   private ectdv: any[] = [];
   private totalma;
   private totaldv;
+  private min;
+  private max;
+  dtOptions: DataTables.Settings = {};
+  dtTrigger: Subject<any> = new Subject();
   // tslint:disable-next-line:max-line-length
   constructor(private router: Router, private hoadonS: HoadonService, private phongsv: PhongserviceService) { }
   ngOnInit() {
-    this.laydsHoadon();
+    this.laydsHoadon(false, false);
+    this.dtOptions = {
+      pagingType: 'full_numbers',
+      retrieve: true,
+      paging: true,
+      ordering: false,
+      language: {
+        processing: 'Procesando...',
+        search: 'Tìm Kiếm:',
+        lengthMenu: 'Hiển thị _MENU_ mục',
+        info: 'Hiển thị từ _START_ đến _END_ mục trong _TOTAL_ mục',
+        infoEmpty: 'Không có mục nào',
+        infoFiltered: "(filtrado _MAX_ elementos total)",
+        infoPostFix: "",
+        loadingRecords: "Cargando registros...",
+        zeroRecords: "Không có mục nào",
+        emptyTable: "No hay datos disponibles en la tabla",
+        paginate: {
+          first: 'Đầu tiên',
+          previous: 'Trở về',
+          next: 'Kế tiếp',
+          last: 'Cuối cùng'
+        },
+        aria: {
+          sortAscending: ": Activar para ordenar la tabla en orden ascendente",
+          sortDescending: ": Activar para ordenar la tabla en orden descendente"
+        }
+      }
+    };
   }
   // exportAsXLSX(): void {
   //   this.excelService.exportAsExcelFile(this.lstHoadon, 'sample');
   // }
-  laydsHoadon() {
+  filterById() {
+    this.laydsHoadon(this.min, this.max);
+  }
+  laydsHoadon(min, max) {
     this.hoadonS.laydanhsach().subscribe(res => {
       this.lstHoadon = res;
+      if (min && max) {
+
+      }
       this.chuaxacnhan = [];
       this.daxacnhan = [];
       this.dathanhtoan = [];
@@ -44,23 +83,60 @@ export class BillsManagerComponent implements OnInit {
       this.dathanhtoan2 = [];
       this.huy = [];
       res.forEach(element => {
+        // element.thoidiemtao = moment(element.thoidiemtao).format(' h:mm:ss a, Ngày: DD-MM-YYYY');
+        // if (element.tinhtrang === 0) {
+        //   this.chuaxacnhan.push(element);
+        // } else if (element.tinhtrang === 1) {
+        //   this.daxacnhan.push(element);
+        // } else if (element.tinhtrang === 2) {
+        //   this.dathanhtoan.push(element);
+        //   if (element.hinhthucthanhtoan == 2) {
+        //     this.dathanhtoan2.push(element);
+        //   } else {
+        //     this.dathanhtoan1.push(element);
+        //   }
+        // } else if (element.tinhtrang === -1) {
+        //   this.huy.push(element);
+        // }
         element.thoidiemtao = moment(element.thoidiemtao).format(' h:mm:ss a, Ngày: DD-MM-YYYY');
-        if (element.tinhtrang === 0) {
-          this.chuaxacnhan.push(element);
-        } else if (element.tinhtrang === 1) {
-          this.daxacnhan.push(element);
-        } else if (element.tinhtrang === 2) {
-          this.dathanhtoan.push(element);
-          if (element.hinhthucthanhtoan == 2) {
-            this.dathanhtoan2.push(element);
-          } else {
-            this.dathanhtoan1.push(element);
-          }
 
-        } else if (element.tinhtrang === -1) {
-          this.huy.push(element);
+        if (!min && !max) {
+          if (element.tinhtrang === 0) {
+            this.chuaxacnhan.push(element);
+          } else if (element.tinhtrang === 1) {
+            this.daxacnhan.push(element);
+          } else if (element.tinhtrang === 2) {
+            this.dathanhtoan.push(element);
+            if (element.hinhthucthanhtoan == 2) {
+              this.dathanhtoan2.push(element);
+            } else {
+              this.dathanhtoan1.push(element);
+            }
+          } else if (element.tinhtrang === -1) {
+            this.huy.push(element);
+          }
+        } else if (min && max) {
+          console.log(moment(max).isAfter(moment(element.thoidiemden, 'DD-MM-YYYY')));
+          // tslint:disable-next-line:max-line-length
+          if (moment(max).isAfter(moment(element.thoidiemden, 'DD-MM-YYYY')) && moment(element.thoidiemden, 'DD-MM-YYYY').isAfter(moment(min))) {
+            if (element.tinhtrang === 0) {
+              this.chuaxacnhan.push(element);
+            } else if (element.tinhtrang === 1) {
+              this.daxacnhan.push(element);
+            } else if (element.tinhtrang === 2) {
+              this.dathanhtoan.push(element);
+              if (element.hinhthucthanhtoan == 2) {
+                this.dathanhtoan2.push(element);
+              } else {
+                this.dathanhtoan1.push(element);
+              }
+            } else if (element.tinhtrang === -1) {
+              this.huy.push(element);
+            }
+          }
         }
       });
+      this.dtTrigger.next();
     });
   }
   openDetail(data) {
