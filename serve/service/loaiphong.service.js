@@ -165,7 +165,6 @@ function taoLoaiPhong(request) {
 
             }
             else {
-
                 return loaiphongmoi.save()
             }
 
@@ -176,6 +175,7 @@ function taoLoaiPhong(request) {
                     _id: result._id,
                     ten: result.ten,
                     gia: result.gia,
+                    mota: result.mota,
                     succhua: request.succhua
                 }
             }

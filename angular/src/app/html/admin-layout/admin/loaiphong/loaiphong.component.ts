@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { IloaiPhong } from '../../../../share/entities/iloai-phong';
 import { PhongserviceService } from '../../../../share/services/phongservice.service';
-
+declare var $;
 @Component({
   selector: 'app-loaiphong',
   templateUrl: './loaiphong.component.html',
@@ -11,13 +11,13 @@ import { PhongserviceService } from '../../../../share/services/phongservice.ser
 export class LoaiphongComponent implements OnInit {
 
   private formStatus = 'view';
-  private  listData: IloaiPhong[] = [];
+  private listData: IloaiPhong[] = [];
   private eData: IloaiPhong = {};
   private formAddNew: FormGroup;
   private frmSua: FormGroup;
   private selectedFile: any;
   constructor(private formBuilder: FormBuilder,
-              private phongserviceService: PhongserviceService) { }
+    private phongserviceService: PhongserviceService) { }
   ngOnInit() {
     this.taoForm();
     this.getList();
@@ -39,50 +39,57 @@ export class LoaiphongComponent implements OnInit {
       mota: ['', []],
     });
   }
-  getList(){
-    this.phongserviceService.laydanhsachloaiphong().subscribe(res =>{ this.listData = res});
+  getList() {
+    this.phongserviceService.laydanhsachloaiphong().subscribe(res => { this.listData = res });
   }
   onFileChange(event) {
     this.selectedFile = event.target.files[0];
   }
-  addNew(){
+  addNew() {
     this.phongserviceService.themloaiphong(this.formAddNew.value).subscribe(res => {
       var data = res;
       console.log(data);
       const uploaddata = new FormData();
       uploaddata.append('loaiphongimg', this.selectedFile);
-      this.phongserviceService.upanhloai(data.values._id, uploaddata).subscribe(resq =>{
-        if(resq){
-          alert('thanh cong!');
+      this.phongserviceService.upanhloai(data.values._id, uploaddata).subscribe(resq => {
+        if (resq) {
+          $.notify('Đã tạo một mục mới!', 'success');
           this.getList();
-          this.formStatus = 'view';
+          setTimeout(() => {
+            $('#addnl').modal('hide');
+          }, 150);
         }
       })
     })
   }
-  edit(){
+  edit() {
     this.phongserviceService.sualoaiphong(this.eData.id, this.frmSua.value).subscribe(res => {
-      if(res){
+      if (res) {
         var data = res;
         console.log(data);
         const uploaddata = new FormData();
         uploaddata.append('loaiphongimg', this.selectedFile);
-        this.phongserviceService.upanhloai(this.eData.id, uploaddata).subscribe(resq =>{
-          if(resq){
-            alert('thanh cong!');
+        this.phongserviceService.upanhloai(this.eData.id, uploaddata).subscribe(resq => {
+          if (resq) {
+            $.notify('Đã sửa một mục!', 'success');
             this.getList();
-            this.formStatus = 'view';
+            setTimeout(() => {
+              $('#detaillp').modal('hide');
+            }, 150);
           }
         })
       } else {
-        alert ('failed');
+        alert('failed');
       }
     })
   }
-  delete(){
+  delete() {
     this.phongserviceService.xoaloaiphong(this.eData.id).subscribe(res => {
+      $.notify('Đã xóa 1 mục !', 'success');
       this.getList();
-      this.formStatus = 'view';
+      setTimeout(() => {
+        $('#detaillp').modal('hide');
+      }, 150);
     });
   }
 }
