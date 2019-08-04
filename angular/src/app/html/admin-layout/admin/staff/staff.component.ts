@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { StaffService } from '../../../../share/services/staff.service';
+import { Subject } from 'rxjs';
 @Component({
   selector: 'app-stafff',
   templateUrl: './staff.component.html',
@@ -13,9 +14,39 @@ export class StaffComponent implements OnInit {
   private formAddNew: FormGroup;
   private frmSua: FormGroup;
   private selectedFile: any;
+  dtOptions: DataTables.Settings = {};
+  dtTrigger: Subject<any> = new Subject();
   constructor(private formBuilder: FormBuilder,
     private staff: StaffService) { }
   ngOnInit() {
+    this.dtOptions = {
+      pagingType: 'full_numbers',
+      retrieve: true,
+      paging: true,
+      ordering: false,
+      language: {
+        processing: 'Procesando...',
+        search: 'Tìm Kiếm:',
+        lengthMenu: 'Hiển thị _MENU_ mục',
+        info: 'Hiển thị từ _START_ đến _END_ mục trong _TOTAL_ mục',
+        infoEmpty: 'Không có mục nào',
+        infoFiltered: "(filtrado _MAX_ elementos total)",
+        infoPostFix: "",
+        loadingRecords: "Cargando registros...",
+        zeroRecords: "Không có mục nào",
+        emptyTable: "No hay datos disponibles en la tabla",
+        paginate: {
+          first: 'Đầu tiên',
+          previous: 'Trở về',
+          next: 'Kế tiếp',
+          last: 'Cuối cùng'
+        },
+        aria: {
+          sortAscending: ": Activar para ordenar la tabla en orden ascendente",
+          sortDescending: ": Activar para ordenar la tabla en orden descendente"
+        }
+      }
+    };
     this.taoForm();
     this.getList();
   }
@@ -57,6 +88,7 @@ export class StaffComponent implements OnInit {
   getList() {
     this.staff.laydanhsach().subscribe(res => {
     this.listData = res; console.log(res);
+    this.dtTrigger.next();
     });
   }
   onFileChange(event) {

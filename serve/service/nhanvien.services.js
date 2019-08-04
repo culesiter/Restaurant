@@ -9,7 +9,37 @@ module.exports = {
     layNhanVien: layNhanVien,
     updateProduct: updateProduct,
     dangNhap:dangNhap,
-    capNhatHinh:capNhatHinh
+    capNhatHinh:capNhatHinh,
+    layNhanVientheoid:layNhanVientheoid
+}
+function layNhanVientheoid(req) {
+    return new Promise((resolve, reject) => {
+        nhanvien.find({_id:req.id}).select('_id ten email sdt matkhau hinhanh _idcapnhanvien').populate('_idcapnhanvien').exec(
+            function (err, response) {
+                if (err) {
+                    var err = {
+                        err: err
+                    }
+                    reject(err)
+                } else {
+                    var data = response.map(res => {
+                        return {
+                            _id:res._id,
+                            ten:res.ten,
+                            email:res.email,
+                            sdt:res.sdt,
+                            matkhau:res.matkhau,
+                            hinhanh:res.hinhanh,
+                            thanhvien:res.thanhvien,
+                            diem:res.diem,
+                            _idcapnhanvien:res._idcapnhanvien                       
+                        }
+                    }
+                    )
+                    resolve(data);
+                }
+            })
+    });
 }
 function capNhatHinh(pramas, file) {
     console.log(file.path)
@@ -90,6 +120,7 @@ var err={message:err+""}
     
     })
 }
+
 function xoaNhanVien(request) {
     return new Promise((resolve, reject) => {
         nhanvien.remove({ _id: request.id }).then(result => {

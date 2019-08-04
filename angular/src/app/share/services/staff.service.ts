@@ -8,6 +8,9 @@ export class StaffService {
   private urll = "http://localhost:3000/bangluong";
 
   constructor(private http: Http) { }
+  laynhanvientheoid(id): Observable<any[]> {
+    return this.http.get(this.url + '/id/?id=' + id).map(respose => respose.json() as any[]);
+  }
   them(data): Observable<any> {
     return this.http.post(this.url, data).map(res => {
       return res.json();

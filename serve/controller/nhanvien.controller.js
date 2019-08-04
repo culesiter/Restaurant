@@ -5,7 +5,15 @@ module.exports={
     xoaNhanVien:xoaNhanVien1,
     updateProduct2:updateProduct1,
     dangNhap:dangNhap1,
-    capNhatHinh:capNhatHinh1
+    capNhatHinh:capNhatHinh1,
+    layNhanVientheoid:layNhanVientheoid1
+}
+function layNhanVientheoid1(req,res){
+    service.layNhanVientheoid(req.query).then((result) => {
+        res.send(result);
+    }).catch((err) => {
+        res.send(err);
+    });
 }
 function capNhatHinh1(req,res){
     console.log(1,res.file);
