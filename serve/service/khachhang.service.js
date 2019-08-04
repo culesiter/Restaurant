@@ -186,7 +186,7 @@ function capNhatKhachHang(pramas, request) {
 
 function layNguoiDungtheoid(req) {
     return new Promise((resolve, reject) => {
-        khachhang.find({_id:req.id}).select('_id ten email sdt matkhau hinhanh thanhvien diem ').populate('_idkhachhang', 'ten').exec(
+        khachhang.find({_id:req.id}).select('_id ten email sdt matkhau hinhanh thanhvien diem diachi').populate('_idkhachhang', 'ten').exec(
             function (err, response) {
                 if (err) {
                     var err = {
@@ -204,8 +204,8 @@ function layNguoiDungtheoid(req) {
                             matkhau: res.matkhau,
                             hinhanh: res.hinhanh,
                             thanhvien: res.thanhvien,
-                            diachi: res.diachi,
-                            diem: res.diem
+                            diem: res.diem,
+                            diachi: res.diachi
                         }
                     }
                     )
@@ -218,7 +218,7 @@ function layNguoiDungtheoid(req) {
 
 function layNguoiDung(req) {
     return new Promise((resolve, reject) => {
-        khachhang.find({}).sort( { _id: -1 } ).select('_id ten email sdt matkhau hinhanh thanhvien diem ').populate('_idkhachhang', 'ten').exec(
+        khachhang.find({}).sort( { _id: -1 } ).select('_id ten email sdt matkhau hinhanh thanhvien diem diachi').populate('_idkhachhang', 'ten').exec(
             function (err, response) {
                 if (err) {
                     var err = {
@@ -235,8 +235,8 @@ function layNguoiDung(req) {
                             matkhau: res.matkhau,
                             hinhanh: res.hinhanh,
                             thanhvien: res.thanhvien,
-                            diachi: res.diachi,
-                            diem: res.diem
+                            diem: res.diem,
+                            diachi: res.diachi
                         }
                     }
                     )
