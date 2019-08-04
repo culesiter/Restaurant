@@ -44,9 +44,10 @@
                                                 <label>Sức chứa</label>
                                                 <input type="number" class="form-control" formControlName="succhua" placeholder="10">
                                             </div>
-                                            <div class="form-group col-md-2">
+                                            <div class="form-group col-md-12">
                                                 <label>Mô tả</label>
-                                                <input type="text" class="form-control" formControlName="mota" placeholder="10">
+                                                <textarea  rows="4" cols="50" class="form-control" formControlName="mota" placeholder="Mô tả loại phòng">
+                                                 </textarea>
                                             </div>
                                             <div class="form-group col-md-12">
                                                 <label>Image</label>
@@ -90,9 +91,10 @@
                                                         <label>Sức chứa</label>
                                                         <input type="number" class="form-control" formControlName="succhua" value="{{eData.succhua}}">
                                                     </div>
-                                                    <div class="form-group col-md-2">
+                                                    <div class="form-group col-md-12">
                                                         <label>Mô tả</label>
-                                                        <input type="text" class="form-control" formControlName="mota" placeholder="10">
+                                                        <textarea rows="4" cols="50" class="form-control" formControlName="mota" placeholder="10" value="{{eData.mota}}">
+                                                        </textarea>
                                                     </div>
                                                     <div class="form-group col-md-12">
                                                         <label>Image</label>

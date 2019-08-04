@@ -65,8 +65,6 @@ export class GioithieuphongComponent implements OnInit {
       })
       return tong;
     }
-
-
   }
   kiemTraPhongVuaDat() {
     this.phongstore = JSON.parse(localStorage.getItem('phong'));
