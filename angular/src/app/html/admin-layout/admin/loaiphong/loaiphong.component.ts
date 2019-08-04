@@ -79,7 +79,7 @@ export class LoaiphongComponent implements OnInit {
           }
         })
       } else {
-        alert('failed');
+        $.notify("Có lỗi xảy ra!", "error");
       }
     })
   }

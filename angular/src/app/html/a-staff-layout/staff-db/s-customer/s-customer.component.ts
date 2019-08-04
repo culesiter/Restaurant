@@ -124,7 +124,7 @@ export class SCustomerComponent implements OnInit {
         this.getList();
         this.formStatus = 'view';
       } else {
-        alert('failed');
+        $.notify("Có lỗi xảy ra!", "error");
       }
     });
   }

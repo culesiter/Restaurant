@@ -61,12 +61,12 @@ export class HeaderComponent implements OnInit {
   dangNhap() {
     this.login.login(this.email.value, this.matkhau.value).subscribe(response => {
       if (response.message === 'dang nhap thanh cong') {
-        alert('Đăng nhập thành công');
+        $.notify('Đăng nhập thành công!', 'success');
         const user = JSON.stringify(response);
         localStorage.setItem('user', user);
         this.khachhang = JSON.parse(localStorage.getItem('user'));
       } else {
-        alert('Sai Email hoặc Password');
+        $.notify("Sai Email hoặc Password!", "error");
       }
     });
 

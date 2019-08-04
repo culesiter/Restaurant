@@ -125,7 +125,7 @@ export class SBillComponent implements OnInit {
     const check = confirm('Bạn có chắc chắn muốn xóa?');
     if (check === true) {
       this.hoadonS.xoa(id).subscribe(res => {
-        alert(res.message);
+        $.notify(res.message, 'success');
         this.laydsHoadon();
         this.xem = true;
       });

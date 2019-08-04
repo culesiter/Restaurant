@@ -132,7 +132,7 @@ export class DishManagerComponent implements OnInit {
           this.getAllDish();
           this.formStatus = 'view';
         } else {
-          alert('err');
+          $.notify("Có lỗi xảy ra!", "error");
         }
       })
     }
@@ -147,13 +147,13 @@ export class DishManagerComponent implements OnInit {
         console.log(uploaddata);
         this.dishserviceService.upanh(id, uploaddata).subscribe(resq => {
           if (resq) {
-            alert('thanh cong!');
+            $.notify('Đã sửa một mục!', 'success');
             this.getAllDish();
             this.formStatus = 'view';
           }
         })
       } else {
-        alert('failed');
+        $.notify("Có lỗi xảy ra!", "error");
       }
     })
   }
