@@ -1,9 +1,9 @@
 var service=require("../service/lichlam.service");
 module.exports={
     taolichlam:taolichlam1,
-    laybangluong:laybangluong1,
-    xoabangluong:xoabangluong1,
-    laybangluongtheoid:laybangluongtheoid1
+    laylichlam:laylichlam1,
+    xoalichlam:xoalichlam1,
+    laylichlamtheoid:laylichlamtheoid1
 }
 function taolichlam1(req,res){
     service.taolichlam(req.body).then((result) => {
@@ -19,22 +19,22 @@ function updateProduct1(req,res){
         res.send(err);
     });
 }
-function xoabangluong1(req,res){
-    service.xoabangluong(req.params).then((result) => {
+function xoalichlam1(req,res){
+    service.xoalichlam(req.params).then((result) => {
         res.send(result);
     }).catch((err) => {
         res.send(err);
     });
 }
-function laybangluong1(req,res){
-    service.laybangluong().then((result) => {
+function laylichlam1(req,res){
+    service.laylichlam().then((result) => {
         res.send(result);
     }).catch((err) => {
         res.send(err);
     });
 }
-function laybangluongtheoid1(req,res){
-    service.laybangluongtheoid(req.query).then((result) => {
+function laylichlamtheoid1(req,res){
+    service.laylichlamtheoid(req.query).then((result) => {
         res.send(result);
     }).catch((err) => {
         res.send(err);

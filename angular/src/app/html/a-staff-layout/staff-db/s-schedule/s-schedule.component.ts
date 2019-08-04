@@ -15,11 +15,12 @@ export interface CalendarDate {
 }
 
 @Component({
-  selector: 'app-schedule',
-  templateUrl: './schedule.component.html',
-  styleUrls: ['./schedule.component.scss']
+  selector: 'app-s-schedule',
+  templateUrl: './s-schedule.component.html',
+  styleUrls: ['./s-schedule.component.scss']
 })
-export class ScheduleComponent implements OnInit, OnChanges {
+export class SScheduleComponent implements OnInit, OnChanges {
+
 
   private listData: any[];
   private serchform: FormGroup;
@@ -49,64 +50,13 @@ export class ScheduleComponent implements OnInit, OnChanges {
   constructor(private staff: StaffService, private formBuilder: FormBuilder, private excelService: ExcelService) { }
 
   ngOnInit() {
-    this.form();
-    this.nextMonth();
-    this.getList((this.currentDate.month() + 1));
-    this.dtOptions = {
-      pagingType: 'full_numbers',
-      retrieve: true,
-      paging: true,
-      ordering: false,
-      language: {
-        processing: 'Procesando...',
-        search: 'Tìm Kiếm:',
-        lengthMenu: 'Hiển thị _MENU_ mục',
-        info: 'Hiển thị từ _START_ đến _END_ mục trong _TOTAL_ mục',
-        infoEmpty: 'Không có mục nào',
-        infoFiltered: "(filtrado _MAX_ elementos total)",
-        infoPostFix: "",
-        loadingRecords: "Cargando registros...",
-        zeroRecords: "Không có mục nào",
-        emptyTable: "No hay datos disponibles en la tabla",
-        paginate: {
-          first: 'Đầu tiên',
-          previous: 'Trở về',
-          next: 'Kế tiếp',
-          last: 'Cuối cùng'
-        },
-        aria: {
-          sortAscending: ": Activar para ordenar la tabla en orden ascendente",
-          sortDescending: ": Activar para ordenar la tabla en orden descendente"
-        }
-      }
-    };
+    const user = JSON.parse(localStorage.getItem('staff'));
+    if (user) {
+      this.getList(this.currentDate.month() + 1, user._id);
+    }
     this.generateCalendar();
   }
 
-
-  daytomodal() {
-    const day = JSON.parse(sessionStorage.getItem('day'));
-    const u = JSON.parse(sessionStorage.getItem('staffbydate'));
-    if (day && u) {
-      const data = {
-        tinhtrang: 0,
-        thang: this.currentDate.month() + 1,
-        nam: this.currentyear,
-        thulam: day,
-        _idnhanvien: u._id
-      };
-      this.staff.themlichlam(data).subscribe(res => {
-        if (res.message = 'luu thanh cong') {
-          $.notify('Đã tạo một món ăn mới!', 'success');
-          setTimeout(() => {
-            $('#myModal').modal('hide');
-          }, 150);
-          this.getList((this.currentDate.month() + 1));
-        }
-        console.log(res);
-      });
-    }
-  }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.selectedDates &&
@@ -153,6 +103,10 @@ export class ScheduleComponent implements OnInit, OnChanges {
     return result;
   }
 
+  isToday2(date: moment.Moment): boolean {
+    console.log(date);
+    return moment().isSame(moment(date), 'day');
+  }
   isToday(date: moment.Moment): boolean {
     const date1 = JSON.parse(sessionStorage.getItem('date'));
     let check = false;
@@ -171,9 +125,7 @@ export class ScheduleComponent implements OnInit, OnChanges {
   }
 
   isSelected(date: moment.Moment): boolean {
-    return _.findIndex(this.selectedDates, (selectedDate) => {
-      return moment(date).isSame(selectedDate.mDate, 'day');
-    }) > -1;
+    return moment().isSame(moment(date), 'day');
   }
 
   isSelectedMonth(date: moment.Moment): boolean {
@@ -191,7 +143,10 @@ export class ScheduleComponent implements OnInit, OnChanges {
 
     } else {
       this.currentDate = moment(this.currentDate).subtract(1, 'months');
-      this.getList(this.currentDate.month() + 1);
+      const user = JSON.parse(localStorage.getItem('staff'));
+      if (user) {
+        this.getList(this.currentDate.month() + 1, user._id);
+      }
       this.generateCalendar();
     }
 
@@ -202,7 +157,10 @@ export class ScheduleComponent implements OnInit, OnChanges {
 
     } else {
       this.currentDate = moment(this.currentDate).add(1, 'months');
-      this.getList(this.currentDate.month() + 1);
+      const user = JSON.parse(localStorage.getItem('staff'));
+      if (user) {
+        this.getList(this.currentDate.month() + 1, user._id);
+      }
       this.generateCalendar();
     }
   }
@@ -252,78 +210,28 @@ export class ScheduleComponent implements OnInit, OnChanges {
         };
       });
   }
+
   exportAsXLSX(): void {
     const salary_arr = [];
     salary_arr.push(this.bangluong);
     this.excelService.exportAsExcelFile(salary_arr, 'Bang_luong_');
   }
-  form() {
-    this.serchform = this.formBuilder.group({
-      thang: [this.currentmonth, [
-      ]]
-    });
-  }
 
-  getList(thang) {
-    this.staff.laydanhsach().subscribe(res => {
+
+  getList(thang, id) {
+    this.staff.laylichlamtheoid(id).subscribe(res => {
+      console.log(res);
       this.listData = res;
-      this.staff.laylichlam().subscribe(response => {
-        console.log(thang, response);
-        this.listData.forEach(element => {
-          element['tao'] = 'chuatao';
-          response.forEach(element2 => {
-            if (element2.thang == thang && element2._idnhanvien._id === element._id && element2.nam == this.currentyear) {
-              element['tao'] = 'datao';
-            }
-          });
-        });
-        this.dtTrigger.next();
-      });
-    });
-  }
-  calc(item) {
-    sessionStorage.setItem('date', JSON.stringify([]));
-    sessionStorage.setItem('staffbydate', JSON.stringify(item));
-    this.generateCalendar();
-  }
-  calc2(ngay, luong) {
-    console.log(ngay * luong);
-    this.tongluong = ngay * luong;
-  }
-  calc3(data, ngay, tongluong) {
-    const wrap = {
-      _idnhanvien: data._id,
-      songaylam: ngay,
-      tongluong: tongluong,
-      thangtra: this.serchform.value.thang || this.currentmonth,
-      namtra: this.currentyear,
-      cap: data._idcapnhanvien.cap,
-      luongtheongay: data._idcapnhanvien.luongtheongay
-    };
-    this.staff.thembangluong(wrap).subscribe(response => {
-      console.log(response);
-      if (response.message === 'luu thanh cong') {
-        $.notify('Lương đã được tính!', 'success');
-        this.getList(this.serchform.value.thang || this.currentmonth);
-        setTimeout(() => {
-          $('#myModal').modal('hide');
-        }, 150);
-      }
-    });
-  }
-  search() {
-    console.log(this.currentDate.month());
-
-    this.mounthde = this.serchform.value.thang;
-    this.getList(this.serchform.value.thang);
-  }
-  detail(item) {
-    this.staff.laybangluongtheoid(item._id).subscribe(res => {
-      res.forEach(element => {
-        if (element.thangtra === this.mounthde) {
-          this.bangluong = element;
+      res.forEach(element2 => {
+        if (element2.thang == thang && element2._idnhanvien._id === id && element2.nam == this.currentyear) {
+          console.log(element2);
+          // tslint:disable-next-line:max-line-length
+          sessionStorage.setItem('date', JSON.stringify(this.getDaysArray(this.currentyear, this.currentDate.month() + 1, element2.thulam)));
+          this.generateCalendar();
         }
       });
     });
   }
+
+
 }

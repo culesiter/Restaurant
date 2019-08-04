@@ -89,17 +89,18 @@ $dayBase: 30px;
       &.selected {
         color: red;
         &:after {
-          background-color: red;
+          background-color: yellow;
         }
         &:hover {
           &:after {
-            background-color: red;
+            background-color: yellow;
           }
         }
       }
 
       &.disabled {
         color: slategrey;
+        opacity: 0.7;
       }
     }
 
@@ -109,3 +110,6 @@ $dayBase: 30px;
     }
   }
 } 
+.today2{
+background: yellow;
+}

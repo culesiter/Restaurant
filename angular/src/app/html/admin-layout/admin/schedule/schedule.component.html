@@ -1,36 +1,9 @@
 
 <section id="salary">
     <div class="container">
-      <form (ngSubmit)="search()" [formGroup]="serchform">
-        <div class="row" style="display: flex;width: 100%; align-items: center;padding-top: 10px;padding-bottom: 10px">
-          <div class="col-md-6">
-            <div class="form-group" style="display: flex;margin-bottom: 0">
-              <label style="width: 30%">Chọn tháng: </label>
-              <select class="form-control" formControlName="thang">
-                <option selected value="1">Tháng 1</option>
-                <option value="2">Tháng 2</option>
-                <option value="3">Tháng 3</option>
-                <option value="4">Tháng 4</option>
-                <option value="5">Tháng 5</option>
-                <option value="6">Tháng 6</option>
-                <option value="7">Tháng 7</option>
-                <option value="8">Tháng 8</option>
-                <option value="9">Tháng 9</option>
-                <option value="10">Tháng 10</option>
-                <option value="11">Tháng 11</option>
-                <option value="12">Tháng 12</option>
-              </select>
-            </div>
-          </div>
-          <div class="col-md-3" style="display: flex; align-items: center">
-            <button type="submit" class="btn btn-primary">Chọn</button>
-          </div>
-          <div class="col-md-3" style="display: flex; align-items: center">
-            <h3>lương tháng: {{currentmonth}}, </h3>
-            <h3>Năm: {{currentyear}}</h3>
-          </div>
-        </div>
-      </form>
+      <button (click)="prevMonth()">&lt;</button>
+      <span class="p4">Tháng {{ currentDate.format('MM') }}</span>
+      <button (click)="nextMonth()">&gt;</button>
       <table class="table table-hover list-table" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
         <thead>
           <tr>
@@ -59,11 +32,10 @@
               </span>
           </td>
             <td>
-              <button  class="btn btn-primary" (click)="calc(item)" data-toggle="modal"
-                data-target="#myModal">
+              <button *ngIf="item.tao==='chuatao'" class="btn btn-primary" (click)="calc(item)" data-toggle="modal" data-target="#myModal">
                 Lên Lịch
               </button>
-              <button *ngIf="item.luong==='datinh'" class="btn btn-danger" (click)="detail(item)" data-toggle="modal"
+              <button *ngIf="item.tao==='datao'" class="btn btn-danger" (click)="detail(item)" data-toggle="modal"
                 data-target="#myModal2">
                 Xem chi tiết
               </button>
@@ -73,9 +45,9 @@
       </table>
     </div>
   </section>
-  <div class="modal" id="myModal" *ngIf="data">
+  <div class="modal" id="myModal" >
     <div class="modal-dialog">
-      <div class="modal-content" style="padding:15px">
+      <div class="modal-content" style="padding:15px;display: flex">
           <section>
               Mời lựa chọn ngày làm tháng:
               <form (submit)="daytomodal()">
@@ -84,43 +56,36 @@
                   <label class="form-check-label" for="exampleCheck1">thứ 2</label>
                 </div>
                 <div class="form-check">
-                  <input type="checkbox" class="form-check-input" id="exampleCheck1" (click)="addthu(2)">
-                  <label class="form-check-label" for="exampleCheck1">thứ 3</label>
+                  <input type="checkbox" class="form-check-input" id="exampleCheck2" (click)="addthu(2)">
+                  <label class="form-check-label" for="exampleCheck2">thứ 3</label>
                 </div>
                 <div class="form-check">
-                  <input type="checkbox" class="form-check-input" id="exampleCheck1" (click)="addthu(3)">
-                  <label class="form-check-label" for="exampleCheck1">thứ 4</label>
+                  <input type="checkbox" class="form-check-input" id="exampleCheck3" (click)="addthu(3)">
+                  <label class="form-check-label" for="exampleCheck3">thứ 4</label>
                 </div>
                 <div class="form-check">
-                  <input type="checkbox" class="form-check-input" id="exampleCheck1" (click)="addthu(4)">
-                  <label class="form-check-label" for="exampleCheck1">thứ 5</label>
+                  <input type="checkbox" class="form-check-input" id="exampleCheck4" (click)="addthu(4)">
+                  <label class="form-check-label" for="exampleCheck4">thứ 5</label>
                 </div>
                 <div class="form-check">
-                  <input type="checkbox" class="form-check-input" id="exampleCheck1" (click)="addthu(5)">
-                  <label class="form-check-label" for="exampleCheck1">thứ 6</label>
+                  <input type="checkbox" class="form-check-input" id="exampleCheck5" (click)="addthu(5)">
+                  <label class="form-check-label" for="exampleCheck5">thứ 6</label>
                 </div>
                 <div class="form-check">
-                  <input type="checkbox" class="form-check-input" id="exampleCheck1" (click)="addthu(6)">
-                  <label class="form-check-label" for="exampleCheck1">thứ 7</label>
+                  <input type="checkbox" class="form-check-input" id="exampleCheck6" (click)="addthu(6)">
+                  <label class="form-check-label" for="exampleCheck6">thứ 7</label>
                 </div>
                 <div class="form-check">
-                  <input type="checkbox" class="form-check-input" id="exampleCheck1" (click)="addthu(0)">
-                  <label class="form-check-label" for="exampleCheck1">Chủ Nhật</label>
+                  <input type="checkbox" class="form-check-input" id="exampleCheck7" (click)="addthu(0)">
+                  <label class="form-check-label" for="exampleCheck7">Chủ Nhật</label>
                 </div>
-                <button class="btn btn-primary" type="submit">tìm kiếm</button>
+                <button class="btn btn-primary" type="submit">them lich lam</button>
               </form>
             </section>
             <div class="calendar">
                 <div class="calendar-navs">
                   <div class="month-nav">
-                    <button (click)="prevMonth()">&lt;</button>
-                    <span class="p4">{{ currentDate.format('MMMM') }}</span>
-                    <button (click)="nextMonth()">&gt;</button>
-                  </div>
-                  <div class="year-nav">
-                    <button (click)="prevYear()">&lt;</button>
-                    <span>{{ currentDate.format('YYYY') }}</span>
-                    <button (click)="nextYear()">&gt;</button>
+                    <span class="p4">Tháng {{ currentDate.format('MM') }}</span>
                   </div>
                 </div>
                 <div class="month-grid">

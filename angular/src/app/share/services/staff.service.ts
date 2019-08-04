@@ -6,6 +6,7 @@ import { Icustomer } from '../entities/icustomer';
 export class StaffService {
   private url = "http://localhost:3000/nhanvien";
   private urll = "http://localhost:3000/bangluong";
+  private urls = "http://localhost:3000/lichlam";
 
   constructor(private http: Http) { }
   laynhanvientheoid(id): Observable<any[]> {
@@ -23,6 +24,20 @@ export class StaffService {
     return this.http.post(this.urll, data).map(res => {
       return res.json();
     });
+  }
+  themlichlam(data): Observable<any> {
+    return this.http.post(this.urls, data).map(res => {
+      return res.json();
+    });
+  }
+  laylichlamtheoid(id): Observable<any[]> {
+    return this.http.get(this.urls + '/id/?id=' + id).map(respose => respose.json() as any[]);
+  }
+  laylichlam(): Observable<any[]> {
+    return this.http.get(this.urls).map(respose => respose.json() as any[]);
+  }
+  xoalichlam(id): Observable<any> {
+    return this.http.delete(this.urls + '/' + id).map(res => res.json() as any);
   }
   xoa(id): Observable<any> {
     return this.http.delete(this.url + '/' + id).map(res => res.json() as any);
