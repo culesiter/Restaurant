@@ -29,6 +29,7 @@ app.use('/chitietdichvu', require('./router/chitietdichvu.router')());
 app.use('/chitietmonan', require('./router/chitietmonan.router')());
 app.use('/capnhanvien', require('./router/capnhanvien.router.js')());
 app.use('/bangluong', require('./router/bangluong.router.js')());
+app.use('/lichlam', require('./router/lichlam.router.js')());
 app.use('/payment', require('./router/payment.router.js')());
 
 var a= app.listen(process.env.PORT || 3000, () => {

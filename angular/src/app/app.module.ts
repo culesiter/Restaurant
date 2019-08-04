@@ -81,6 +81,7 @@ import { SroomtypeComponent } from './html/a-staff-layout/staff-db/sroomtype/sro
 import { SServicesComponent } from './html/a-staff-layout/staff-db/s-services/s-services.component';
 import { SMenuComponent } from './html/a-staff-layout/staff-db/s-menu/s-menu.component';
 import { SDishTypeComponent } from './html/a-staff-layout/staff-db/s-dish-type/s-dish-type.component';
+import { ScheduleComponent } from './html/admin-layout/admin/schedule/schedule.component';
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   {
@@ -133,6 +134,7 @@ const routes: Routes = [
           { path: 'rank', component: RankStaffComponent },
           { path: 'statistical', component: StatisComponent },
           { path: 'salary', component: SalaryComponent },
+          { path: 'schedule', component: ScheduleComponent },
           {
             path: 'bills', component: BillsManagerComponent, children: [
               { path: 'detail:/id', component: BillDetailComponent }
@@ -224,6 +226,7 @@ const routes: Routes = [
     SServicesComponent,
     SMenuComponent,
     SDishTypeComponent
+    ScheduleComponent
   ],
   imports: [
     ChartsModule,

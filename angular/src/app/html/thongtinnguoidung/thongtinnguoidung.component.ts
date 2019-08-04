@@ -15,7 +15,7 @@ private usertempForid: Icustomer ={};
 private frmSua: FormGroup;
 private eData: Icustomer = {};
 private tempCalendar: any[] = [
-  {start: "2019-08-03T07:00:00.000Z",end: "2019-08-05T08:00:00.000Z",text: "test calendar.",color: "red"}
+  {start: "2019-08-03",end: "2019-08-05T08:00:00.000Z",text: "test calendar.",color: "red"}
 ];
   constructor(private formBuilder: FormBuilder, private human: HumanService) { }
 
