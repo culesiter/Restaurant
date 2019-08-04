@@ -225,7 +225,7 @@ const routes: Routes = [
     SroomtypeComponent,
     SServicesComponent,
     SMenuComponent,
-    SDishTypeComponent
+    SDishTypeComponent,
     ScheduleComponent
   ],
   imports: [
