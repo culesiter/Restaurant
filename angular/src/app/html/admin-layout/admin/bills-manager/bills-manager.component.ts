@@ -4,6 +4,7 @@ import { Ihoadon } from '../../../../share/entities/ihoadon';
 import { HoadonService } from '../../../../share/services/hoadon.service';
 import { PhongserviceService } from '../../../../share/services/phongservice.service';
 import { Subject } from 'rxjs';
+declare var $: any;
 // import { ExcelService } from '../../../../share/services/contacService/Excel.service';
 //import { ExcelService } from '../../../../share/services/contacService/Excel.service';
 const moment = require('moment');
@@ -70,6 +71,15 @@ export class BillsManagerComponent implements OnInit {
   filterById() {
     this.laydsHoadon(this.min, this.max);
   }
+  filterById2() {
+    this.laydsHoadon(this.min, false);
+  }
+  filterById3() {
+    this.laydsHoadon(false, this.max);
+  }
+  filterById4() {
+    this.laydsHoadon(false, false);
+  }
   laydsHoadon(min, max) {
     this.hoadonS.laydanhsach().subscribe(res => {
       this.lstHoadon = res;
@@ -117,8 +127,48 @@ export class BillsManagerComponent implements OnInit {
           }
         } else if (min && max) {
           console.log(moment(max).isAfter(moment(element.thoidiemden, 'DD-MM-YYYY')));
+          console.log(moment(element.thoidiemden, 'DD-MM-YYYY').isAfter(moment(min)));
           // tslint:disable-next-line:max-line-length
-          if (moment(max).isAfter(moment(element.thoidiemden, 'DD-MM-YYYY')) && moment(element.thoidiemden, 'DD-MM-YYYY').isAfter(moment(min))) {
+          if (moment(element.thoidiemden, 'DD-MM-YYYY').isAfter(moment(min)) && moment(max).isAfter(moment(element.thoidiemden, 'DD-MM-YYYY'))) {
+            console.log(element.thoidiemden);
+            if (element.tinhtrang === 0) {
+              this.chuaxacnhan.push(element);
+            } else if (element.tinhtrang === 1) {
+              this.daxacnhan.push(element);
+            } else if (element.tinhtrang === 2) {
+              this.dathanhtoan.push(element);
+              if (element.hinhthucthanhtoan == 2) {
+                this.dathanhtoan2.push(element);
+              } else {
+                this.dathanhtoan1.push(element);
+              }
+            } else if (element.tinhtrang === -1) {
+              this.huy.push(element);
+            }
+          }
+        } else if (min && !max) {
+          // tslint:disable-next-line:max-line-length
+          if (moment(element.thoidiemden, 'DD-MM-YYYY').isAfter(moment(min))) {
+            console.log(element.thoidiemden);
+            if (element.tinhtrang === 0) {
+              this.chuaxacnhan.push(element);
+            } else if (element.tinhtrang === 1) {
+              this.daxacnhan.push(element);
+            } else if (element.tinhtrang === 2) {
+              this.dathanhtoan.push(element);
+              if (element.hinhthucthanhtoan == 2) {
+                this.dathanhtoan2.push(element);
+              } else {
+                this.dathanhtoan1.push(element);
+              }
+            } else if (element.tinhtrang === -1) {
+              this.huy.push(element);
+            }
+          }
+        } else if (!min && max) {
+          // tslint:disable-next-line:max-line-length
+          if (moment(max).isAfter(moment(element.thoidiemden, 'DD-MM-YYYY'))) {
+            console.log(element.thoidiemden);
             if (element.tinhtrang === 0) {
               this.chuaxacnhan.push(element);
             } else if (element.tinhtrang === 1) {
@@ -137,6 +187,7 @@ export class BillsManagerComponent implements OnInit {
         }
       });
       this.dtTrigger.next();
+      $.notify('Hiển thị dữ liệu!', 'success');
     });
   }
   openDetail(data) {

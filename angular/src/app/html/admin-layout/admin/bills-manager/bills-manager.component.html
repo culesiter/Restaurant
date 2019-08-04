@@ -12,7 +12,15 @@
                 <button data-toggle="modal" data-target="#range">
                     khoảng ngày
                 </button>
-
+                <button data-toggle="modal" data-target="#afterdate">
+                    truoc ngày được nhập
+                </button>
+                <button data-toggle="modal" data-target="#beforedate">
+                    sau ngày được nhập
+                </button>
+                <button (click)="filterById4()">
+                    bỏ tìm kiếm
+                </button>
             </div>
         </li>
     </ul>
@@ -28,7 +36,33 @@
                         Max
                         <input type="date" name="max" id="max" [(ngModel)]="max" />
                     </label>
-                    <button class="btn btn-primary" type="submit">Filter by ID</button>
+                    <button class="btn btn-primary" type="submit">tìm kiếm</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div id="afterdate" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form (submit)="filterById2()">
+                    <label>
+                        ngày bé nhất:
+                        <input type="date" name="min" id="min" [(ngModel)]="min" />
+                    </label>
+                    <button class="btn btn-primary" type="submit">tìm kiếm</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div id="beforedate" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form (submit)="filterById3()">
+                    <label>
+                        ngày lớn nhất:
+                        <input type="date" name="max" id="max" [(ngModel)]="max" />
+                    </label>
+                    <button class="btn btn-primary" type="submit">tìm kiếm</button>
                 </form>
             </div>
         </div>
