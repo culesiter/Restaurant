@@ -244,7 +244,7 @@ export class GioithieuphongComponent implements OnInit {
     const phong = JSON.parse(localStorage.getItem('phong'));
     const buoi = JSON.parse(localStorage.getItem('buoi'));
     if (!buoi || buoi.length === 0 || buoi[0]._idphong !== giatri._id) {
-      alert('Chọn buổi cho phòng trên');
+      $.notify("Chọn buổi cho phòng trên", "info");
     } else {
       if (!phong || phong.length === 0) {
 
@@ -258,20 +258,16 @@ export class GioithieuphongComponent implements OnInit {
         this.layPhongStore();
         this.tienphong = this.tinhTienPhong();
         this.kiemTraPhongVuaDat();
-
       } else {
-        alert('Xin lỗi bạn đã chọn phòng rồi');
+        $.notify("Xin lỗi bạn đã chọn phòng rồi!", "error");
       }
     }
   }
   layPhongStore() {
     this.phongstore = JSON.parse(localStorage.getItem('phong'));
-
-
     if (this.phongstore) {
       this.mang = this.phongstore.map(res => { return res.item._id });
     }
-
   }
   chonBuoi(buoi, idphong) {
     let buoidadat = true;
@@ -335,12 +331,12 @@ export class GioithieuphongComponent implements OnInit {
     const tempBuoi = JSON.parse(localStorage.getItem('buoi'));
     const tempphong = JSON.parse(localStorage.getItem('phong'));
     if (!tempBuoi || tempBuoi.length === 0) {
-      alert('vui long chọn buổi đến');
+      $.notify("Vui lòng chọn buổi đến", "info");
     } else if (tempBuoi[0]._idphong !== item_p._id) {
-      alert('vui long chọn buổi đến cho phòng trên');
+      $.notify("Vui lòng chọn buổi đến cho phòng trên", "info");
     } else if (tempphong && tempphong.length !== 0) {
       if (tempphong[0].item._id === item_p._id) {
-        alert('Phòng đã đặt, bạn hãy chọn món');
+        $.notify('Phòng đã đặt, bạn hãy chọn món!', 'success');
       }
     } else {
       localStorage.setItem('thoidiemden', JSON.stringify(moment(date).format('DD-MM-YYYY')));

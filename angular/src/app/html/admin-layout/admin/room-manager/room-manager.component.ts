@@ -109,11 +109,11 @@ export class RoomManagerComponent implements OnInit {
   edit() {
     this.phongserviceService.suaphong(this.eData._id, this.frmSua.value).subscribe(res => {
       if (res) {
-        alert('ok');
+        $.notify('Đã sửa một mục!', 'success');
         this.getList();
         this.formStatus = 'view';
       } else {
-        alert('failed');
+        $.notify("Có lỗi xảy ra!", "error");
       }
     })
   }

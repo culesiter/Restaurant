@@ -103,7 +103,7 @@ export class SRoomComponent implements OnInit {
           this.getList();
           this.formStatus = 'view';
         } else {
-          $.notify('có lỗi xảy ra');
+          $.notify('Có lỗi xảy ra');
         }
       });
     });
@@ -111,11 +111,11 @@ export class SRoomComponent implements OnInit {
   edit() {
     this.phongserviceService.suaphong(this.eData._id, this.frmSua.value).subscribe(res => {
       if (res) {
-        alert('ok');
+        $.notify('Đã sửa một mục!', 'success');
         this.getList();
         this.formStatus = 'view';
       } else {
-        alert('failed');
+        $.notify("Có lỗi xảy ra!", "error");
       }
     })
   }

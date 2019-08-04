@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Idichvu } from '../../../../share/entities/idichvu';
 import { DichvuService } from '../../../../share/services/dichvu.service';
+declare var $;
 @Component({
   selector: 'app-dichvu',
   templateUrl: './dichvu.component.html',
@@ -51,7 +52,7 @@ export class DichvuComponent implements OnInit {
       this.dvservices.upanh(data.values._id, uploaddata).subscribe(resq =>{
         console.log(resq);
         if(resq){
-          alert('thanh cong!');
+          $.notify('Đã tạo một mục mới!', 'success');
           this.getList();
           this.formStatus = 'view';
         }
@@ -69,13 +70,13 @@ export class DichvuComponent implements OnInit {
       this.dvservices.upanh(this.eData._id, uploaddata).subscribe(resq =>{
         console.log(resq);
         if(resq){
-          alert('thanh cong!');
+         $.notify('Đã sửa một mục!', 'success');
           this.getList();
           this.formStatus = 'view';
         }
       })
       } else {
-        alert ('failed');
+        $.notify("Có lỗi xảy ra!", "error");
       }
     })
   }

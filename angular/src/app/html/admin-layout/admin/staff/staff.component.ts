@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { StaffService } from '../../../../share/services/staff.service';
 import { Subject } from 'rxjs';
+declare var $;
 @Component({
   selector: 'app-stafff',
   templateUrl: './staff.component.html',
@@ -104,7 +105,7 @@ export class StaffComponent implements OnInit {
       this.staff.upanhkh(data.values._id, uploaddata).subscribe(resq => {
         console.log(resq);
         if (resq) {
-          alert('thanh cong!');
+          $.notify('Đã tạo một mục mới!', 'success');
           this.getList();
           this.formStatus = 'view';
         }
@@ -114,11 +115,11 @@ export class StaffComponent implements OnInit {
   edit() {
     this.staff.sua(this.eData._id, this.frmSua.value).subscribe(res => {
       if (res) {
-        alert('ok');
+        $.notify('Đã sửa một mục!', 'success');
         this.getList();
         this.formStatus = 'view';
       } else {
-        alert('failed');
+        $.notify("Có lỗi xảy ra!", "error");
       }
     });
   }

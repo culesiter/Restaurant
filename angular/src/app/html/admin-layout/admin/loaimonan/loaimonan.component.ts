@@ -79,7 +79,6 @@ export class LoaimonanComponent implements OnInit {
   taoMoi() {
     this.dishserviceService.themloaimon(this.formAddNew.value).subscribe(res => {
       if (res.message === 'luu thanh cong') {
-        console.log(res);
         $.notify('Đã tạo một món ăn mới!', 'success');
         this.formStatus = 'view';
         this.getListType();
@@ -93,11 +92,11 @@ export class LoaimonanComponent implements OnInit {
     this.dishserviceService.sualoaimon(this.eLoaiMon._id, this.frmSua.value).subscribe(res => {
       console.log(res);
       if (res) {
-        alert('ok');
+        $.notify('Đã sửa một mục!', 'success');
         this.getListType();
         this.formStatus = 'view';
       } else {
-        alert('failed');
+        $.notify("Có lỗi xảy ra!", "error");
       }
     })
   }

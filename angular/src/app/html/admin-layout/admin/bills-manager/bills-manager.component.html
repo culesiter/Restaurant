@@ -1,72 +1,94 @@
 <div class="bills">
+    <div class="more-search">
+        <div class="btn-adtocart" data-toggle="collapse" data-target="#search">
+            + Tìm Kiếm Nâng Cao
+        </div>
+        <div id="search" class="collapse">
+            <button class="btn-adtocart" data-toggle="modal" data-target="#range">
+                khoảng ngày
+            </button>
+            <button class="btn-adtocart" data-toggle="modal" data-target="#afterdate">
+                truoc ngày được nhập
+            </button>
+            <button class="btn-adtocart" data-toggle="modal" data-target="#beforedate">
+                sau ngày được nhập
+            </button>
+            <button class="btn-adtocart cancel" (click)="filterById4()">
+                bỏ tìm kiếm
+            </button>
+        </div>
+        <div id="range" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form (submit)="filterById()">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>
+                                    Từ ngày:
+                                </label>
+                                <input type="date" name="min" id="min" [(ngModel)]="min" />
+                            </div>
+                            <div class="col-md-6">
+                                <label>
+                                    Đến
+                                </label>
+                                <input type="date" name="max" id="max" [(ngModel)]="max" />
+                            </div>
+                        </div>
+                        <div class="col-md-12 bottom">
+                            <button class="btn btn-primary" type="submit"><i class="fa fa-search"
+                                    aria-hidden="true"></i> Tìm kiếm</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div id="afterdate" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form (submit)="filterById2()">
+                        <div class="row">
+                            <div class="col-md-9">
+                                <label>
+                                    Xem hóa đơn kể từ ngày:
+                                </label>
+                                <input type="date" name="min" id="min" [(ngModel)]="min" />
+                            </div>
+                            <div class="col-md-3">
+                                <button class="btn btn-primary" type="submit">tìm kiếm</button>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div id="beforedate" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form (submit)="filterById3()">
+                        <div class="row">
+                            <div class="col-md-9">
+                                <label>
+                                    Xem hóa đơn cho đến ngày:
+                                </label>
+                                <input type="date" name="max" id="max" [(ngModel)]="max" />
+                            </div>
+                            <div class="col-md-3">
+                                <button class="btn btn-primary" type="submit">tìm kiếm</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
     <ul class="nav nav-tabs">
         <li class="active"><a data-toggle="tab" href="#home">Chưa xác nhận</a></li>
         <li><a data-toggle="tab" href="#menu1">Đã xác nhận</a></li>
         <li><a data-toggle="tab" href="#menu2">Đã thanh toán</a></li>
         <li><a data-toggle="tab" href="#menu3">Đã Hủy</a></li>
-        <li>
-            <button data-toggle="collapse" data-target="#search">
-                + Tìm Kiếm Nâng Cao
-            </button>
-            <div id="search" class="collapse">
-                <button data-toggle="modal" data-target="#range">
-                    khoảng ngày
-                </button>
-                <button data-toggle="modal" data-target="#afterdate">
-                    truoc ngày được nhập
-                </button>
-                <button data-toggle="modal" data-target="#beforedate">
-                    sau ngày được nhập
-                </button>
-                <button (click)="filterById4()">
-                    bỏ tìm kiếm
-                </button>
-            </div>
-        </li>
     </ul>
-    <div id="range" class="modal fade" role="dialog">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <form (submit)="filterById()">
-                    <label>
-                        Min
-                        <input type="date" name="min" id="min" [(ngModel)]="min" />
-                    </label>
-                    <label>
-                        Max
-                        <input type="date" name="max" id="max" [(ngModel)]="max" />
-                    </label>
-                    <button class="btn btn-primary" type="submit">tìm kiếm</button>
-                </form>
-            </div>
-        </div>
-    </div>
-    <div id="afterdate" class="modal fade" role="dialog">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <form (submit)="filterById2()">
-                    <label>
-                        ngày bé nhất:
-                        <input type="date" name="min" id="min" [(ngModel)]="min" />
-                    </label>
-                    <button class="btn btn-primary" type="submit">tìm kiếm</button>
-                </form>
-            </div>
-        </div>
-    </div>
-    <div id="beforedate" class="modal fade" role="dialog">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <form (submit)="filterById3()">
-                    <label>
-                        ngày lớn nhất:
-                        <input type="date" name="max" id="max" [(ngModel)]="max" />
-                    </label>
-                    <button class="btn btn-primary" type="submit">tìm kiếm</button>
-                </form>
-            </div>
-        </div>
-    </div>
     <div class="tab-content">
         <div id="home" class="tab-pane in active">
             <table class="table table-hover list-table" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
