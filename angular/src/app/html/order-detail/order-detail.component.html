@@ -23,13 +23,17 @@
             {{item.thoidiemtao}}
           </td>
           <td>
-            {{item.tinhtrang}}
+           
+            <span *ngIf="item.tinhtrang===2&&item.hinhthucthanhtoan===1">Đã thanh toán 100%</span>
+            <span *ngIf="item.tinhtrang===2&&item.hinhthucthanhtoan===2">Đã thanh toán 10%</span>
+            <span *ngIf="item.tinhtrang===0">Chưa xác nhận</span>
+            <span *ngIf="item.tinhtrang===1">Thanh toán</span>
           </td>
           <td>
             {{item.tongtien}}
           </td>
           <td style="width:200px">
-            <div class="btn btn-danger" (click)="delete(item._id)">
+            <div *ngIf="item.tinhtrang!==2" class="btn btn-danger" (click)="delete(item._id)">
               Hủy
             </div>
             <div class="btn btn-primary" data-toggle="modal" data-target="#myModal" (click)="toDetail(item._id)">

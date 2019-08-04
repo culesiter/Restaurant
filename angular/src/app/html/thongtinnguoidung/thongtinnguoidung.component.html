@@ -2,12 +2,12 @@
   <div class="container">
     <div id="card">
       <div class="col-md-3">
-        <a href="">
+        <a href="#">
           <img src="../../../assets/images/us.jpg" />
         </a>
       </div>
       <div class="col-md-9">
-        <a href="">
+        <a href="#">
           <h2>{{usertemp.ten}}</h2>
         </a>
         <div class="form-tt">
@@ -20,6 +20,14 @@
               <div class="col-md-4 tit">Email:</div>
               <div class="col-md-8">{{usertemp.email}}</div>
             </div>
+            <div class="row">
+                <div class="col-md-4 tit">Địa chỉ:</div>
+                <div class="col-md-8">{{usertemp.diachi}}</div>
+              </div>
+              <div class="row">
+                  <div class="col-md-4 tit">Điểm tích lũy:</div>
+                  <div class="col-md-8" >{{dtl}}</div>
+                </div>
             <div class="row mgt-30">
               <div class="btn-adtocart"  data-toggle="modal" data-target="#editmd">
                 Chỉnh sửa thông tin cá nhân
@@ -64,7 +72,7 @@
                                     </div>
                                     <div class="col-md-12">
                                         <label>Đia chỉ</label>
-                                        <input type="text" class="form-control">
+                                        <input formControlName="diachi" type="text" value="{{usertemp.diachi}}" class="form-control">
                                     </div>
                                     <div class="form-group col-md-12 mgt-30">
                                         <button type="submit" class="btn btn-default">Cập nhật</button>

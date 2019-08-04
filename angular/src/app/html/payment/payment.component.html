@@ -367,6 +367,9 @@
             <option value="1">
               Trả hết
             </option>
+            <option value="0">
+              Đặt trước
+            </option>
           </select>
         </div>
       </div>
@@ -418,70 +421,72 @@
                 <td class="value">{{tinhTienPhong()+tinhTienDichVu()+tongTien}} VND</td>
               </tr>
               <tr>
-                  <td class="name">Ngày đến:</td>
-                  <td class="value">{{gio}} giờ {{phut}} phút, ngày: {{ngayden}}</td>
-                </tr>
-                <tr>
-                    <td class="name">Thời gian đến:</td>
-                    <td class="value">{{buoiden}}</td>
-                  </tr>
-                  <tr>
-                      <td class="name">Hình thức thanh toán:</td>
-                      <td class="value">
-                          <input *ngIf="select==1" disabled value="Trả hết" type="text" class="form-control">
-                          <input *ngIf="select==2" disabled value="Trả trước 10%" type="text" class="form-control">
-                      </td>
-                    </tr>
-                    <tr>
-                        <td class="name">Cân Thanh toán:</td>
-                        <td class="value">{{total}}</td>
-                      </tr>
+                <td class="name">Ngày đến:</td>
+                <td class="value">{{gio}} giờ {{phut}} phút, ngày: {{ngayden}}</td>
+              </tr>
+              <tr>
+                <td class="name">Thời gian đến:</td>
+                <td class="value">{{buoiden}}</td>
+              </tr>
+              <tr>
+                <td class="name">Hình thức thanh toán:</td>
+                <td class="value">
+                    <input *ngIf="select==0" disabled value="Đặt trước" type="text" class="form-control">
+                  <input *ngIf="select==1" disabled value="Trả hết" type="text" class="form-control">
+                  <input *ngIf="select==2" disabled value="Trả trước 10%" type="text" class="form-control">
+                </td>
+              </tr>
+              <tr>
+                <td class="name">Cân Thanh toán:</td>
+                <td class="value">{{total}}</td>
+              </tr>
             </table>
             <table class="temp_bill" *ngIf="khachhang2">
-                <tr>
-                  <td class="name">Tên khách hàng:</td>
-                  <td class="value">{{khachhang2.ten}}</td>
-                </tr>
-                <tr>
-                  <td class="name">Email:</td>
-                  <td class="value">{{khachhang2.email}}</td>
-                </tr>
-                <tr>
-                  <td class="name">Số Điện Thoại:</td>
-                  <td class="value">{{khachhang2.sdt}}</td>
-                </tr>
-                <tr>
-                  <td class="name">Tổng tiền món ăn:</td>
-                  <td class="value">{{tongTien}} VND</td>
-                </tr>
-                <tr>
-                  <td class="name">Tổng tiền Phòng - Dịch vụ:</td>
-                  <td class="value">{{tinhTienPhong()+tinhTienDichVu()}} VND</td>
-                </tr>
-                <tr>
-                  <td class="name">Tổng tiền phải trả:</td>
-                  <td class="value">{{tinhTienPhong()+tinhTienDichVu()+tongTien}} VND</td>
-                </tr>
-                <tr>
-                    <td class="name">Ngày đến:</td>
-                    <td class="value">{{gio}} giờ {{phut}} phút, ngày: {{ngayden}}</td>
-                  </tr>
-                  <tr>
-                      <td class="name">Thời gian đến:</td>
-                      <td class="value">{{buoiden}}</td>
-                    </tr>
-                    <tr>
-                        <td class="name">Hình thức thanh toán:</td>
-                        <td class="value">
-                            <input *ngIf="select==1" disabled value="Trả hết" type="text" class="form-control">
-                            <input *ngIf="select==2" disabled value="Trả trước 10%" type="text" class="form-control">
-                        </td>
-                      </tr>
-                      <tr>
-                          <td class="name">Cân Thanh toán:</td>
-                          <td class="value">{{total}}  VND</td>
-                        </tr>
-              </table>
+              <tr>
+                <td class="name">Tên khách hàng:</td>
+                <td class="value">{{khachhang2.ten}}</td>
+              </tr>
+              <tr>
+                <td class="name">Email:</td>
+                <td class="value">{{khachhang2.email}}</td>
+              </tr>
+              <tr>
+                <td class="name">Số Điện Thoại:</td>
+                <td class="value">{{khachhang2.sdt}}</td>
+              </tr>
+              <tr>
+                <td class="name">Tổng tiền món ăn:</td>
+                <td class="value">{{tongTien}} VND</td>
+              </tr>
+              <tr>
+                <td class="name">Tổng tiền Phòng - Dịch vụ:</td>
+                <td class="value">{{tinhTienPhong()+tinhTienDichVu()}} VND</td>
+              </tr>
+              <tr>
+                <td class="name">Tổng tiền phải trả:</td>
+                <td class="value">{{tinhTienPhong()+tinhTienDichVu()+tongTien}} VND</td>
+              </tr>
+              <tr>
+                <td class="name">Ngày đến:</td>
+                <td class="value">{{gio}} giờ {{phut}} phút, ngày: {{ngayden}}</td>
+              </tr>
+              <tr>
+                <td class="name">Thời gian đến:</td>
+                <td class="value">{{buoiden}}</td>
+              </tr>
+              <tr>
+                <td class="name">Hình thức thanh toán:</td>
+                <td class="value">
+                    <input *ngIf="select==0" disabled value="Đặt trước" type="text" class="form-control">
+                  <input *ngIf="select==1" disabled value="Trả hết" type="text" class="form-control">
+                  <input *ngIf="select==2" disabled value="Trả trước 10%" type="text" class="form-control">
+                </td>
+              </tr>
+              <tr>
+                <td class="name">Cân Thanh toán:</td>
+                <td class="value">{{total}} VND</td>
+              </tr>
+            </table>
           </div>
         </div>
         <div class="modal-footer">

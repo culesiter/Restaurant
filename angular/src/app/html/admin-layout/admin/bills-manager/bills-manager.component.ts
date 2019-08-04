@@ -4,6 +4,7 @@ import { Ihoadon } from '../../../../share/entities/ihoadon';
 import { HoadonService } from '../../../../share/services/hoadon.service';
 import { PhongserviceService } from '../../../../share/services/phongservice.service';
 import { Subject } from 'rxjs';
+import { DatePipe } from '@angular/common';
 declare var $: any;
 // import { ExcelService } from '../../../../share/services/contacService/Excel.service';
 //import { ExcelService } from '../../../../share/services/contacService/Excel.service';
@@ -33,8 +34,12 @@ export class BillsManagerComponent implements OnInit {
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject();
   // tslint:disable-next-line:max-line-length
-  constructor(private router: Router, private hoadonS: HoadonService, private phongsv: PhongserviceService) { }
+  private myDate = new Date();
+  constructor(private router: Router, private hoadonS: HoadonService, private phongsv: PhongserviceService,
+    private datePipe: DatePipe) { 
+    }
   ngOnInit() {
+    console.log(this.myDate);
     this.laydsHoadon(false, false);
     this.dtOptions = {
       pagingType: 'full_numbers',
@@ -110,8 +115,6 @@ export class BillsManagerComponent implements OnInit {
             this.huy.push(element);
           }
         } else if (min && max) {
-          console.log(moment(max).isAfter(moment(element.thoidiemden, 'DD-MM-YYYY')));
-          console.log(moment(element.thoidiemden, 'DD-MM-YYYY').isAfter(moment(min)));
           // tslint:disable-next-line:max-line-length
           if (moment(element.thoidiemden, 'DD-MM-YYYY').isAfter(moment(min)) && moment(max).isAfter(moment(element.thoidiemden, 'DD-MM-YYYY'))) {
             console.log(element.thoidiemden);

@@ -40,6 +40,7 @@
                 <th>Loai</th>
                 <th>Hình ảnh</th>
                 <th>Mô tả</th>
+                <th>Sức chứa</th>
                 <th>Giá</th>
               </tr>
             </thead>
@@ -54,12 +55,13 @@
                 <td style="text-align: justify">
                   {{item.mota}}
                 </td>
-                <td>
+                <td>{{item.succhua}} Người</td>
+                <td style="width:100px">
                   {{item.gia}} VNĐ
                 </td>
               </tr>
               <tr>
-                <td colspan="3" *ngIf="item.dsp">
+                <td colspan="4" *ngIf="item.dsp">
                   <div *ngFor="let ite of item.dsp" class="outline-rl">
                     <div class="wrap room-line">
                       <div class="room-name text-left" style="width: 10%;" *ngIf="ite.buoidat">

@@ -36,6 +36,44 @@
         border-color: rgba(48, 48, 134, 0.589);
     }
 }
+form{
+    display: inline-block;
+    width: 100%;
+    .row{
+        display: flex;
+        align-items: center;
+        >div{
+            padding:  5px 30px;
+            display: flex;
+            align-items: center;
+            label{
+                width: 35%;
+            }
+            input{
+                width: 65%;
+            }
+        }
+    }
+    .bottom{
+        margin-top: 30px;
+    }
+}
+.more-search{
+    margin-bottom: 20px;
+    #search{
+        padding: 7px 15px 0px;
+        .btn-adtocart{
+            margin-right: 10px;
+            background: #428bca;
+            border-color: snow;
+            color: white;
+            text-transform: uppercase;
+            &.cancel{
+                background: rgba(230, 114, 114, 0.94);
+            }
+        }
+    }
+}
 .lbrela{
     position: relative;
     padding: 10px 0;

@@ -139,7 +139,7 @@ export class PaymentComponent implements OnInit {
   time2() {
     const thoidiemden = JSON.parse(localStorage.getItem('thoidiemden'));
     this.total = this.tinhTienPhong() + this.tinhTienDichVu() + this.tongTien;
-    if (this.select == 2) {
+    if (this.select == 2 || this.select == 2) {
       this.total = this.total * 0.1;
     }
   }
@@ -299,6 +299,7 @@ export class PaymentComponent implements OnInit {
               };
               this.gettime.thanhtoan(payment_data).subscribe(res => {
                 $('#load').css('display', 'none');
+                $.notify('Gửi yêu cầu thành công');
                 this.href = res._body;
               });
             }

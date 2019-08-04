@@ -10,9 +10,10 @@ declare var $;
   styleUrls: ['./thongtinnguoidung.component.scss']
 })
 export class ThongtinnguoidungComponent implements OnInit {
-private usertemp: Icustomer ={};
+private usertemp: any ={};
 private usertempForid: Icustomer ={};
 private frmSua: FormGroup;
+private dtl : number;
 private eData: Icustomer = {};
   constructor(private formBuilder: FormBuilder, private human: HumanService) { }
   ngOnInit() {
@@ -20,6 +21,11 @@ private eData: Icustomer = {};
     this.human.laythongtinkhachhangtheoid(this.usertempForid._id).subscribe(res =>{
       this.usertemp = res[0];
       console.log(this.usertemp);
+      if(this.usertemp.diem === null){
+        this.dtl = 0;
+      } else{
+        this.dtl = this.usertemp.diem;
+      }
     })
     this.taoForm();
   }
@@ -28,6 +34,7 @@ private eData: Icustomer = {};
       ten: ['', []],
       email: ['', []],
       matkhau: ['', []],
+      diachi: ['', []],
     });
   }
   edit() {

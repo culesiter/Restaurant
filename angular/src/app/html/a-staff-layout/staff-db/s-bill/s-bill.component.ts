@@ -3,10 +3,10 @@ import { Router } from '@angular/router';
 import { Ihoadon } from '../../../../share/entities/ihoadon';
 import { HoadonService } from '../../../../share/services/hoadon.service';
 import { PhongserviceService } from '../../../../share/services/phongservice.service';
-// import { ExcelService } from '../../../../share/services/contacService/Excel.service';
-//import { ExcelService } from '../../../../share/services/contacService/Excel.service';
-const moment = require('moment');
+import { Subject } from 'rxjs';
+import { DatePipe } from '@angular/common';
 declare var $: any;
+const moment = require('moment');
 @Component({
   selector: 'app-s-bill',
   templateUrl: './s-bill.component.html',
@@ -27,17 +27,68 @@ export class SBillComponent implements OnInit {
   private ectdv: any[] = [];
   private totalma;
   private totaldv;
+  private min;
+  private max;
+  dtOptions: DataTables.Settings = {};
+  dtTrigger: Subject<any> = new Subject();
   // tslint:disable-next-line:max-line-length
-  constructor(private router: Router, private hoadonS: HoadonService, private phongsv: PhongserviceService) { }
+  private myDate = new Date();
+  constructor(private router: Router, private hoadonS: HoadonService, private phongsv: PhongserviceService,
+    private datePipe: DatePipe) {
+  }
   ngOnInit() {
-    this.laydsHoadon();
+    console.log(this.myDate);
+    this.laydsHoadon(false, false);
+    this.dtOptions = {
+      pagingType: 'full_numbers',
+      retrieve: true,
+      paging: true,
+      ordering: false,
+      language: {
+        processing: 'Procesando...',
+        search: 'Tìm Kiếm:',
+        lengthMenu: 'Hiển thị _MENU_ mục',
+        info: 'Hiển thị từ _START_ đến _END_ mục trong _TOTAL_ mục',
+        infoEmpty: 'Không có mục nào',
+        infoFiltered: "(filtrado _MAX_ elementos total)",
+        infoPostFix: "",
+        loadingRecords: "Cargando registros...",
+        zeroRecords: "Không có mục nào",
+        emptyTable: 'Không có mục nào',
+        paginate: {
+          first: 'Đầu tiên',
+          previous: 'Trở về',
+          next: 'Kế tiếp',
+          last: 'Cuối cùng'
+        },
+        aria: {
+          sortAscending: ": Activar para ordenar la tabla en orden ascendente",
+          sortDescending: ": Activar para ordenar la tabla en orden descendente"
+        }
+      }
+    };
   }
   // exportAsXLSX(): void {
   //   this.excelService.exportAsExcelFile(this.lstHoadon, 'sample');
   // }
-  laydsHoadon() {
+  filterById() {
+    this.laydsHoadon(this.min, this.max);
+  }
+  filterById2() {
+    this.laydsHoadon(this.min, false);
+  }
+  filterById3() {
+    this.laydsHoadon(false, this.max);
+  }
+  filterById4() {
+    this.laydsHoadon(false, false);
+  }
+  laydsHoadon(min, max) {
     this.hoadonS.laydanhsach().subscribe(res => {
       this.lstHoadon = res;
+      if (min && max) {
+
+      }
       this.chuaxacnhan = [];
       this.daxacnhan = [];
       this.dathanhtoan = [];
@@ -46,22 +97,83 @@ export class SBillComponent implements OnInit {
       this.huy = [];
       res.forEach(element => {
         element.thoidiemtao = moment(element.thoidiemtao).format(' h:mm:ss a, Ngày: DD-MM-YYYY');
-        if (element.tinhtrang === 0) {
-          this.chuaxacnhan.push(element);
-        } else if (element.tinhtrang === 1) {
-          this.daxacnhan.push(element);
-        } else if (element.tinhtrang === 2) {
-          this.dathanhtoan.push(element);
-          if (element.hinhthucthanhtoan == 2) {
-            this.dathanhtoan2.push(element);
-          } else {
-            this.dathanhtoan1.push(element);
+        if (!min && !max) {
+          if (element.tinhtrang === 0) {
+            this.chuaxacnhan.push(element);
+          } else if (element.tinhtrang === 1) {
+            this.daxacnhan.push(element);
+          } else if (element.tinhtrang === 2) {
+            this.dathanhtoan.push(element);
+            if (element.hinhthucthanhtoan == 2) {
+              this.dathanhtoan2.push(element);
+            } else {
+              this.dathanhtoan1.push(element);
+            }
+          } else if (element.tinhtrang === -1) {
+            this.huy.push(element);
           }
-
-        } else if (element.tinhtrang === -1) {
-          this.huy.push(element);
+        } else if (min && max) {
+          // tslint:disable-next-line:max-line-length
+          if (moment(element.thoidiemden, 'DD-MM-YYYY').isAfter(moment(min)) && moment(max).isAfter(moment(element.thoidiemden, 'DD-MM-YYYY'))) {
+            console.log(element.thoidiemden);
+            if (element.tinhtrang === 0) {
+              this.chuaxacnhan.push(element);
+            } else if (element.tinhtrang === 1) {
+              this.daxacnhan.push(element);
+            } else if (element.tinhtrang === 2) {
+              this.dathanhtoan.push(element);
+              if (element.hinhthucthanhtoan == 2) {
+                this.dathanhtoan2.push(element);
+              } else {
+                this.dathanhtoan1.push(element);
+              }
+            } else if (element.tinhtrang === -1) {
+              this.huy.push(element);
+            }
+          }
+        } else if (min && !max) {
+          // tslint:disable-next-line:max-line-length
+          if (moment(element.thoidiemden, 'DD-MM-YYYY').isAfter(moment(min))) {
+            console.log(element.thoidiemden);
+            if (element.tinhtrang === 0) {
+              this.chuaxacnhan.push(element);
+            } else if (element.tinhtrang === 1) {
+              this.daxacnhan.push(element);
+            } else if (element.tinhtrang === 2) {
+              this.dathanhtoan.push(element);
+              if (element.hinhthucthanhtoan == 2) {
+                this.dathanhtoan2.push(element);
+              } else {
+                this.dathanhtoan1.push(element);
+              }
+            } else if (element.tinhtrang === -1) {
+              this.huy.push(element);
+            }
+          }
+        } else if (!min && max) {
+          // tslint:disable-next-line:max-line-length
+          if (moment(max).isAfter(moment(element.thoidiemden, 'DD-MM-YYYY'))) {
+            console.log(element.thoidiemden);
+            if (element.tinhtrang === 0) {
+              this.chuaxacnhan.push(element);
+            } else if (element.tinhtrang === 1) {
+              this.daxacnhan.push(element);
+            } else if (element.tinhtrang === 2) {
+              this.dathanhtoan.push(element);
+              if (element.hinhthucthanhtoan == 2) {
+                this.dathanhtoan2.push(element);
+              } else {
+                this.dathanhtoan1.push(element);
+              }
+            } else if (element.tinhtrang === -1) {
+              this.huy.push(element);
+            }
+          }
         }
       });
+      this.dtTrigger.next();
+      $.notify('Hiển thị dữ liệu!', 'success');
+      $('.modal').modal('hide');
     });
   }
   openDetail(data) {
@@ -117,7 +229,9 @@ export class SBillComponent implements OnInit {
       action: action
     };
     this.hoadonS.suahoadon(id, action).subscribe(res => {
-      if (res) {
+      if (res.message === 'thanh cong') {
+        $.notify('Xác nhận thành công', 'success');
+        this.laydsHoadon(false, false);
       }
     });
   }
@@ -125,11 +239,10 @@ export class SBillComponent implements OnInit {
     const check = confirm('Bạn có chắc chắn muốn xóa?');
     if (check === true) {
       this.hoadonS.xoa(id).subscribe(res => {
-        $.notify(res.message, 'success');
-        this.laydsHoadon();
+        $.notify('Đã xóa một mục!', 'success');
+        this.laydsHoadon(false, false);
         this.xem = true;
       });
     }
   }
-
 }

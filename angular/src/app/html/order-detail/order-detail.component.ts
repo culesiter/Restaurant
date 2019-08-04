@@ -41,7 +41,13 @@ export class OrderDetailComponent implements OnInit, AfterViewInit {
   layhoadon() {
     const khachhang = JSON.parse(localStorage.getItem('user'));
     this.hoadon.laydanhsachtheokh(khachhang._id).subscribe(Response => {
-      this.hoadonkh = Response;
+      const result = [];
+      Response.forEach(element => {
+        if (element.tinhtrang !== -1) {
+          result.push(element);
+        }
+      });
+      this.hoadonkh = result;
       this.dtTrigger.next();
     });
   }

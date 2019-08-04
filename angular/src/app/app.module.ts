@@ -83,6 +83,7 @@ import { SMenuComponent } from './html/a-staff-layout/staff-db/s-menu/s-menu.com
 import { SDishTypeComponent } from './html/a-staff-layout/staff-db/s-dish-type/s-dish-type.component';
 import { ScheduleComponent } from './html/admin-layout/admin/schedule/schedule.component';
 import { SScheduleComponent } from './html/a-staff-layout/staff-db/s-schedule/s-schedule.component';
+import { DatePipe } from '@angular/common';
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   {
@@ -245,6 +246,7 @@ const routes: Routes = [
     RouterModule.forRoot(routes)
   ],
   providers: [DichvuService,
+    DatePipe,
     ExcelService,
     StaffService,
     LoginService,
