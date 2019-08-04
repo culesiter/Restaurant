@@ -51,7 +51,7 @@ export class BillsManagerComponent implements OnInit {
         infoPostFix: "",
         loadingRecords: "Cargando registros...",
         zeroRecords: "Không có mục nào",
-        emptyTable: "No hay datos disponibles en la tabla",
+        emptyTable: 'Không có mục nào',
         paginate: {
           first: 'Đầu tiên',
           previous: 'Trở về',
@@ -93,23 +93,7 @@ export class BillsManagerComponent implements OnInit {
       this.dathanhtoan2 = [];
       this.huy = [];
       res.forEach(element => {
-        // element.thoidiemtao = moment(element.thoidiemtao).format(' h:mm:ss a, Ngày: DD-MM-YYYY');
-        // if (element.tinhtrang === 0) {
-        //   this.chuaxacnhan.push(element);
-        // } else if (element.tinhtrang === 1) {
-        //   this.daxacnhan.push(element);
-        // } else if (element.tinhtrang === 2) {
-        //   this.dathanhtoan.push(element);
-        //   if (element.hinhthucthanhtoan == 2) {
-        //     this.dathanhtoan2.push(element);
-        //   } else {
-        //     this.dathanhtoan1.push(element);
-        //   }
-        // } else if (element.tinhtrang === -1) {
-        //   this.huy.push(element);
-        // }
         element.thoidiemtao = moment(element.thoidiemtao).format(' h:mm:ss a, Ngày: DD-MM-YYYY');
-
         if (!min && !max) {
           if (element.tinhtrang === 0) {
             this.chuaxacnhan.push(element);
@@ -252,7 +236,7 @@ export class BillsManagerComponent implements OnInit {
     if (check === true) {
       this.hoadonS.xoa(id).subscribe(res => {
         alert(res.message);
-        this.laydsHoadon();
+        this.laydsHoadon(false, false);
         this.xem = true;
       });
     }

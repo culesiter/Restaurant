@@ -77,6 +77,7 @@ import { SRoomComponent } from './html/a-staff-layout/staff-db/s-room/s-room.com
 import { SFormComponent } from './html/a-staff-layout/staff-db/s-form/s-form.component';
 import { MbscModule } from '@mobiscroll/angular';
 import { SViewsalaryComponent } from './html/a-staff-layout/staff-db/s-viewsalary/s-viewsalary.component';
+import { ScheduleComponent } from './html/admin-layout/admin/schedule/schedule.component';
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   {
@@ -129,6 +130,7 @@ const routes: Routes = [
           { path: 'rank', component: RankStaffComponent },
           { path: 'statistical', component: StatisComponent },
           { path: 'salary', component: SalaryComponent },
+          { path: 'schedule', component: ScheduleComponent },
           {
             path: 'bills', component: BillsManagerComponent, children: [
               { path: 'detail:/id', component: BillDetailComponent }
@@ -210,7 +212,8 @@ const routes: Routes = [
     SDishComponent,
     SRoomComponent,
     SFormComponent,
-    SViewsalaryComponent
+    SViewsalaryComponent,
+    ScheduleComponent
   ],
   imports: [
     ChartsModule,
