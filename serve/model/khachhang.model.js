@@ -18,6 +18,9 @@ var khachhangSchema=mongoose.Schema(
         hinhanh:{
             type:String
         },
+        diachi:{
+            type:String
+        },
         thanhvien:{
             type:Boolean,
             default:false

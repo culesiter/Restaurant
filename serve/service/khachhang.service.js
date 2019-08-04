@@ -16,7 +16,6 @@ module.exports = {
     xoaNguoiDung: xoaNguoiDung,
     capNhatKhachHang: capNhatKhachHang,
     dangNhap: dangNhap,
-
     capNhatHinh: capNhatHinh,
     layNguoiDungtheoid:layNguoiDungtheoid
 }
@@ -142,7 +141,8 @@ function capNhatKhachHang(pramas, request) {
                         res.ten = request.ten || res.ten,
                             res.matkhau = hash || res.matkhau,
                             res.email = request.email || res.email,
-                            res.sdt = request.sdt || res.sdt
+                            res.sdt = request.sdt || res.sdt,
+                            res.diachi = request.diachi || res.diachi
                         return res.save((err, response) => {
                             if (response) {
                                 const data = {
@@ -160,7 +160,8 @@ function capNhatKhachHang(pramas, request) {
                         res.ten = request.ten || res.ten,
                             res.matkhau = res.matkhau,
                             res.email = request.email || res.email,
-                            res.sdt = request.sdt || res.sdt
+                            res.sdt = request.sdt || res.sdt,
+                            res.diachi = request.diachi || res.diachi
                         return res.save((err, response) => {
                             if (response) {
                                 const data = {
@@ -203,6 +204,7 @@ function layNguoiDungtheoid(req) {
                             matkhau: res.matkhau,
                             hinhanh: res.hinhanh,
                             thanhvien: res.thanhvien,
+                            diachi: res.diachi,
                             diem: res.diem
                         }
                     }
@@ -233,6 +235,7 @@ function layNguoiDung(req) {
                             matkhau: res.matkhau,
                             hinhanh: res.hinhanh,
                             thanhvien: res.thanhvien,
+                            diachi: res.diachi,
                             diem: res.diem
                         }
                     }
@@ -258,6 +261,7 @@ function taoNguoiDung(request) {
                     matkhau: hash,
                     hinhanh: request.hinhanh,
                     thanhvien: request.thanhvien,
+                    diachi: request.diachi,
                     diem: request.diem
                 });
                 khachhang.find(email).then(items => {
@@ -270,7 +274,6 @@ function taoNguoiDung(request) {
 
                     }
                     else {
-
                         return nguoidungmoi.save()
                     }
 
@@ -305,6 +308,7 @@ function taoNguoiDungk(request){
             sdt: request.sdt,
             hinhanh: request.hinhanh,
             thanhvien: request.thanhvien,
+            diachi: request.diachi,
             diem: request.diem
         });
        nguoidungmoi.save().then(result => {

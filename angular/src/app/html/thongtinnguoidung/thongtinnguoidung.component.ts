@@ -14,22 +14,7 @@ private usertemp: Icustomer ={};
 private usertempForid: Icustomer ={};
 private frmSua: FormGroup;
 private eData: Icustomer = {};
-private tempCalendar: any[] = [
-  {start: "2019-08-03",end: "2019-08-05T08:00:00.000Z",text: "test calendar.",color: "red"}
-];
   constructor(private formBuilder: FormBuilder, private human: HumanService) { }
-
-  events: any;
-
-    eventSettings: MbscEventcalendarOptions = {
-        theme: 'ios',
-        display: 'inline',
-        view: {
-            calendar: { type: 'month' },
-            eventList: { type: 'month', scrollable: true }
-        }
-    };
-
   ngOnInit() {
     this.usertempForid=JSON.parse(localStorage.getItem('user'));
     this.human.laythongtinkhachhangtheoid(this.usertempForid._id).subscribe(res =>{

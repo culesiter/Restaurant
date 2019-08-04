@@ -84,6 +84,7 @@ export class CustomerManagerComponent implements OnInit {
       email: ['', []],
       matkhau: ['', []],
       thanhvien: ['', []],
+      diachi: ['',[]],
       diem: ['', []]
     });
   }
