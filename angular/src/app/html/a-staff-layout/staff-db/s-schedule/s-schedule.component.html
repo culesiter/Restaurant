@@ -1,10 +1,9 @@
 <div class="calendar">
     <div class="calendar-navs">
-      <h1>Nam {{ currentDate.format('YYYY') }}</h1>
+      <h3>Lịch làm việc Tháng {{ currentDate.format('MM') }} năm {{ currentDate.format('YYYY') }}</h3>
       <div class="month-nav">
-          <button (click)="prevMonth()">&lt;</button>
-          <span class="p4">Tháng {{ currentDate.format('MM') }}</span>
-          <button (click)="nextMonth()">&gt;</button>
+          <button (click)="prevMonth()"><i class="fa fa-angle-double-left" aria-hidden="true"></i> Tháng trước</button>
+          <button (click)="nextMonth()">Tháng sau <i class="fa fa-angle-double-right" aria-hidden="true"></i></button>
       </div>
     </div>
     <div class="month-grid">

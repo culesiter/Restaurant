@@ -1,147 +1,145 @@
-
 <section id="salary">
-    <div class="container">
-      <button (click)="prevMonth()">&lt;</button>
-      <span class="p4">Tháng {{ currentDate.format('MM') }}</span>
-      <button (click)="nextMonth()">&gt;</button>
-      <table class="table table-hover list-table" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
-        <thead>
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">Tên</th>
-            <th scope="col">Email</th>
-            <th scope="col">Chức vụ</th>
-            <th scope="col">Lương theo ngày</th>
-            <th scope="col">Lương</th>
-            <th scope="col"></th>
-          </tr>
-        </thead>
-        <tbody class="tbody-list">
-          <tr *ngFor="let item of listData; let i = index">
-            <th scope="row">{{i+1}}</th>
-            <td>{{item.ten}}</td>
-            <td>{{item.email}}</td>
-            <td>Nhân viên cấp {{item._idcapnhanvien.cap}}</td>
-            <td>{{item._idcapnhanvien.luongtheongay}} VND</td>
-            <td>
-                <span *ngIf="item.luong==='datinh'">
-                  Đã tính
-              </span>
-              <span *ngIf="item.luong==='chuatinh'">
-                  Chưa tính
-              </span>
+  <div class="container">
+    <button class="mont-direc" (click)="prevMonth()"><i class="fa fa-angle-double-left" aria-hidden="true"></i> Tháng trước</button>
+    <span class="p4">Tháng {{ currentDate.format('MM') }}</span>
+    <button class="mont-direc" (click)="nextMonth()">Tháng sau <i class="fa fa-angle-double-right" aria-hidden="true"></i></button>
+    <table class="table table-hover list-table" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Tên</th>
+          <th scope="col">Email</th>
+          <th scope="col">Chức vụ</th>
+          <th scope="col">Lương theo ngày</th>
+          <th scope="col">Lương</th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody class="tbody-list">
+        <tr *ngFor="let item of listData; let i = index">
+          <th scope="row">{{i+1}}</th>
+          <td>{{item.ten}}</td>
+          <td>{{item.email}}</td>
+          <td>Nhân viên cấp {{item._idcapnhanvien.cap}}</td>
+          <td>{{item._idcapnhanvien.luongtheongay}} VND</td>
+          <td>
+            <span *ngIf="item.luong==='datinh'">
+              Đã tính
+            </span>
+            <span *ngIf="item.luong==='chuatinh'">
+              Chưa tính
+            </span>
           </td>
-            <td>
-              <button *ngIf="item.tao==='chuatao'" class="btn btn-primary" (click)="calc(item)" data-toggle="modal" data-target="#myModal">
-                Lên Lịch
-              </button>
-              <button *ngIf="item.tao==='datao'" class="btn btn-danger" (click)="detail(item)" data-toggle="modal"
-                data-target="#myModal2">
-                Xem chi tiết
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </section>
-  <div class="modal" id="myModal" >
-    <div class="modal-dialog">
-      <div class="modal-content" style="padding:15px;display: flex">
-          <section>
-              Mời lựa chọn ngày làm tháng:
-              <form (submit)="daytomodal()">
-                <div class="form-check">
-                  <input type="checkbox" class="form-check-input" id="exampleCheck1" (click)="addthu(1)">
-                  <label class="form-check-label" for="exampleCheck1">thứ 2</label>
-                </div>
-                <div class="form-check">
-                  <input type="checkbox" class="form-check-input" id="exampleCheck2" (click)="addthu(2)">
-                  <label class="form-check-label" for="exampleCheck2">thứ 3</label>
-                </div>
-                <div class="form-check">
-                  <input type="checkbox" class="form-check-input" id="exampleCheck3" (click)="addthu(3)">
-                  <label class="form-check-label" for="exampleCheck3">thứ 4</label>
-                </div>
-                <div class="form-check">
-                  <input type="checkbox" class="form-check-input" id="exampleCheck4" (click)="addthu(4)">
-                  <label class="form-check-label" for="exampleCheck4">thứ 5</label>
-                </div>
-                <div class="form-check">
-                  <input type="checkbox" class="form-check-input" id="exampleCheck5" (click)="addthu(5)">
-                  <label class="form-check-label" for="exampleCheck5">thứ 6</label>
-                </div>
-                <div class="form-check">
-                  <input type="checkbox" class="form-check-input" id="exampleCheck6" (click)="addthu(6)">
-                  <label class="form-check-label" for="exampleCheck6">thứ 7</label>
-                </div>
-                <div class="form-check">
-                  <input type="checkbox" class="form-check-input" id="exampleCheck7" (click)="addthu(0)">
-                  <label class="form-check-label" for="exampleCheck7">Chủ Nhật</label>
-                </div>
-                <button class="btn btn-primary" type="submit">them lich lam</button>
-              </form>
-            </section>
-            <div class="calendar">
-                <div class="calendar-navs">
-                  <div class="month-nav">
-                    <span class="p4">Tháng {{ currentDate.format('MM') }}</span>
-                  </div>
-                </div>
-                <div class="month-grid">
-                  <div class="day-names">
-                    <div *ngFor="let name of dayNames" class="day-name p9">
-                      {{ name }}
-                    </div>
-                  </div>
-                  <div class="weeks">
-                    <div *ngFor="let week of weeks" class="week">
-                      <ng-container *ngFor="let day of week">
-                        <div class="week-date disabled" *ngIf="!isSelectedMonth(day.mDate)">
-                          <span class="date-text">{{ day.mDate.date() }}</span>
-                        </div>
-                        <div class="week-date enabled"
-                             *ngIf="isSelectedMonth(day.mDate)"
-                             (click)="selectDate(day)"
-                             [ngClass]="{ today: day.today, selected: day.selected }">
-                          <span class="date-text">{{ day.mDate.date() }}</span>
-                        </div>
-                      </ng-container>
-                    </div>
-                  </div>
-                </div>
-              </div>
-      </div>
-    </div>
+          <td>
+            <button *ngIf="item.tao==='chuatao'" class="btn btn-primary" (click)="calc(item)" data-toggle="modal"
+              data-target="#myModal">
+              Lên Lịch
+            </button>
+            <button *ngIf="item.tao==='datao'" class="btn btn-danger" (click)="detail(item)" data-toggle="modal"
+              data-target="#myModal2">
+              Xem chi tiết
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
-  <div class="modal" id="myModal2" *ngIf="bangluong">
-    <div class="modal-dialog">
-      <div class="modal-content" style="padding:15px">
-        <div class="content">
-            <h3 class="text-center salary-tit">
-              Bảng lương tháng {{bangluong.thangtra}}
-            </h3>
-            <table class="salary">
-              <tr>
-                <td class="tit">Tên nhân viên:</td>
-                <td>{{bangluong._idnhanvien.ten}}</td>
-              </tr>
-              <tr>
-                <td class="tit">Email:</td>
-                <td>{{bangluong._idnhanvien.email}}</td>
-              </tr>
-              <tr>
-                <td class="tit">Số ngày làm:</td>
-                <td>{{bangluong.songaylam}}</td>
-              </tr>
-              <tr>
-                <td class="tit">Tổng lương:</td>
-                <td class="total">{{bangluong.tongluong}}</td>
-              </tr>
-            </table>
-            <div class="excel-export" (click)="exportAsXLSX()"><i class="fa fa-file-excel-o"></i> Xuất Excel bảng lương
+</section>
+<div class="modal" id="myModal">
+  <div class="modal-dialog">
+    <div class="modal-content" style="padding:0 15px;display: flex; flex-wrap: wrap;">
+      <section class="form-set">
+        <h3>Chọn lịch làm cho nhân viên:</h3>
+        <form (submit)="daytomodal()">
+          <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="exampleCheck1" (click)="addthu(1)">
+            <label class="form-check-label" for="exampleCheck1">THỨ HAI</label>
+          </div>
+          <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="exampleCheck2" (click)="addthu(2)">
+            <label class="form-check-label" for="exampleCheck2">THỨ BA</label>
+          </div>
+          <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="exampleCheck3" (click)="addthu(3)">
+            <label class="form-check-label" for="exampleCheck3">THỨ TƯ</label>
+          </div>
+          <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="exampleCheck4" (click)="addthu(4)">
+            <label class="form-check-label" for="exampleCheck4">THỨ NĂM</label>
+          </div>
+          <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="exampleCheck5" (click)="addthu(5)">
+            <label class="form-check-label" for="exampleCheck5">THỨ SÁU</label>
+          </div>
+          <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="exampleCheck6" (click)="addthu(6)">
+            <label class="form-check-label" for="exampleCheck6">THỨ BẢY</label>
+          </div>
+          <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="exampleCheck7" (click)="addthu(0)">
+            <label class="form-check-label" for="exampleCheck7">CHỦ NHẬT  </label>
+          </div>
+          <button class="btn btn-primary" type="submit">them lich lam</button>
+        </form>
+      </section>
+      <div class="calendar">
+        <div class="calendar-navs">
+          <div class="month-nav">
+            <span class="p4">Tháng {{ currentDate.format('MM') }}</span>
+          </div>
+        </div>
+        <div class="month-grid">
+          <div class="day-names">
+            <div *ngFor="let name of dayNames" class="day-name p9">
+              {{ name }}
             </div>
+          </div>
+          <div class="weeks">
+            <div *ngFor="let week of weeks" class="week">
+              <ng-container *ngFor="let day of week">
+                <div class="week-date disabled" *ngIf="!isSelectedMonth(day.mDate)">
+                  <span class="date-text">{{ day.mDate.date() }}</span>
+                </div>
+                <div class="week-date enabled" *ngIf="isSelectedMonth(day.mDate)" (click)="selectDate(day)"
+                  [ngClass]="{ today: day.today, selected: day.selected }">
+                  <span class="date-text">{{ day.mDate.date() }}</span>
+                </div>
+              </ng-container>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
+</div>
+<div class="modal" id="myModal2" *ngIf="bangluong">
+  <div class="modal-dialog">
+    <div class="modal-content" style="padding:15px">
+      <div class="content">
+        <h3 class="text-center salary-tit">
+          Bảng lương tháng {{bangluong.thangtra}}
+        </h3>
+        <table class="salary">
+          <tr>
+            <td class="tit">Tên nhân viên:</td>
+            <td>{{bangluong._idnhanvien.ten}}</td>
+          </tr>
+          <tr>
+            <td class="tit">Email:</td>
+            <td>{{bangluong._idnhanvien.email}}</td>
+          </tr>
+          <tr>
+            <td class="tit">Số ngày làm:</td>
+            <td>{{bangluong.songaylam}}</td>
+          </tr>
+          <tr>
+            <td class="tit">Tổng lương:</td>
+            <td class="total">{{bangluong.tongluong}}</td>
+          </tr>
+        </table>
+        <div class="excel-export" (click)="exportAsXLSX()"><i class="fa fa-file-excel-o"></i> Xuất Excel bảng lương
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,16 +1,28 @@
-$dayBase: 30px;
+$dayBase: 60px;
 
 .calendar {
   display: block;
   width: $dayBase * 7;
   margin: 0 auto;
-
+  background: white;
+  padding: 5px;
+  border-radius: 5px;
   * {
     box-sizing: border-box;
   }
 
   .calendar-navs {
-    background-color: bisque;
+    background-color: #3276b1;
+    padding: 5px;
+    border-radius: 5px;
+    h3{
+      margin: 0;
+      font-size: 18px;
+      font-family: dark-b;
+      text-transform: uppercase;
+      text-align: center;
+      color: white;
+    }
   }
 
   .month-nav {
@@ -18,6 +30,12 @@ $dayBase: 30px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    button{
+      background: none;
+      border: none;
+      color: white;
+      text-decoration: underline;
+    }
   }
 
   .year-nav {

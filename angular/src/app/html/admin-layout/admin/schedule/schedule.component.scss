@@ -1,4 +1,4 @@
-$dayBase: 30px;
+$dayBase: 70px;
 
 .calendar {
   display: block;
@@ -14,10 +14,25 @@ $dayBase: 30px;
   }
 
   .month-nav {
-    padding: 10px;
+    padding: 5px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    background: #3276b1;
+    margin: 0;
+    text-align: center;
+    border-radius: 5px;
+    text-transform: uppercase;
+    font-size: 15px;
+    font-family: dark-b; 
+    margin-bottom: 10px;
+    color: white; 
+    .p4{
+      font-size: 15px;
+      color: white;
+      display: block;
+      text-align: center;
+    }
   }
 
   .year-nav {
@@ -109,3 +124,90 @@ $dayBase: 30px;
     }
   }
 } 
+.mont-direc{
+  background: none;
+  border: none;
+  text-decoration: underline;
+}
+.p4{
+  font-family: dark-b;
+  text-transform: uppercase;
+  font-size: 20px;
+  color: #3276b1;
+}
+#myModal .modal-dialog {
+  width: 800px;
+}
+.form-set{
+  width: 100%;
+  margin: 15px 0 20px;
+  h3{
+    padding: 7px 0;
+    background: #3276b1;
+    margin: 0;
+    text-align: center;
+    border-radius: 5px;
+    text-transform: uppercase;
+    font-size: 18px;
+    font-family: dark-b; 
+    margin-bottom: 10px;
+    color: white; 
+  }
+  form{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    >div{
+      width: calc(100%/7);
+      display: flex;
+      align-items: center;
+      input, label{
+        margin:  0 5px 0 0;
+      }
+    }
+    > button{
+      width: auto;
+      margin: 10px auto 0;
+      height: 20px;
+      line-height: 20px;
+      padding: 0 15px;
+      background: cadetblue;
+      text-transform: uppercase;
+      border: none;
+    }
+  }
+}
+.myModal2{
+  .modal-content{
+      padding: 15px; 
+  }
+}
+table.salary {
+  width: 100%;
+  td{
+      padding: 5px;
+      border: 1px solid green;
+      text-align: right;
+      &.tit{
+          font-family: dark-b;
+          text-transform: uppercase;
+          text-align: center;
+      }
+      &.total{
+          color: red;
+          font-family: dark-b;
+      }
+  }
+}
+.total-salary{
+  margin-top: 15px;
+  span{
+      font-family: dark-b;
+      margin-right: 30px;
+      small{
+          font-size: 15px;
+          color: red;
+      }
+  }
+}
