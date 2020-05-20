@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { IloaiPhong } from '../../../../share/entities/iloai-phong';
 import { PhongserviceService } from '../../../../share/services/phongservice.service';
 declare var $;
@@ -23,14 +23,23 @@ export class LoaiphongComponent implements OnInit {
     this.getList();
   }
   formShow(data) {
+    $('#inputGroupFile01').val('');
     this.eData = data;
   }
   taoForm() {
     this.formAddNew = this.formBuilder.group({
-      ten: ['', []],
-      gia: ['', []],
-      succhua: ['', []],
-      mota: ['', []],
+      ten: ['', [
+        Validators.required
+      ]],
+      gia: ['', [
+        Validators.required
+      ]],
+      succhua: ['', [
+        Validators.required
+      ]],
+      mota: ['', [
+        Validators.required
+      ]],
     });
     this.frmSua = this.formBuilder.group({
       ten: ['', []],
@@ -47,49 +56,71 @@ export class LoaiphongComponent implements OnInit {
   }
   addNew() {
     this.phongserviceService.themloaiphong(this.formAddNew.value).subscribe(res => {
-      var data = res;
-      console.log(data);
-      const uploaddata = new FormData();
-      uploaddata.append('loaiphongimg', this.selectedFile);
-      this.phongserviceService.upanhloai(data.values._id, uploaddata).subscribe(resq => {
-        if (resq) {
-          $.notify('Đã tạo một mục mới!', 'success');
-          this.getList();
-          setTimeout(() => {
-            $('#addnl').modal('hide');
-          }, 150);
+      if (res.message === 'loai phong da co') {
+        $.notify("Trùng tên phòng!", "error");
+      } else if (res.message === 'luu thanh cong') {
+        const data = res;
+        console.log(data);
+        const uploaddata = new FormData();
+        if (this.selectedFile) {
+          uploaddata.append('loaiphongimg', this.selectedFile);
+          this.phongserviceService.upanhloai(data.values._id, uploaddata).subscribe(resq => {
+            if (resq.message === 'thanh cong') {
+              $.notify('Đã tạo một mục mới!', 'success');
+              this.getList();
+              setTimeout(() => {
+                $('#addnl').modal('hide');
+              }, 150);
+            }
+          });
         }
-      })
-    })
+      } else {
+        $.notify("Có lỗi xảy ra với hình!", "error");
+      }
+    });
   }
   edit() {
     this.phongserviceService.sualoaiphong(this.eData.id, this.frmSua.value).subscribe(res => {
-      if (res) {
-        var data = res;
-        console.log(data);
+      console.log(res);
+      if (res.message === 'thanh cong') {
+        const data = res;
         const uploaddata = new FormData();
         uploaddata.append('loaiphongimg', this.selectedFile);
-        this.phongserviceService.upanhloai(this.eData.id, uploaddata).subscribe(resq => {
-          if (resq) {
-            $.notify('Đã sửa một mục!', 'success');
-            this.getList();
-            setTimeout(() => {
-              $('#detaillp').modal('hide');
-            }, 150);
-          }
-        })
+        console.log(this.selectedFile);
+        if (this.selectedFile) {
+          this.phongserviceService.upanhloai(this.eData.id, uploaddata).subscribe(resq => {
+            if (resq.message === 'thanh cong') {
+              $.notify('Đã cập nhật hình!', 'success');
+              this.getList();
+              setTimeout(() => {
+                $('#detaillp').modal('hide');
+              }, 150);
+            } else {
+              $.notify("Có lỗi xảy ra với hình!", "error");
+            }
+          });
+        } else {
+          $.notify('Đã sửa một mục!', 'success');
+          this.getList();
+          setTimeout(() => {
+            $('#detaillp').modal('hide');
+          }, 150);
+        }
       } else {
         $.notify("Có lỗi xảy ra!", "error");
       }
-    })
-  }
-  delete() {
-    this.phongserviceService.xoaloaiphong(this.eData.id).subscribe(res => {
-      $.notify('Đã xóa 1 mục !', 'success');
-      this.getList();
-      setTimeout(() => {
-        $('#detaillp').modal('hide');
-      }, 150);
     });
+  }
+  delete(id) {
+    if (confirm('Bạn muốn xóa?')) {
+      this.phongserviceService.xoaloaiphong(id).subscribe(res => {
+        if (res.message === 'phong dang ton tai loai phong nay') {
+          $.notify('Có phòng thuộc loại phòng trên', 'error');
+        } else if (res.message === 'xoa thanh cong') {
+          $.notify('Đã xóa 1 mục !', 'success');
+          this.getList();
+        }
+      });
+    }
   }
 }

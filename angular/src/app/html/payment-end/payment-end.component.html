@@ -3,8 +3,16 @@
 
   </app-header>
 </div>
+<h1 class="text-center" *ngIf="vpc_TxnResponseCode!=0">
+  Một số lỗi không mong muốn đã sảy ra, vui lòng thực hiện lại hoặc liên hệ với nhà hàng 
+</h1>
 <h1 class="text-center" *ngIf="vpc_TxnResponseCode==0">
   THANH TOÁN THÀNH CÔNG
 </h1>
+<p class="text-center">
+  <button class="btn" (click)="back()">
+     Đên trang đơn hàng
+  </button>
+</p>
 <app-footer>
 </app-footer>

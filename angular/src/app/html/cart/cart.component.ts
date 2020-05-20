@@ -173,6 +173,7 @@ export class CartComponent implements OnInit {
       this.check = false;
       return false;
     }
+
     this.clearphong();
     this.clearbuoi();
     this.layPhongStore();
@@ -206,6 +207,7 @@ export class CartComponent implements OnInit {
         this.mochonphong = true;
       });
       localStorage.setItem('thoidiemden', JSON.stringify(moment(new Date(event.target.value)).format('DD-MM-YYYY')));
+      localStorage.setItem('thoidiemden_temp', JSON.stringify(moment(new Date(event.target.value)).format('YYYY-MM-DD')));
       this.ngayden = moment(new Date(event.target.value)).format('DD-MM-YYYY');
     });
 
@@ -228,6 +230,29 @@ export class CartComponent implements OnInit {
       setTimeout(() => {
         $('#nutPhong').removeClass('nut');
       }, 1000);
+    }
+  }
+  Kiemtramonstrore() {
+    const mon = JSON.parse(localStorage.getItem('cart'));
+    const td = JSON.parse(localStorage.getItem('cart1'));
+    if (mon && !td) {
+      if (mon.length == 0) {
+        return false;
+      }
+      return true;
+    } else if (!mon && td) {
+      if (td.length == 0) {
+        return false;
+      }
+      return true;
+    } else if (mon && td) {
+      if (mon.length == 0 && td.length == 0) {
+        return false;
+      }
+
+      return true;
+    } else {
+      return false;
     }
   }
   kiemTraPhongStore() {
@@ -391,12 +416,10 @@ export class CartComponent implements OnInit {
     if (!this.phongstore) {
       this.tinhtrangphongstore = 0;
 
-    }
-    else {
+    } else {
       if (this.phongstore.length == 0) {
         this.tinhtrangphongstore = 0;
-      }
-      else {
+      } else {
         this.tinhtrangphongstore = 1;
       }
 
@@ -558,7 +581,7 @@ export class CartComponent implements OnInit {
     var tong = 0;
     if (this.cart != null) {
       cart.forEach(element => {
-        tong = tong + (element.item.gia * element.sl)
+        tong = tong + (element.item.gia * element.sl - (element.item.gia * element.sl * element.item.khuyenmai / 100))
       })
       return tong;
     }

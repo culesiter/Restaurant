@@ -4,4 +4,6 @@ export class Icustomer {
     email?:string;
     sdt?:string;
     matkhau?:string;
+    thanhvien?:boolean;
+    message?:string;
 }

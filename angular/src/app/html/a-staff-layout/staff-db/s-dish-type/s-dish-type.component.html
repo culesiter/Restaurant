@@ -1,83 +1,94 @@
 <div class="container-fluid">
-    <div class="head-cus"> 
-            <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#add-type"> Thêm loại món mới</button>
-        </div>
-<!-- Modal -->
-<div id="add-type" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-        <!-- Modal content-->
-        <div class="modal-content">
-            <form (ngSubmit)="taoMoi()" [formGroup]="formAddNew">
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <label>Tên Loại</label>
-                        <input type="text" class="form-control" formControlName="ten" placeholder="Taxi babe">
-                    </div>
-                    <div class="form-group col-md-12">
-                        <label>Description</label>
-                        <input type="textarea" class="form-control" formControlName="descrip"
-                            placeholder="Ho Chi Minh City">
-                    </div>
-                    <div class="form-group col-md-12">
-                        <button type="submit" class="btn btn-secondary">Sign up</button>
-                        <button class="btn btn-warning" (click)="XoaForm(formAddNew)">Clear</button>
-                    </div>
-                </div>
-            </form>
-        </div>
-
-    </div>
-</div>
-<div class="content">
-    <div class="list-customer" *ngIf="formStatus==='view'">
-        <table class="table table-hover list-table" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
-            <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Tên Loại</th>
-                </tr>
-            </thead>
-            <tbody class="tbody-list">
-                <tr *ngFor="let item of listLoaiMon; let i = index" (click)="formShow('detail',item)">
-                    <th scope="row">{{i+1}}</th>
-                    <td>{{item.ten}}</td>
-                </tr>
-            </tbody>
-        </table>
-
-    </div>
-    <!-- ket thuc form xem list -->
-    <!-- form add new begin -->
-    <div class="create-customer" *ngIf="formStatus==='create'">
-
-    </div>
-    <!-- ket thuc form add new -->
-    <!-- bat dau form detail -->
-    <div *ngIf="formStatus==='detail'">
-        <div class="dish-detail">
-            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 carosel">
+        <div class="head-cus"> 
+                <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#add-type"> Thêm loại món mới</button>
             </div>
-            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                <form (ngSubmit)="sua()" [formGroup]="frmSua">
+    <!-- Modal -->
+    <div id="add-type" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <form (ngSubmit)="taoMoi()" [formGroup]="formAddNew">
+                    <h4 class="text-center">
+                         Thêm Loại món
+                    </h4>
                     <div class="form-row">
                         <div class="form-group col-md-6">
-                            <label>Tên Loại Món Ăn</label>
-                            <input type="text" class="form-control" formControlName="ten" value="{{eLoaiMon.ten}}">
+                            <label>Tên Loại:</label>
+                            <input type="text" class="form-control" formControlName="ten" placeholder="Taxi babe">
                         </div>
                         <div class="form-group col-md-12">
-                            <label>Description</label>
-                            <input type="textarea" class="form-control" formControlName="descrip"
-                                value="Ho Chi Minh City">
+                            <label>Mô tả:</label>
+                            <input type="textarea" class="form-control" formControlName="mota"
+                                placeholder="Ho Chi Minh City">
                         </div>
                         <div class="form-group col-md-12">
-                            <button type="submit" class="btn btn-secondary">Sửa</button>
-                            <button class="btn btn-warning" (click)="XoaMon()">Xóa</button>
+                            <button type="submit" class="btn btn-secondary">Thêm</button>
+                            <div class="btn btn-warning" (click)="XoaForm(formAddNew)">Làm mới</div>
                         </div>
                     </div>
                 </form>
             </div>
+
         </div>
     </div>
-    <!-- ket thuc form detail -->
-</div>
+    <div class="content">
+        <div class="list-customer" *ngIf="formStatus==='view'">
+            <table class="table table-hover list-table" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Tên Loại</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody class="tbody-list">
+                    <tr *ngFor="let item of listLoaiMon; let i = index" >
+                        <th scope="row">{{i+1}}</th>
+                        <td>{{item.ten}}</td>
+                        <td style="width:200px">
+                            <button class="btn btn-primary" (click)="formShow('detail',item)">
+                                Xem chi tiết
+                            </button>
+                            <button class="btn btn-warning" (click)="XoaMon(item._id)">Xóa</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+        <!-- ket thuc form xem list -->
+        <!-- form add new begin -->
+        <div class="create-customer" *ngIf="formStatus==='create'">
+
+        </div>
+        <!-- ket thuc form add new -->
+        <!-- bat dau form detail -->
+        <div *ngIf="formStatus==='detail'">
+            <div class="dish-detail">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 carosel">
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <form (ngSubmit)="sua()" [formGroup]="frmSua">
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label>Tên Loại Món Ăn</label>
+                                <input type="text" class="form-control" formControlName="ten" value="{{eLoaiMon.ten}}">
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label>Mô Tả</label>
+                                <input type="textarea" class="form-control" formControlName="mota"
+                                    value="Ho Chi Minh City">
+                            </div>
+                            <div class="form-group col-md-12">
+                                <button type="submit" class="btn btn-secondary">Sửa</button>
+                                <button class="btn btn-warning" (click)="XoaMon(eLoaiMon._id)">Xóa</button>
+                                <div class="btn" (click)="back()">Thoát</div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- ket thuc form detail -->
+    </div>
 </div>

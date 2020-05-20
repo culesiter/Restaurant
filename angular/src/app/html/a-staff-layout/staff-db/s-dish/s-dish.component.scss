@@ -75,6 +75,9 @@
     background: #F4F3EF;
     border-radius: 50%;
 }
+#update{
+    @extend #detailmd;
+}
 .noticeDelete{
     position: absolute; z-index: 1; top: 0;
     color: black;
@@ -114,4 +117,16 @@
  }
 @media (min-width: 1170px) { 
     
+ }
+
+ .waite{
+     &:before{
+   position: absolute;
+   z-index: 9999;
+   top: 50%;
+   left: 50%;
+   color: white;
+   transform: translate(-50%,-50%);
+   content: 'Thực Thi!'
+     }
  }

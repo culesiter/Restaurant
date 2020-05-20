@@ -11,13 +11,13 @@ declare var $;
 export class SServicesComponent implements OnInit {
 
   private formStatus = 'view';
-  private  listData: Idichvu[] = [];
+  private listData: Idichvu[] = [];
   private eData: Idichvu = {};
   private formAddNew: FormGroup;
   private frmSua: FormGroup;
   private selectedFile: any;
   constructor(private formBuilder: FormBuilder,
-              private dvservices: DichvuService) { }
+    private dvservices: DichvuService) { }
   ngOnInit() {
     this.taoForm();
     this.getList();
@@ -28,62 +28,84 @@ export class SServicesComponent implements OnInit {
   taoForm() {
     this.formAddNew = this.formBuilder.group({
       ten: ['', []],
-      gia: ['', []],
-      succhua: ['', []],
+      gia: ['', []]
     });
     this.frmSua = this.formBuilder.group({
       ten: ['', []],
-      gia: ['', []],
-      succhua: ['', []],
+      gia: ['', []]
     });
   }
-  getList(){
-    this.dvservices.laydanhsachDV().subscribe(res =>{ this.listData = res});
+  getList() {
+    this.dvservices.laydanhsachDV().subscribe(res => { this.listData = res });
   }
   onFileChange(event) {
     this.selectedFile = event.target.files[0];
   }
-  addNew(){
+  addNew() {
     this.dvservices.themDV(this.formAddNew.value).subscribe(res => {
-      var data = res;
-      const uploaddata = new FormData();
-      uploaddata.append('dichvuimg', this.selectedFile);
-      console.log(uploaddata);
-      this.dvservices.upanh(data.values._id, uploaddata).subscribe(resq =>{
-        console.log(resq);
-        if(resq){
-          $.notify('Đã tạo một mục mới!', 'success');
-          this.getList();
-          this.formStatus = 'view';
-        }
-      })
-    
-    })
+      if (res.message === 'dich vu da co') {
+        $.notify('Trùng tên', 'error');
+      } else {
+        const data = res;
+        const uploaddata = new FormData();
+        uploaddata.append('dichvuimg', this.selectedFile);
+        console.log(uploaddata);
+        this.dvservices.upanh(data.values._id, uploaddata).subscribe(resq => {
+          console.log(resq);
+          if (resq.message === 'thanh cong') {
+            $.notify('Đã tạo một mục mới!', 'success');
+            this.getList();
+            $('#adds').modal('hide');
+            this.formStatus = 'view';
+          }
+        });
+      }
+    });
   }
-  edit(){
+  edit() {
     this.dvservices.suaDV(this.eData._id, this.frmSua.value).subscribe(res => {
-      if(res){
-        var data = res;
-      const uploaddata = new FormData();
-      uploaddata.append('dichvuimg', this.selectedFile);
-      console.log(uploaddata);
-      this.dvservices.upanh(this.eData._id, uploaddata).subscribe(resq =>{
-        console.log(resq);
-        if(resq){
-         $.notify('Đã sửa một mục!', 'success');
+      if (res.message === 'thanh cong') {
+        const data = res;
+        const uploaddata = new FormData();
+        uploaddata.append('dichvuimg', this.selectedFile);
+        if (this.selectedFile) {
+          this.dvservices.upanh(this.eData._id, uploaddata).subscribe(resq => {
+            console.log(resq);
+            if (resq.message === 'thanh cong') {
+              $.notify('Đã sửa một mục!', 'success');
+              this.getList();
+              this.formStatus = 'view';
+              setTimeout(() => {
+                $('#detailmd').modal('hide');
+              }, 150);
+
+            }
+          });
+        } else {
+          $.notify('Đã sửa một mục!', 'success');
           this.getList();
-          this.formStatus = 'view';
+          setTimeout(() => {
+            $('#detailmd').modal('hide');
+          }, 150);
         }
-      })
       } else {
         $.notify("Có lỗi xảy ra!", "error");
       }
     })
   }
-  delete(){
-    this.dvservices.xoaDV(this.eData._id).subscribe(res => {
-      this.getList();
-      this.formStatus = 'view';
+  delete(id) {
+    this.dvservices.xoaDV(id).subscribe(res => {
+      console.log(res);
+      if (res.message === 'xoa thanh cong') {
+        this.getList();
+        setTimeout(() => {
+          $('#detailmd').modal('hide');
+        }, 150);
+        this.formStatus = 'view';
+      } else {
+        $.notify("Có hóa đơn chưa dịch vụ trên", "error");
+      }
+
     });
   }
 }

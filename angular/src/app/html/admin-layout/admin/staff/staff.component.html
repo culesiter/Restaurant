@@ -13,15 +13,22 @@
                         <th scope="col">Email</th>
                         <th scope="col">Chức vụ</th>
                         <th scope="col">Lương theo ngày</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody class="tbody-list">
-                    <tr *ngFor="let item of listData; let i = index" data-toggle="modal" data-target="#detailstaff" (click)="showdetail(item)">
+                    <tr *ngFor="let item of listData; let i = index" >
                         <th scope="row">{{i+1}}</th>
                         <td>{{item.ten}}</td>
                         <td>{{item.email}}</td>
                         <td>Nhân viên cấp {{item._idcapnhanvien.cap}}</td>
                         <td>{{item._idcapnhanvien.luongtheongay}} VND</td>
+                        <td>
+                            <button class="btn btn-primary" data-toggle="modal" data-target="#detailstaff"
+                            (click)="showdetail(item)">Chi tiết</button>
+                            <button class="btn " (click)="delete(item._id)">Xóa</button>
+
+                        </td>
                     </tr>
                 </tbody>
             </table>
@@ -54,9 +61,8 @@
                                     <div class="form-group col-md-6">
                                         <label>Cấp nhân viên</label>
                                         <select class="form-control" formControlName="_idcapnhanvien">
-                                            <option selected value="5d0377fad811143770b281e8">Cấp 1</option>
-                                            <option value="5d0377c3d811143770b281e6">Cấp 2</option>
-                                            <option value="5d0377cdd811143770b281e7">Cấp 3</option>
+                                            <option *ngFor="let item of allrank" value="{{item._id}}">{{item.cap}}
+                                            </option>
                                         </select>
                                     </div>
                                     <div class="form-group col-md-6">
@@ -64,11 +70,6 @@
                                         <input type="password" class="form-control" formControlName="matkhau"
                                             placeholder="Password">
                                     </div>
-                                    <div class="form-group col-md-6">
-                                        <label>Ngày sinh</label>
-                                        <input type="date" class="form-control">
-                                    </div>
-
                                     <div class="form-group col-md-12">
                                         <label>Avatar</label>
                                         <div class="custom-file">
@@ -79,8 +80,9 @@
                                     </div>
                                 </div>
                                 <div class="col-md-12">
-                                    <button class="btn btn-warning" onclick="formReser()">Làm mới</button>
-                                    <button type="submit" class="btn btn-primary">Đăng ký</button>
+                                    <button [disabled]="formAddNew.invalid&&!selectedFile" type="submit"
+                                        class="btn btn-primary">Đăng ký</button>
+                                    <div class="btn btn-warning" onclick="formReser()">Làm mới</div>
                                 </div>
                             </form>
                         </div>
@@ -112,30 +114,20 @@
                                                     <input type="email" class="form-control" formControlName="email"
                                                         value="{{eData.email}}">
                                                 </div>
-                                                <div class="form-group col-md-6">
-                                                    <label>Mật khẩu</label>
-                                                    <input type="password" class="form-control"
-                                                        formControlName="matkhau" value="{{eData.matkhau}}">
-                                                </div>
-                                                <div class="col-md-12">
-                                                    <label>Đia chỉ</label>
-                                                    <input type="text" class="form-control">
-                                                </div>
-                                                <div class="form-row">
-                                                    <div class="form-group col-md-6">
-                                                        <label>Thành Viên</label>
-                                                        <input type="text" formControlName="thanhvien"
-                                                            class="form-control" value="{{eData.thanhvien}}">
-                                                    </div>
-                                                    <div class="form-group col-md-6">
-                                                        <label for="inputState">Điểm Tích Lũy</label>
-                                                        <input type="number" formControlName="diem" class="form-control"
-                                                            value="{{eData.diem}}">
-                                                    </div>
+                                                <div class="col-md-6">
+                                                    <label>Số điện thoại</label>
+                                                    <input type="text" value="{{eData.sdt}}" formControlName="sdt"
+                                                        class="form-control">
                                                 </div>
                                                 <div class="form-group col-md-6">
-                                                    <button type="submit" class="btn btn-default">Edit</button>
-                                                    <button class="btn btn-warning" (click)="delete()">Xóa</button>
+                                                    <label>Cấp nhân viên</label>
+                                                    <select class="form-control" formControlName="_idcapnhanvien">
+                                                        <option *ngFor="let item of allrank" value="{{item._id}}">
+                                                            {{item.cap}}</option>
+                                                    </select>
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <button type="submit" class="btn btn-default">Sửa</button>
                                                 </div>
                                             </div>
                                         </form>

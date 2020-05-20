@@ -24,7 +24,7 @@ function capNhatHinh(pramas, file) {
                 reject(err)
             }
             else if (res) {
-                res.hinhanh = file.path
+                res.hinhanh = file.path||res.hinhanh
                 res.save((err,response)=>{
                     if(response)
                     {
@@ -43,30 +43,25 @@ function capNhatHinh(pramas, file) {
 }
 function xoaDichVu(request) {
     return new Promise((resolve, reject) => {
-        hoadon.findOne({_id:request.id}).exec((err, response) => {
-            if (err) {
-                var err = { err: err + "" }
-                reject(err);
+        chitietdichvu.find({_iddichvu:request.id}).then(res=>{
+            console.log(res);
+            if(res.length!=0){
+                var mes = { message: "hoadon" }
+                reject(mes);
+            }else if(res.length==0){
+                return dichvu.remove({ _id: request.id  });
             }
-            else {
-                if (!response) {
-                    var mes = { message: "khong ton tai" }
-                    reject(mes);
+        }).then(res=>{
+            if(res){
+                var mes={
+                    message:"xoa thanh cong"
                 }
-                else if (response) { 
-                    chitietdichvu.remove({ _idhoadon: request.id  }).exec(function (err,response) {
-                        if (err) {
-                            reject(err+"");
-                        } else {
-                            var mes={
-                                message:"xoa thanh cong"
-                            }
-                            resolve(mes);
-                        }
-                    });
-                }
+                resolve(mes);
             }
+        }).catch(err => {
+            reject(err + "");
         })
+        
     });
 }
 function capNhatDichVu(pramas, request) {
@@ -122,7 +117,7 @@ function getProductById(req) {
 }
 function layDichVu() {
     return new Promise((resolve, reject) => {
-        dichvu.find({}).select('_id ten gia hinhanh').exec(
+        dichvu.find({}).sort({ _id: -1 }).select('_id ten gia hinhanh').exec(
             function (err, response) {
                 if (err) {
                     reject(err)

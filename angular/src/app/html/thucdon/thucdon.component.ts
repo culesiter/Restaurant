@@ -29,11 +29,12 @@ export class ThucdonComponent implements OnInit {
     });
   }
   giaThucDon(id) {
-    var tong = 0;
-    var thucdon: Ithucdon[] = JSON.parse(localStorage.getItem('thucdon'));
+    let tong = 0;
+    const thucdon: Ithucdon[] = JSON.parse(localStorage.getItem('thucdon'));
     thucdon.forEach(element => {
-      if (element._idthucdon == id)
+      if (element._idthucdon == id){
         tong = tong + element.gia;
+      }
     })
     return tong;
   }

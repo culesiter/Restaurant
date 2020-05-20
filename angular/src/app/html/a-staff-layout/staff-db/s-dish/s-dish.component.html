@@ -1,159 +1,233 @@
 <div class="container-fluid">
-  <div class="customer-head">
-      <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#add-dish">
-          Thêm món ăn mới
-      </button>
-  </div>
-  <div class="content">
-      <div class="list-customer">
-          <table class="table table-hover list-table" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
-              <thead>
-                  <tr>
-                      <th scope="col">#</th>
-                      <th scope="col">Tên món ăn</th>
-                      <th scope="col">Giá</th>
-                      <th scope="col">Loại</th>
-                      <th scope="col">Khuyến mãi</th>
-                  </tr>
-              </thead>
-              <tbody class="tbody-list">
-                  <tr *ngFor="let item of listDish; let i = index" data-toggle="modal" data-target="#detailmd" (click)="detailview(item)">
-                      <th scope="row">{{i+1}}</th>
-                      <td>{{item.ten}}</td>
-                      <td>{{item.gia}}</td>
-                      <td>{{item.loai}}</td>
-                      <td>{{item.khuyenmai}}</td>
-                  </tr>
-              </tbody>
-          </table>
-      </div>
-      <!-- ket thuc form xem list -->
-      <!-- form add new begin -->
-      <div class="modal fade" id="add-dish" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-          aria-hidden="true">
-          <div class="modal-dialog" role="document">
-              <div class="modal-content">
-                  <div class="headmd">Thêm món ăn mới</div>
-                  <div class="modal-body">
-                      <div class="create-customer">
-                          <form (ngSubmit)="createNewDish()" [formGroup]="formAdd">
-                              <div class="form-row">
-                                  <div class="form-group col-md-6">
-                                      <label>Tên Món ăn</label>
-                                      <input type="text" class="form-control" formControlName="ten"
-                                          placeholder="Cơm chiên dương châu">
-                                  </div>
-                                  <div class="form-group col-md-6">
-                                      <label>Giá</label>
-                                      <input type="text" formControlName="gia" class="form-control" placeholder="Giá">
-                                  </div>
-                                  <div class="form-group col-md-6">
-                                      <label>Loại Món Ăn</label>
-                                      <select name="" id="" class="opt" formControlName="_idloai">
-                                          <option value="5c13ecd5fe2ad82314d11e86">Cơm</option>
-                                          <option value="5c155b0522f06a22d051b09f">Gà</option>
-                                          <option value="5c13ecdefe2ad82314d11e87">Cháo</option>
-                                          <option value="5c155b0e22f06a22d051b0a0">Gỏi</option>
-                                          <option value="5c13ed04fe2ad82314d11e88">Nướng</option>
-                                      </select>
-                                  </div>
-                                  <div class="form-group col-md-6">
-                                      <label>Khuyến Mãi</label>
-                                      <input type="text" class="form-control" formControlName="khuyenmai"
-                                          placeholder="Giá">
-                                  </div>
-                                  <div class="form-group col-md-8">
-                                      <label>Image</label>
-                                      <div class="custom-file">
-                                          <input type="file" formControlName="hinh" (change)="onFileChange($event)"
-                                              class="custom-file-input" id="inputGroupFile01">
-                                      </div>
-                                  </div>
-                                  <div class="form-group col-md-12">
-                                      <label>Description</label>
-                                      <input type="textarea" class="form-control" placeholder="Ho Chi Minh City">
-                                  </div>
-                                  <div class="form-group col-md-12">
-                                      <button type="submit" class="btn btn-secondary">Sign up</button>
-                                      <button class="btn btn-warning" (click)="xoaForm()">Clear</button>
-                                  </div>
-                              </div>
-                          </form>
-                      </div>
-                  </div>
-              </div>
-          </div>
-      </div>
-      <!-- ket thuc form add new -->
-      <!-- bat dau form detail -->
-      <div class="modal fade" id="detailmd" tabindex="-1" role="dialog" aria-labelledby="detailmd" aria-hidden="true">
-              <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                  <div class="headmd">Chi tiết món ăn</div>
-                  <div class="modal-body">
-                          <div>
-                                  <div class="dish-detail">
-                                      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                          <form (ngSubmit)="editExistDish()" [formGroup]="formEdit">
-                                              <div class="form-row">
-                                                  <div class="form-group col-md-6">
-                                                      <label>Name</label>
-                                                      <input type="text" class="form-control" formControlName="ten" value="{{editDish.ten}} ">
-                                                  </div>
-                                                  <div class="form-group col-md-6">
-                                                      <label>Giá</label>
-                                                      <input type="email" class="form-control" formControlName="gia" value="{{editDish.gia}}">
-                                                  </div>
-                                                  <div class="form-group col-md-6">
-                                                      <label>Loại Món Ăn</label>
-                                                      <select name="" id="" class="opt" formControlName="_idloai">
-                                                          <option value="5c13ecd5fe2ad82314d11e86" selected disabled hidden>{{editDish.loai}}
-                                                          </option>
-                                                          <option *ngFor="let type of lstType" value="5c13ecd5fe2ad82314d11e86">{{type.ten}}
-                                                          </option>
-                                                      </select>
-                                                  </div>
-                                                  <div class="form-group col-md-12">
-                                                      <label>Image</label>
-                                                      <div class="custom-file">
-                                                          <input type="file" class="custom-file-input" id="inputGroupFile001">
-                                                          <label class="custom-file-label" for="inputGroupFile001">Choose file</label>
-                                                      </div>
-                                                  </div>
-                                                  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                                      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                                          <label>Ảnh đã đăng</label>
-                                                      </div>
-                                                      <div class="form-group col-xs-4 col-sm-4 col-md-3 col-lg-3">
-                                                          <img src="http://localhost:3000/{{editDish.hinhanh}}" alt="..."
-                                                              class="img-thumbnail imgfood">
-                                                          <div class="xoaAnh" (mouseenter)="mouseEnterDelete()"
-                                                              (mouseleave)="mouseLeaveDelete()" (click)="xoaAnhluon()">
-                                                              <i class="fas fa-minus-circle"></i>
-                                                              <div class="noticeDelete" [ngStyle]="{'display': styleExp}">
-                                                                  <p>Xóa ảnh</p>
-                                                              </div>
-                                                          </div>
-                                                      </div>
-                                                  </div>
-                                                  <div class="form-group col-md-12">
-                                                      <label>Description</label>
-                                                      <input type="textarea" class="form-control" placeholder="Ho Chi Minh City">
-                                                  </div>
-                                                  <div class="form-group col-md-12">
-                                                      <button type="submit" class="btn btn-secondary"> Xác Nhận Sửa</button>
-                                                      <button class="btn btn-warning" (click)="deleteDish(editDish._id)">Xoá Món Ăn</button>
-                                                  </div>
-                                              </div>
-                                          </form>
-                                      </div>
-                                  </div>
-                              </div>
-                  </div>
-                </div>
-              </div>
+        <div class="customer-head">
+            <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#add-dish">
+                Thêm món ăn mới
+            </button>
+        </div>
+        <div class="content">
+            <div class="list-customer">
+                <table class="table table-hover list-table" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Tên món ăn</th>
+                            <th scope="col">Giá</th>
+                            <th scope="col">Loại</th>
+                            <th scope="col">Khuyến mãi</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody class="tbody-list">
+                        <tr *ngFor="let item of listDish; let i = index">
+                            <th scope="row">{{i+1}}</th>
+                            <td>{{item.ten}}</td>
+                            <td>{{item.gia| number}} VNĐ</td>
+                            <td>{{item.loai}}</td>
+                            <td>{{item.khuyenmai}}</td>
+                            <td>
+                                <button class="btn btn-primary" (click)="detailview(item)" data-toggle="modal" data-target="#detailmd">Chi
+                                    Tiết</button>
+                                    <button class="btn" (click)="deleteDish(item._id)">Xoá
+                                            Món Ăn</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
-     
-      <!-- ket thuc form detail -->
-  </div>
-</div>
+            <!-- ket thuc form xem list -->
+            <!-- form add new begin -->
+            <div class="modal fade" id="add-dish" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="headmd">Thêm món ăn mới</div>
+                        <div class="modal-body">
+                            <div class="create-customer">
+                                <form (ngSubmit)="createNewDish()" [formGroup]="formAdd">
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label>Tên Món ăn</label>
+                                            <input type="text" class="form-control" formControlName="ten"
+                                                placeholder="Cơm chiên dương châu">
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label>Giá</label>
+                                            <input type="number" formControlName="gia" class="form-control" placeholder="Giá">
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label>Loại Món Ăn</label>
+                                            <select name="" id="" class="opt" formControlName="_idloai">
+                                                <option *ngFor="let type of lstType" value="{{type._id}}">
+                                                    {{type.ten}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label>Khuyến Mãi</label>
+                                            <input type="number" class="form-control" formControlName="khuyenmai"
+                                                placeholder="Giá">
+                                        </div>
+                                        <div class="form-group col-md-8">
+                                            <label>Chọn ảnh</label>
+                                            <div class="custom-file">
+                                                <input type="file" (change)="onFileChange($event)"
+                                                    accept="image/x-png,image/gif,image/jpeg" class="custom-file-input"
+                                                    id="inputGroupFile01">
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-12">
+                                            <label>Mô tả</label>
+                                            <input type="textarea" class="form-control" formControlName="mota" placeholder="">
+                                        </div>
+                                        <div class="form-group col-md-12">
+                                            <button [disabled]="formAdd.invalid&&selectedFile"  type="submit" class="btn btn-secondary">Sign up</button>
+                                            <button class="btn btn-warning" (click)="xoaForm()">Clear</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- ket thuc form add new -->
+            <!-- bat dau form detail -->
+            <div class="modal fade" id="detailmd" tabindex="-1" role="dialog" aria-labelledby="detailmd" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="headmd">Chi tiết món ăn</div>
+                        <div class="modal-body">
+                            <div>
+                                <div class="dish-detail">
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                        <form (ngSubmit)="editExistDish()" [formGroup]="formEdit">
+                                            <div class="form-row">
+                                                <div class="form-group col-md-6">
+                                                    <label>Name</label>
+                                                    <input type="text" class="form-control" formControlName="ten" value=" ">
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label>Giá</label>
+                                                    <input type="email" class="form-control" formControlName="gia" value="">
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label>Loại Món Ăn</label>
+                                                    <select name="" id="" class="opt" formControlName="_idloai">
+                                                        <option *ngFor="let type of lstType" value="{{type._id}}">
+                                                            {{type.ten}}
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label>Khuyến mãi</label>
+                                                    <input type="number" class="form-control" formControlName="khuyenmai"
+                                                        value="">
+                                                </div>
+                                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                        <label>Ảnh món ăn</label>
+                                                    </div>
+                                                    <div class="form-group col-xs-4 col-sm-4 col-md-3 col-lg-3">
+                                                        <img src="http://localhost:3000/{{editDish.hinhanh}}" alt="..."
+                                                            class="img-thumbnail imgfood">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-md-12">
+                                                    <label>Chọn ảnh</label>
+                                                    <div class="custom-file">
+                                                        <input type="file" class="custom-file-input"
+                                                            (change)="onFileChange($event)"
+                                                            accept="image/x-png,image/gif,image/jpeg"
+                                                            id="inputGroupFile001">
+                                                        <label class="custom-file-label" for="inputGroupFile001">Choose
+                                                            file</label>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-md-12">
+                                                    <label>Mô tả</label>
+                                                    <input type="textarea" class="form-control">
+                                                </div>
+                                                <div class="form-group col-md-12">
+                                                    <button  type="submit" class="btn btn-secondary"> Xác Nhận Sửa</button>
+                                                    
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+            <!-- ket thuc form detail -->
+            <div class="modal fade" id="update" tabindex="-1" role="dialog" aria-labelledby="detailmd" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="headmd">Chi tiết món ăn</div>
+                        <div class="modal-body">
+                            <div>
+                                <div class="dish-detail">
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                        <form (ngSubmit)="editExistDish()" [formGroup]="formEdit">
+                                            <div class="form-row">
+                                                <div class="form-group col-md-6">
+                                                    <label>Name</label>
+                                                    <input type="text" class="form-control" formControlName="ten"
+                                                        value="{{editDish.ten}} ">
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label>Giá</label>
+                                                    <input type="email" class="form-control" formControlName="gia"
+                                                        value="{{editDish.gia|number}} VNĐ">
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label>Loại Món Ăn</label>
+                                                    <select name="" id="" class="opt" formControlName="_idloai">
+                                                        <option value="5c13ecd5fe2ad82314d11e86" selected disabled hidden>
+                                                            {{editDish.loai}}
+                                                        </option>
+                                                        <option *ngFor="let type of lstType"
+                                                            value="5c13ecd5fe2ad82314d11e86">{{type.ten}}
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                                <div class="form-group col-md-12">
+                                                    <label>Image</label>
+                                                    <div class="custom-file">
+                                                        <input type="file" class="custom-file-input" id="inputGroupFile001">
+                                                        <label class="custom-file-label" for="inputGroupFile001">Choose
+                                                            file</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                        <label>Ảnh đã đăng</label>
+                                                    </div>
+                                                    <div class="form-group col-xs-4 col-sm-4 col-md-3 col-lg-3">
+                                                        <img src="http://localhost:3000/{{editDish.hinhanh}}" alt="..."
+                                                            class="img-thumbnail imgfood">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-md-12">
+                                                    <label>Description</label>
+                                                    <input type="textarea" class="form-control"
+                                                        placeholder="Ho Chi Minh City">
+                                                </div>
+                                                <div class="form-group col-md-12">
+    
+                                                    <button class="btn btn-warning" (click)="deleteDish(editDish._id)">Xoá
+                                                        Món Ăn</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

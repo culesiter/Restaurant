@@ -1,6 +1,6 @@
-<section >
+<section>
   <div class="container">
-    <table id="TableName"  datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"  >
+    <table style="margin-top: 100px" id="TableName" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
       <thead>
         <tr>
           <th>#</th>
@@ -14,29 +14,29 @@
       <tbody>
         <tr *ngFor="let item of hoadonkh;index as i">
           <td>
-            {{i}}
+            {{i+1}}
           </td>
           <td>
-            {{item.ten}}
+            {{item._idkhachhang.ten}}
           </td>
           <td>
             {{item.thoidiemtao}}
           </td>
           <td>
-           
+
             <span *ngIf="item.tinhtrang===2&&item.hinhthucthanhtoan===1">Đã thanh toán 100%</span>
             <span *ngIf="item.tinhtrang===2&&item.hinhthucthanhtoan===2">Đã thanh toán 10%</span>
             <span *ngIf="item.tinhtrang===0">Chưa xác nhận</span>
-            <span *ngIf="item.tinhtrang===1">Thanh toán</span>
+            <span *ngIf="item.tinhtrang===1">Cần Thanh toán</span>
           </td>
           <td>
-            {{item.tongtien}}
+            {{item.tongtien|number}} VNĐ
           </td>
           <td style="width:200px">
             <div *ngIf="item.tinhtrang!==2" class="btn btn-danger" (click)="delete(item._id)">
               Hủy
             </div>
-            <div class="btn btn-primary" data-toggle="modal" data-target="#myModal" (click)="toDetail(item._id)">
+            <div class="btn btn-primary" data-toggle="modal" data-target="#myModal" (click)="toDetail(item._id,item)">
               Xem chi tiết
             </div>
           </td>
@@ -49,10 +49,10 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <p class="text-center" *ngFor="let item of chitiet;index as i" style="margin-top:20px">
-         Hóa đơn {{item._id}} tạo ngày {{item.thoidiemtao}}, ngày đến {{item.thoidiemden}}
+        Hóa đơn {{item._id}} tạo ngày {{item.thoidiemtao}}, ngày đến {{item.thoidiemden}}
       </p>
       <div *ngIf="doi===true" class="img text-center" style="margin-bottom: 20px;width: 100%;">
-          <img src="../../../assets/images/load.svg" alt="">
+        <img src="../../../assets/images/load.svg" alt="">
       </div>
       <table *ngIf="fade===false" class="table table-bordered">
         <thead>
@@ -62,9 +62,15 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let item of chitietma;index as i">
-            <td>{{item._idmonan.ten}} X {{item.soluongmonan}} <span *ngIf="item._idmonan.giacu"> giảm {{item._idmonan.khuyenmai}} %</span></td>
-            <td>{{item._idmonan.gia}}</td>
+          <tr *ngFor="let item of chitietma;index as i" >
+            <td *ngIf='item._idmonan'>{{item._idmonan.ten}} X {{item.soluongmonan}} <span >giảm
+                {{item._idmonan.khuyenmai}} %</span></td>
+            <td *ngIf='item._idmonan'>{{item._idmonan.gia*item.soluongmonan-(item._idmonan.gia*item.soluongmonan*item._idmonan.khuyenmai/100)|number}} VNĐ</td>
+          </tr>
+          <tr *ngFor="let item of chitietma;index as i" >
+            <td *ngIf='item._idthucdon'>{{item._idthucdon.ten}} X {{item.soluongthucdon}} <span > giảm
+                {{item._idthucdon.khuyenmai}} %</span></td>
+            <td *ngIf='item._idthucdon'>{{item._idthucdon.gia|number}} VNĐ</td>
           </tr>
         </tbody>
         <thead>
@@ -74,32 +80,59 @@
           </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let item of phong;index as i">
-              <td>{{item.ten}} - {{item.loai}}</td>
-              <td>{{item.gia}}</td>
-            </tr>
+          <tr *ngFor="let item of phong;index as i">
+            <td>{{item.ten}} - {{item.loai}}</td>
+            <td>
+              <span *ngIf='hdgl.buoiDat==3'>
+                {{item.gia*2 |number}} VNĐ
+              </span>
+              <span *ngIf='hdgl.buoiDat!=3'>
+                {{item.gia | number}} VNĐ
+              </span>
+            </td>
+          </tr>
         </tbody>
         <thead *ngIf="dichvu">
-            <tr>
-              <th>Dịch vụ</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody *ngIf="dichvu">
-              <tr *ngFor="let item of dichvu;index as i">
-                <td>{{item._iddichvu.ten}}</td>
-                <td>{{item._iddichvu.gia}}</td>
-              </tr>
-          </tbody>
-        <tfoot >
+          <tr>
+            <th>Dịch vụ</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody *ngIf="dichvu">
+          <tr *ngFor="let item of dichvu;index as i">
+            <td>{{item._iddichvu.ten}}</td>
+            <td>{{item._iddichvu.gia |number}} VNĐ</td>
+          </tr>
+        </tbody>
+        <tfoot>
           <tr *ngFor="let item of chitiet;index as i">
             <th>Tổng tiền</th>
             <th>
-                  {{item.tongtien}}
+              {{item.tongtien|number}} VNĐ
             </th>
           </tr>
         </tfoot>
       </table>
+      <div class="cover" *ngIf="hdgl" style="display: flex;justify-content: center;padding-bottom: 10px">
+        <div class="wrap"  *ngIf="hdgl.tinhtrang===1">
+            <button style="margin: 0 5px" class="btn" (click)=payment(2)>
+                Thanh toán 10%
+              </button>
+              <button style="margin: 0 5px" class="btn btn-primary" (click)=payment(1)>
+                Thanh toán hết
+              </button>
+              <a style="margin: 0 5px" class="btn btn-success" *ngIf="href" href="{{href}}">Đến tràng thanh toán</a>
+        </div>
+      </div>
+      <div class="cover" *ngIf="hdgl"
+        style="display: flex;justify-content: center;padding-bottom: 10px">
+        <div class="wrap" *ngIf="hdgl.tinhtrang===2&&hdgl.hinhthucthanhtoan===2">
+            <button style="margin: 0 5px" class="btn btn-primary" (click)=payment(3)>
+                Thanh toán 90% còn lại
+              </button>
+              <a style="margin: 0 5px" class="btn btn-success" *ngIf="href" href="{{href}}">Đến tràng thanh toán</a>
+        </div>
+      </div>
     </div>
   </div>
 </div>

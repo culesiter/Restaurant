@@ -17,7 +17,7 @@ module.exports = {
     capNhatKhachHang: capNhatKhachHang,
     dangNhap: dangNhap,
     capNhatHinh: capNhatHinh,
-    layNguoiDungtheoid:layNguoiDungtheoid
+    layNguoiDungtheoid: layNguoiDungtheoid
 }
 function capNhatHinh(pramas, file) {
 
@@ -50,14 +50,13 @@ function capNhatHinh(pramas, file) {
 }
 function dangNhap(request) {
     return new Promise((resolve, reject) => {
-        khachhang.findOne({ email: request.body.email })
+        khachhang.findOne({ email: request.body.email,thanhvien:true })
             .then(user => {
                 if (!user) {
                     var err = { message: "that bai" }
                     return reject(err)
                 }
-                if(user.matkhau)
-                {
+                if (user.matkhau) {
                     bcrypt.compare(request.body.matkhau, user.matkhau, (err, result) => {
                         if (err) {
                             var err = { message: err + "" }
@@ -82,13 +81,13 @@ function dangNhap(request) {
                                 token: token
                             }
                             console.log(123, data);
-    
+
                             return resolve(data)
                         }
                         err = { message: "that bai" }
                         return reject(err)
                     })
-                }else{
+                } else {
                     var err = { message: "that bai" }
                     return reject(err)
                 }
@@ -102,24 +101,26 @@ function dangNhap(request) {
 }
 function xoaNguoiDung(request) {
     return new Promise((resolve, reject) => {
-        hoadon.findOne({ _idkhachhang: request.id }).exec().then(
+        hoadon.find({ _idkhachhang: request.id }).then(
             response => {
-                if (response) {
+                console.log(response)
+                if (response.length != 0) {
                     var mes = {
                         message: "rang buoc"
                     }
-                    reject(mes)
+                    return reject(mes)
                 }
-                else if (!response) {
+                else if (response.length == 0) {
                     return khachhang.remove({ _id: request.id })
                 }
             }
         ).then(result => {
-            const data = {
-                message: "xoa thanh cong"
+            if (result) {
+                const data = {
+                    message: "xoa thanh cong"
+                }
+                resolve(data)
             }
-            resolve(data)
-
         }).catch(err => reject(err + ""))
     });
 }
@@ -127,7 +128,6 @@ function xoaNguoiDung(request) {
 function capNhatKhachHang(pramas, request) {
 
     return new Promise((resolve, reject) => {
-
         khachhang.findById({ _id: pramas.id }).then(res => {
             if (!res) {
                 var err = {
@@ -139,7 +139,7 @@ function capNhatKhachHang(pramas, request) {
                 bcrypt.hash(request.matkhau, 10, (err, hash) => {
                     if (hash) {
                         res.ten = request.ten || res.ten,
-                            res.matkhau = hash || res.matkhau,
+                          //  res.matkhau = hash || res.matkhau,
                             res.email = request.email || res.email,
                             res.sdt = request.sdt || res.sdt,
                             res.diachi = request.diachi || res.diachi
@@ -157,11 +157,16 @@ function capNhatKhachHang(pramas, request) {
 
                         });
                     } else if (hash == undefined) {
-                        res.ten = request.ten || res.ten,
-                            res.matkhau = res.matkhau,
+                            res.ten = request.ten || res.ten,
+                         //   res.matkhau = res.matkhau,
                             res.email = request.email || res.email,
                             res.sdt = request.sdt || res.sdt,
-                            res.diachi = request.diachi || res.diachi
+                            res.diachi = request.diachi || res.diachi,
+                            res.diem = request.diem || res.diem
+                          if(request.diem==0){
+                            res.diem = request.diem
+                          }
+                        console.log(request);
                         return res.save((err, response) => {
                             if (response) {
                                 const data = {
@@ -186,7 +191,7 @@ function capNhatKhachHang(pramas, request) {
 
 function layNguoiDungtheoid(req) {
     return new Promise((resolve, reject) => {
-        khachhang.find({_id:req.id}).select('_id ten email sdt matkhau hinhanh thanhvien diem diachi').populate('_idkhachhang', 'ten').exec(
+        khachhang.find({ _id: req.id }).select('_id ten email sdt matkhau hinhanh thanhvien diem diachi').populate('_idkhachhang', 'ten').exec(
             function (err, response) {
                 if (err) {
                     var err = {
@@ -218,7 +223,7 @@ function layNguoiDungtheoid(req) {
 
 function layNguoiDung(req) {
     return new Promise((resolve, reject) => {
-        khachhang.find({}).sort( { _id: -1 } ).select('_id ten email sdt matkhau hinhanh thanhvien diem diachi').populate('_idkhachhang', 'ten').exec(
+        khachhang.find({}).sort({ _id: -1 }).select('_id ten email sdt matkhau hinhanh thanhvien diem diachi').populate('_idkhachhang', 'ten').exec(
             function (err, response) {
                 if (err) {
                     var err = {
@@ -248,7 +253,8 @@ function layNguoiDung(req) {
 function taoNguoiDung(request) {
     return new Promise((resolve, reject) => {
         var email = {
-            email: new RegExp('^' + request.email.trim() + '$', "i")
+            email: new RegExp('^' + request.email.trim() + '$', "i"),
+            thanhvien:true
         }
         bcrypt.hash(request.matkhau, 10, (err, hash) => {
             if (err) {
@@ -265,6 +271,7 @@ function taoNguoiDung(request) {
                     diem: request.diem
                 });
                 khachhang.find(email).then(items => {
+                    console.log(items)
                     if (items.length > 0) {
 
                         var err = {
@@ -299,8 +306,8 @@ function taoNguoiDung(request) {
 
     })
 
-}  
-function taoNguoiDungk(request){
+}
+function taoNguoiDungk(request) {
     return new Promise((resolve, reject) => {
         var nguoidungmoi = new khachhang({
             ten: request.ten,
@@ -311,7 +318,7 @@ function taoNguoiDungk(request){
             diachi: request.diachi,
             diem: request.diem
         });
-       nguoidungmoi.save().then(result => {
+        nguoidungmoi.save().then(result => {
             const data = {
                 message: "tao thanh cong",
                 values: {

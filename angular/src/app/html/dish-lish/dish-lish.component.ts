@@ -95,13 +95,8 @@ export class DishLishComponent implements OnInit {
   }
   showdishs() {
     this.dishservice.laydanhsachmonan().subscribe(response => {
-      response.forEach(element => {
-        if (element.khuyenmai > 0) {
-          element['giacu'] = element.gia;
-          element.gia = element.gia * (100 - element.khuyenmai) / 100;
-        }
-      });
       this.dishs = response;
+      console.log(this.dishs)
     });
   }
   showdishs2() {

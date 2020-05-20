@@ -6,4 +6,5 @@ export class Ithucdon {
     tenthucdon?:string;
     soluong?:number;
     gia?:number;
+    message?:string;
 }

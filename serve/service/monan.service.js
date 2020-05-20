@@ -10,14 +10,14 @@ module.exports = {
     getProductById: getProductById,
     xoaMonAn: xoaMonAn,
     capNhatMonAn: capNhatMonAn,
-    capNhatHinh:capNhatHinh
+    capNhatHinh: capNhatHinh
 }
 function capNhatHinh(pramas, file) {
-
+    console.log(file)
     return new Promise((resolve, reject) => {
 
         monan.findById({ _id: pramas.id }).then(res => {
-            
+
             if (!res) {
                 var err = {
                     message: "khong ton tai"
@@ -25,16 +25,15 @@ function capNhatHinh(pramas, file) {
                 reject(err)
             }
             else if (res) {
-                res.hinhanh = file.path
-                res.save((err,response)=>{
-                    if(response)
-                    {
+                res.hinhanh = file.path || res.hinhanh
+                res.save((err, response) => {
+                    if (response) {
                         const data = {
                             message: "thanh cong",
                         }
                         resolve(data);
                     }
-                    
+
                 })
             }
         }).catch(err => {
@@ -46,62 +45,65 @@ function xoaMonAn(request) {
     return new Promise((resolve, reject) => {
         thucdonmonan.find({ _idmonan: request.id }).then(
             response => {
-                console.log(request.id);
-                
-                if (response) {
+
+                if (response.length != 0) {
                     var mes = {
                         message: "rangbuoc"
                     }
-                    reject(mes)
-                }else if (!response) {
-                    console.log(3);
-                    
-                    return chitiethoadon.findOne({ _idmonan: request.id })
+                    return reject(mes)
+
+                } else if (response.length == 0) {
+
+                    return chitiethoadon.find({ _idmonan: request.id })
 
                 }
             }
-        ).then(
-            res => {
-                if (res) {
+        ).then(res => {
+            console.log(res);
+
+            if (res) {
+
+                if (res.length != 0) {
                     var mes = {
                         message: "hoa don dang ton tai"
                     }
-                    reject(mes)
+                    return reject(mes)
                 }
-                else if (!res) {
-                    console.log(2);
-                    
+                else if (res.length == 0) {
                     return monan.deleteOne({ _id: request.id })
                 }
             }
+        }
         ).then(result => {
-            const data = {
-                message: "xoa thanh cong"
+            if(result){
+                const data = {
+                    message: "xoa thanh cong"
+                }
+                resolve(data)
             }
-            resolve(data)
-
         }).catch(err => reject(err + ""))
     });
 }
 function capNhatMonAn(pramas, request) {
     return new Promise((resolve, reject) => {
-          loaimon.findOne({ _id: request._idloai }).then(
+        loaimon.findOne({ _id: request._idloai }).then(
             response => {
                 if (!response && request._idloai) {
                     var err = {
                         message: "khong ton tai loai mon an"
                     }
                     reject(err)
-                    
+
                 }
-                else{
-                    console.log(pramas.id);
-                    
+                else {
+
+
                     return monan.findById({ _id: pramas.id })
                 }
             }
         ).then(res => {
-            
+            console.log(request);
+
             if (!res) {
                 var err = {
                     message: "khong ton tai"
@@ -109,19 +111,21 @@ function capNhatMonAn(pramas, request) {
                 reject(err)
             }
             else if (res) {
-                res.ten = request.ten||res.ten
-                res.gia = request.gia||res.gia
-                res._idloai = request._idloai||res._idloai
-                res.hinhanh = request.hinhanh||res.hinhanh
-                res.khuyenmai = request.khuyenmai||res.khuyenmai
+                res.ten = request.ten || res.ten
+                res.gia = request.gia || res.gia
+                res._idloai = request._idloai || res._idloai
+                res.khuyenmai = request.khuyenmai || res.khuyenmai
+                res.hinhanh = request.hinhanh || res.hinhanh
+                res.mota = request.mota || res.mota
+                if (request.khuyenmai == 0) {
+                    res.khuyenmai = request.khuyenmai
+                }
                 return res.save()
             }
         }).then(result => {
             const data = {
                 message: "thanh cong",
-                values: {
-                    _id: result._id
-                }
+                data: result
             }
             resolve(data);
 
@@ -157,7 +161,7 @@ function getProductById(req) {
 }
 function layMonAN() {
     return new Promise((resolve, reject) => {
-        monan.find({}).sort( { _id: -1 } ).select('_id ten hinhanh gia khuyenmai _idloai ').populate('_idloai', '_id ten').exec(
+        monan.find({}).sort({ _id: -1 }).select('_id ten hinhanh gia khuyenmai _idloai ').populate('_idloai', '_id ten').exec(
             function (err, response) {
                 if (err) {
                     var err = {
@@ -172,7 +176,7 @@ function layMonAN() {
                             hinhanh: res.hinhanh,
                             gia: res.gia,
                             loai: res._idloai.ten,
-                            _idloai:res._idloai._id,
+                            _idloai: res._idloai._id,
                             khuyenmai: res.khuyenmai
                         }
                     }
@@ -220,20 +224,20 @@ function taoMonAn1(request) {
         khuyenmai: request.khuyenmai
     });
     return new Promise((resolve, reject) => {
-        var ten={
-            ten: new RegExp('^'+request.ten.trim()+'$',"i")
+        var ten = {
+            ten: new RegExp('^' + request.ten.trim() + '$', "i")
         }
-        loaimon.find(ten).then(items=>{
-            if(items.length>0){
-                var err={
-                    message:"mon da co"
+        loaimon.find(ten).then(items => {
+            if (items.length > 0) {
+                var err = {
+                    message: "mon da co"
                 }
                 reject(err)
             }
-            else{
+            else {
                 return loaimon.findById(request._idloai)
             }
-           }).then(
+        }).then(
             res => {
                 if (!res) {
                     var err = {

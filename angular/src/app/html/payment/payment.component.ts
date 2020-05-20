@@ -157,6 +157,7 @@ export class PaymentComponent implements OnInit {
     this.total = this.tinhTienPhong() + this.tinhTienDichVu() + this.tongTien;
     if (this.select == 2) {
       this.total = this.total * 0.1;
+      this.total = Math.floor(this.total);
     }
     $('#load').css('display', 'block');
     if (buoidat.length === 2) {
@@ -171,7 +172,7 @@ export class PaymentComponent implements OnInit {
         thoidiemden: thoidiemden,
         buoiDat: buoidat,
         tongtien: this.tongTien + this.tinhTienPhong() + this.tinhTienDichVu(),
-        gioden: this.gio + ' giờ' + this.phut + ' phút',
+        gioden: this.gio + ' giờ ' + this.phut + ' phút',
         hinhthucthanhtoan: this.select
       };
       this.gettime.themhoadon(data).subscribe(response => {
@@ -220,26 +221,19 @@ export class PaymentComponent implements OnInit {
             customerId: khachhang._id,
             customerEmail: this.khachhang.email,
             customerPhone: this.khachhang.sdt,
-            orderId: response.values._id
+            orderId: response.values._id,
+            ref: response.values._id + new Date().getMinutes() + new Date().getSeconds()
           };
           this.gettime.thanhtoan(payment_data).subscribe(res => {
             $('#load').css('display', 'none');
+            $.notify('Gửi yêu cầu thành công', 'success');
             this.href = res._body;
+            $('#xacNhan').modal({ backdrop: 'static', keyboard: false });
           });
+        } else if (response.message === 'bi chiem') {
+          $('#load').css('display', 'none');
+          $.notify('Phòng trên đã bị đặt', 'error');
         }
-        // alert('ok');
-        // $('#xacNhan').modal('toggle');
-        // $('body').removeClass('modal-open');
-        // $('.modal-backdrop').removeClass('modal-backdrop fade in')
-        // this.router.navigate(['/home']);
-        // localStorage.setItem('cart', JSON.stringify([]));
-        // localStorage.setItem('cart1', JSON.stringify([]));
-        // localStorage.setItem('dichvu', JSON.stringify([]));
-        // localStorage.removeItem('thoidiemden');
-        // localStorage.setItem('phong', JSON.stringify([]));
-        // localStorage.setItem('buoi', JSON.stringify([]));
-        // localStorage.removeItem('thoidiemden_temp');
-        // localStorage.setItem('phong_temp', JSON.stringify([]));
       });
     } else {
       this.customer.themtknoaccount(this.frmThanhToan.value).subscribe(Response => {
@@ -249,6 +243,7 @@ export class PaymentComponent implements OnInit {
             _idkhachhang: Response.values._id,
             thoidiemden: thoidiemden,
             buoiDat: buoidat,
+            gioden: this.gio + ' giờ ' + this.phut + ' phút',
             tongtien: this.tongTien + this.tinhTienPhong() + this.tinhTienDichVu()
           };
           this.gettime.themhoadon(data).subscribe(response => {
@@ -295,24 +290,29 @@ export class PaymentComponent implements OnInit {
                 customerId: data._idkhachhang,
                 customerEmail: this.khachhang2.email,
                 customerPhone: this.khachhang2.sdt,
-                orderId: response.values._id
+                orderId: response.values._id,
+                ref: response.values._id + new Date().getMinutes() + new Date().getSeconds()
               };
+              console.log(payment_data);
+
               this.gettime.thanhtoan(payment_data).subscribe(res => {
                 $('#load').css('display', 'none');
-                $.notify('Gửi yêu cầu thành công');
+                $('#xacNhan').modal({ backdrop: 'static', keyboard: false });
+                $.notify('Gửi yêu cầu thành công', 'success');
                 this.href = res._body;
               });
+            } else if (response.message === 'bi chiem') {
+              $('#load').css('display', 'none');
+              $.notify('Phòng trên đã bị đặt', 'error');
             }
-            // alert('ok');
-            // $('#xacNhan').hide();
-            // $('body').removeClass('modal-open');
-            // $('.modal-backdrop').removeClass('modal-backdrop fade in');
-            // this.router.navigate(['/home']);
-
           });
         }
       });
     }
+  }
+  backhome() {
+    this.clearalllocal();
+    this.router.navigate(['/home']);
   }
   clearalllocal() {
     localStorage.setItem('cart', JSON.stringify([]));
@@ -320,6 +320,9 @@ export class PaymentComponent implements OnInit {
     localStorage.setItem('dichvu', JSON.stringify([]));
     localStorage.setItem('thoidiemden', JSON.stringify([]));
     localStorage.setItem('phong', JSON.stringify([]));
+    localStorage.setItem('buoi', JSON.stringify([]));
+    localStorage.setItem('thoidiemden_temp', JSON.stringify([]));
+    localStorage.setItem('phong_temp', JSON.stringify([]));
   }
   giatri(time) {
     console.log(time);
@@ -418,7 +421,7 @@ export class PaymentComponent implements OnInit {
     let tong = 0;
     if (this.cart != null) {
       this.cart.forEach(element => {
-        tong = tong + (element.item.gia * element.sl)
+        tong = tong + (element.item.gia * element.sl - (element.item.gia * element.sl * element.item.khuyenmai / 100))
       });
       return tong;
     }

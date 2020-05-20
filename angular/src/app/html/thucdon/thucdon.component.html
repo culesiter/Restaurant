@@ -21,7 +21,7 @@
                 </div>
               </div>
               <div class="money">
-                {{mon.gia}}VNĐ X {{mon.soluong}}
+                {{mon.gia|number}} VNĐ X {{mon.soluong}} 
               </div>
           </span>
         </span>
@@ -29,7 +29,7 @@
       <div class="panel-footer t-center">
         <div class="row">
           <div class="col-md-12 all-price">
-            {{thucdon.gia}} VNĐ
+            {{thucdon.gia| number}} VNĐ 
           </div>
           <div class="col-md-12">
             <a (click)="addToCart(thucdon)" class="btn-adtocart" role="button">

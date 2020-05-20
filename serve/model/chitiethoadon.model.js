@@ -12,10 +12,12 @@ var chitiethoadonSchema = mongoose.Schema(
             type: mongoose.Schema.Types.ObjectId, ref: 'thucdon'
         },
         soluongmonan:{
-            type:Number
+            type:Number,
+            default:1
         },
         soluongthucdon:{
-            type:Number
+            type:Number,
+            default:1
         }
 
     }

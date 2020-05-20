@@ -1,12 +1,23 @@
 <div class="container-fluid">
-    <div class="head-cus">
+    <div class="head-cus" style="display:flex;justify-content: space-between">
         <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#addc"><i
                 class="fa fa-user-plus" aria-hidden="true"></i> Thêm người dùng mới</button>
+                <div class="cover">
+                    <button (click)="getList(1)">
+                            Lọc khách hàng thành viên
+                    </button>
+                    <button  (click)="getList(2)">
+                            Lọc khách hàng vãng lai
+                    </button>
+                    <button  (click)="getList(false)">
+                            Lọc tất cả khách hàng
+                    </button>
+                </div>
     </div>
     <div id="addc" class="modal fade" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form id="formThemCustomer" (ngSubmit)="addNew()" [formGroup]="formAddNew">
+                <form style="display: inline-block" id="formThemCustomer" (ngSubmit)="addNew()" [formGroup]="formAddNew">
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label>Tên</label>
@@ -22,14 +33,16 @@
                                 placeholder="Password">
                         </div>
                         <div class="form-group col-md-6">
-                            <label>Confirm Mật Khẩu</label>
-                            <input type="password" class="form-control" placeholder="Password">
-                        </div>
-                        <div class="form-group col-md-4">
-                            <label>Birth Day</label>
-                            <input type="date" class="form-control">
-                        </div>
-                        <div class="form-group col-md-8">
+                                <label>Địa Chỉ</label>
+                                <input type="text" class="form-control" formControlName="diachi"
+                                    placeholder="Địa chỉ">
+                            </div>
+                            <div class="form-group col-md-6">
+                                    <label>Điểm</label>
+                                    <input type="number" class="form-control" formControlName="diem"
+                                        placeholder="Điểm">
+                                </div>
+                        <div class="form-group col-md-12">
                             <label>Avatar</label>
                             <div class="custom-file">
                                 <input type="file" (change)="onFileChange($event)" class="custom-file-input"
@@ -38,18 +51,9 @@
                             </div>
                         </div>
                     </div>
-                    <div class="form-group col-md-4">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="true" formControlName="thanhvien"
-                                id="gridCheck">
-                            <label class="form-check-label" for="gridCheck">
-                                Thành Viên
-                            </label>
-                        </div>
-                    </div>
-                    <div class="col-12">
-                        <button type="submit" class="btn btn-secondary">Sign up</button>
-                        <button class="btn btn-warning" onclick="formReser()">Clear</button>
+                    <div class="col-md-12">
+                        <button type="submit" class="btn btn-secondary">Tạo</button>
+                        <button class="btn btn-warning" onclick="formReser()">làm mới</button>
                     </div>
                 </form>
             </div>
@@ -65,15 +69,21 @@
                         <th>Email</th>
                         <th>Thành Viên</th>
                         <th>Điểm tích lũy</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let item of listData" data-toggle="modal" data-target="#cusdetail"
-                        (click)="openDetailInModal(item)">
+                    <tr *ngFor="let item of listData" 
+                        >
                         <td>{{item.ten}}</td>
                         <td>{{item.email}}</td>
                         <td>{{item.thanhvien}}</td>
                         <td>{{item.diem}}</td>
+                        <td>
+                                <button data-toggle="modal" data-target="#cusdetail" (click)="openDetailInModal(item)" class="btn btn-primary">Chi Tiết</button>
+                                <button class="btn btn-warning" (click)="delete(item._id)">Xóa</button>
+                        
+                            </td>
                     </tr>
                 </tbody>
             </table>
@@ -97,13 +107,8 @@
                                                 </div>
                                                 <div class="form-group col-md-6">
                                                     <label>Email</label>
-                                                    <input type="email" class="form-control" formControlName="email"
+                                                    <input disabled type="email" class="form-control" formControlName="email"
                                                         value="{{eData.email}}">
-                                                </div>
-                                                <div class="form-group col-md-6">
-                                                    <label>Mật khẩu</label>
-                                                    <input type="password" class="form-control"
-                                                        formControlName="matkhau" value="{{eData.matkhau}}">
                                                 </div>
                                                 <div class="col-md-12">
                                                     <label>Đia chỉ</label>
@@ -112,7 +117,7 @@
                                                 <div class="form-row">
                                                     <div class="form-group col-md-6">
                                                         <label>Thành Viên</label>
-                                                        <input type="text" formControlName="thanhvien"
+                                                        <input disabled type="text" formControlName="thanhvien"
                                                             class="form-control" value="{{eData.thanhvien}}">
                                                     </div>
                                                     <div class="form-group col-md-6">
@@ -122,17 +127,13 @@
                                                     </div>
                                                 </div>
                                                 <div class="form-group col-md-6">
-                                                    <button type="submit" class="btn btn-default">Edit</button>
-                                                    <button class="btn btn-warning" (click)="delete()">Xóa</button>
+                                                    <button type="submit" class="btn btn-default">Sửa</button>
                                                 </div>
                                             </div>
                                         </form>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         </div>
                     </div>
                 </div>

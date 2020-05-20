@@ -22,11 +22,14 @@ export class RegisterComponent implements OnInit {
   }
   luuForm() {
     console.log(JSON.stringify(this.frmDangKy.value));
-    this.user = { ten: this.frmDangKy.value.ten,
-       email: this.frmDangKy.value.email,
-        sdt: this.frmDangKy.value.sdt,
-         matkhau: this.frmDangKy.value.matkhau,
-        thanhvien: true };
+    this.user = {
+      ten: this.frmDangKy.value.ten,
+      email: this.frmDangKy.value.email,
+      sdt: this.frmDangKy.value.sdt,
+      matkhau: this.frmDangKy.value.matkhau,
+      diachi: this.frmDangKy.value.diachi,
+      thanhvien: true
+    };
     this.customer.them1(this.user).subscribe(response => {
       console.log(response);
       if (response.message === 'tao thanh cong') {
@@ -61,6 +64,10 @@ export class RegisterComponent implements OnInit {
       matkhau: ['', [
         Validators.required,
         Validators.pattern('^[a-zA-Z0-9]{6,25}$')
+      ]]
+      ,
+      diachi: ['', [
+        Validators.required
       ]]
     });
   }

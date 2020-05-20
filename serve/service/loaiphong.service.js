@@ -8,14 +8,14 @@ module.exports = {
     getProductById: getProductById,
     xoaLoaiPhong: xoaLoaiPhong,
     capNhatLoaiPhong: capNhatLoaiPhong,
-    capNhatHinh:capNhatHinh
+    capNhatHinh: capNhatHinh
 }
 function capNhatHinh(pramas, file) {
 
     return new Promise((resolve, reject) => {
 
         loaiphong.findById({ _id: pramas.id }).then(res => {
-            
+
             if (!res) {
                 var err = {
                     message: "khong ton tai"
@@ -24,17 +24,16 @@ function capNhatHinh(pramas, file) {
             }
             else if (res) {
                 res.hinhanh = file.path
-                res.save((err,response)=>{
+                res.save((err, response) => {
                     console.log(response);
-                    
-                    if(response)
-                    {
+
+                    if (response) {
                         const data = {
                             message: "thanh cong",
                         }
                         resolve(data);
                     }
-                    
+
                 })
             }
         }).catch(err => {
@@ -44,24 +43,25 @@ function capNhatHinh(pramas, file) {
 }
 function xoaLoaiPhong(request) {
     return new Promise((resolve, reject) => {
-        phong.findOne({ _idloai: request.id }).exec().then(
+        phong.find({ _idloai: request.id }).then(
             response => {
-                if (response) {
+                if (response.length != 0) {
                     var mes = {
                         message: "phong dang ton tai loai phong nay"
                     }
                     reject(mes)
                 }
-                else if (!response) {
+                else if (response.length == 0) {
                     return loaiphong.remove({ _id: request.id })
                 }
             }
         ).then(result => {
-            const data = {
-                message: "xoa thanh cong"
+            if (result) {
+                const data = {
+                    message: "xoa thanh cong"
+                }
+                resolve(data)
             }
-            resolve(data)
-
         }).catch(err => reject(err + ""))
     });
 }
@@ -69,33 +69,32 @@ function capNhatLoaiPhong(pramas, request) {
 
     return new Promise((resolve, reject) => {
 
-    
-                 loaiphong.findById({ _id: pramas.id }).then(res => {
-                if (!res) {
-                    var err = {
-                        message: "khong ton tai"
-                    }
-                    reject(err)
+        loaiphong.findById({ _id: pramas.id }).then(res => {
+            if (!res) {
+                var err = {
+                    message: "khong ton tai"
                 }
-                else if (res) {
-                    res.ten = request.ten||res.ten
-                    res.gia=request.gia||res.gia
-                    res.succhua=request.succhua||res.succhua
-                    res.mota=request.mota||res.mota
-                    return res.save()
+                reject(err)
+            }
+            else if (res) {
+                res.ten = request.ten || res.ten
+                res.gia = request.gia || res.gia
+                res.succhua = request.succhua || res.succhua
+                res.mota = request.mota || res.mota
+                return res.save()
+            }
+        }).then(result => {
+            const data = {
+                message: "thanh cong",
+                values: {
+                    ten: result.ten,
                 }
-            }).then(result => {
-                const data = {
-                    message: "thanh cong",
-                    values: {
-                        ten: result.ten,
-                    }
-                }
-                resolve(data);
+            }
+            resolve(data);
 
-            }).catch(err => {
-                reject(err + "");
-            })
+        }).catch(err => {
+            reject(err + "");
+        })
     })
 
 }
@@ -133,8 +132,8 @@ function layLoaiPhong(request) {
                             ten: res.ten,
                             gia: res.gia,
                             succhua: res.succhua,
-                            mota:res.mota,
-                            hinhanh:res.hinhanh
+                            mota: res.mota,
+                            hinhanh: res.hinhanh
                         }
                     }
                     )
@@ -149,7 +148,7 @@ function taoLoaiPhong(request) {
         ten: request.ten,
         gia: request.gia,
         succhua: request.succhua,
-        mota:request.mota
+        mota: request.mota
     });
     return new Promise((resolve, reject) => {
         var ten = {

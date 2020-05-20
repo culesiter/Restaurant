@@ -8,8 +8,8 @@ import { Ithucdon } from '../../../../share/entities/ithucdon';
 import { Ithucdonmonan } from '../../../../share/entities/ithucdonmonan';
 import { log } from 'util';
 import { CartserviceService } from '../../../../share/services/cartservice.service';
+import { Subject } from 'rxjs';
 declare var $: any;
-
 @Component({
   selector: 'app-s-menu',
   templateUrl: './s-menu.component.html',
@@ -29,12 +29,42 @@ export class SMenuComponent implements OnInit {
   private tdtotal = 0;
   private styletemp = {};
   private slma = 0;
+  dtOptions: DataTables.Settings = {};
+  dtTrigger: Subject<any> = new Subject();
   constructor(private formBuilder: FormBuilder,
     private dishS: DishserviceService, private menuS: ThucdonserviceService, private cartsv: CartserviceService) { }
   ngOnInit() {
     this.getlistthucdon();
     this.getdsmon();
     this.taoForm();
+    this.dtOptions = {
+      pagingType: 'full_numbers',
+      retrieve: true,
+      paging: true,
+      ordering: false,
+      language: {
+        processing: 'Procesando...',
+        search: 'Tìm Kiếm:',
+        lengthMenu: 'Hiển thị _MENU_ mục',
+        info: 'Hiển thị từ _START_ đến _END_ mục trong _TOTAL_ mục',
+        infoEmpty: 'Không có mục nào',
+        infoFiltered: "(filtrado _MAX_ elementos total)",
+        infoPostFix: "",
+        loadingRecords: "Cargando registros...",
+        zeroRecords: "Không có mục nào",
+        emptyTable: "No hay datos disponibles en la tabla",
+        paginate: {
+          first: 'Đầu tiên',
+          previous: 'Trở về',
+          next: 'Kế tiếp',
+          last: 'Cuối cùng'
+        },
+        aria: {
+          sortAscending: ": Activar para ordenar la tabla en orden ascendente",
+          sortDescending: ": Activar para ordenar la tabla en orden descendente"
+        }
+      }
+    };
   }
 
   back() {
@@ -43,8 +73,12 @@ export class SMenuComponent implements OnInit {
   }
   taoForm() {
     this.formAddNewMenu = this.formBuilder.group({
-      ten: ['', []],
-      khuyenmai: ['', []]
+      ten: ['', [
+        Validators.required,
+      ]],
+      khuyenmai: [0, [
+        Validators.required,
+      ]]
     });
   }
   laysl(vl, item) {
@@ -62,14 +96,20 @@ export class SMenuComponent implements OnInit {
       tong = tong + this.tinhgiathucdontheomonan(element.sl, element.item.gia, element.item.khuyenmai);
     });
     this.tdtotal = tong - (this.currenttd.values.khuyenmai * tong / 100);
-
+    console.log(vl);
+    if (vl === 0) {
+      this.huymonantrongthucdon(item);
+    }
     // this.slma = this.slma - 1;
     // this.tdtotal = this.tdtotal + this.tinhgiathucdontheomonan(this.slma, gia, km);
   }
   formShow(a, id) {
     this.formStatus = a;
     if (a === 'detail') {
-      this.menuS.getmonantheoIdthucdon(id).subscribe(res => this.lstmontheothucdon = res);
+      this.menuS.getmonantheoIdthucdon(id).subscribe(res => {
+        this.lstmontheothucdon = res;
+        console.log(res);
+      });
     }
     sessionStorage.setItem('admintd', JSON.stringify([]));
   }
@@ -120,6 +160,7 @@ export class SMenuComponent implements OnInit {
     if (data && data.length !== 0) {
       console.log('davao');
       data.forEach(element => {
+        console.log(item, element);
         if (item._id === element.item._id) {
 
           const index = data.indexOf(element);
@@ -184,11 +225,15 @@ export class SMenuComponent implements OnInit {
   }
   xoatd(id) {
     var temp_confirm = confirm('Bạn có chắc chắn muốn xóa mục này?');
-    if(temp_confirm == true){
+    if (temp_confirm == true) {
       this.menuS.xoaThucDonMonAn(id).subscribe(res => {
         this.menuS.xoathucdon(id).subscribe(res => {
-          $.notify("Đã xóa 1 mục", "success");
-          this.getlistthucdon();
+          if (res.message === 'hoa don chua') {
+            $.notify("Có hóa đơn chứa thực đơn trên", "error");
+          } else {
+            $.notify("Đã xóa 1 mục", "success");
+            this.getlistthucdon();
+          }
         })
       })
     }

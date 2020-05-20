@@ -1,6 +1,7 @@
 var thucdon = require("./../model/thucdon.model");
 var service = require("../service/thucdonmonan.service");
-const monan = require("./../model/monan.model")
+const monan = require("./../model/monan.model");
+var chitiethoadon = require("./../model/chitiethoadon.model");
 const thucdonmonan = require("./../model/chitietthucdonmonan.model")
 module.exports = {
     taoThucDon: taoThucDon,
@@ -12,33 +13,26 @@ module.exports = {
 }
 function xoaThucDon(request) {
     return new Promise((resolve, reject) => {
-
-
-        thucdon.findOne({
-            _id: request.id
-        }).exec().then(response => {
-            if (!response) {
-                reject("khong co thuc don nay!")
-            } else {
-                return thucdonmonan.remove({ _idthucdon: request.id })
+       chitiethoadon.find({_idthucdon:request.id}).then(res=>{
+           console.log(res);
+           if(res.length!=0){
+            var mes = {
+                message: "hoa don chua"
             }
-        }
-        ).then(res => {
+            resolve(mes);
+           }else if(res.length==0){
+            return  thucdonmonan.deleteMany({ _idthucdon: request.id })
+           }
+       }).then(res => {
+           if(res){
+            return thucdon.remove({ _id: request.id });
+           }
+        }).then(res => {
             if (res) {
-                thucdon.remove({
-                    _id: request.id
-                }).exec(function (err, response) {
-                    if (err) {
-                        reject(err + "");
-                    } else {
-                        var mes = {
-                            message: "xoa thuc don thanh cong"
-                        }
-                        resolve(mes);
-                    }
-                });
-            } else if (!res) {
-                reject("khong co thuc don nay!")
+                var mes = {
+                    message: "xoa thuc don thanh cong"
+                }
+                resolve(mes);
             }
         }).catch(err => {
             var err = {
@@ -125,7 +119,7 @@ function layThucDon() {
                             _id: res._id,
                             ten: res.ten,
                             khuyenmai: res.khuyenmai,
-                            gia:res.gia
+                            gia: res.gia
                         }
                     }
 

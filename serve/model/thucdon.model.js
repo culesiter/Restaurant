@@ -13,7 +13,8 @@ var thucdonSchema = mongoose.Schema(
             type: String
         },
         gia: {
-            type: Number
+            type: Number,
+            default: 0
         }
 
     }

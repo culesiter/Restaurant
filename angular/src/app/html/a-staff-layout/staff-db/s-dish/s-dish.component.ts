@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Idish } from '../../../../share/entities/idish';
 import { DishserviceService } from '../../../../share/services/dishservice.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -12,7 +12,6 @@ declare var $: any;
   styleUrls: ['./s-dish.component.scss']
 })
 export class SDishComponent implements OnInit {
-
   private formStatus = 'view';
   private newDish: Idish = {};
   private editDish: Idish = {};
@@ -22,11 +21,14 @@ export class SDishComponent implements OnInit {
   private formEdit: FormGroup;
   private styleExp = 'none';
   private selectedFile: any;
+  private file1;
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject();
   constructor(private dishserviceService: DishserviceService,
     private formBuilder: FormBuilder,
   ) { }
+
+
 
   ngOnInit() {
     this.taoForm();
@@ -46,7 +48,7 @@ export class SDishComponent implements OnInit {
         infoFiltered: "(filtrado _MAX_ elementos total)",
         infoPostFix: "",
         loadingRecords: "Cargando registros...",
-        zeroRecords: "Không có mục nào",
+        zeroRecords: 'Không có mục nào',
         emptyTable: "No hay datos disponibles en la tabla",
         paginate: {
           first: 'Đầu tiên',
@@ -61,8 +63,28 @@ export class SDishComponent implements OnInit {
       }
     };
   }
+
   getListType() {
-    this.dishserviceService.laydsloaimon().subscribe(res => this.lstType = res);
+    this.dishserviceService.laydsloaimon().subscribe(res => {
+      this.lstType = res;
+      this.formAdd = this.formBuilder.group({
+        ten: ['', [
+          Validators.required
+        ]],
+        gia: ['', [
+          Validators.required
+        ]],
+        _idloai: [this.lstType[0]._id, [
+          Validators.required
+        ]],
+        khuyenmai: ['', [
+          Validators.required
+        ]],
+        mota: ['', [
+          Validators.required
+        ]]
+      });
+    });
   }
   taoForm() {
     this.formAdd = this.formBuilder.group({
@@ -70,13 +92,14 @@ export class SDishComponent implements OnInit {
       gia: ['', []],
       _idloai: ['', []],
       khuyenmai: ['', []],
+      mota: ['', []]
     });
     this.formEdit = this.formBuilder.group({
       ten: ['', []],
       gia: ['', []],
       _idloai: ['', []],
-      loai: ['', []],
       khuyenmai: ['', []],
+      mota: ['', []],
     })
   }
   taoMon() {
@@ -87,31 +110,52 @@ export class SDishComponent implements OnInit {
     this.editDish = data;
   }
   detailview(data) {
+    $('#inputGroupFile001').val('');
     this.editDish = data;
+    this.formEdit = this.formBuilder.group({
+      ten: [data.ten, [
+        Validators.required
+      ]],
+      gia: [data.gia, [
+        Validators.required
+      ]],
+      _idloai: [data._idloai, [
+        Validators.required
+      ]],
+      khuyenmai: [data.khuyenmai || 0, [
+        Validators.required
+      ]],
+      mota: [data.mota, [
+        Validators.required
+      ]],
+    })
   }
   xoaForm() {
     this.formAdd.reset();
   }
   onFileChange(event) {
     this.selectedFile = event.target.files[0];
+    console.log(this.selectedFile);
   }
   createNewDish() {
     this.newDish = this.formAdd.value;
     this.dishserviceService.themMonaAn(this.newDish).subscribe(res => {
-      var data = res;
-      const uploaddata = new FormData();
-      uploaddata.append('monanimg', this.selectedFile);
-      console.log(uploaddata);
-      this.dishserviceService.upanh(data.values._id, uploaddata).subscribe(resq => {
-        if (resq) {
-          $.notify("Đã thêm 1 mục", "success");
-          setTimeout(() => {
-            $('#add-dish').modal('hide');
-          }, 150);
-          this.getAllDish();
-          this.formStatus = 'view';
-        }
-      })
+      if (res.message === 'luu thanh cong') {
+        const data = res;
+        const uploaddata = new FormData();
+        uploaddata.append('monanimg', this.selectedFile);
+        console.log(uploaddata);
+        this.dishserviceService.upanh(data.values._id, uploaddata).subscribe(resq => {
+          if (resq.message === 'thanh cong') {
+            $.notify("Đã thêm 1 mục", "success");
+            setTimeout(() => {
+              $('#add-dish').modal('hide');
+            }, 150);
+            this.getAllDish();
+            this.formStatus = 'view';
+          }
+        });
+      }
     });
   }
   getAllDish() {
@@ -128,35 +172,55 @@ export class SDishComponent implements OnInit {
     if (confirm('Bạn có muốn xóa món ăn này?')) {
       this.dishserviceService.xoaMonAn(id).subscribe(res => {
         console.log(res);
-        if (res) {
-          $.notify("Đã xóa 1 mục", "success");
+        if (res.message === 'rangbuoc') {
+          $.notify('Có thực đơn đang chứa món trên!', 'error');
+        } else if (res.message === 'hoa don dang ton tai') {
+          $.notify('Có hóa đơn đang chứa món trên!', 'error');
+        } else if (res.message === 'xoa thanh cong') {
+          $.notify('Đã xóa 1 mục', 'success');
           this.getAllDish();
-          this.formStatus = 'view';
         } else {
           $.notify("Có lỗi xảy ra!", "error");
         }
-      })
+      });
     }
   }
   editExistDish() {
+    $('#detailmd').addClass('waite');
     const id = this.editDish._id;
-    this.dishserviceService.suaMonAn(id, this.formEdit.value).subscribe(res => {
-      if (res) {
-        var data = res;
-        const uploaddata = new FormData();
-        uploaddata.append('monanimg', this.selectedFile);
-        console.log(uploaddata);
-        this.dishserviceService.upanh(id, uploaddata).subscribe(resq => {
-          if (resq) {
+    if (confirm('Bạn muốn sửa món trên?')) {
+      this.dishserviceService.suaMonAn(id, this.formEdit.value).subscribe(res => {
+        if (res.message === 'thanh cong') {
+          const data = res;
+          const uploaddata = new FormData();
+          uploaddata.append('monanimg', this.selectedFile);
+          if (this.selectedFile) {
+            this.dishserviceService.upanh(id, uploaddata).subscribe(resq => {
+              if (resq.message === 'thanh cong') {
+                $.notify('Cập nhật ảnh thành công!', 'success');
+                $('#detailmd').removeClass('waite');
+                setTimeout(() => {
+                  $('#detailmd').modal('hide');
+                }, 150);
+                this.getAllDish();
+                this.formStatus = 'view';
+              } else {
+                $.notify('Có lỗi xảy ra với file hình!', 'error');
+              }
+            });
+          } else {
             $.notify('Đã sửa một mục!', 'success');
+            $('#detailmd').removeClass('waite');
             this.getAllDish();
-            this.formStatus = 'view';
+            setTimeout(() => {
+              $('#detailmd').modal('hide');
+            }, 150);
           }
-        })
-      } else {
-        $.notify("Có lỗi xảy ra!", "error");
-      }
-    })
+        } else {
+          $.notify('Có lỗi xảy ra!', 'error');
+        }
+      });
+    }
   }
   xoaAnhluon() {
     $.notify("Đã xóa 1 ảnh", "success");

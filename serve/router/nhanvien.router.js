@@ -25,6 +25,7 @@ module.exports=function(){
   router.get('/id',controller.layNhanVientheoid);
   router.post('/login/',controller.dangNhap)
   // router.get('/:id',controller.getProductById1);
+  router.put('/:id',controller.capnhatnv);
   router.delete('/:id',controller.xoaNhanVien);
   router.put('/img/:id',upload.single('nhanvienimg'),controller.capNhatHinh);
   // router.put('/:id',controller.updateProduct2)

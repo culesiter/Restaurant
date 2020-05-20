@@ -15,7 +15,7 @@ module.exports = {
     layLoaiPhong: layLoaiPhong
 }
 function capNhatHinh(pramas, file) {
-
+    console.log(file);
     return new Promise((resolve, reject) => {
 
         phong.findById({ _id: pramas.id }).then(res => {
@@ -27,7 +27,7 @@ function capNhatHinh(pramas, file) {
                 reject(err)
             }
             else if (res) {
-                res.hinhanh = file.path
+                res.hinhanh = file.path || res.hinhanh
                 res.save((err, response) => {
                     if (response) {
                         const data = {
@@ -46,25 +46,26 @@ function capNhatHinh(pramas, file) {
 
 function xoaPhong(request) {
     return new Promise((resolve, reject) => {
-        phong.findOne({ _id: request.id }).exec().then(
+        hoadon.find({ _idphong: request.id }).then(
             response => {
-                if (!response) {
+                if (response.length != 0) {
                     var mes = {
-                        message: "0 co"
+                        message: "rang buoc"
                     }
                     reject(mes)
                 }
-                else if (response) {
+                else if (response.length == 0) {
                     return phong.remove({ _id: request.id })
                 }
             }
         )
             .then(result => {
-                const data = {
-                    message: "xoa thanh cong"
+                if(result){
+                    const data = {
+                        message: "xoa thanh cong"
+                    }
+                    resolve(data)
                 }
-                resolve(data)
-
             }).catch(err => reject(err + ""))
     });
 }
@@ -75,25 +76,18 @@ function capNhatPhong(pramas, request) {
 
         loaiphong.findOne({ _id: request._idloai }).then(
             response => {
-                if (!response && request._idloai) {
-                    var err = {
-                        message: "khong ton tai loai phong"
-                    }
-                    reject(err)
-
-                }
-                else {
+                
                     return phong.findById({ _id: pramas.id })
-                }
             }
         ).then(res => {
-            if (!res) {
+            console.log(res);
+            if (res.length==0) {
                 var err = {
                     message: "khong ton tai"
                 }
                 reject(err)
             }
-            else if (res) {
+            else if (res.length!=0) {
                 res.ten = request.ten || res.ten
                 res.tinhtrang = request.tinhtrang || res.tinhtrang
                 res._idloai = request._idloai || res._idloai
@@ -119,7 +113,7 @@ function capNhatPhong(pramas, request) {
 }
 function layLoaiPhong(request) {
     return new Promise((resolve, reject) => {
-        phong.find({_id:request.id}).select('_id ten _idloai tinhtrang hinhanh').populate('_idloai', '_id ten gia succhua').exec(
+        phong.find({ _id: request.id }).select('_id ten _idloai tinhtrang hinhanh').populate('_idloai', '_id ten gia succhua').exec(
             function (err, response) {
                 if (err) {
                     var err = {
@@ -134,7 +128,8 @@ function layLoaiPhong(request) {
                             loai: res._idloai.ten,
                             gia: res._idloai.gia,
                             succhua: res._idloai.succhua,
-                            tinhtrang: res.tinhtrang
+                            tinhtrang: res.tinhtrang,
+                            _idloai:res._idloai._id
 
                         }
                     }
@@ -148,7 +143,7 @@ function layLoaiPhong(request) {
 }
 function layPhong() {
     return new Promise((resolve, reject) => {
-        phong.find({}).sort( { _id: -1 } ).select('_id ten _idloai tinhtrang hinhanh').populate('_idloai', '_id ten gia succhua').exec(
+        phong.find({}).sort({ _id: -1 }).select('_id ten _idloai tinhtrang hinhanh').populate('_idloai', '_id ten gia succhua').exec(
             function (err, response) {
                 if (err) {
                     var err = {
@@ -163,7 +158,8 @@ function layPhong() {
                             loai: res._idloai.ten,
                             gia: res._idloai.gia,
                             succhua: res._idloai.succhua,
-                            tinhtrang: res.tinhtrang
+                            tinhtrang: res.tinhtrang,
+                            _idloai:res._idloai._id
 
                         }
                     }

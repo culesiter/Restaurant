@@ -26,16 +26,7 @@
                   <div class="row">
                     <div class="col-md-6">
                       <div class="input-group modal-title " id="myModalLabel">
-                        <span class="input-group-addon">
-                          Loai Phòng:
-                        </span>
-                        <form [formGroup]="frmTimKiem" (change)="timKiemLoaiPhong()">
-                          <select formControlName="loai" class="form-control">
-                            <option value="0">Tất cả</option>
-                            <option value="VIP">VIP</option>
-                            <option value="B2">B2</option>
-                          </select>
-                        </form>
+                       
                       </div>
                     </div>
                   </div>
@@ -162,7 +153,7 @@
                 max="100" class="form-control" value="{{item.sl}}" (change)="thayDoiGiaTri($event.target.value,item)">
             </td>
             <td class="text-center">
-              {{item.item.gia*item.sl}}
+              {{item.item.gia*item.sl-(item.item.gia*item.sl*item.item.khuyenmai/100)|number}} VNĐ
             </td>
             <td>
               <span id="icon" (click)="xoa(item.item._id)">
@@ -186,7 +177,7 @@
                 (change)="thayDoiGiaTriThucDon($event.target.value,item)">
             </td>
             <td class="text-center">
-              {{item.thucdon.gia*item.sl}}
+              {{item.thucdon.gia*item.sl|number}} VNĐ
             </td>
             <td>
               <span (click)="xoaThucDon(item.thucdon._id)">
@@ -205,7 +196,7 @@
             <td>
             </td>
             <td class="text-right success">
-              <span>Tổng tiền món ăn: {{tongTien}}</span>
+              <strong>Tổng tiền món ăn: {{tongTien|number}} VNĐ</strong>
             </td>
           </tr>
           <tr>
@@ -253,7 +244,7 @@
             </th>
             <th class="  text-right">
               <span [ngClass]="{'display':tinhtrangphongstore===0}">
-                Tiền phòng:{{tienphong}}
+                Tiền phòng:{{tienphong|number}} VNĐ
               </span>
             </th>
           </tr>
@@ -288,7 +279,7 @@
 
             </th>
             <td style="width: 200px;" class="text-right success">
-              <span *ngIf="!kiemTraHienTienDichVu()">Tiền Dịch Vụ:{{tiendichvu}}</span>
+              <span *ngIf="!kiemTraHienTienDichVu()">Tiền Dịch Vụ:{{tiendichvu|number}} VNĐ</span>
             </td>
           </tr>
         </tbody>
@@ -301,7 +292,7 @@
             <th></th>
             <th></th>
             <th></th>
-            <th class="text-right">Thành Tiền :{{tiendichvu+tienphong+tongTien}} VNG</th>
+            <th class="text-right">Thành Tiền :{{tiendichvu+tienphong+tongTien|number}} VNĐ</th>
           </tr>
         </tfoot>
       </table>
@@ -312,11 +303,11 @@
       <div class="col-md-4"></div>
       <div style="padding-top: 15px" class="col-md-4"></div>
       <div class="col-md-4">
-        <input *ngIf="!kiemTraPhongStore()" type="submit" value="Thanh Toán" data-toggle="modal" (click)="thongBao()"
+        <input *ngIf="!kiemTraPhongStore()&&!Kiemtramonstrore()" type="submit" value="Thanh Toán" data-toggle="modal" (click)="thongBao()"
           class=" btn add-more">
-        <input *ngIf="!kiemTraKhachhang()&&kiemTraPhongStore()" type="submit" value="Thanh Toán" data-toggle="modal"
+        <input *ngIf="!kiemTraKhachhang()&&kiemTraPhongStore()&&Kiemtramonstrore()" type="submit" value="Thanh Toán" data-toggle="modal"
           data-target="#taotaikhoan" class="btn btn-lg btn-primary">
-        <input *ngIf="kiemTraKhachhang()&&kiemTraPhongStore()" routerLink="/payment" type="submit" value="Thanh Toán"
+        <input *ngIf="kiemTraKhachhang()&&kiemTraPhongStore()&&Kiemtramonstrore()" routerLink="/payment" type="submit" value="Thanh Toán"
           class="btn add-more">
       </div>
     </div>

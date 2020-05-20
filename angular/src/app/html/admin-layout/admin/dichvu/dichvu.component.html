@@ -1,7 +1,8 @@
 <div class="container-fluid">
-        <div class="head-cus"> 
-                <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#adds"> Thêm dịch vụ mới</button>
-            </div>
+    <div class="head-cus">
+        <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#adds"> Thêm dịch vụ
+            mới</button>
+    </div>
     <div class="content">
         <div class="list-customer">
             <table class="table table-hover list-table">
@@ -10,99 +11,112 @@
                         <th scope="col">#</th>
                         <th scope="col">Tên Dịch vụ</th>
                         <th scope="col">Giá</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody class="tbody-list">
-                    <tr *ngFor="let item of listData" data-toggle="modal" data-target="#detailmd" (click)="formShow(item)">
-                        <th scope="row">1</th>
+                    <tr *ngFor="let item of listData; let i = index" >
+                        <th scope="row">{{i+1}}</th>
                         <td>{{item.ten}}</td>
                         <td>{{item.gia}}</td>
+                        <th>
+                            <button class="btn btn-primary" data-toggle="modal" data-target="#detailmd"
+                            (click)="formShow(item)"> Chi tiết</button>
+                            <button class="btn " (click)="delete(item._id)">Xóa</button>
+                        </th>
                     </tr>
                 </tbody>
             </table>
         </div>
         <!-- ket thuc form xem list -->
         <!-- form add new begin -->
-        <div class="modal fade" id="adds" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                  <div class="modal-content">
+        <div class="modal fade" id="adds" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
                     <div class="modal-body">
-                            <div class="create-customer">
-                                    <form (ngSubmit)="addNew()" [formGroup]="formAddNew">
+                        <div class="create-customer">
+                            <form (ngSubmit)="addNew()" [formGroup]="formAddNew">
+                                <div class="form-row">
+                                    <div class="form-group col-md-5">
+                                        <label>Tên Dịch vụ</label>
+                                        <input type="text" class="form-control" formControlName="ten" placeholder="Tên">
+                                    </div>
+                                    <div class="form-group col-md-5">
+                                        <label>Giá</label>
+                                        <input type="number" class="form-control" formControlName="gia"
+                                            placeholder="Giá">
+                                    </div>
+                                    <div class="form-group col-md-8">
+                                        <label>Hình</label>
+                                        <div class="custom-file">
+                                            <input type="file" (change)="onFileChange($event)" class="custom-file-input"
+                                                id="inputGroupFile01">
+                                            <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-12">
+                                        <button [disabled]="formAddNew.invalid" type="submit"
+                                            class="btn btn-secondary">Thêm</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- ket thuc form add new -->
+        <!-- bat dau form detail -->
+        <div class="modal fade" id="detailmd" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div>
+                            <div class="dish-detail">
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 carosel">
+                                </div>
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <form (ngSubmit)="edit()" [formGroup]="frmSua">
                                         <div class="form-row">
-                                            <div class="form-group col-md-5">
-                                                <label>Tên Dịch vụ</label>
-                                                <input type="text" class="form-control" formControlName="ten" placeholder="Tên">
+                                            <div class="form-group col-md-6">
+                                                <label>Tên Dịch Vụ</label>
+                                                <input type="text" class="form-control" formControlName="ten"
+                                                    value="{{eData.ten}}">
                                             </div>
-                                            <div class="form-group col-md-5">
+                                            <div class="form-group col-md-6">
                                                 <label>Giá</label>
-                                                <input type="text" class="form-control" formControlName="gia" placeholder="Giá">
+                                                <input type="text" class="form-control" formControlName="gia"
+                                                    value="{{eData.gia}}">
+                                            </div>
+                                            <div class="form-group col-md-8">
+                                                <label>Hình đã chọn</label>
+                                                <img src="http://localhost:3000/{{eData.hinhanh}}" style="width: 200px;
+                                                            height: auto;
+                                                            display: block;" class="img-thumbnail" alt="">
                                             </div>
                                             <div class="form-group col-md-8">
                                                 <label>Hình</label>
                                                 <div class="custom-file">
-                                                    <input type="file" (change)="onFileChange($event)" class="custom-file-input" id="inputGroupFile01">
-                                                    <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                                                    <input type="file" (change)="onFileChange($event)"
+                                                        class="custom-file-input" id="inputGroupFile01">
+                                                    <label class="custom-file-label" for="inputGroupFile01">Choose
+                                                        file</label>
                                                 </div>
                                             </div>
                                             <div class="form-group col-md-12">
-                                                <button type="submit" class="btn btn-secondary">Thêm</button>
+                                                <button type="submit" class="btn btn-secondary">Cập Nhật</button>
                                             </div>
                                         </div>
                                     </form>
                                 </div>
+                            </div>
+                        </div>
                     </div>
-                  </div>
                 </div>
-              </div>
-        <!-- ket thuc form add new -->
-        <!-- bat dau form detail -->
-        <div class="modal fade" id="detailmd" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                  <div class="modal-content">
-                    <div class="modal-body">
-                            <div>
-                                    <div class="dish-detail">
-                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 carosel">
-                                        </div>
-                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                            <form (ngSubmit)="edit()" [formGroup]="frmSua">
-                                                <div class="form-row">
-                                                    <div class="form-group col-md-6">
-                                                        <label>Tên Dịch Vụ</label>
-                                                        <input type="text" class="form-control" formControlName="ten" value="{{eData.ten}}">
-                                                    </div>
-                                                    <div class="form-group col-md-6">
-                                                        <label>Giá</label>
-                                                        <input type="text" class="form-control" formControlName="gia" value="{{eData.gia}}">
-                                                    </div>
-                                                    <div class="form-group col-md-8">
-                                                        <label>Hình đã chọn</label>
-                                                        <img src="http://localhost:3000/{{eData.hinhanh}}" style="width: 200px;
-                                                            height: auto;
-                                                            display: block;"
-                                                            class="img-thumbnail" alt="">
-                                                    </div>
-                                                    <div class="form-group col-md-8">
-                                                        <label>Hình</label>
-                                                        <div class="custom-file">
-                                                            <input type="file" (change)="onFileChange($event)" class="custom-file-input" id="inputGroupFile01">
-                                                            <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group col-md-12">
-                                                        <button type="submit" class="btn btn-secondary">Cập Nhật</button>
-                                                        <button class="btn btn-warning" (click)="delete()">Xóa</button>
-                                                    </div>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+            </div>
+        </div>
         <!-- ket thuc form detail -->
     </div>
 </div>

@@ -1,5 +1,7 @@
 
-const nhanvien=require("./../model/nhanvien.model");
+const nhanvien = require("./../model/nhanvien.model");
+const bangluong = require("./../model/bangluong.model");
+const lichlam = require("./../model/lichlam.model");
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
@@ -8,13 +10,48 @@ module.exports = {
     xoaNhanVien: xoaNhanVien,
     layNhanVien: layNhanVien,
     updateProduct: updateProduct,
-    dangNhap:dangNhap,
-    capNhatHinh:capNhatHinh,
-    layNhanVientheoid:layNhanVientheoid
+    dangNhap: dangNhap,
+    capNhatHinh: capNhatHinh,
+    layNhanVientheoid: layNhanVientheoid,
+    capnhatnv: capnhatnv
+}
+
+function capnhatnv(pramas, request) {
+
+    return new Promise((resolve, reject) => {
+
+        console.log(request);
+        nhanvien.findById({ _id: pramas.id }).then(res => {
+
+            if (!res) {
+                var err = {
+                    message: "khong ton tai"
+                }
+                reject(err)
+            }
+            else if (res) {
+                res.ten = request.ten || res.ten
+                res.sdt = request.sdt || res.sdt
+                res._idcapnhanvien = request._idcapnhanvien || res._idcapnhanvien
+                res.save((err, response) => {
+                    if (response) {
+                        const data = {
+                            message: "thanh cong",
+                        }
+                        resolve(data);
+                    }
+                    console.log(response);
+                })
+
+            }
+        }).catch(err => {
+            reject(err + "");
+        })
+    });
 }
 function layNhanVientheoid(req) {
     return new Promise((resolve, reject) => {
-        nhanvien.find({_id:req.id}).select('_id ten email sdt matkhau hinhanh _idcapnhanvien').populate('_idcapnhanvien').exec(
+        nhanvien.find({ _id: req.id }).select('_id ten email sdt matkhau hinhanh _idcapnhanvien').populate('_idcapnhanvien').exec(
             function (err, response) {
                 if (err) {
                     var err = {
@@ -24,15 +61,15 @@ function layNhanVientheoid(req) {
                 } else {
                     var data = response.map(res => {
                         return {
-                            _id:res._id,
-                            ten:res.ten,
-                            email:res.email,
-                            sdt:res.sdt,
-                            matkhau:res.matkhau,
-                            hinhanh:res.hinhanh,
-                            thanhvien:res.thanhvien,
-                            diem:res.diem,
-                            _idcapnhanvien:res._idcapnhanvien                       
+                            _id: res._id,
+                            ten: res.ten,
+                            email: res.email,
+                            sdt: res.sdt,
+                            matkhau: res.matkhau,
+                            hinhanh: res.hinhanh,
+                            thanhvien: res.thanhvien,
+                            diem: res.diem,
+                            _idcapnhanvien: res._idcapnhanvien
                         }
                     }
                     )
@@ -46,8 +83,9 @@ function capNhatHinh(pramas, file) {
 
     return new Promise((resolve, reject) => {
 
+
         nhanvien.findById({ _id: pramas.id }).then(res => {
-            
+
             if (!res) {
                 var err = {
                     message: "khong ton tai"
@@ -55,16 +93,15 @@ function capNhatHinh(pramas, file) {
                 reject(err)
             }
             else if (res) {
-                res.hinhanh = file.path
-                res.save((err,response)=>{
-                    if(response)
-                    {
+                res.hinhanh = file.path || res.hinhanh
+                res.save((err, response) => {
+                    if (response) {
                         const data = {
                             message: "thanh cong",
                         }
                         resolve(data);
                     }
-                    
+
                 })
             }
         }).catch(err => {
@@ -72,62 +109,88 @@ function capNhatHinh(pramas, file) {
         })
     });
 }
-function dangNhap(request)
-{
+function dangNhap(request) {
     console.log(request);
-    
+
     console.log(request.body.email);
-    
+
     return new Promise((resolve, reject) => {
-   nhanvien.find({ email: request.body.ten }).exec()
-        .then(user => {
-            console.log(user[0]);
-          if (user.length < 1) { 
-            var err={message: "that bai 1"  }
-            return reject(err)
-          }
-          bcrypt.compare(request.body.matkhau, user[0].matkhau, (err, result) => {
-            if (err) {
-                var err={message: err+""}
-                return reject(err)
-            }
-            if (result) {
-              const token = jwt.sign({
-                id: user[0]._id,
-                name: user[0].name,
-                img: user[0].img
-              },
-                'secret',
-                {
-                  expiresIn: "1h"
+        nhanvien.find({ email: request.body.ten }).exec()
+            .then(user => {
+                console.log(user[0]);
+                if (user.length < 1) {
+                    var err = { message: "that bai 1" }
+                    return reject(err)
+                }
+                bcrypt.compare(request.body.matkhau, user[0].matkhau, (err, result) => {
+                    if (err) {
+                        var err = { message: err + "" }
+                        return reject(err)
+                    }
+                    if (result) {
+                        const token = jwt.sign({
+                            id: user[0]._id,
+                            name: user[0].name,
+                            img: user[0].img
+                        },
+                            'secret',
+                            {
+                                expiresIn: "1h"
+                            })
+                        var data = {
+                            message: "dang nhap thanh cong",
+                            _id: user[0]._id,
+                            ten: user[0].ten,
+                            email: user[0].email,
+                            sdt: user[0].sdt,
+                            token: token
+                        }
+                        return resolve(data)
+                    }
+                    err = { message: "that bai 2" }
+                    return reject(err)
                 })
-             var data={message: "dang nhap thanh cong",
-             _id:user[0]._id,
-             ten:user[0].ten,
-             email:user[0].email,
-             sdt:user[0].sdt,
-             token: token}
-             return resolve(data)
-            }
-            err={message: "that bai 2"  }
-            return reject(err)
-          })
-        })
-        .catch(err => {
-var err={message:err+""}
-            reject(err)
-        })
-    
+            })
+            .catch(err => {
+                var err = { message: err + "" }
+                reject(err)
+            })
+
     })
 }
 
 function xoaNhanVien(request) {
     return new Promise((resolve, reject) => {
-        nhanvien.remove({ _id: request.id }).then(result => {
-            const data = {
-                message: "xoa thanh cong"
+        bangluong.find({ _idnhavien: request.id }).then(res => {
+            console.log(res);
+            if (res.length != 0) {
+                var err = {
+                    message: "bangluong"
+                }
+                reject(err)
+            } else if (res.length == 0) {
+                return lichlam.find({ _idnhavien: request.id })
             }
-            resolve(data)
+        }).then(resp => {
+            console.log(resp);
+            if (resp.length != 0) {
+                var err = {
+                    message: "lichlam"
+                }
+                reject(err)
+            } else if (resp.length == 0) {
+                console.log('vào',request.id);
+                
+                return nhanvien.deleteOne({ _id: request.id })
+            }
+        }).then(result => {
+            console.log(result)
+            if (result) {
+                const data = {
+                    message: "xoa thanh cong"
+                }
+                resolve(data)
+            }
 
         }).catch(err => reject(err + ""))
     });
@@ -167,8 +230,7 @@ function updateProduct(pramas, request) {
                 reject(err)
             }
             else if (res) {
-                res.name = request.name
-                res.img = request.img
+                res.name = request.name || res.name
                 res.price = request.price
                 res._idtypeproduct = request._idtypeproduct
                 res.discount = request.discount
@@ -199,7 +261,7 @@ function updateProduct(pramas, request) {
 }
 function layNhanVien(req) {
     return new Promise((resolve, reject) => {
-        nhanvien.find({}).select('_id ten email sdt matkhau hinhanh _idcapnhanvien').populate('_idcapnhanvien').exec(
+        nhanvien.find({}).sort({ _id: -1 }).select('_id ten email sdt matkhau hinhanh _idcapnhanvien').populate('_idcapnhanvien').exec(
             function (err, response) {
                 if (err) {
                     var err = {
@@ -209,15 +271,15 @@ function layNhanVien(req) {
                 } else {
                     var data = response.map(res => {
                         return {
-                            _id:res._id,
-                            ten:res.ten,
-                            email:res.email,
-                            sdt:res.sdt,
-                            matkhau:res.matkhau,
-                            hinhanh:res.hinhanh,
-                            thanhvien:res.thanhvien,
-                            diem:res.diem,
-                            _idcapnhanvien:res._idcapnhanvien                       
+                            _id: res._id,
+                            ten: res.ten,
+                            email: res.email,
+                            sdt: res.sdt,
+                            matkhau: res.matkhau,
+                            hinhanh: res.hinhanh,
+                            thanhvien: res.thanhvien,
+                            diem: res.diem,
+                            _idcapnhanvien: res._idcapnhanvien
                         }
                     }
                     )
@@ -227,32 +289,49 @@ function layNhanVien(req) {
     });
 }
 function taoNhanVien(request) {
-        return new Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
+        var email = {
+            email: new RegExp('^' + request.email.trim() + '$', "i")
+        }
         bcrypt.hash(request.matkhau, 10, (err, hash) => {
             if (err) {
                 reject(err);
             } else {
                 var nhanVienMoi = new nhanvien({
-                    ten:request.ten,
-                    email:request.email,
-                    sdt:request.sdt,
-                    matkhau:hash,
-                    hinhanh:request.hinhanh,
-                    _idcapnhanvien:request._idcapnhanvien
+                    ten: request.ten,
+                    email: request.email,
+                    sdt: request.sdt,
+                    matkhau: hash,
+                    hinhanh: request.hinhanh,
+                    _idcapnhanvien: request._idcapnhanvien
                 });
-                nhanVienMoi.save().then(result => {
+                nhanvien.find(email).then(items => {
+                    console.log(items)
+                    if (items.length > 0) {
+
+                        var err = {
+                            message: "email da co"
+                        }
+                        reject(err)
+
+                    }
+                    else {
+                        return nhanVienMoi.save()
+                    }
+
+                }).then(result => {
                     const data = {
                         message: "luu thanh cong",
                         values: {
                             _id: result._id
-        
+
                         }
                     }
                     resolve(data);
-        
+
                 }).catch(err => {
-                    var err={err:err+""}
-                    reject(err );
+                    var err = { err: err + "" }
+                    reject(err);
                 })
 
             }
@@ -260,5 +339,5 @@ function taoNhanVien(request) {
 
 
     })
-  
+
 }     

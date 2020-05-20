@@ -11,24 +11,25 @@ module.exports = {
 }
 function xoaLoaiMon(request) {
     return new Promise((resolve, reject) => {
-        monan.findOne({ _idloai: request.id }).exec().then(
+        monan.find({ _idloai: request.id }).then(
             response => {
-                if (response) {
+                if (response.length!=0) {
                     var mes = {
                         message: "rang buoc"
                     }
-                    reject(mes)
+                   return reject(mes)
                 }
-                else if (!response) {
+                else if (response.length==0) {
                     return loaimonan.remove({ _id: request.id })
                 }
             }
-        ).then(result => {
-            const data = {
-                message: "xoa thanh cong"
+        ).then(res=>{
+            if(res){
+                const data = {
+                    message: "xoa thanh cong"
+                }
+                resolve(data)
             }
-            resolve(data)
-
         }).catch(err => reject(err + ""))
 
     });
@@ -46,6 +47,7 @@ function capNhatLoaiMon(pramas, request) {
             }
             else if (res) {
                 res.ten = request.ten || res.ten
+                res.mota = request.mota || res.mota
                 return res.save()
             }
         }).then(result => {
@@ -85,7 +87,7 @@ function getProductById(req) {
 }
 function layLoaiMon() {
     return new Promise((resolve, reject) => {
-        loaimonan.find({}).sort({ _id: -1 }).select('_id ten').exec(
+        loaimonan.find({}).sort({ _id: -1 }).select('_id ten mota').exec(
             function (err, response) {
                 if (err) {
                     reject(err)
@@ -94,7 +96,8 @@ function layLoaiMon() {
                     var data = response.map(res => {
                         return {
                             _id: res._id,
-                            ten: res.ten
+                            ten: res.ten,
+                            mota:res.mota
                         }
                     }
 
@@ -108,7 +111,8 @@ function layLoaiMon() {
 function taoLoaiMon1(request) {
     var loaimonanmoi = new loaimonan({
         _id: new mongoose.Types.ObjectId(),
-        ten: request.ten
+        ten: request.ten,
+        mota:request.mota
     });
     console.log(loaimonanmoi);
 
@@ -122,7 +126,7 @@ function taoLoaiMon1(request) {
                     message: "loai mon da co"
                 }
                 reject(err);
-                
+
                 return false;
             } else {
                 console.log(err)
@@ -133,7 +137,8 @@ function taoLoaiMon1(request) {
                 message: "luu thanh cong",
                 values: {
                     _id: result._id,
-                    ten: result.ten
+                    ten: result.ten,
+                    mota:result.mota
                 }
             }
             resolve(data);

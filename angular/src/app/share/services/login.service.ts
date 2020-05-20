@@ -9,7 +9,18 @@ export class LoginService {
   private hoadon = 'http://localhost:3000/hoadon/gettime';
   private hoadon1 = 'http://localhost:3000/hoadon';
   private cthd = 'http://localhost:3000/chitiethoadon';
+  public _islogin: boolean;
   constructor(private http: Http) { }
+
+  islogin(): boolean {
+    return this._islogin;
+  }
+
+
+  setislogin(islogin: boolean) {
+    this._islogin = islogin;
+  }
+
   gettime(time, Idp): Observable<any> {
     const date = {
       thoidiemden: time,

@@ -1,4 +1,4 @@
-<div id="thongtinngdung">
+<div id="thongtinngdung" *ngIf="usertemp._id" style="margin-top:100px">
   <div class="container">
     <div id="card">
       <div class="col-md-3">
@@ -87,3 +87,6 @@
       </div>
     </div>
   </div>
+  <h1 class="text-center" *ngIf="!usertemp._id" style="margin-top: 100px">
+ Vui lòng đăng nhập để truy cập trang này
+  </h1>

@@ -6,13 +6,21 @@ module.exports={
     updateProduct2:updateProduct1,
     dangNhap:dangNhap1,
     capNhatHinh:capNhatHinh1,
-    layNhanVientheoid:layNhanVientheoid1
+    layNhanVientheoid:layNhanVientheoid1,
+    capnhatnv:capnhatnv1
 }
 function layNhanVientheoid1(req,res){
     service.layNhanVientheoid(req.query).then((result) => {
         res.send(result);
     }).catch((err) => {
         res.send(err);
+    });
+}
+function capnhatnv1(req,res){
+    service.capnhatnv(req.params,req.body).then((result) => {
+        res.send(result);
+    }).catch((err) => {
+        res.send(err)
     });
 }
 function capNhatHinh1(req,res){

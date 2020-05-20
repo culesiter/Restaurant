@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { DishserviceService } from '../../../../share/services/dishservice.service';
 import { iloaimon } from '../../../../share/entities/iloaimon';
 import { Subject } from 'rxjs';
+import { Router } from '@angular/router';
 declare var $: any;
 @Component({
   selector: 'app-loaimonan',
@@ -19,7 +20,7 @@ export class LoaimonanComponent implements OnInit {
   private styleExp = 'none';
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject();
-  constructor(private formBuilder: FormBuilder, private dishserviceService: DishserviceService) { }
+  constructor(private formBuilder: FormBuilder, private dishserviceService: DishserviceService, private router: Router) { }
 
   ngOnInit() {
     this.taoFormAddNew();
@@ -56,16 +57,20 @@ export class LoaimonanComponent implements OnInit {
   taoFormAddNew() {
     this.formAddNew = this.formBuilder.group({
       ten: ['', []],
-      descrip: ['', []]
+      mota: ['', []]
     });
     this.frmSua = this.formBuilder.group({
-      ten: ['haha', []],
-      descrip: ['', []]
+      ten: ['', []],
+      mota: ['', []]
     });
   }
   formShow(a, data) {
     this.formStatus = a;
     this.eLoaiMon = data;
+    this.frmSua = this.formBuilder.group({
+      ten: [data.ten, []],
+      mota: [data.mota, []]
+    });
   }
   XoaForm(a: FormGroup) {
     a.reset();
@@ -83,6 +88,9 @@ export class LoaimonanComponent implements OnInit {
         this.formStatus = 'view';
         this.getListType();
         this.formStatus = 'view';
+        setTimeout(() => {
+          $('#add-type').modal('hide');
+        }, 150);
       } else {
         $.notify('Thử lại với tên khác!', 'error');
       }
@@ -100,10 +108,22 @@ export class LoaimonanComponent implements OnInit {
       }
     })
   }
-  XoaMon() {
-    this.dishserviceService.xoaloaimon(this.eLoaiMon._id).subscribe(res => {
-      this.getListType();
-      this.formStatus = 'view';
-    });
+  back() {
+    this.getListType();
+    this.formStatus = 'view';
+  }
+  XoaMon(id) {
+    console.log(id);
+    if (confirm('Bạn muốn xóa?')) {
+      this.dishserviceService.xoaloaimon(id).subscribe(res => {
+        if (res.message === 'xoa thanh cong') {
+          $.notify('Đã xóa một mục!', 'success');
+        } else if (res.message === 'rang buoc') {
+          $.notify('Có món ăn chứa loại trên', 'error');
+        }
+        this.getListType();
+        this.formStatus = 'view';
+      });
+    }
   }
 }

@@ -3,4 +3,5 @@ export class IloaiPhong {
     ten?:string;
     gia?:number;
     succhua?:number;
+    message?:string;
 }

@@ -97,6 +97,7 @@
                         <th scope="col">#</th>
                         <th scope="col">Tên khách hàng</th>
                         <th scope="col">Thời điểm tạo</th>
+                        <th scope="col">Thời điểm dến</th>
                         <th scope="col">Tình Trạng</th>
                         <th></th>
                     </tr>
@@ -106,6 +107,7 @@
                         <th *ngIf="item.tinhtrang===0" scope="row">{{i+1}}</th>
                         <td *ngIf="item.tinhtrang===0">{{item._idkhachhang.ten}}</td>
                         <td *ngIf="item.tinhtrang===0">{{item.thoidiemtao}}</td>
+                        <td>{{item.thoidiemden}}</td>
                         <td *ngIf="item.tinhtrang===0" style="color:red">Chưa xác nhận</td>
                         <td><button type="button" class="btn btn-primary" data-toggle="modal"
                                 data-target="#detail_modal" (click)="openDetail(item)">
@@ -269,9 +271,12 @@
                                     <input type="text" class="form-control" disabled value="{{ehoadon.thoidiemtao}}">
                                 </div>
                                 <div class="form-group col-md-4">
+                                    <label>Giờ đến</label>
+                                    <input type="text" class="form-control" value="{{ehoadon.gioden}}">
+                                </div>
+                                <div class="form-group col-md-4">
                                     <label>Thời điểm đến</label>
-                                    <input type="text" class="form-control"
-                                        value="{{ehoadon.gioden}}, {{ehoadon.thoidiemden}}">
+                                    <input type="text" class="form-control" value="{{ehoadon.thoidiemden}}">
                                 </div>
                                 <div class="form-group col-md-4">
                                     <label>Thời lượng</label>
@@ -284,10 +289,6 @@
                                     <div *ngIf="ehoadon.buoiDat===3">
                                         Cả ngày
                                     </div>
-                                </div>
-                                <div class="form-group col-md-4">
-                                    <label>Giờ đến</label>
-                                    <input type="text" class="form-control" value="{{ehoadon.gioden}}">
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label>Phòng</label>
@@ -413,11 +414,120 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="submit" class="btn btn-secondary" (click)="confirm(ehoadon._id,1)">Xác nhận đơn
+                <button data-toggle="modal" data-target="#edit" type="button" (click)="getid(ehoadon._id)"
+                    class="btn btn-secondary">Sửa
+                </button>
+                <button *ngIf="ehoadon.tinhtrang===0" type="submit" class="btn btn-secondary"
+                    (click)="confirm(ehoadon._id,1)">Xác nhận đơn
                     hàng</button>
-                <button class="btn btn-danger" (click)="deleteBill(ehoadon._id)">Xóa</button>
+                <button class="btn btn-danger" (click)="huyhd2(ehoadon._id,-1)">Hủy</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button class="btn" (click)="deleteBill(ehoadon._id)">Xóa</button>
+
             </div>
         </div>
+    </div>
+</div>
+
+
+<div id="edit" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form>
+                <div class="row" style="flex-wrap: wrap">
+                    <div class="col-md-6">
+                        <div class="wrap" style="display:flex;align-items: center">
+                            Ngày đến:
+                            <div class='input-group'>
+                                <input id="thoidiemdat" style="width:100%" type='date' class="form-control"
+                                    [(ngModel)]="fromDate" name="fromDate" (change)="laythoigian($event)" />
+                                <img style="" *ngIf="doi==true" src="../../../assets/images/load.svg" alt="">
+                            </div>
+                            <div *ngIf="time" style="margin-left: 10px">
+                            </div>
+                        </div>
+                        <span style="color:red" class="label" *ngIf="check===false">Đã qua ngày này!</span>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="" style="display: flex;align-items: center">
+                            <label for="name" class="cols-sm-2 control-label">giờ đến:</label>
+                            <div class="cols-sm-10 wrong" style="display:flex;align-items: center;line-height: 1">
+                                <input oninput="validity.valid||(value='');" type="number" min="6" max="21"
+                                    class="form-control text-center" value="" [(ngModel)]="gio"
+                                    [ngModelOptions]="{standalone: true}" />
+                                Giờ:
+                                <input oninput="validity.valid||(value='');" type="number" min="0" max="60"
+                                    class="form-control text-center" value="0" [(ngModel)]="phut"
+                                    [ngModelOptions]="{standalone: true}" />
+                                Phút
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="cover" style="width: 100%;display: flex;justify-content: center;" *ngIf="phong">
+                            <table class="table" style="width: 600px;margin: auto">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            #
+                                        </th>
+                                        <th>
+                                            Tên
+                                        </th>
+                                        <th>
+                                            Loại
+                                        </th>
+                                        <th>
+                                            Giá
+                                        </th>
+                                        <th>
+                                            Sức chứa
+                                        </th>
+                                        <th>
+
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr [ngClass]="{'animated ':phongChon==item}" *ngFor="let item of phong">
+                                        <td>{{item.ten}}</td>
+                                        <td>{{item.loai}}</td>
+                                        <td>{{item.gia|number}} VNĐ</td>
+                                        <td>{{item.succhua}} Người</td>
+                                        <td>
+                                            <div [ngClass]="{'sl':kiemtrabuoi(1,item._id)}"
+                                                *ngIf="item.sang==='trong'" class="btn btn-success"
+                                                (click)=chonBuoi(1,item._id)>
+                                                Sáng
+                                            </div>
+                                            <div *ngIf="item.sang==='dat'" class="btn btn-default">
+                                                Sáng
+                                            </div>
+                                            <div [ngClass]="{'sl':kiemtrabuoi(2,item._id)}"
+                                                *ngIf="item.chieu==='trong'" class="btn btn-success"
+                                                (click)=chonBuoi(2,item._id)>
+                                                Chiều
+                                            </div>
+                                            <div *ngIf="item.chieu==='dat'" class="btn btn-default">
+                                                Chiều
+                                            </div>
+                                        </td>
+                                        <td class="text-center">
+                                            <input id="checkbox" [ngClass]="{'display':kiemTra(item._id)}" type="button" value="Chọn" class="btn btn-default"
+                                                (click)="giatriphong(item)">
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <div class="modal-footer">
+                    <button class="btn" (click)="change()">Thay Đổi</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Thoát</button>
+                </div>
+        </div>
+        
     </div>
 </div>

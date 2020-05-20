@@ -1,23 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 import { Iphong } from '../../../../share/entities/iphong';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PhongserviceService } from '../../../../share/services/phongservice.service';
 import { IloaiPhong } from '../../../../share/entities/iloai-phong';
 import { Subject } from 'rxjs';
 declare var $: any;
-
 @Component({
   selector: 'app-s-room',
   templateUrl: './s-room.component.html',
   styleUrls: ['./s-room.component.scss']
 })
 export class SRoomComponent implements OnInit {
-
   private formStatus = 'view';
   private lstType: IloaiPhong[] = [];
   private listData: Iphong[] = [];
   private eData: Iphong = {};
-  private formAddNew: FormGroup;
+  private formAddNew1: FormGroup;
   private frmSua: FormGroup;
   private selectedFile: any;
   dtOptions: DataTables.Settings = {};
@@ -58,24 +56,38 @@ export class SRoomComponent implements OnInit {
     };
   }
   getListType() {
-    this.phongserviceService.laydanhsachloaiphong().subscribe(res => { this.lstType = res });
+    this.phongserviceService.laydanhsachloaiphong().subscribe(res => {
+      this.lstType = res;
+    });
   }
   formShow(data) {
     this.eData = data;
+    console.log(data)
+    this.frmSua = this.formBuilder.group({
+      ten: [data.ten, []],
+      _idloai: [data._idloai, []],
+      gia: [data.gia, []],
+      tinhtrang: [1, []]
+    });
   }
   taoForm() {
-    this.formAddNew = this.formBuilder.group({
-      ten: ['', []],
-      _idloai: ['', []],
-      gia: ['', []],
-      succhua: ['', []],
-      tinhtrang: ['', []]
+    this.formAddNew1 = this.formBuilder.group({
+      ten: ['', [
+        Validators.required
+      ]],
+      _idloai: ['', [
+        Validators.required
+      ]],
+      gia: ['', [
+        Validators.required
+      ]],
+      tinhtrang: [1, [
+      ]]
     });
     this.frmSua = this.formBuilder.group({
       ten: ['', []],
       _idloai: ['', []],
       gia: ['', []],
-      succhua: ['', []],
       tinhtrang: ['', []]
     });
   }
@@ -89,40 +101,60 @@ export class SRoomComponent implements OnInit {
     this.selectedFile = event.target.files[0];
   }
   addNew() {
-    this.phongserviceService.themphong(this.formAddNew.value).subscribe(res => {
-      var data = res;
-      console.log(data);
-      const uploaddata = new FormData();
-      uploaddata.append('phongimg', this.selectedFile);
-      this.phongserviceService.upanh(data.values._id, uploaddata).subscribe(resq => {
-        if (resq.message === 'luu thanh cong') {
-          $.notify('Đã tạo phòng mới');
+    this.phongserviceService.themphong(this.formAddNew1.value).subscribe(res => {
+      if (res.message === 'luu thanh cong') {
+        const data = res;
+        console.log(data);
+        const uploaddata = new FormData();
+        uploaddata.append('phongimg', this.selectedFile);
+        console.log(this.selectedFile);
+        if (this.selectedFile) {
+          this.phongserviceService.upanh(data.values._id, uploaddata).subscribe(resq => {
+            if (resq.message === 'thanh cong') {
+              $.notify('Đã tạo phòng mới', 'success');
+              setTimeout(() => {
+                $('#addroom').modal('hide');
+              }, 150);
+              this.getList();
+              this.formStatus = 'view';
+            } else {
+              $.notify('Có lỗi xảy ra với hình', 'error');
+            }
+          });
+        }
+      } else if (res.message === 'phong da co') {
+        $.notify('Trùng tên', 'error');
+      }
+    });
+  }
+  edit() {
+    if (confirm('Bạn có muốn sửa?')) {
+      this.phongserviceService.suaphong(this.eData._id, this.frmSua.value).subscribe(res => {
+        if (res.message === 'thanh cong') {
+          $.notify('Đã cập nhật', 'success');
           setTimeout(() => {
-            $('#addroom').modal('hide');
+            $('#detailmd').modal('hide');
           }, 150);
           this.getList();
           this.formStatus = 'view';
         } else {
-          $.notify('Có lỗi xảy ra');
+          $.notify('Có lỗi', 'error');
         }
       });
-    });
+    }
+
   }
-  edit() {
-    this.phongserviceService.suaphong(this.eData._id, this.frmSua.value).subscribe(res => {
-      if (res) {
-        $.notify('Đã sửa một mục!', 'success');
-        this.getList();
-        this.formStatus = 'view';
-      } else {
-        $.notify("Có lỗi xảy ra!", "error");
-      }
-    })
-  }
-  delete() {
-    this.phongserviceService.xoaphong(this.eData._id).subscribe(res => {
-      this.getList();
-      this.formStatus = 'view';
-    });
+  delete(id) {
+    if (confirm('Bạn muốn xóa?')) {
+      this.phongserviceService.xoaphong(id).subscribe(res => {
+        if (res.message === 'rang buoc') {
+          $.notify('Hóa đơn đang chứa phòng trên', 'error');
+        } else if (res.message === 'xoa thanh cong') {
+          $.notify('Đã xóa', 'success');
+          this.getList();
+        }
+      });
+    }
+
   }
 }

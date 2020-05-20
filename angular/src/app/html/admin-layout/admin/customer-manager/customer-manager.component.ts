@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Icustomer } from '../../../../share/entities/icustomer';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { HumanService } from '../../../../share/services/human.service';
 import { Subject } from 'rxjs';
+import { Identifiers } from '@angular/compiler';
+import { DataTableDirective } from 'angular-datatables';
 declare var $;
 @Component({
   selector: 'app-customer-manager',
@@ -22,10 +24,9 @@ export class CustomerManagerComponent implements OnInit {
     private human: HumanService) { }
   ngOnInit() {
     this.taoForm();
-    this.getList();
+    this.getList(false);
     this.dtOptions = {
       pagingType: 'full_numbers',
-      pageLength: 6,
       retrieve: true,
       paging: true,
       ordering: false,
@@ -53,6 +54,7 @@ export class CustomerManagerComponent implements OnInit {
       }
     };
   }
+  
   formShow(a, data) {
     this.formStatus = a;
   }
@@ -73,8 +75,11 @@ export class CustomerManagerComponent implements OnInit {
         Validators.required,
         Validators.pattern('^[a-zA-Z0-9]{6,32$')
       ]],
-      thanhvien: ['', []],
-      diem: ['', [
+      diachi: ['', [
+        Validators.required
+      ]],
+      thanhvien: [true, []],
+      diem: [0, [
         Validators.required,
         Validators.pattern('^[0-9]{8,32$')
       ]]
@@ -82,14 +87,34 @@ export class CustomerManagerComponent implements OnInit {
     this.frmSua = this.formBuilder.group({
       ten: ['', []],
       email: ['', []],
-      matkhau: ['', []],
       thanhvien: ['', []],
-      diachi: ['',[]],
+      diachi: ['', []],
       diem: ['', []]
     });
   }
-  getList() {
-    this.human.laydanhsach().subscribe(res => { this.listData = res; this.dtTrigger.next(); });
+  getList(dk) {
+    this.listData = [];
+    console.log(dk);
+    this.human.laydanhsach().subscribe(res => {
+      if (!dk) {
+        this.listData = res;
+      } else if (dk == 2) {
+        console.log(dk);
+        res.forEach(element => {
+          if (element.thanhvien === false) {
+            console.log(dk, element);
+            this.listData.push(element);
+          }
+        });
+      } else if (dk == 1) {
+        res.forEach(element => {
+          if (element.thanhvien === true) {
+            this.listData.push(element);
+          }
+        });
+      }
+      this.dtTrigger.next();
+    });
   }
   onFileChange(event) {
     this.selectedFile = event.target.files[0];
@@ -103,7 +128,7 @@ export class CustomerManagerComponent implements OnInit {
         this.human.upanhkh(data.values._id, uploaddata).subscribe(resq => {
           if (resq.message === 'thanh cong') {
             $.notify('Đã tạo một khách hàng mới!', 'success');
-            this.getList();
+            this.getList(false);
             this.formStatus = 'view';
             setTimeout(() => {
               $('#addc').modal('hide');
@@ -118,20 +143,32 @@ export class CustomerManagerComponent implements OnInit {
     });
   }
   edit() {
-    this.human.sua(this.eData._id, this.frmSua.value).subscribe(res => {
-      if (res) {
-        $.notify("Đã sửa 1 mục", "success");
-        this.getList();
-        this.formStatus = 'view';
-      } else {
-        $.notify("Có lỗi xảy ra!", "error");
-      }
-    });
+    if (confirm('Bạn muốn sửa?')) {
+      this.human.sua(this.eData._id, this.frmSua.value).subscribe(res => {
+        if (res.message === 'thanh cong') {
+          $.notify("Đã sửa 1 mục", "success");
+          this.getList(false);
+          setTimeout(() => {
+            $('#cusdetail').modal('hide');
+          }, 150);
+          this.formStatus = 'view';
+        } else {
+          $.notify("Có lỗi xảy ra!", "error");
+        }
+      });
+    }
   }
-  delete() {
-    this.human.xoa(this.eData._id).subscribe(res => {
-      this.getList();
-      this.formStatus = 'view';
-    });
+  delete(id) {
+    console.log(id);
+    if (confirm('Bạn muốn xóa?')) {
+      this.human.xoa(id).subscribe(res => {
+        if (res.message === 'rang buoc') {
+          $.notify('Có hóa đơn chứa người trên', 'error');
+        } else if (res.message = 'xoa thanh cong') {
+          $.notify('Đã xóa một mục!', 'success');
+          this.getList(false);
+        }
+      });
+    }
   }
 }

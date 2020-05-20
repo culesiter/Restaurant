@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { Ihoadon } from '../../../../share/entities/ihoadon';
 import { HoadonService } from '../../../../share/services/hoadon.service';
 import { PhongserviceService } from '../../../../share/services/phongservice.service';
 import { Subject } from 'rxjs';
 import { DatePipe } from '@angular/common';
+import { DataTableDirective } from 'angular-datatables';
+import { LoginService } from '../../../../share/services/login.service';
 declare var $: any;
 const moment = require('moment');
 @Component({
@@ -29,16 +31,28 @@ export class SBillComponent implements OnInit {
   private totaldv;
   private min;
   private max;
+  private phong;
+  private buoi;
+  private check = true;
+  private crid;
+  private crt;
+  private gio;
+  private phut;
+  private today = new Date();
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject();
   // tslint:disable-next-line:max-line-length
   private myDate = new Date();
-  constructor(private router: Router, private hoadonS: HoadonService, private phongsv: PhongserviceService,
-    private datePipe: DatePipe) {
+
+  constructor(private router: Router,
+    private hoadonS: HoadonService,
+    private phongsv: PhongserviceService,
+    private datePipe: DatePipe,
+    private gettime: LoginService) {
   }
   ngOnInit() {
     console.log(this.myDate);
-    this.laydsHoadon(false, false);
+
     this.dtOptions = {
       pagingType: 'full_numbers',
       retrieve: true,
@@ -67,10 +81,13 @@ export class SBillComponent implements OnInit {
         }
       }
     };
+    this.laydsHoadon(false, false);
   }
   // exportAsXLSX(): void {
   //   this.excelService.exportAsExcelFile(this.lstHoadon, 'sample');
   // }
+
+
   filterById() {
     this.laydsHoadon(this.min, this.max);
   }
@@ -83,12 +100,11 @@ export class SBillComponent implements OnInit {
   filterById4() {
     this.laydsHoadon(false, false);
   }
+
+
   laydsHoadon(min, max) {
     this.hoadonS.laydanhsach().subscribe(res => {
       this.lstHoadon = res;
-      if (min && max) {
-
-      }
       this.chuaxacnhan = [];
       this.daxacnhan = [];
       this.dathanhtoan = [];
@@ -96,18 +112,30 @@ export class SBillComponent implements OnInit {
       this.dathanhtoan2 = [];
       this.huy = [];
       res.forEach(element => {
+        const tempdate = element.thoidiemtao;
         element.thoidiemtao = moment(element.thoidiemtao).format(' h:mm:ss a, Ngày: DD-MM-YYYY');
         if (!min && !max) {
           if (element.tinhtrang === 0) {
             this.chuaxacnhan.push(element);
           } else if (element.tinhtrang === 1) {
-            this.daxacnhan.push(element);
-          } else if (element.tinhtrang === 2) {
-            this.dathanhtoan.push(element);
-            if (element.hinhthucthanhtoan == 2) {
-              this.dathanhtoan2.push(element);
+            const date = moment(tempdate).add(1, 'days');
+            // tslint:disable-next-line:max-line-length
+            if (moment().isAfter(date)) {
+              this.huyhd(element._id, -1);
             } else {
-              this.dathanhtoan1.push(element);
+              this.daxacnhan.push(element);
+            }
+          } else if (element.tinhtrang === 2) {
+            const date = moment(tempdate).add(1, 'days');
+            console.log(moment(tempdate), date, moment().isAfter(date));
+            if (moment().isAfter(date)) {
+            } else {
+              this.dathanhtoan.push(element);
+              if (element.hinhthucthanhtoan == 2 || element.hinhthucthanhtoan == 3) {
+                this.dathanhtoan2.push(element);
+              } else if (element.hinhthucthanhtoan == 1) {
+                this.dathanhtoan1.push(element);
+              }
             }
           } else if (element.tinhtrang === -1) {
             this.huy.push(element);
@@ -159,8 +187,8 @@ export class SBillComponent implements OnInit {
             } else if (element.tinhtrang === 1) {
               this.daxacnhan.push(element);
             } else if (element.tinhtrang === 2) {
-              this.dathanhtoan.push(element);
               if (element.hinhthucthanhtoan == 2) {
+                console.log(1);
                 this.dathanhtoan2.push(element);
               } else {
                 this.dathanhtoan1.push(element);
@@ -224,6 +252,30 @@ export class SBillComponent implements OnInit {
       this.totaldv = tong;
     });
   }
+  huyhd(id, action) {
+    action = {
+      action: action
+    };
+    this.hoadonS.suahoadon(id, action).subscribe(res => {
+      if (res.message === 'thanh cong') {
+        $.notify('Hủy Hóa đơn quá hạn', 'success');
+      }
+    });
+  }
+  huyhd2(id, action) {
+    action = {
+      action: action
+    };
+    this.hoadonS.suahoadon(id, action).subscribe(res => {
+      if (res.message === 'thanh cong') {
+        setTimeout(() => {
+          $('#detail_modal').modal('hide');
+        }, 150);
+        this.laydsHoadon(false, false);
+        $.notify('Hủy Hóa đơn', 'success');
+      }
+    });
+  }
   confirm(id, action) {
     action = {
       action: action
@@ -235,6 +287,11 @@ export class SBillComponent implements OnInit {
       }
     });
   }
+  deletebill2(id) {
+    this.hoadonS.xoa(id).subscribe(res => {
+      console.log(res);
+    });
+  }
   deleteBill(id) {
     const check = confirm('Bạn có chắc chắn muốn xóa?');
     if (check === true) {
@@ -244,5 +301,167 @@ export class SBillComponent implements OnInit {
         this.xem = true;
       });
     }
+  }
+  kiemtrabuoi(buoi, id) {
+    this.buoi = JSON.parse(sessionStorage.getItem('buoiad'));
+    if (this.buoi) {
+      for (let i = 0; i < this.buoi.length; i++) {
+        if (this.buoi[i].buoiDat === buoi && this.buoi[i]._idphong === id) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+  kiemTra(id) {
+    const pp = JSON.parse(sessionStorage.getItem('phongad'));
+    if (pp) {
+      if (id === pp._id) {
+        return true;
+      }
+    }
+    return false;
+  }
+  clearbuoi() {
+    const clear = [];
+    sessionStorage.setItem('buoiad', JSON.stringify(clear));
+  }
+  giatriphong(giatri) {
+    sessionStorage.setItem('phongad', JSON.stringify(giatri));
+    const buoi = JSON.parse(sessionStorage.getItem('buoiad'));
+    const phongChon = giatri;
+
+    if (buoi.length === 2) {
+      const pp = JSON.parse(sessionStorage.getItem('phongad'));
+      pp.gia = pp.gia * 2;
+      sessionStorage.setItem('phongad', JSON.stringify(pp));
+
+    }
+  }
+  getid(id) {
+    this.crid = id;
+    sessionStorage.setItem('buoiad', JSON.stringify([]));
+    sessionStorage.setItem('phongad', JSON.stringify({}));
+    $('#thoidiemdat').val('');
+    this.phong = false;
+    this.gio = false;
+    this.phut = false;
+  }
+  change() {
+    if (this.crid) {
+      const phong = JSON.parse(sessionStorage.getItem('phongad'));
+      const buoi = JSON.parse(sessionStorage.getItem('buoiad'));
+      let b;
+      let idp;
+      let date;
+      if (phong && buoi && buoi.length !== 0 && phong !== {}) {
+        if (buoi.length === 2) {
+          b = 3;
+        } else {
+          b = buoi[0].buoiDat;
+        }
+        idp = phong._id;
+        date = this.crt;
+      }
+
+
+
+      let t;
+      if (this.gio) {
+        t = this.gio + ' gio ' + this.phut + ' phut';
+      }
+      const action = {
+        thoidiemden: date,
+        buoiDat: b,
+        _idphong: idp,
+        gioden: t
+      };
+      console.log(action);
+
+      this.hoadonS.suahoadon(this.crid, action).subscribe(res => {
+        if (res.message === 'thanh cong') {
+          $.notify('sửa thành công', 'success');
+          this.laydsHoadon(false, false);
+          setTimeout(() => {
+            $('#edit').modal('hide');
+            $('#detail_modal').modal('hide');
+          }, 150);
+        } else {
+          $.notify('sửa thành công', 'success');
+        }
+      });
+    }
+  }
+  chonBuoi(buoi, idphong) {
+    let buoidadat = true;
+    let dem = 0;
+    this.buoi = [];
+    const data = {
+      buoiDat: buoi,
+      _idphong: idphong
+    };
+    if (sessionStorage.getItem('buoiad') === null) {
+      this.buoi.push(data);
+      sessionStorage.setItem('buoiad', JSON.stringify(this.buoi));
+    } else {
+      this.buoi = JSON.parse(sessionStorage.getItem('buoiad'));
+      let index = -1;
+      for (let i = 0; i < this.buoi.length; i++) {
+        if (this.buoi[i]._idphong === data._idphong && this.buoi[i].buoiDat === data.buoiDat) {
+          index = i;
+          console.log(i);
+          dem = 1;
+        } else if (this.buoi[i]._idphong === data._idphong && this.buoi[i].buoiDat !== data.buoiDat) {
+          buoidadat = false;
+        }
+      }
+      if (index > -1) {
+        this.buoi.splice(index, 1);
+        sessionStorage.setItem('buoiad', JSON.stringify(this.buoi));
+      } else if (buoidadat === false && dem === 0) {
+        this.buoi.push(data);
+        sessionStorage.setItem('buoiad', JSON.stringify(this.buoi));
+      } else {
+        this.clearbuoi();
+        this.buoi = [];
+        this.buoi.push(data);
+        sessionStorage.setItem('buoiad', JSON.stringify(this.buoi));
+      }
+    }
+
+  }
+  laythoigian(event) {
+    if (new Date(event.target.value) < this.today) {
+      this.check = false;
+      return false;
+    }
+    sessionStorage.setItem('buoiad', JSON.stringify([]));
+    sessionStorage.setItem('phongad', JSON.stringify({}));
+    this.gettime.getlistblankroom(moment(new Date(event.target.value)).format('DD-MM-YYYY')).subscribe(res => {
+      this.phongsv.laydanhsachphong().subscribe(response => {
+        this.phong = response;
+        this.phong.forEach(element => {
+          element['sang'] = 'trong';
+          element['chieu'] = 'trong';
+          if (res) {
+            res.forEach(element2 => {
+              if (element._id === element2._idphong._id) {
+                if (element2.buoiDat === 1) {
+                  element['sang'] = 'dat';
+                } else if (element2.buoiDat === 2) {
+                  element['chieu'] = 'dat';
+                } else {
+                  element['sang'] = 'dat';
+                  element['chieu'] = 'dat';
+                }
+              }
+            });
+          }
+        });
+        // this.doi = false;
+        // this.mochonphong = true;
+      });
+    });
+    this.crt = moment(new Date(event.target.value)).format('DD-MM-YYYY');
   }
 }

@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Icustomer } from '../../share/entities/icustomer';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { HumanService } from '../../share/services/human.service';
-import { MbscEventcalendarOptions } from '@mobiscroll/angular';
 declare var $;
 @Component({
   selector: 'app-thongtinnguoidung',
@@ -18,15 +17,17 @@ private eData: Icustomer = {};
   constructor(private formBuilder: FormBuilder, private human: HumanService) { }
   ngOnInit() {
     this.usertempForid=JSON.parse(localStorage.getItem('user'));
-    this.human.laythongtinkhachhangtheoid(this.usertempForid._id).subscribe(res =>{
-      this.usertemp = res[0];
-      console.log(this.usertemp);
-      if(this.usertemp.diem === null){
-        this.dtl = 0;
-      } else{
-        this.dtl = this.usertemp.diem;
-      }
-    })
+    if(this.usertempForid){
+      this.human.laythongtinkhachhangtheoid(this.usertempForid._id).subscribe(res =>{
+        this.usertemp = res[0];
+        console.log(this.usertemp);
+        if(this.usertemp.diem === null){
+          this.dtl = 0;
+        } else{
+          this.dtl = this.usertemp.diem;
+        }
+      })
+    }
     this.taoForm();
   }
   taoForm() {

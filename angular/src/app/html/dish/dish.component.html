@@ -7,8 +7,8 @@
             alt="..." class="image-responsive">
         </div>
       <div class="caption-bottom">
-        <span class="price" *ngIf="!dish.giacu">$ {{dish.gia}}</span>
-        <span class="old-price" *ngIf="dish.giacu">{{dish.giacu}} -> {{dish.gia}}</span>
+        <span class="price" *ngIf="dish.khuyenmai===0||dish.khuyenmai==null"> {{dish.gia  |number}} VNĐ</span>
+        <span class="old-price" *ngIf="dish.khuyenmai!==0"> <span style="text-decoration: line-through"> {{dish.gia| number}} VNĐ</span>  -> {{dish.gia-(dish.gia*dish.khuyenmai/100)| number}} VNĐ</span>
           <a (click)="addToCart(dish)" class="btn-adtocart" role="button">
               Thêm vào giỏ hàng <i class="fa fa-cart-plus" aria-hidden="true"></i>
           </a>

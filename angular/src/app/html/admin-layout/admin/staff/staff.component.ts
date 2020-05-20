@@ -15,6 +15,7 @@ export class StaffComponent implements OnInit {
   private formAddNew: FormGroup;
   private frmSua: FormGroup;
   private selectedFile: any;
+  private allrank;
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject();
   constructor(private formBuilder: FormBuilder,
@@ -50,6 +51,12 @@ export class StaffComponent implements OnInit {
     };
     this.taoForm();
     this.getList();
+    this.getallrank();
+  }
+  getallrank() {
+    this.staff.laydscapnv().subscribe(res => {
+      this.allrank = res;
+    });
   }
   formShow(a, data) {
     this.formStatus = a;
@@ -58,38 +65,44 @@ export class StaffComponent implements OnInit {
   taoForm() {
     this.formAddNew = this.formBuilder.group({
       ten: ['', [
-        Validators.required,
-        Validators.pattern('^[a-zA-Z]{6,32$')
+        Validators.required
       ]],
       email: ['', [
-        Validators.required,
-        Validators.pattern('^[a-zA-Z0-9%-_]{4,32}@gmail.com$')
+        Validators.required
       ]],
       matkhau: ['', [
-        Validators.required,
-        Validators.pattern('^[a-zA-Z0-9]{6,32$')
+        Validators.required
       ]],
       sdt: ['', [
       ]],
       _idcapnhanvien: ['', [
-        Validators.pattern('^[a-zA-Z0-9]{6,32$')
+        Validators.required
       ]]
     });
     this.frmSua = this.formBuilder.group({
       ten: ['', []],
       email: ['', []],
-      matkhau: ['', []],
-      thanhvien: ['', []],
-      diem: ['', []]
+      sdt: ['', [
+      ]],
+      _idcapnhanvien: ['', [
+      ]]
     });
   }
-  showdetail(data){
+  showdetail(data) {
     this.eData = data;
+    this.frmSua = this.formBuilder.group({
+      ten: [data.name, []],
+      email: [data.email, []],
+      sdt: [data.sdt, [
+      ]],
+      _idcapnhanvien: [data._idcapnhanvien._id, [
+      ]]
+    });
   }
   getList() {
     this.staff.laydanhsach().subscribe(res => {
-    this.listData = res; console.log(res);
-    this.dtTrigger.next();
+      this.listData = res; console.log(res);
+      this.dtTrigger.next();
     });
   }
   onFileChange(event) {
@@ -97,36 +110,55 @@ export class StaffComponent implements OnInit {
   }
   addNew() {
     this.staff.them(this.formAddNew.value).subscribe(res => {
-      var data = res;
-      console.log(data.values._id);
-      const uploaddata = new FormData();
-      uploaddata.append('nhanvienimg', this.selectedFile);
-      console.log(this.selectedFile, uploaddata);
-      this.staff.upanhkh(data.values._id, uploaddata).subscribe(resq => {
-        console.log(resq);
-        if (resq) {
-          $.notify('Đã tạo một mục mới!', 'success');
+      if (res.message === 'luu thanh cong') {
+        const data = res;
+        console.log(data.values._id);
+        const uploaddata = new FormData();
+        uploaddata.append('nhanvienimg', this.selectedFile);
+        this.staff.upanhkh(data.values._id, uploaddata).subscribe(resq => {
+          if (resq.message === 'thanh cong') {
+            $.notify('Đã tạo một mục mới!', 'success');
+            this.getList();
+            setTimeout(() => {
+              $('#addstaff').modal('hide');
+            }, 150);
+            this.formStatus = 'view';
+          }
+        });
+      }
+    });
+  }
+  edit() {
+    if (confirm('Bạn muốn sửa?')) {
+      this.staff.sua(this.eData._id, this.frmSua.value).subscribe(res => {
+        if (res.message === 'thanh cong') {
+          $.notify('Đã sửa một mục!', 'success');
+          this.getList();
+          setTimeout(() => {
+            $('#detailstaff').modal('hide');
+          }, 150);
+          this.formStatus = 'view';
+        } else {
+          $.notify("Có lỗi xảy ra!", "error");
+        }
+      });
+    }
+  }
+  delete(id) {
+    if (confirm('Bạn muốn xóa?')) {
+      this.staff.xoa(id).subscribe(res => {
+        console.log(res);
+
+        if (res.message === 'lichlam') {
+          $.notify("Đã có lịch làm", "error");
+        } else if (res.message === 'bangluong') {
+          $.notify("Đã có bảng lương", "error");
+        } else if (res.message === 'xoa thanh cong') {
+          $.notify('Đã xóa!', 'success');
           this.getList();
           this.formStatus = 'view';
         }
       });
-    });
-  }
-  edit() {
-    this.staff.sua(this.eData._id, this.frmSua.value).subscribe(res => {
-      if (res) {
-        $.notify('Đã sửa một mục!', 'success');
-        this.getList();
-        this.formStatus = 'view';
-      } else {
-        $.notify("Có lỗi xảy ra!", "error");
-      }
-    });
-  }
-  delete() {
-    this.staff.xoa(this.eData._id).subscribe(res => {
-      this.getList();
-      this.formStatus = 'view';
-    });
+    }
   }
 }

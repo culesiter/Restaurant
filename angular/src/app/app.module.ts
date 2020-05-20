@@ -75,7 +75,6 @@ import { SCustomerComponent } from './html/a-staff-layout/staff-db/s-customer/s-
 import { SDishComponent } from './html/a-staff-layout/staff-db/s-dish/s-dish.component';
 import { SRoomComponent } from './html/a-staff-layout/staff-db/s-room/s-room.component';
 import { SFormComponent } from './html/a-staff-layout/staff-db/s-form/s-form.component';
-import { MbscModule } from '@mobiscroll/angular';
 import { SViewsalaryComponent } from './html/a-staff-layout/staff-db/s-viewsalary/s-viewsalary.component';
 import { SroomtypeComponent } from './html/a-staff-layout/staff-db/sroomtype/sroomtype.component';
 import { SServicesComponent } from './html/a-staff-layout/staff-db/s-services/s-services.component';
@@ -84,6 +83,7 @@ import { SDishTypeComponent } from './html/a-staff-layout/staff-db/s-dish-type/s
 import { ScheduleComponent } from './html/admin-layout/admin/schedule/schedule.component';
 import { SScheduleComponent } from './html/a-staff-layout/staff-db/s-schedule/s-schedule.component';
 import { DatePipe } from '@angular/common';
+import { Auth2Guard } from './share/services/guard2/auth2.guard';
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   {
@@ -151,7 +151,7 @@ const routes: Routes = [
       { path: '', redirectTo: 'staff_login', pathMatch: 'full' },
       { path: 'staff_login', component: StaffLoginComponent },
       {
-        path: 'dashboard', component: StaffDbComponent, children: [
+        canActivate: [Auth2Guard], path: 'dashboard', component: StaffDbComponent, children: [
           { path: 'order', component: SBillComponent },
           { path: 'customer', component: SCustomerComponent },
           { path: 'dish', component: SDishComponent },
@@ -234,7 +234,6 @@ const routes: Routes = [
   ],
   imports: [
     ChartsModule,
-    MbscModule,
     OwlModule,
     AngularDateTimePickerModule,
     FormsModule,
@@ -251,6 +250,7 @@ const routes: Routes = [
     StaffService,
     LoginService,
     AuthGuard, HoadonService,
+    Auth2Guard,
     HumanService, ThucdonserviceService,
     DishserviceService, DataTransferService, CartserviceService, PhongserviceService],
   bootstrap: [AppComponent]

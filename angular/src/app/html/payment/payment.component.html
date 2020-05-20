@@ -166,13 +166,11 @@
                             value="{{item.sl}}" (change)="thayDoiGiaTri($event.target.value,item)">
                         </td>
                         <td class="text-center">
-                          {{item.item.gia*item.sl}}
+                          {{item.item.gia*item.sl-(item.item.gia*item.sl*item.khuyenmai/100)| number}} VNĐ
                         </td>
                         <td>
-                          <span *ngIf="sua==0" style="cursor: no-drop;" class="
-                                      glyphicon glyphicon-trash"></span>
-                          <span *ngIf="sua==1" style="cursor: pointer;" (click)="xoa(item.item._id)" class="
-                                      glyphicon glyphicon-trash"></span>
+                          <span *ngIf="sua==0" style="cursor: no-drop;" >Xóa</span>
+                          <span *ngIf="sua==1" style="cursor: pointer;" (click)="xoa(item.item._id)" >Xóa</span>
                         </td>
                       </tr>
                       <tr *ngFor="let item of cart1">
@@ -194,13 +192,11 @@
                             value="{{item.sl}}" (change)="thayDoiGiaTriThucDon($event.target.value,item)">
                         </td>
                         <td class="text-center">
-                          {{item.thucdon.gia*item.sl}}
+                          {{item.thucdon.gia*item.sl|number}} VNĐ
                         </td>
                         <td>
-                          <span *ngIf="sua==0" style="cursor: no-drop;" class="
-                                        glyphicon glyphicon-trash"></span>
-                          <span *ngIf="sua==1" style="cursor: pointer;" (click)="xoaThucDon(item.thucdon._id)" class="
-                                        glyphicon glyphicon-trash"></span>
+                          <span *ngIf="sua==0" style="cursor: no-drop;" >Xóa</span>
+                          <span *ngIf="sua==1" style="cursor: pointer;" (click)="xoaThucDon(item.thucdon._id)" >Xóa</span>
                         </td>
                       </tr>
                     </tbody>
@@ -209,7 +205,7 @@
                         <td></td>
                         <td></td>
                         <td></td>
-                        <td class="text-center text-primary">Tổng:{{tongTien}} VND</td>
+                        <td class="text-center text-primary">Tổng:{{tongTien|number}} VNĐ</td>
                         <td></td>
                       </tr>
                     </tfoot>
@@ -347,10 +343,10 @@
       <div class="form-group">
         <label for="name" class="cols-sm-2 control-label">giờ đến:</label>
         <div class="cols-sm-10 wrong" style="display:flex;align-items: center;line-height: 1">
-          <input type="number" min="6" max="21" class="form-control text-center" value="" [(ngModel)]="gio"
+          <input oninput="validity.valid||(value='');" type="number" min="6" max="21" class="form-control text-center" value="" [(ngModel)]="gio"
             (change)="laygio($event)" />
           Giờ:
-          <input type="number" min="0" max="60" class="form-control text-center" value="0" [(ngModel)]="phut"
+          <input oninput="validity.valid||(value='');" type="number" min="0" max="60" class="form-control text-center" value="0" [(ngModel)]="phut"
             (change)="layphut($event)" />
           Phút
         </div>
@@ -383,7 +379,7 @@
       type="button" class="btn btn-lg btn-primary pull-right" value="Xác Nhận" (click)="time2()">
   </div>
   <!-- Modal -->
-  <div class="modal fade" id="xacNhan" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal fade" id="xacNhan" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -490,7 +486,7 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal" (click)='backhome()'>Về trang lại trang Chủ</button>
           <button type="button" class="btn btn-primary" (click)="taohoadon()">Tạo</button>
           <img style="display: none;" id="load" src="../../../assets/images/load.svg" alt="">
           <a *ngIf="href" href="{{href}}" id="href" class="btn btn-success">Đến Trang Thanh Toán</a>

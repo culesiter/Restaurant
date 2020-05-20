@@ -6,4 +6,5 @@ export class Iphong {
     succhua?:number;
     tinhtrang?:string;
     loai?:string;
+    message?:string;
 }

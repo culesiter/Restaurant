@@ -5,6 +5,10 @@ var loaimonanSchema=mongoose.Schema(
         ten:{
             type:String,
             require: true
+        },
+        mota:{
+            type:String,
+            default:'Vị Rất Ngon'
         }
     }
 );

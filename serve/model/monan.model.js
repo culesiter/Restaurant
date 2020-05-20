@@ -20,6 +20,9 @@ var monanSchema=mongoose.Schema(
        khuyenmai:{
         type:Number,
         default:0
+       },
+       mota:{
+           type:String
        }
     }
 );

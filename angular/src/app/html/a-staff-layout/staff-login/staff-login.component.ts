@@ -29,6 +29,7 @@ export class StaffLoginComponent implements OnInit {
         $.notify('Đăng nhập thành công!', 'success');
         const nv = JSON.stringify(response);
         localStorage.setItem('staff', nv);
+        sessionStorage.setItem('staff', nv);
         this.router.navigate(['/staff/dashboard']);
       } else{
         $.notify("Có lỗi xảy ra!", "error");
